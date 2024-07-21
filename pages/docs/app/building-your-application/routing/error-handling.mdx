@@ -6,67 +6,71 @@ related:
     - app/api-reference/file-conventions/error
 ---
 
-Errors can be divided into two categories: **expected errors** and **uncaught exceptions**:
+import Image from "next/image";
 
-- **Model expected errors as return values**: Avoid using `try`/`catch` for expected errors in Server Actions. Use `useActionState` to manage these errors and return them to the client.
-- **Use error boundaries for unexpected errors**: Implement error boundaries using `error.tsx` and `global-error.tsx` files to handle unexpected errors and provide a fallback UI.
+# Error Handling
+
+에러는 **예상된 에러**와 **예상치 못한 예외** 두 가지 범주로 나눌 수 있습니다:
+
+- **예상된 에러를 반환 값으로 모델링**: 서버 액션에서 예상된 에러를 `try`/`catch`로 처리하는 것을 피하십시오. `useActionState`를 사용하여 이러한 에러를 관리하고 클라이언트에 반환합니다.
+- **예상치 못한 에러는 에러 경계로 처리**: `error.tsx` 및 `global-error.tsx` 파일을 사용하여 에러 경계를 구현하고 예상치 못한 에러를 처리하며 대체 UI를 제공합니다.
 
 ## Handling Expected Errors
 
-Expected errors are those that can occur during the normal operation of the application, such as those from [server-side form validation](/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-side-form-validation) or failed requests. These errors should be handled explicitly and returned to the client.
+예상된 에러는 [서버 측 폼 검증](/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-side-form-validation)이나 실패한 요청 등 정상적인 애플리케이션 운영 중에 발생할 수 있는 에러입니다. 이러한 에러는 명시적으로 처리하고 클라이언트에 반환해야 합니다.
 
 ### Handling Expected Errors from Server Actions
 
-Use the `useActionState` hook (previously `useFormState`) to manage the state of Server Actions, including handling errors. This approach avoids `try`/`catch` blocks for expected errors, which should be modeled as return values rather than thrown exceptions.
+`useActionState` 훅(이전에는 `useFormState`)을 사용하여 서버 액션의 상태를 관리하고 에러를 처리합니다. 이 접근 방식은 예상된 에러를 위한 `try`/`catch` 블록을 피하고, 에러를 throw하는 대신 반환 값으로 모델링해야 합니다.
 
 ```tsx filename="app/actions.ts" switcher
-'use server'
+"use server";
 
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 export async function createUser(prevState: any, formData: FormData) {
-  const res = await fetch('https://...')
-  const json = await res.json()
+  const res = await fetch("https://...");
+  const json = await res.json();
 
   if (!res.ok) {
-    return { message: 'Please enter a valid email' }
+    return { message: "Please enter a valid email" };
   }
 
-  redirect('/dashboard')
+  redirect("/dashboard");
 }
 ```
 
 ```jsx filename="app/actions.js" switcher
-'use server'
+"use server";
 
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 export async function createUser(prevState, formData) {
-  const res = await fetch('https://...')
-  const json = await res.json()
+  const res = await fetch("https://...");
+  const json = await res.json();
 
   if (!res.ok) {
-    return { message: 'Please enter a valid email' }
+    return { message: "Please enter a valid email" };
   }
 
-  redirect('/dashboard')
+  redirect("/dashboard");
 }
 ```
 
-Then, you can pass your action to the `useActionState` hook and use the returned `state` to display an error message.
+그런 다음, `useActionState` 훅에 액션을 전달하고 반환된 `state`를 사용하여 에러 메시지를 표시할 수 있습니다.
 
 ```tsx filename="app/ui/signup.tsx" highlight={11,18-20} switcher
-'use client'
+"use client";
 
-import { useActionState } from 'react'
-import { createUser } from '@/app/actions'
+import { useActionState } from "react";
+import { createUser } from "@/app/actions";
 
 const initialState = {
-  message: '',
-}
+  message: "",
+};
 
 export function Signup() {
-  const [state, formAction] = useActionState(createUser, initialState)
+  const [state, formAction] = useActionState(createUser, initialState);
 
   return (
     <form action={formAction}>
@@ -76,22 +80,22 @@ export function Signup() {
       <p aria-live="polite">{state?.message}</p>
       <button>Sign up</button>
     </form>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/ui/signup.js" highlight={11,18-20} switcher
-'use client'
+"use client";
 
-import { useActionState } from 'react'
-import { createUser } from '@/app/actions'
+import { useActionState } from "react";
+import { createUser } from "@/app/actions";
 
 const initialState = {
-  message: '',
-}
+  message: "",
+};
 
 export function Signup() {
-  const [state, formAction] = useActionState(createUser, initialState)
+  const [state, formAction] = useActionState(createUser, initialState);
 
   return (
     <form action={formAction}>
@@ -101,72 +105,72 @@ export function Signup() {
       <p aria-live="polite">{state?.message}</p>
       <button>Sign up</button>
     </form>
-  )
+  );
 }
 ```
 
-You could also use the returned state to display a toast message from the client component.
+클라이언트 컴포넌트에서 반환된 상태를 사용하여 토스트 메시지를 표시할 수도 있습니다.
 
 ### Handling Expected Errors from Server Components
 
-When fetching data inside of a Server Component, you can use the response to conditionally render an error message or [`redirect`](/docs/app/building-your-application/routing/redirecting#redirect-function).
+서버 컴포넌트 내에서 데이터를 가져올 때는 응답을 사용하여 조건부로 에러 메시지를 렌더링하거나 [`redirect`](/docs/app/building-your-application/routing/redirecting#redirect-function)할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
-  const res = await fetch(`https://...`)
-  const data = await res.json()
+  const res = await fetch(`https://...`);
+  const data = await res.json();
 
   if (!res.ok) {
-    return 'There was an error.'
+    return "There was an error.";
   }
 
-  return '...'
+  return "...";
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
-  const res = await fetch(`https://...`)
-  const data = await res.json()
+  const res = await fetch(`https://...`);
+  const data = await res.json();
 
   if (!res.ok) {
-    return 'There was an error.'
+    return "There was an error.";
   }
 
-  return '...'
+  return "...";
 }
 ```
 
 ## Uncaught Exceptions
 
-Uncaught exceptions are unexpected errors that indicate bugs or issues that should not occur during the normal flow of your application. These should be handled by throwing errors, which will then be caught by error boundaries.
+예상치 못한 예외는 정상적인 애플리케이션 흐름 중에 발생해서는 안 되는 버그나 문제를 나타내는 예기치 않은 에러입니다. 이러한 에러는 throw하여 에러 경계에서 처리해야 합니다.
 
-- **Common:** Handle uncaught errors below the root layout with `error.js`.
-- **Optional:** Handle granular uncaught errors with nested `error.js` files (e.g. `app/dashboard/error.js`)
-- **Uncommon:** Handle uncaught errors in the root layout with `global-error.js`.
+- **일반적인 경우**: 루트 레이아웃 아래에서 발생한 예기치 않은 에러는 `error.js`로 처리합니다.
+- **선택적인 경우**: 중첩된 `error.js` 파일(예: `app/dashboard/error.js`)을 사용하여 세분화된 예기치 않은 에러를 처리합니다.
+- **드문 경우**: 루트 레이아웃에서 발생한 예기치 않은 에러는 `global-error.js`로 처리합니다.
 
 ### Using Error Boundaries
 
-Next.js uses error boundaries to handle uncaught exceptions. Error boundaries catch errors in their child components and display a fallback UI instead of the component tree that crashed.
+Next.js는 예상치 못한 예외를 처리하기 위해 에러 경계를 사용합니다. 에러 경계는 자식 컴포넌트에서 발생한 에러를 캐치하고, 충돌한 컴포넌트 트리 대신 대체 UI를 표시합니다.
 
-Create an error boundary by adding an `error.tsx` file inside a route segment and exporting a React component:
+경로 세그먼트 내에 `error.tsx` 파일을 추가하고 React 컴포넌트를 내보내어 에러 경계를 생성합니다:
 
 ```tsx filename="app/dashboard/error.tsx" switcher
-'use client' // Error boundaries must be Client Components
+"use client"; // Error boundaries must be Client Components
 
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error & { digest?: string }
-  reset: () => void
+  error: Error & { digest?: string };
+  reset: () => void;
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error)
-  }, [error])
+    console.error(error);
+  }, [error]);
 
   return (
     <div>
@@ -180,20 +184,20 @@ export default function Error({
         Try again
       </button>
     </div>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/dashboard/error.js" switcher
-'use client' // Error boundaries must be Client Components
+"use client"; // Error boundaries must be Client Components
 
-import { useEffect } from 'react'
+import { useEffect } from "react";
 
 export default function Error({ error, reset }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error)
-  }, [error])
+    console.error(error);
+  }, [error]);
 
   return (
     <div>
@@ -207,13 +211,13 @@ export default function Error({ error, reset }) {
         Try again
       </button>
     </div>
-  )
+  );
 }
 ```
 
 ### Handling Errors in Nested Routes
 
-Errors will bubble up to the nearest parent error boundary. This allows for granular error handling by placing `error.tsx` files at different levels in the [route hierarchy](/docs/app/building-your-application/routing#component-hierarchy).
+에러는 가장 가까운 부모 에러 경계로 전파됩니다. 이를 통해 [경로 계층 구조](/docs/app/building-your-application/routing#component-hierarchy)의 다양한 수준에서 `error.tsx` 파일을 배치하여 세분화된 에러 처리가 가능합니다.
 
 <Image
   alt="Nested Error Component Hierarchy"
@@ -225,17 +229,17 @@ Errors will bubble up to the nearest parent error boundary. This allows for gran
 
 ### Handling Global Errors
 
-While less common, you can handle errors in the root layout using `app/global-error.js`, located in the root app directory, even when leveraging [internationalization](/docs/app/building-your-application/routing/internationalization). Global error UI must define its own `<html>` and `<body>` tags, since it is replacing the root layout or template when active.
+드물게 루트 레이아웃에서 에러를 처리해야 할 때는, `app/global-error.js`를 사용합니다. 이 파일은 루트 앱 디렉토리에 위치하며, [국제화](/docs/app/building-your-application/routing/internationalization)를 활용할 때도 작동합니다. 전역 에러 UI는 활성화될 때 루트 레이아웃이나 템플릿을 대체하므로 자체 `<html>` 및 `<body>` 태그를 정의해야 합니다.
 
 ```tsx filename="app/global-error.tsx" switcher
-'use client' // Error boundaries must be Client Components
+"use client"; // Error boundaries must be Client Components
 
 export default function GlobalError({
   error,
   reset,
 }: {
-  error: Error & { digest?: string }
-  reset: () => void
+  error: Error & { digest?: string };
+  reset: () => void;
 }) {
   return (
     // global-error must include html and body tags
@@ -245,12 +249,12 @@ export default function GlobalError({
         <button onClick={() => reset()}>Try again</button>
       </body>
     </html>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/global-error.js" switcher
-'use client' // Error boundaries must be Client Components
+"use client"; // Error boundaries must be Client Components
 
 export default function GlobalError({ error, reset }) {
   return (
@@ -261,6 +265,6 @@ export default function GlobalError({ error, reset }) {
         <button onClick={() => reset()}>Try again</button>
       </body>
     </html>
-  )
+  );
 }
 ```
