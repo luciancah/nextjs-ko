@@ -1,18 +1,38 @@
-import React from 'react'
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import React from "react";
+import { DocsThemeConfig } from "nextra-theme-docs";
+import { useRouter } from "next/router";
 
 const config: DocsThemeConfig = {
-  logo: <span>My Project</span>,
+  logo: <span>Nextjs 한국어 번역</span>,
   project: {
-    link: 'https://github.com/shuding/nextra-docs-template',
+    link: "https://github.com/luciancah/nextjs-ko",
   },
-  chat: {
-    link: 'https://discord.com',
+  docsRepositoryBase: "https://github.com/luciancah/nextjs-ko",
+  useNextSeoProps() {
+    const { asPath } = useRouter();
+    if (asPath !== "/") {
+      return {
+        titleTemplate: "%s – Nextjs 한국어 번역",
+      };
+    }
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  banner: {
+    key: "banner",
+    text: (
+      <a href="https://github.com/luciancah/nextjs-ko" target="_blank">
+        🎉 공식문서 번역에 참여해주세요.
+      </a>
+    ),
+  },
+  editLink: {
+    component: null,
+  },
+  feedback: {
+    content: null,
+  },
   footer: {
-    text: 'Nextra Docs Template',
+    text: "Nextra Docs Template",
   },
-}
+};
 
-export default config
+export default config;

@@ -1,0 +1,14 @@
+{
+  "getting-started": {
+    "title": "Getting Started"
+  },
+  "app": {
+    "title": "App Router"
+  },
+  "architecture": {
+    "title": "Architecture"
+  },
+  "community": {
+    "title": "Community"
+  }
+}
