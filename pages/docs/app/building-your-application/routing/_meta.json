@@ -1,0 +1,47 @@
+{
+  "defining-routes": {
+    "title": "Defining Routes"
+  },
+  "pages": {
+    "title": "Pages"
+  },
+  "layouts-and-templates": {
+    "title": "Layouts and Templates"
+  },
+  "linking-and-navigating": {
+    "title": "Linking and Navigating"
+  },
+  "error-handling": {
+    "title": "Error Handling"
+  },
+  "loading-ui-and-streaming": {
+    "title": "Loading UI and Streaming"
+  },
+  "redirecting": {
+    "title": "Redirecting"
+  },
+  "route-groups": {
+    "title": "Route Groups"
+  },
+  "colocation": {
+    "title": "Colocation"
+  },
+  "dynamic-routes": {
+    "title": "Dynamic Routes"
+  },
+  "parallel-routes": {
+    "title": "Parallel Routes"
+  },
+  "intercepting-routes": {
+    "title": "Intercepting Routes"
+  },
+  "route-handlers": {
+    "title": "Route Handlers"
+  },
+  "middleware": {
+    "title": "Middleware"
+  },
+  "internationalization": {
+    "title": "Internationalization"
+  }
+}

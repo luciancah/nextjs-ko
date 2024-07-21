@@ -1,0 +1,166 @@
+---
+title: 라우팅 기본 사항
+nav_title: 라우팅
+description: 프론트엔드 애플리케이션의 라우팅 기본 사항을 배우세요.
+---
+
+import Image from "next/image";
+
+# 라우팅 기본 사항
+
+애플리케이션의 뼈대는 라우팅입니다. 이 페이지에서는 웹 라우팅의 **기본 개념**과 Next.js에서 라우팅을 처리하는 방법을 소개합니다.
+
+## 용어
+
+먼저, 문서 전체에서 자주 사용되는 용어를 살펴보겠습니다. 여기에 대한 간단한 참고 자료를 제공합니다:
+
+<Image
+  alt="컴포넌트 트리를 위한 용어"
+  srcLight="/docs/light/terminology-component-tree.png"
+  srcDark="/docs/dark/terminology-component-tree.png"
+  width="1600"
+  height="832"
+/>
+
+- **트리:** 계층적 구조를 시각화하기 위한 규칙. 예를 들어, 부모 및 자식 컴포넌트가 있는 컴포넌트 트리, 폴더 구조 등.
+- **서브트리:** 새로운 루트(첫 번째)에서 시작하여 리프(마지막)에서 끝나는 트리의 일부.
+- **루트:** 트리 또는 서브트리의 첫 번째 노드, 예를 들어 루트 레이아웃.
+- **리프:** 자식이 없는 서브트리의 노드, 예를 들어 URL 경로의 마지막 세그먼트.
+
+<Image
+  alt="URL 해부를 위한 용어"
+  srcLight="/docs/light/terminology-url-anatomy.png"
+  srcDark="/docs/dark/terminology-url-anatomy.png"
+  width="1600"
+  height="371"
+/>
+
+- **URL 세그먼트:** 슬래시로 구분된 URL 경로의 일부.
+- **URL 경로:** 도메인 이후에 오는 URL의 일부로, 세그먼트로 구성됨.
+
+## `app` 라우터
+
+버전 13에서 Next.js는 공유 레이아웃, 중첩 라우팅, 로딩 상태, 오류 처리 등을 지원하는 [React Server Components](/docs/app/building-your-application/rendering/server-components) 기반의 새로운 **App Router**를 도입했습니다.
+
+App Router는 `app`이라는 새로운 디렉토리에서 작동합니다. `app` 디렉토리는 `pages` 디렉토리와 함께 작동하여 점진적인 도입을 허용합니다. 이를 통해 애플리케이션의 일부 경로를 새로운 동작으로 전환하면서 다른 경로는 이전 동작을 위해 `pages` 디렉토리에 유지할 수 있습니다. 애플리케이션이 `pages` 디렉토리를 사용하는 경우, [Pages Router](/docs/pages/building-your-application/routing) 문서도 참조하세요.
+
+> **알아두면 좋은 점**: App Router는 Pages Router보다 우선 순위가 높습니다. 디렉토리 간 경로가 동일한 URL 경로로 해석되면 빌드 타임 오류가 발생하여 충돌을 방지합니다.
+
+<Image
+  alt="Next.js App 디렉토리"
+  srcLight="/docs/light/next-router-directories.png"
+  srcDark="/docs/dark/next-router-directories.png"
+  width="1600"
+  height="444"
+/>
+
+기본적으로 `app` 내부의 컴포넌트는 [React Server Components](/docs/app/building-your-application/rendering/server-components)입니다. 이는 성능 최적화이며 쉽게 도입할 수 있습니다. 또한 [Client Components](/docs/app/building-your-application/rendering/client-components)도 사용할 수 있습니다.
+
+> **추천:** Server Components에 익숙하지 않은 경우 [Server](/docs/app/building-your-application/rendering/server-components) 페이지를 확인하세요.
+
+## 폴더와 파일의 역할
+
+Next.js는 파일 시스템 기반의 라우터를 사용하여 다음과 같은 역할을 합니다:
+
+- **폴더**는 경로를 정의하는 데 사용됩니다. 경로는 **루트 폴더**에서 시작하여 `page.js` 파일을 포함하는 최종 **리프 폴더**까지 파일 시스템 계층을 따르는 중첩 폴더의 단일 경로입니다. [라우트 정의](/docs/app/building-your-application/routing/defining-routes)를 참조하세요.
+- **파일**은 경로 세그먼트에 대해 표시되는 UI를 생성하는 데 사용됩니다. [특수 파일](#file-conventions)을 참조하세요.
+
+## 경로 세그먼트
+
+경로의 각 폴더는 **경로 세그먼트**를 나타냅니다. 각 경로 세그먼트는 **URL 경로**의 해당 **세그먼트**에 매핑됩니다.
+
+<Image
+  alt="라우트 세그먼트가 URL 세그먼트로 매핑되는 방법"
+  srcLight="/docs/light/route-segments-to-path-segments.png"
+  srcDark="/docs/dark/route-segments-to-path-segments.png"
+  width="1600"
+  height="594"
+/>
+
+## 중첩 경로
+
+중첩 경로를 생성하려면 폴더를 서로 중첩시킬 수 있습니다. 예를 들어, `app` 디렉토리에 두 개의 새 폴더를 중첩하여 `/dashboard/settings` 경로를 추가할 수 있습니다.
+
+`/dashboard/settings` 경로는 세 개의 세그먼트로 구성됩니다:
+
+- `/` (루트 세그먼트)
+- `dashboard` (세그먼트)
+- `settings` (리프 세그먼트)
+
+## 파일 규칙
+
+Next.js는 중첩 경로에서 특정 동작을 가진 UI를 생성하기 위해 일련의 특수 파일을 제공합니다:
+
+|                                                                                           |                                                                                         |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [`layout`](/docs/app/building-your-application/routing/layouts-and-templates#layouts)     | 세그먼트와 자식에 대한 공유 UI                                                          |
+| [`page`](/docs/app/building-your-application/routing/pages)                               | 경로의 고유한 UI로 경로를 공개적으로 접근 가능하게 만듭니다.                            |
+| [`loading`](/docs/app/building-your-application/routing/loading-ui-and-streaming)         | 세그먼트와 자식에 대한 로딩 UI                                                          |
+| [`not-found`](/docs/app/api-reference/file-conventions/not-found)                         | 세그먼트와 자식에 대한 Not Found UI                                                     |
+| [`error`](/docs/app/building-your-application/routing/error-handling)                     | 세그먼트와 자식에 대한 오류 UI                                                          |
+| [`global-error`](/docs/app/building-your-application/routing/error-handling)              | 글로벌 오류 UI                                                                          |
+| [`route`](/docs/app/building-your-application/routing/route-handlers)                     | 서버 사이드 API 엔드포인트                                                              |
+| [`template`](/docs/app/building-your-application/routing/layouts-and-templates#templates) | 특수한 재렌더링된 레이아웃 UI                                                           |
+| [`default`](/docs/app/api-reference/file-conventions/default)                             | [병렬 경로](/docs/app/building-your-application/routing/parallel-routes)에 대한 폴백 UI |
+
+> **알아두면 좋은 점**: 특수 파일에는 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
+
+## 컴포넌트 계층 구조
+
+특수 파일에 정의된 React 컴포넌트는 특정 계층 구조로 렌더링됩니다:
+
+- `layout.js`
+- `template.js`
+- `error.js` (React 오류 경계)
+- `loading.js` (React 서스펜스 경계)
+- `not-found.js` (React 오류 경계)
+- `page.js` 또는 중첩 `layout.js`
+
+<Image
+  alt="파일 규칙을 위한 컴포넌트 계층 구조"
+  srcLight="/docs/light/file-conventions-component-hierarchy.png"
+  srcDark="/docs/dark/file-conventions-component-hierarchy.png"
+  width="1600"
+  height="643"
+/>
+
+중첩 경로에서는 세그먼트의 컴포넌트가 부모 세그먼트의 컴포넌트 **내부에** 중첩됩니다.
+
+<Image
+  alt="중첩 파일 규칙 컴포넌트 계층 구조"
+  srcLight="/docs/light/nested-file-conventions-component-hierarchy.png"
+  srcDark="/docs/dark/nested-file-conventions-component-hierarchy.png"
+  width="1600"
+  height="863"
+/>
+
+## 콜로케이션
+
+특수 파일 외에도 `app` 디렉토리의 폴더 안에 자신의 파일(예: 컴포넌트, 스타일, 테스트 등)을 콜로케이트할 수 있습니다.
+
+이는 폴더가 경로를 정의하지만, `page.js` 또는 `route.js`에서 반환된 내용만 공개적으로 접근할 수 있기 때문입니다.
+
+<Image
+  alt="콜로케이트된 파일이 있는 예시 폴더 구조"
+  srcLight="/docs/light/project-organization-colocation.png"
+  srcDark="/docs/dark/project-organization-colocation.png"
+  width="1600"
+  height="1011"
+/>
+
+[프로젝트 조직 및 콜로케이션](/docs/app/building-your-application/routing/colocation)에 대해 자세히 알아보세요.
+
+## 고급
+
+라우팅 패턴
+
+App Router는 더 고급 라우팅 패턴을 구현하는 데 도움이 되는 일련의 규칙도 제공합니다. 여기에는 다음이 포함됩니다:
+
+- [병렬 경로](/docs/app/building-your-application/routing/parallel-routes): 동시에 두 개 이상의 페이지를 동일한 뷰에 표시하고 독립적으로 탐색할 수 있습니다. 예: 대시보드.
+- [경로 인터셉트](/docs/app/building-your-application/routing/intercepting-routes): 경로를 인터셉트하고 다른 경로의 컨텍스트에서 표시할 수 있습니다. 현재 페이지의 컨텍스트를 유지하는 것이 중요한 경우에 사용할 수 있습니다. 예: 하나의 작업을 편집하는 동안 모든 작업 보기 또는 피드에서 사진 확대 보기.
+
+이러한 패턴은 역사적으로 소규모 팀과 개인 개발자에게 복잡했던 기능을 구현할 수 있도록 하여 더 풍부하고 복잡한 UI를 구축할 수 있게 합니다.
+
+## 다음 단계
+
+이제 Next.js에서 라우팅의 기본 사항을 이해했으므로, 아래 링크를 따라 첫 번째 라우트를 생성하세요:

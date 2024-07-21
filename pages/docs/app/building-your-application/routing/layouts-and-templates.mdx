@@ -1,0 +1,310 @@
+---
+title: 레이아웃 및 템플릿
+description: Next.js에서 첫 번째 공유 레이아웃을 만드세요.
+---
+
+import Image from "next/image";
+
+# 레이아웃 및 템플릿
+
+특수 파일인 [layout.js](#layouts)와 [template.js](#templates)는 [경로](/docs/app/building-your-application/routing/defining-routes#creating-routes) 간에 공유되는 UI를 생성할 수 있게 해줍니다. 이 페이지에서는 이러한 특수 파일을 언제, 어떻게 사용하는지 안내합니다.
+
+## 레이아웃
+
+레이아웃은 여러 경로 간에 **공유**되는 UI입니다. 탐색 시 레이아웃은 상태를 유지하고, 상호작용을 유지하며, 다시 렌더링되지 않습니다. 레이아웃은 또한 [중첩](#nesting-layouts)될 수 있습니다.
+
+레이아웃은 `layout.js` 파일에서 React 컴포넌트를 기본 내보내기로 정의하여 생성할 수 있습니다. 이 컴포넌트는 렌더링 중 자식 레이아웃(존재하는 경우) 또는 페이지로 채워질 `children` prop을 받아야 합니다.
+
+예를 들어, 이 레이아웃은 `/dashboard`와 `/dashboard/settings` 페이지와 공유됩니다:
+
+<Image
+  alt="layout.js 특수 파일"
+  srcLight="/docs/light/layout-special-file.png"
+  srcDark="/docs/dark/layout-special-file.png"
+  width="1600"
+  height="606"
+/>
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+export default function DashboardLayout({
+  children, // 페이지 또는 중첩 레이아웃이 될 것임
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      {/* 여기에는 헤더나 사이드바와 같은 공유 UI를 포함하세요 */}
+      <nav></nav>
+
+      {children}
+    </section>
+  );
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+export default function DashboardLayout({
+  children, // 페이지 또는 중첩 레이아웃이 될 것임
+}) {
+  return (
+    <section>
+      {/* 여기에는 헤더나 사이드바와 같은 공유 UI를 포함하세요 */}
+      <nav></nav>
+
+      {children}
+    </section>
+  );
+}
+```
+
+### 루트 레이아웃 (필수)
+
+루트 레이아웃은 `app` 디렉토리의 최상위 레벨에서 정의되며 모든 경로에 적용됩니다. 이 레이아웃은 **필수**이며, 서버에서 반환되는 초기 HTML을 수정할 수 있도록 `html` 및 `body` 태그를 포함해야 합니다.
+
+```tsx filename="app/layout.tsx" switcher
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {/* 레이아웃 UI */}
+        <main>{children}</main>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {/* 레이아웃 UI */}
+        <main>{children}</main>
+      </body>
+    </html>
+  );
+}
+```
+
+### 레이아웃 중첩
+
+기본적으로 폴더 계층 구조의 레이아웃은 **중첩**됩니다. 이는 `children` prop을 통해 자식 레이아웃을 래핑함을 의미합니다. 특정 경로 세그먼트(폴더) 안에 `layout.js`를 추가하여 레이아웃을 중첩할 수 있습니다.
+
+예를 들어, `/dashboard` 경로에 대한 레이아웃을 만들려면 `dashboard` 폴더 안에 새 `layout.js` 파일을 추가하세요:
+
+<Image
+  alt="중첩된 레이아웃"
+  srcLight="/docs/light/nested-layout.png"
+  srcDark="/docs/dark/nested-layout.png"
+  width="1600"
+  height="606"
+/>
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <section>{children}</section>;
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+export default function DashboardLayout({ children }) {
+  return <section>{children}</section>;
+}
+```
+
+위의 두 레이아웃을 결합하면, 루트 레이아웃(`app/layout.js`)은 대시보드 레이아웃(`app/dashboard/layout.js`)을 래핑하며, 이는 `app/dashboard/*` 내의 경로 세그먼트를 래핑합니다.
+
+두 레이아웃은 다음과 같이 중첩됩니다:
+
+<Image
+  alt="중첩된 레이아웃"
+  srcLight="/docs/light/nested-layouts-ui.png"
+  srcDark="/docs/dark/nested-layouts-ui.png"
+  width="1600"
+  height="1026"
+/>
+
+> **알아두면 좋은 점**:
+>
+> - 레이아웃에는 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
+> - 루트 레이아웃만 `<html>` 및 `<body>` 태그를 포함할 수 있습니다.
+> - 동일한 폴더에 `layout.js`와 `page.js` 파일이 정의되어 있으면 레이아웃이 페이지를 래핑합니다.
+> - 레이아웃은 기본적으로 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)지만, [클라이언트 컴포넌트](/docs/app/building-your-application/rendering/client-components)로 설정할 수 있습니다.
+> - 레이아웃은 데이터를 가져올 수 있습니다. 자세한 내용은 [데이터 가져오기](/docs/app/building-your-application/data-fetching) 섹션을 참조하세요.
+> - 부모 레이아웃과 자식 간에 데이터를 전달하는 것은 불가능합니다. 그러나 경로에서 동일한 데이터를 여러 번 가져올 수 있으며, React는 성능에 영향을 주지 않고 [요청을 자동으로 중복 제거](/docs/app/building-your-application/caching#request-memoization)합니다.
+> - 레이아웃은 `pathname`에 접근할 수 없습니다([자세히 알아보기](/docs/app/api-reference/file-conventions/layout)). 하지만, 임포트된 클라이언트 컴포넌트는 [`usePathname`](/docs/app/api-reference/functions/use-pathname) 훅을 사용하여 pathname에 접근할 수 있습니다.
+> - 레이아웃은 자신보다 아래에 있는 경로 세그먼트에 접근할 수 없습니다. 모든 경로 세그먼트에 접근하려면 클라이언트 컴포넌트에서 [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) 또는 [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments) 훅을 사용할 수 있습니다.
+> - [경로 그룹](/docs/app/building-your-application/routing/route-groups)을 사용하여 특정 경로 세그먼트를 공유 레이아웃에서 선택적으로 포함하거나 제외할 수 있습니다.
+> - [경로 그룹](/docs/app/building-your-application/routing/route-groups)을 사용하여 여러 개의 루트 레이아웃을 만들 수 있습니다. [여기에서 예시를 확인하세요](/docs/app/building-your-application/routing/route-groups#creating-multiple-root-layouts).
+> - **`pages` 디렉토리에서 마이그레이션:** 루트 레이아웃은 [`_app.js`](/docs/pages/building-your-application/routing/custom-app) 및 [`_document.js`](/docs/pages/building-your-application/routing/custom-document) 파일을 대체합니다. [마이그레이션 가이드 보기](/docs/app/building-your-application/upgrading/app-router-migration#migrating-_documentjs-and-_appjs).
+
+## 템플릿
+
+템플릿은 자식 레이아웃 또는 페이지를 래핑한다는 점에서 레이아웃과 유사합니다. 경로 간에 지속되고 상태를 유지하는 레이아웃과 달리, 템플릿은 탐색 시 자식의 새 인스턴스를 생성합니다. 이는 사용자가 템플릿을 공유하는 경로 간에 탐색할 때마다 자식의 새 인스턴스가 마운트되고, DOM 요소가 재생성되며, 클라이언트 컴포넌트의 상태가 **유지되지 않**고, 이펙트가 다시 동기화됨을 의미합니다.
+
+이러한 특정 동작이 필요한 경우 템플릿이 레이아웃보다 더 적합한 옵션일 수 있습니다. 예를 들어:
+
+- 탐색 시 `useEffect`를 다시 동기화하려는 경우.
+- 탐색 시 자식 클라이언트 컴포넌트의 상태를 재설정하려는 경우.
+
+템플릿은 `template.js` 파일에서 기본 React 컴포넌트를 내보내기로 정의할 수 있습니다. 이 컴포넌트는 `children` prop을 받아야 합니다.
+
+<Image
+  alt="template.js 특수 파일"
+  srcLight="/docs/light/template-special-file.png"
+  srcDark="/docs/dark/template-special-file.png"
+  width="1600"
+  height="444"
+/>
+
+```tsx filename="app/template.tsx" switcher
+export default function Template({ children }: { children: React.ReactNode }) {
+  return <div>{children}</div>;
+}
+```
+
+```jsx filename="app/template.js" switcher
+export default function Template({ children }) {
+  return <div>{children}</div>;
+}
+```
+
+중첩 측면에서 `template.js`는 레이아웃과 자식 사이에 렌더링됩니다. 다음은 간략화된 출력입니다:
+
+```jsx filename="Output"
+<Layout>
+  {/* 템플릿은 고유한 키를 부여받습니다. */}
+  <Template key={routeParam}>{children}</Template>
+</Layout>
+```
+
+## 예시
+
+### 메타데이터
+
+`title` 및 `meta`와 같은 `<head>` HTML 요소를 [메타데이터 API](/docs/app/building-your-application/optimizing/metadata)를 사용하여 수정할 수 있습니다.
+
+메타데이터는 [`metadata` 객체](/docs/app/api-reference/functions/generate-metadata#the-metadata-object) 또는 [`generateMetadata` 함수](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 [`layout.js`](/docs/app/api-reference/file-conventions/layout) 또는 [`page.js`](/docs/app/api-reference/file-conventions/page) 파일에서 내보내기 하여 정의할 수 있습니다.
+
+```tsx filename="app/page.tsx" switcher
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Next.js",
+};
+
+export default function Page() {
+  return "...";
+}
+```
+
+```jsx filename="app/page.js" switcher
+export const metadata = {
+  title: "Next.js",
+};
+
+export default function Page() {
+  return "...";
+}
+```
+
+> **알아두면 좋은 점**: 루트 레이아웃에 `<title>` 및 `<meta>`와 같은 `<head>` 태그를 수동으로 추가하지 **말아야** 합니다. 대신 [메타데이터 API](/docs/app/api-reference/functions/generate-metadata)를 사용하여 스트리밍 및 `<head>` 요소 중복 제거와 같은 고급 요구 사항을 자동으로 처리하세요.
+
+사용 가능한 메타데이터 옵션에 대해 더 알아보려면 [API 참조](/docs/app/api-reference/functions/generate-metadata)를 확인하세요.
+
+### 활성 탐색 링크
+
+[usePathname()](/docs/app/api-reference/functions/use-pathname) 훅을 사용하여 탐색 링크가 활성 상태인지 확인할 수 있습니다.
+
+`usePathname()`은 클라이언트 훅이기 때문에 탐색 링크를 클라이언트 컴포넌트로 추출한 다음 레이아웃 또는 템플릿에 임포트해야 합니다:
+
+```tsx filename="app/ui/nav-links.tsx" switcher
+"use client";
+
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+export function NavLinks() {
+  const pathname = usePathname();
+
+  return (
+    <nav>
+      <Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+        Home
+      </Link>
+
+      <Link
+        className={`link ${pathname === "/about" ? "active" : ""}`}
+        href="/about"
+      >
+        About
+      </Link>
+    </nav>
+  );
+}
+```
+
+```jsx filename="app/ui/nav-links.js" switcher
+"use client";
+
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+export function Links() {
+  const pathname = usePathname();
+
+  return (
+    <nav>
+      <Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+        Home
+      </Link>
+
+      <Link
+        className={`link ${pathname === "/about" ? "active" : ""}`}
+        href="/about"
+      >
+        About
+      </Link>
+    </nav>
+  );
+}
+```
+
+```tsx filename="app/layout.tsx" switcher
+import { NavLinks } from "@/app/ui/nav-links";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <NavLinks />
+        <main>{children}</main>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { NavLinks } from "@/app/ui/nav-links";
+
+export default function Layout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <NavLinks />
+        <main>{children}</main>
+      </body>
+    </html>
+  );
+}
+```
