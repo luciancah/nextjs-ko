@@ -1,13 +1,15 @@
 ---
 title: Turbopack
-description: Turbopack is an incremental bundler optimized for JavaScript and TypeScript, written in Rust, and built into Next.js.
+description: Turbopack은 JavaScript와 TypeScript에 최적화된 점진적 번들러로, Rust로 작성되었으며 Next.js에 내장되어 있습니다.
 ---
 
-[Turbopack](https://turbo.build/pack) (beta) is an incremental bundler optimized for JavaScript and TypeScript, written in Rust, and built into Next.js.
+# Turbopack
 
-## Usage
+[Turbopack](https://turbo.build/pack) (베타)는 JavaScript와 TypeScript에 최적화된 점진적 번들러로, Rust로 작성되었으며 Next.js에 내장되어 있습니다.
 
-Turbopack can be used in Next.js in both the `pages` and `app` directories for faster local development. To enable Turbopack, use the `--turbo` flag when running the Next.js development server.
+## 사용법
+
+Turbopack은 Next.js의 `pages` 및 `app` 디렉토리에서 더 빠른 로컬 개발을 위해 사용할 수 있습니다. Next.js 개발 서버를 실행할 때 `--turbo` 플래그를 사용하여 Turbopack을 활성화하세요.
 
 ```json filename="package.json" highlight={3}
 {
@@ -20,49 +22,49 @@ Turbopack can be used in Next.js in both the `pages` and `app` directories for f
 }
 ```
 
-## Supported features
+## 지원되는 기능
 
-Turbopack in Next.js requires zero-configuration for most users and can be extended for more advanced use cases. To learn more about the currently supported features for Turbopack, view the [API Reference](/docs/app/api-reference/next-config-js/turbo).
+Next.js의 Turbopack은 대부분의 사용자에게 별도의 구성 없이 사용할 수 있으며, 더 고급 사용 사례를 위해 확장할 수 있습니다. 현재 Turbopack에서 지원되는 기능에 대해 자세히 알아보려면 [API 레퍼런스](/docs/app/api-reference/next-config-js/turbo)를 참조하세요.
 
-## Unsupported features
+## 지원되지 않는 기능
 
-Turbopack currently only supports `next dev` and does not support `next build`. We are currently working on support for builds as we move closer towards stability.
+현재 Turbopack은 `next dev`만 지원하며 `next build`는 지원하지 않습니다. 안정성 향상을 위해 빌드 지원 작업을 진행 중입니다.
 
-These features are currently not supported:
+현재 지원되지 않는 기능은 다음과 같습니다:
 
-- [`webpack()`](/docs/app/api-reference/next-config-js/webpack) configuration in `next.config.js`
-  - Turbopack replaces Webpack, this means that webpack configuration is not supported.
-  - To configure Turbopack, [see the documentation](/docs/app/api-reference/next-config-js/turbo).
-  - A subset of [Webpack loaders](/docs/app/api-reference/next-config-js/turbo#webpack-loaders) are supported in Turbopack.
+- `next.config.js`의 [`webpack()`](/docs/app/api-reference/next-config-js/webpack) 구성
+  - Turbopack은 Webpack을 대체하므로 Webpack 구성은 지원되지 않습니다.
+  - Turbopack을 구성하려면 [문서](/docs/app/api-reference/next-config-js/turbo)를 참조하세요.
+  - Turbopack에서는 [Webpack 로더](/docs/app/api-reference/next-config-js/turbo#webpack-loaders)의 하위 집합을 지원합니다.
 - Babel (`.babelrc`)
-  - Turbopack leverages the [SWC](/docs/architecture/nextjs-compiler#why-swc) compiler for all transpilation and optimizations. This means that Babel is not included by default.
-  - If you have a `.babelrc` file, you might no longer need it because Next.js includes common Babel plugins as SWC transforms that can be enabled. You can read more about this in the [compiler documentation](docs/architecture/nextjs-compiler#supported-features).
-  - If you still need to use Babel after verifying your particular use case is not covered, you can leverage Turbopack's [support for custom webpack loaders](/docs/app/api-reference/next-config-js/turbo#webpack-loaders) to include `babel-loader`.
-- Creating a root layout automatically in App Router.
-  - This behavior is currently not supported since it changes input files, instead, an error will be shown for you manually add a root layout in the desired location.
-- `@next/font` (legacy font support).
-  - `@next/font` is deprecated in favor of `next/font`. [`next/font`](/docs/app/building-your-application/optimizing/fonts) is fully supported with Turbopack.
+  - Turbopack은 모든 변환 및 최적화를 위해 [SWC](/docs/architecture/nextjs-compiler#why-swc) 컴파일러를 사용합니다. 따라서 Babel은 기본적으로 포함되지 않습니다.
+  - `.babelrc` 파일이 있는 경우, Next.js에 포함된 일반적인 Babel 플러그인이 SWC 변환으로 제공되므로 더 이상 필요하지 않을 수 있습니다. 자세한 내용은 [컴파일러 문서](docs/architecture/nextjs-compiler#supported-features)를 참조하세요.
+  - 특정 사용 사례가 포함되지 않은 경우 Babel을 계속 사용해야 한다면, Turbopack의 [사용자 정의 Webpack 로더 지원](/docs/app/api-reference/next-config-js/turbo#webpack-loaders)을 활용하여 `babel-loader`를 포함할 수 있습니다.
+- App Router에서 루트 레이아웃 자동 생성.
+  - 이 동작은 입력 파일을 변경하기 때문에 현재 지원되지 않으며, 대신 원하는 위치에 수동으로 루트 레이아웃을 추가하라는 오류가 표시됩니다.
+- `@next/font` (레거시 폰트 지원).
+  - `@next/font`는 `next/font`로 대체되었습니다. [`next/font`](/docs/app/building-your-application/optimizing/fonts)는 Turbopack에서 완전히 지원됩니다.
 - `new Worker('file', import.meta.url)`.
-  - We are planning to implement this in the future.
-- [Relay transforms](/docs/architecture/nextjs-compiler#relay)
-  - We are planning to implement this in the future.
-- [`experimental.typedRoutes](https://nextjs.org/docs/app/api-reference/next-config-js/typedRoutes)
-  - We are planning to implement this in the future.
+  - 이 기능은 향후 구현할 예정입니다.
+- [Relay 변환](/docs/architecture/nextjs-compiler#relay)
+  - 이 기능은 향후 구현할 예정입니다.
+- [`experimental.typedRoutes`](https://nextjs.org/docs/app/api-reference/next-config-js/typedRoutes)
+  - 이 기능은 향후 구현할 예정입니다.
 - `experimental.nextScriptWorkers`
-  - We are planning to implement this in the future.
+  - 이 기능은 향후 구현할 예정입니다.
 - `experimental.sri.algorithm`
-  - We are planning to implement this in the future.
+  - 이 기능은 향후 구현할 예정입니다.
 - `experimental.esmExternals`
-  - We are currently not planning to support the legacy esmExternals configuration in Next.js with Turbopack.
+  - 현재 Turbopack과 함께 Next.js에서 레거시 esmExternals 구성을 지원할 계획이 없습니다.
 - [AMP](/docs/pages/building-your-application/configuring/amp).
-  - We are currently not planning to support AMP in Next.js with Turbopack.
+  - 현재 Turbopack과 함께 Next.js에서 AMP를 지원할 계획이 없습니다.
 - Yarn PnP
-  - We are currently not planning to support Yarn PnP in Next.js with Turbopack.
+  - 현재 Turbopack과 함께 Next.js에서 Yarn PnP를 지원할 계획이 없습니다.
 - [`experimental.urlImports`](/docs/app/api-reference/next-config-js/urlImports)
-  - We are currently not planning to support `experimental.urlImports` in Next.js with Turbopack.
+  - 현재 Turbopack과 함께 Next.js에서 `experimental.urlImports`를 지원할 계획이 없습니다.
 
-## Generating Trace Files
+## 트레이스 파일 생성
 
-Trace files allow the Next.js team to investigate and improve performance metrics and memory usage. To generate a trace file, append `NEXT_TURBOPACK_TRACING=1` to the `next dev --turbo` command, this will generate a `.next/trace.log` file.
+트레이스 파일은 Next.js 팀이 성능 메트릭 및 메모리 사용량을 조사하고 개선하는 데 도움이 됩니다. 트레이스 파일을 생성하려면 `next dev --turbo` 명령에 `NEXT_TURBOPACK_TRACING=1`을 추가하면 `.next/trace.log` 파일이 생성됩니다.
 
-When reporting issues related to Turbopack performance and memory usage, please include the trace file in your [GitHub](https://github.com/vercel/next.js) issue.
+Turbopack의 성능 및 메모리 사용과 관련된 문제를 보고할 때, [GitHub](https://github.com/vercel/next.js) 이슈에 트레이스 파일을 포함시켜 주세요.
