@@ -1,0 +1,14 @@
+{
+  "stylesheets": {
+    "title": "Stylesheets"
+  },
+  "tailwind-css": {
+    "title": "Tailwind CSS"
+  },
+  "sass": {
+    "title": "Sass"
+  },
+  "css-in-js": {
+    "title": "CSS-in-JS"
+  }
+}

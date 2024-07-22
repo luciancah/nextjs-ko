@@ -1,0 +1,368 @@
+---
+title: Stylesheets
+nav_title: Stylesheets
+description: Style your Next.js Application with CSS Modules, Global Styles, and external stylesheets.
+---
+
+{/* 이 문서의 내용은 app과 pages 라우터 간에 공유됩니다. Pages Router에 특정한 내용을 추가하려면 `<PagesOnly>Content</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 모든 공유 내용은 컴포넌트로 감싸지 않아야 합니다. */}
+
+# Stylesheets
+
+<PagesOnly>
+
+<details open>
+  <summary>Examples</summary>
+
+- [Basic CSS Example](https://github.com/vercel/next.js/tree/canary/examples/basic-css)
+
+</details>
+
+</PagesOnly>
+
+Next.js는 다양한 유형의 스타일시트를 지원합니다:
+
+- [CSS Modules](#css-modules)
+- [Global Styles](#global-styles)
+- [External Stylesheets](#external-stylesheets)
+
+## CSS Modules
+
+Next.js는 `.module.css` 확장자를 사용하여 CSS Modules를 기본적으로 지원합니다.
+
+CSS Modules는 자동으로 고유한 클래스 이름을 생성하여 CSS를 로컬 스코프로 지정합니다. 이를 통해 다른 파일에서 동일한 클래스 이름을 충돌 없이 사용할 수 있습니다. 이러한 동작은 CSS Modules를 컴포넌트 수준의 CSS를 포함시키는 이상적인 방법으로 만듭니다.
+
+### Example
+
+<AppOnly>
+CSS Modules는 `app` 디렉토리 내의 모든 파일에 임포트할 수 있습니다:
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+import styles from "./styles.module.css";
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <section className={styles.dashboard}>{children}</section>;
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+import styles from "./styles.module.css";
+
+export default function DashboardLayout({ children }) {
+  return <section className={styles.dashboard}>{children}</section>;
+}
+```
+
+```css filename="app/dashboard/styles.module.css"
+.dashboard {
+  padding: 24px;
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+예를 들어, `components/` 폴더에 재사용 가능한 `Button` 컴포넌트가 있다고 가정합니다:
+
+먼저, 다음 내용을 가진 `components/Button.module.css` 파일을 만듭니다:
+
+```css filename="Button.module.css"
+/*
+.error {}가 다른 `.css` 또는 `.module.css` 파일과 충돌하지 않도록 걱정할 필요가 없습니다!
+*/
+.error {
+  color: white;
+  background-color: red;
+}
+```
+
+그런 다음, 위 CSS 파일을 임포트하고 사용하는 `components/Button.js`를 만듭니다:
+
+```jsx filename="components/Button.js"
+import styles from "./Button.module.css";
+
+export function Button() {
+  return (
+    <button
+      type="button"
+      // "error" 클래스가 임포트된 `styles` 객체의 속성으로 접근되는 것을 확인하세요.
+      className={styles.error}
+    >
+      Destroy
+    </button>
+  );
+}
+```
+
+</PagesOnly>
+
+CSS Modules는 **`.module.css` 및 `.module.sass` 확장자**가 있는 파일에 대해서만 활성화됩니다.
+
+프로덕션에서는 모든 CSS Module 파일이 자동으로 병합되어 **다양한 미니파이된 코드 분할된** `.css` 파일로 결합됩니다.
+이 `.css` 파일은 애플리케이션의 중요한 실행 경로를 나타내어 애플리케이션을 렌더링하는 데 필요한 최소한의 CSS만 로드되도록 합니다.
+
+## Global Styles
+
+<AppOnly>
+글로벌 스타일은 `app` 디렉토리 내의 모든 레이아웃, 페이지 또는 컴포넌트에 임포트할 수 있습니다.
+
+> **알아두면 좋은 점**:
+>
+> - 이것은 `pages` 디렉토리와 다르며, `pages` 디렉토리에서는 글로벌 스타일을 `_app.js` 파일 내에서만 임포트할 수 있습니다.
+> - Next.js는 실제로 글로벌인 스타일, 즉 모든 페이지에 적용될 수 있고 애플리케이션의 수명 동안 유지될 수 있는 스타일이 아니면 글로벌 스타일의 사용을 지원하지 않습니다. 이는 Next.js가 React의 내장 스타일 시트 지원을 사용하여 Suspense와 통합하기 때문입니다. 이 내장 지원은 현재 경로 간 탐색 시 스타일 시트를 제거하지 않습니다. 따라서 글로벌 스타일보다 CSS Modules를 사용하는 것이 좋습니다.
+
+예를 들어, `app/global.css`라는 스타일 시트를 고려해보세요:
+
+```css filename="app/global.css"
+body {
+  padding: 20px 20px 60px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+```
+
+루트 레이아웃 (`app/layout.js`) 내에서 `global.css` 스타일 시트를 임포트하여 애플리케이션의 모든 경로에 스타일을 적용합니다:
+
+```tsx filename="app/layout.tsx" switcher
+// 이 스타일은 애플리케이션의 모든 경로에 적용됩니다.
+import "./global.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+// 이 스타일은 애플리케이션의 모든 경로에 적용됩니다.
+import "./global.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+애플리케이션에 스타일 시트를 추가하려면 `pages/_app.js` 내에서 CSS 파일을 임포트합니다.
+
+예를 들어, `styles.css`라는 스타일 시트를 고려해보세요:
+
+```css filename="styles.css"
+body {
+  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
+  padding: 20px 20px 60px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+```
+
+[`pages/_app.js` 파일](/docs/pages/building-your-application/routing/custom-app)이 아직 없다면 만드세요.
+그런 다음, `styles.css` 파일을 [`import`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/import)하세요.
+
+```jsx filename="pages/_app.js"
+import "../styles.css";
+
+// 이 기본 내보내기는 새로운 `pages/_app.js` 파일에 필요합니다.
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+
+이 스타일(`styles.css`)은 애플리케이션의 모든 페이지 및 컴포넌트에 적용됩니다.
+글로벌 스타일 시트의 특성 때문에, 충돌을 방지하기 위해 **오직 [`pages/_app.js`](/docs/pages/building-your-application/routing/custom-app) 내에서만 임포트해야 합니다**.
+
+개발 환경에서는 스타일 시트를 이렇게 표현하면 스타일이 편집될 때마다 핫 리로드되므로 애플리케이션 상태를 유지할 수 있습니다.
+
+프로덕션에서는 모든 CSS 파일이 자동으로 하나의 미니파이된 `.css` 파일로 병합됩니다. CSS가 병합되는 순서는 `_app.js` 파일에 CSS가 임포트되는 순서를 따릅니다. 자체 CSS를 포함하는 JS 모듈을 임포트할 때도 동일한 순서 규칙이 적용됩니다. 예를 들어:
+
+```jsx
+import "../styles.css";
+// ErrorBoundary의 CSS는 styles.css의 글로벌 CSS에 의존하므로, styles.css 다음에 임포트합니다.
+import ErrorBoundary from "../components/ErrorBoundary";
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <ErrorBoundary>
+      <Component {...pageProps} />
+    </ErrorBoundary>
+  );
+}
+```
+
+</PagesOnly>
+
+## External Stylesheets
+
+<AppOnly>
+
+외부 패키지에서 발행된 스타일 시트는 `app` 디렉토리의 어느 곳에서나, 위치한 컴포넌트에 임포트할 수 있습니다:
+
+```tsx filename="app/layout.tsx" switcher
+import "bootstrap/dist/css/bootstrap.css";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body className="container">{children}</body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import "bootstrap/dist/css/bootstrap.css";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className="container">{children}</body>
+    </html>
+  );
+}
+```
+
+> **알아두면 좋은 점**: 외부 스타일 시트는 npm 패키지에서 직접 임포트하거나 다운로드하여 코드베이스와 함께 위치해야 합니다. `<link rel="stylesheet" />`를 사용할 수 없습니다.
+
+</AppOnly>
+
+<PagesOnly>
+
+Next.js는 JavaScript 파일에서 CSS 파일을 임포트할 수 있습니다.
+이는 Next.js가 [`import`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/import)의 개념을 JavaScript 이상으로 확장했기 때문에 가능합니다.
+
+### `node_modules`에서 스타일 임포트
+
+Next.js **9.5.4** 버전부터 애플리케이션 어디에서나 `node_modules`에서 CSS 파일을 임포트할 수 있습니다
+
+.
+
+글로벌 스타일 시트의 경우, `pages/_app.js` 파일 내에서 파일을 임포트해야 합니다.
+예를 들어:
+
+```jsx filename="pages/_app.js"
+import "bootstrap/dist/css/bootstrap.css";
+
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+
+서드 파티 컴포넌트에 필요한 CSS를 임포트하려면 컴포넌트 내에서 할 수 있습니다. 예를 들어:
+
+```jsx filename="components/example-dialog.js"
+import { useState } from "react";
+import { Dialog } from "@reach/dialog";
+import VisuallyHidden from "@reach/visually-hidden";
+import "@reach/dialog/styles.css";
+
+function ExampleDialog(props) {
+  const [showDialog, setShowDialog] = useState(false);
+  const open = () => setShowDialog(true);
+  const close = () => setShowDialog(false);
+
+  return (
+    <div>
+      <button onClick={open}>Open Dialog</button>
+      <Dialog isOpen={showDialog} onDismiss={close}>
+        <button className="close-button" onClick={close}>
+          <VisuallyHidden>Close</VisuallyHidden>
+          <span aria-hidden>×</span>
+        </button>
+        <p>Hello there. I am a dialog</p>
+      </Dialog>
+    </div>
+  );
+}
+```
+
+</PagesOnly>
+
+<AppOnly>
+
+## Ordering and Merging
+
+Next.js는 프로덕션 빌드 시 CSS를 자동으로 청크(병합)하여 최적화합니다. CSS 순서는 _애플리케이션 코드에 스타일 시트를 임포트하는 순서에 의해 결정됩니다_.
+
+예를 들어, `<BaseButton>`이 `<Page>`에서 먼저 임포트되었기 때문에 `base-button.module.css`는 `page.module.css`보다 먼저 순서가 매겨집니다:
+
+```tsx filename="base-button.tsx" switcher
+import styles from "./base-button.module.css";
+
+export function BaseButton() {
+  return <button className={styles.primary} />;
+}
+```
+
+```jsx filename="base-button.js" switcher
+import styles from "./base-button.module.css";
+
+export function BaseButton() {
+  return <button className={styles.primary} />;
+}
+```
+
+```tsx filename="page.ts" switcher
+import { BaseButton } from "./base-button";
+import styles from "./page.module.css";
+
+export function Page() {
+  return <BaseButton className={styles.primary} />;
+}
+```
+
+```jsx filename="page.js" switcher
+import { BaseButton } from "./base-button";
+import styles from "./page.module.css";
+
+export function Page() {
+  return <BaseButton className={styles.primary} />;
+}
+```
+
+예측 가능한 순서를 유지하려면 다음을 권장합니다:
+
+- 단일 JS/TS 파일에서만 CSS 파일을 임포트합니다.
+  - 글로벌 클래스 이름을 사용하는 경우, 동일한 파일에서 임포트하여 적용하고자 하는 순서대로 글로벌 스타일을 임포트합니다.
+- 글로벌 스타일보다 CSS Modules를 선호합니다.
+  - CSS 모듈에 일관된 명명 규칙을 사용합니다. 예를 들어, `<name>.module.css`를 `<name>.tsx`보다 선호합니다.
+- 공유 스타일을 별도의 공유 컴포넌트로 추출합니다.
+- [Tailwind](/docs/app/building-your-application/styling/tailwind-css)를 사용하는 경우, 파일 상단에 스타일 시트를 임포트합니다. 가능한 [Root Layout](/docs/app/building-your-application/routing/layouts-and-templates#root-layout-required)에서 임포트합니다.
+- 임포트를 자동으로 정렬하는 린터/포매터(예: ESLint의 [`sort-import`](https://eslint.org/docs/latest/rules/sort-imports))를 비활성화합니다. 이는 CSS 임포트 순서가 _중요하기_ 때문에 의도치 않게 CSS에 영향을 줄 수 있습니다.
+
+> **알아두면 좋은 점**:
+>
+> - 개발 모드에서 CSS 순서는 다르게 작동할 수 있으므로, 최종 CSS 순서를 확인하려면 빌드(`next build`)를 확인하세요.
+> - `next.config.js`에서 [`cssChunking`](/docs/app/api-reference/next-config-js/cssChunking) 옵션을 사용하여 CSS 청킹 방식을 제어할 수 있습니다.
+
+</AppOnly>
+
+## Additional Features
+
+Next.js는 스타일 추가 경험을 개선하기 위해 추가 기능을 포함합니다:
+
+- 로컬에서 `next dev`를 실행할 때, 로컬 스타일 시트(글로벌 또는 CSS 모듈)는 [Fast Refresh](/docs/architecture/fast-refresh)를 활용하여 편집이 저장될 때 즉시 변경 사항을 반영합니다.
+- `next build`를 사용하여 프로덕션을 빌드할 때, CSS 파일은 더 적은 수의 미니파이된 `.css` 파일로 번들링되어 스타일을 검색하는 데 필요한 네트워크 요청 수를 줄입니다.
+- JavaScript를 비활성화하면, 프로덕션 빌드(`next start`)에서는 스타일이 여전히 로드됩니다. 그러나 `next dev`에서는 [Fast Refresh](/docs/architecture/fast-refresh)를 활성화하기 위해 여전히 JavaScript가 필요합니다.
