@@ -1,0 +1,142 @@
+---
+title: Optimizing Package Bundling
+nav_title: Package Bundling
+description: Learn how to optimize your application's server and client bundles.
+related:
+  description: Learn more about optimizing your application for production.
+  links:
+    - app/building-your-application/deploying/production-checklist
+---
+
+import Image from "next/image";
+
+# Optimizing Package Bundling
+
+외부 패키지 번들링은 애플리케이션의 성능을 크게 향상시킬 수 있습니다. <AppOnly>기본적으로 Server Components 및 Route Handlers 내부에서 가져온 패키지는 Next.js에 의해 자동으로 번들링됩니다. 이 페이지에서는 패키지 번들링을 분석하고 추가로 최적화하는 방법을 안내합니다.</AppOnly> <PagesOnly>기본적으로 애플리케이션에 가져온 패키지는 번들링되지 않습니다. 이는 외부 패키지가 사전 번들링되지 않은 경우(예: 모노레포 또는 `node_modules`에서 가져온 경우) 성능에 영향을 미치거나 작동하지 않을 수 있습니다. 이 페이지에서는 패키지 번들링을 분석하고 구성하는 방법을 안내합니다.</PagesOnly>
+
+## Analyzing JavaScript bundles
+
+[`@next/bundle-analyzer`](https://www.npmjs.com/package/@next/bundle-analyzer)는 애플리케이션 번들의 크기를 관리하는 데 도움이 되는 Next.js용 플러그인입니다. 각 패키지와 그 종속성의 크기에 대한 시각적 보고서를 생성합니다. 이를 통해 큰 종속성을 제거하거나 코드를 분할하거나 [lazy-load](/docs/app/building-your-application/optimizing/lazy-loading)할 수 있습니다.
+
+### Installation
+
+다음 명령을 실행하여 플러그인을 설치하세요:
+
+```bash
+npm i @next/bundle-analyzer
+# 또는
+yarn add @next/bundle-analyzer
+# 또는
+pnpm add @next/bundle-analyzer
+```
+
+그런 다음, 번들 분석기의 설정을 `next.config.js`에 추가합니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
+module.exports = withBundleAnalyzer(nextConfig);
+```
+
+### Generating a report
+
+다음 명령을 실행하여 번들을 분석하세요:
+
+```bash
+ANALYZE=true npm run build
+# 또는
+ANALYZE=true yarn build
+# 또는
+ANALYZE=true pnpm build
+```
+
+보고서는 브라우저에서 새 탭 세 개를 열어 확인할 수 있습니다. 주기적으로 애플리케이션 번들을 평가하면 시간이 지남에 따라 애플리케이션 성능을 유지하는 데 도움이 됩니다.
+
+## Optimizing package imports
+
+아이콘 라이브러리와 같은 일부 패키지는 수백 개의 모듈을 내보낼 수 있으며, 이는 개발 및 프로덕션에서 성능 문제를 일으킬 수 있습니다.
+
+이러한 패키지의 가져오는 방식을 최적화하려면 `next.config.js`에 [`optimizePackageImports`](/docs/app/api-reference/next-config-js/optimizePackageImports) 옵션을 추가하세요. 이 옵션은 실제로 사용하는 모듈만 로드하면서도 많은 명명된 내보내기와 함께 가져오기 구문을 편리하게 작성할 수 있도록 합니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    optimizePackageImports: ["icon-library"],
+  },
+};
+
+module.exports = nextConfig;
+```
+
+Next.js는 일부 라이브러리를 자동으로 최적화하므로 `optimizePackageImports` 목록에 포함할 필요가 없습니다. 전체 목록은 [여기](https://nextjs.org/docs/app/api-reference/next-config-js/optimizePackageImports)에서 확인할 수 있습니다.
+
+<PagesOnly>
+
+## Bundling specific packages
+
+특정 패키지를 번들링하려면 `next.config.js`에서 [`transpilePackages`](/docs/app/api-reference/next-config-js/transpilePackages) 옵션을 사용할 수 있습니다. 이 옵션은 모노레포에서 가져온 경우 또는 `node_modules`에서 가져온 외부 패키지를 번들링하는 데 유용합니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  transpilePackages: ["package-name"],
+};
+
+module.exports = nextConfig;
+```
+
+## Bundling all packages
+
+모든 패키지를 자동으로 번들링하려면(App Router의 기본 동작), `next.config.js`에서 [`bundlePagesRouterDependencies`](/docs/pages/api-reference/next-config-js/bundlePagesRouterDependencies) 옵션을 사용할 수 있습니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  bundlePagesRouterDependencies: true,
+};
+
+module.exports = nextConfig;
+```
+
+## Opting specific packages out of bundling
+
+[`bundlePagesRouterDependencies`](/docs/pages/api-reference/next-config-js/bundlePagesRouterDependencies) 옵션을 활성화한 경우, `next.config.js`에서 [`serverExternalPackages`](/docs/pages/api-reference/next-config-js/serverExternalPackages) 옵션을 사용하여 특정 패키지를 자동 번들링에서 제외할 수 있습니다:
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Pages Router에서 외부 패키지를 자동으로 번들링:
+  bundlePagesRouterDependencies: true,
+  // App 및 Pages Router에서 특정 패키지를 번들링에서 제외:
+  serverExternalPackages: ["package-name"],
+};
+
+module.exports = nextConfig;
+```
+
+</PagesOnly>
+
+<AppOnly>
+
+## Opting specific packages out of bundling
+
+Server Components 및 Route Handlers 내부에서 가져온 패키지는 Next.js에 의해 자동으로 번들링되므로, `next.config.js`에서 [`serverExternalPackages`](/docs/app/api-reference/next-config-js/serverExternalPackages) 옵션을 사용하여 특정 패키지를 번들링에서 제외할 수 있습니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  serverExternalPackages: ["package-name"],
+};
+
+module.exports = nextConfig;
+```
+
+Next.js에는 현재 호환성을 위해 작업 중인 인기 패키지 목록이 포함되어 있으며, 자동으로 제외됩니다. 전체 목록은 [여기](/docs/app/api-reference/next-config-js/serverExternalPackages)에서 확인할 수 있습니다.
+
+</AppOnly>
