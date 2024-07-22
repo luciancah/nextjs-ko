@@ -1,0 +1,92 @@
+---
+title: Partial Prerendering (experimental)
+description: Learn how to combine the benefits of static and dynamic rendering with Partial Prerendering.
+---
+
+import Image from "next/image";
+
+# Partial Prerendering (experimental)
+
+> Partial Prerendering은 **실험적** 기능이며 변경될 수 있습니다.
+
+Partial Prerendering (PPR)은 동일한 경로에서 정적 렌더링과 동적 렌더링의 이점을 결합하는 렌더링 전략입니다. PPR을 사용하면, [Suspense](https://react.dev/reference/react/Suspense) 경계 안에 [동적](/docs/app/building-your-application/rendering/server-components#dynamic-rendering) 컴포넌트를 감쌀 수 있습니다. 새로운 요청이 들어오면 Next.js는 캐시에서 즉시 정적 HTML 셸을 제공한 다음, 동적 부분을 동일한 HTTP 요청에서 렌더링하고 [스트리밍](/docs/app/building-your-application/rendering/server-components#streaming)합니다.
+
+<Image
+  alt="정적 내비게이션 및 제품 정보와 동적 장바구니 및 추천 제품을 보여주는 부분적으로 사전 렌더링된 제품 페이지"
+  srcLight="/learn/light/thinking-in-ppr.png"
+  srcDark="/learn/dark/thinking-in-ppr.png"
+  width="1600"
+  height="632"
+/>
+
+> **🎥 시청:** PPR의 이유와 작동 방식 → [YouTube (10분)](https://www.youtube.com/watch?v=MTcPrTIBkpA).
+
+## Incremental Adoption (Version 15)
+
+Next.js 15에서는 `next.config.js` 파일에서 [`ppr`](/docs/app/api-reference/next-config-js/ppr) 옵션을 `incremental`로 설정하고 파일 상단에 `experimental_ppr` [라우트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config)을 내보내어 [레이아웃](/docs/app/building-your-application/routing/layouts-and-templates) 및 [페이지](/docs/app/building-your-application/routing/pages)에서 점진적으로 Partial Prerendering을 도입할 수 있습니다:
+
+```js filename="next.config.js"
+const nextConfig = {
+  experimental: {
+    ppr: "incremental",
+  },
+};
+
+module.exports = nextConfig;
+```
+
+```tsx filename="app/page.tsx" switcher
+import { Suspense } from "react";
+import { StaticComponent, DynamicComponent, Fallback } from "@/app/ui";
+
+export const experimental_ppr = true;
+
+export default function Page() {
+  return (
+    <>
+      <StaticComponent />
+      <Suspense fallback={<Fallback />}>
+        <DynamicComponent />
+      </Suspense>
+    </>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+import { Suspense } from "react";
+import { StaticComponent, DynamicComponent, Fallback } from "@/app/ui";
+
+export const experimental_ppr = true;
+
+export default function Page() {
+  return (
+    <>
+      <StaticComponent />
+      <Suspense fallback={<Fallback />}>
+        <DynamicComponent />
+      </Suspense>
+    </>
+  );
+}
+```
+
+> **알아두면 좋은 정보**:
+>
+> - `experimental_ppr`이 없는 라우트는 기본적으로 `false`로 설정되며 PPR을 사용하여 사전 렌더링되지 않습니다. 각 라우트에 대해 명시적으로 PPR을 선택해야 합니다.
+> - `experimental_ppr`은 중첩된 레이아웃과 페이지를 포함한 라우트 세그먼트의 모든 자식에게 적용됩니다. 모든 파일에 추가할 필요는 없으며, 라우트의 최상위 세그먼트에만 추가하면 됩니다.
+> - 자식 세그먼트에 대해 PPR을 비활성화하려면 자식 세그먼트에서 `experimental_ppr`을 `false`로 설정할 수 있습니다.
+
+## Enabling PPR (Version 14)
+
+버전 14에서는 `next.config.js` 파일에 [`ppr`](/docs/app/api-reference/next-config-js/ppr) 옵션을 추가하여 PPR을 활성화할 수 있습니다. 이는 애플리케이션의 모든 라우트에 적용됩니다:
+
+```js filename="next.config.js"
+const nextConfig = {
+  experimental: {
+    ppr: true,
+  },
+};
+
+module.exports = nextConfig;
+```

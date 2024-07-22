@@ -1,0 +1,17 @@
+{
+  "partial-prerendering": {
+    "title": "Partial Prerendering"
+  },
+  "server-components": {
+    "title": "Server Components"
+  },
+  "client-components": {
+    "title": "Client Components"
+  },
+  "composition-patterns": {
+    "title": "Composition Patterns"
+  },
+  "edge-and-nodejs-runtimes": {
+    "title": "Edge and Node.js Runtimes"
+  }
+}
