@@ -3,45 +3,47 @@ title: Internationalization
 description: Add support for multiple languages with internationalized routing and localized content.
 ---
 
-Next.js enables you to configure the routing and rendering of content to support multiple languages. Making your site adaptive to different locales includes translated content (localization) and internationalized routes.
+# Internationalization
+
+Next.js는 여러 언어를 지원하도록 콘텐츠의 라우팅 및 렌더링을 구성할 수 있습니다. 사이트를 다양한 로케일에 적응시키려면 번역된 콘텐츠(지역화)와 국제화된 라우트를 포함해야 합니다.
 
 ## Terminology
 
-- **Locale:** An identifier for a set of language and formatting preferences. This usually includes the preferred language of the user and possibly their geographic region.
-  - `en-US`: English as spoken in the United States
-  - `nl-NL`: Dutch as spoken in the Netherlands
-  - `nl`: Dutch, no specific region
+- **Locale:** 언어 및 형식 설정을 위한 식별자입니다. 일반적으로 사용자의 선호 언어와 가능하면 지리적 지역을 포함합니다.
+  - `en-US`: 미국에서 사용되는 영어
+  - `nl-NL`: 네덜란드에서 사용되는 네덜란드어
+  - `nl`: 특정 지역이 없는 네덜란드어
 
 ## Routing Overview
 
-It’s recommended to use the user’s language preferences in the browser to select which locale to use. Changing your preferred language will modify the incoming `Accept-Language` header to your application.
+사용자의 브라우저 언어 설정을 사용하여 사용할 로케일을 선택하는 것이 좋습니다. 선호 언어를 변경하면 애플리케이션으로 들어오는 `Accept-Language` 헤더가 변경됩니다.
 
-For example, using the following libraries, you can look at an incoming `Request` to determine which locale to select, based on the `Headers`, locales you plan to support, and the default locale.
+예를 들어, 다음 라이브러리를 사용하여 들어오는 `Request`를 살펴보고 지원할 로케일과 기본 로케일에 따라 선택할 로케일을 결정할 수 있습니다.
 
 ```js filename="middleware.js"
-import { match } from '@formatjs/intl-localematcher'
-import Negotiator from 'negotiator'
+import { match } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
 
-let headers = { 'accept-language': 'en-US,en;q=0.5' }
-let languages = new Negotiator({ headers }).languages()
-let locales = ['en-US', 'nl-NL', 'nl']
-let defaultLocale = 'en-US'
+let headers = { "accept-language": "en-US,en;q=0.5" };
+let languages = new Negotiator({ headers }).languages();
+let locales = ["en-US", "nl-NL", "nl"];
+let defaultLocale = "en-US";
 
-match(languages, locales, defaultLocale) // -> 'en-US'
+match(languages, locales, defaultLocale); // -> 'en-US'
 ```
 
-Routing can be internationalized by either the sub-path (`/fr/products`) or domain (`my-site.fr/products`). With this information, you can now redirect the user based on the locale inside [Middleware](/docs/app/building-your-application/routing/middleware).
+라우팅은 서브 경로(`/fr/products`) 또는 도메인(`my-site.fr/products`)으로 국제화할 수 있습니다. 이 정보를 사용하여 [Middleware](/docs/app/building-your-application/routing/middleware) 내에서 로케일에 따라 사용자를 리디렉션할 수 있습니다.
 
 ```js filename="middleware.js"
 import { NextResponse } from "next/server";
 
 let locales = ['en-US', 'nl-NL', 'nl']
 
-// Get the preferred locale, similar to the above or using a library
+// 위와 유사하게 또는 라이브러리를 사용하여 선호하는 로케일을 가져옵니다.
 function getLocale(request) { ... }
 
 export function middleware(request) {
-  // Check if there is any supported locale in the pathname
+  // 경로명에 지원되는 로케일이 있는지 확인합니다.
   const { pathname } = request.nextUrl
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -49,41 +51,41 @@ export function middleware(request) {
 
   if (pathnameHasLocale) return
 
-  // Redirect if there is no locale
+  // 로케일이 없으면 리디렉션합니다.
   const locale = getLocale(request)
   request.nextUrl.pathname = `/${locale}${pathname}`
-  // e.g. incoming request is /products
-  // The new URL is now /en-US/products
+  // 예: 들어오는 요청이 /products인 경우
+  // 새 URL은 이제 /en-US/products입니다.
   return NextResponse.redirect(request.nextUrl)
 }
 
 export const config = {
   matcher: [
-    // Skip all internal paths (_next)
+    // 모든 내부 경로 (_next)를 건너뜁니다.
     '/((?!_next).*)',
-    // Optional: only run on root (/) URL
+    // 선택 사항: 루트 (/) URL에서만 실행
     // '/'
   ],
 }
 ```
 
-Finally, ensure all special files inside `app/` are nested under `app/[lang]`. This enables the Next.js router to dynamically handle different locales in the route, and forward the `lang` parameter to every layout and page. For example:
+마지막으로, `app/` 내의 모든 특수 파일이 `app/[lang]` 아래에 중첩되도록 합니다. 이렇게 하면 Next.js 라우터가 경로에서 다른 로케일을 동적으로 처리하고 `lang` 매개변수를 모든 레이아웃 및 페이지에 전달할 수 있습니다. 예를 들어:
 
 ```jsx filename="app/[lang]/page.js"
-// You now have access to the current locale
-// e.g. /en-US/products -> `lang` is "en-US"
+// 이제 현재 로케일에 접근할 수 있습니다.
+// 예: /en-US/products -> `lang`은 "en-US"입니다.
 export default async function Page({ params: { lang } }) {
   return ...
 }
 ```
 
-The root layout can also be nested in the new folder (e.g. `app/[lang]/layout.js`).
+루트 레이아웃도 새 폴더에 중첩될 수 있습니다(예: `app/[lang]/layout.js`).
 
 ## Localization
 
-Changing displayed content based on the user’s preferred locale, or localization, is not something specific to Next.js. The patterns described below would work the same with any web application.
+사용자의 선호 로케일에 따라 표시되는 콘텐츠를 변경하는 것은 Next.js에만 국한된 것이 아닙니다. 아래에 설명된 패턴은 모든 웹 애플리케이션에서 동일하게 작동합니다.
 
-Let’s assume we want to support both English and Dutch content inside our application. We might maintain two different “dictionaries”, which are objects that give us a mapping from some key to a localized string. For example:
+애플리케이션 내에서 영어와 네덜란드어 콘텐츠를 모두 지원하려고 한다고 가정해 보겠습니다. 우리는 어떤 키를 로컬라이즈된 문자열로 매핑해주는 두 개의 다른 "사전"을 유지할 수 있습니다. 예를 들어:
 
 ```json filename="dictionaries/en.json"
 {
@@ -101,39 +103,39 @@ Let’s assume we want to support both English and Dutch content inside our appl
 }
 ```
 
-We can then create a `getDictionary` function to load the translations for the requested locale:
+그런 다음 요청된 로케일에 대한 번역을 로드하는 `getDictionary` 함수를 만들 수 있습니다:
 
 ```jsx filename="app/[lang]/dictionaries.js"
-import 'server-only'
+import "server-only";
 
 const dictionaries = {
-  en: () => import('./dictionaries/en.json').then((module) => module.default),
-  nl: () => import('./dictionaries/nl.json').then((module) => module.default),
-}
+  en: () => import("./dictionaries/en.json").then((module) => module.default),
+  nl: () => import("./dictionaries/nl.json").then((module) => module.default),
+};
 
-export const getDictionary = async (locale) => dictionaries[locale]()
+export const getDictionary = async (locale) => dictionaries[locale]();
 ```
 
-Given the currently selected language, we can fetch the dictionary inside of a layout or page.
+현재 선택된 언어를 고려하여 레이아웃이나 페이지 내에서 사전을 가져올 수 있습니다.
 
 ```jsx filename="app/[lang]/page.js"
-import { getDictionary } from './dictionaries'
+import { getDictionary } from "./dictionaries";
 
 export default async function Page({ params: { lang } }) {
-  const dict = await getDictionary(lang) // en
-  return <button>{dict.products.cart}</button> // Add to Cart
+  const dict = await getDictionary(lang); // en
+  return <button>{dict.products.cart}</button>; // Add to Cart
 }
 ```
 
-Because all layouts and pages in the `app/` directory default to [Server Components](/docs/app/building-your-application/rendering/server-components), we do not need to worry about the size of the translation files affecting our client-side JavaScript bundle size. This code will **only run on the server**, and only the resulting HTML will be sent to the browser.
+`app/` 디렉토리의 모든 레이아웃 및 페이지는 기본적으로 [Server Components](/docs/app/building-your-application/rendering/server-components)이기 때문에, 번역 파일의 크기가 클라이언트 측 자바스크립트 번들 크기에 영향을 미치는 것을 걱정할 필요가 없습니다. 이 코드는 **서버에서만 실행**되며, 결과 HTML만 브라우저로 전송됩니다.
 
 ## Static Generation
 
-To generate static routes for a given set of locales, we can use `generateStaticParams` with any page or layout. This can be global, for example, in the root layout:
+주어진 로케일 세트에 대한 정적 경로를 생성하려면 `generateStaticParams`를 사용하여 페이지나 레이아웃을 설정할 수 있습니다. 이는 전역적으로 설정할 수 있으며, 예를 들어 루트 레이아웃에서 사용할 수 있습니다:
 
 ```jsx filename="app/[lang]/layout.js"
 export async function generateStaticParams() {
-  return [{ lang: 'en-US' }, { lang: 'de' }]
+  return [{ lang: "en-US" }, { lang: "de" }];
 }
 
 export default function Root({ children, params }) {
@@ -141,7 +143,7 @@ export default function Root({ children, params }) {
     <html lang={params.lang}>
       <body>{children}</body>
     </html>
-  )
+  );
 }
 ```
 

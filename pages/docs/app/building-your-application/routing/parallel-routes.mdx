@@ -6,9 +6,13 @@ related:
     - app/api-reference/file-conventions/default
 ---
 
-Parallel Routes allows you to simultaneously or conditionally render one or more pages within the same layout. They are useful for highly dynamic sections of an app, such as dashboards and feeds on social sites.
+import Image from "next/image";
 
-For example, considering a dashboard, you can use parallel routes to simultaneously render the `team` and `analytics` pages:
+# Parallel Routes
+
+Parallel Routes를 사용하면 동일한 레이아웃 내에서 하나 이상의 페이지를 동시에 또는 조건부로 렌더링할 수 있습니다. 이는 소셜 사이트의 대시보드 및 피드와 같은 매우 동적인 앱 섹션에 유용합니다.
+
+예를 들어, 대시보드를 고려할 때, Parallel Routes를 사용하여 `team` 및 `analytics` 페이지를 동시에 렌더링할 수 있습니다:
 
 <Image
   alt="Parallel Routes Diagram"
@@ -20,7 +24,7 @@ For example, considering a dashboard, you can use parallel routes to simultaneou
 
 ## Slots
 
-Parallel routes are created using named **slots**. Slots are defined with the `@folder` convention. For example, the following file structure defines two slots: `@analytics` and `@team`:
+Parallel Routes는 **slots**라는 이름으로 생성됩니다. Slots는 `@folder` 규칙으로 정의됩니다. 예를 들어, 다음 파일 구조는 두 개의 slots인 `@analytics`와 `@team`을 정의합니다:
 
 <Image
   alt="Parallel Routes File-system Structure"
@@ -30,7 +34,7 @@ Parallel routes are created using named **slots**. Slots are defined with the `@
   height="687"
 />
 
-Slots are passed as props to the shared parent layout. For the example above, the component in `app/layout.js` now accepts the `@analytics` and `@team` slots props, and can render them in parallel alongside the `children` prop:
+Slots는 공유된 부모 레이아웃에 props로 전달됩니다. 위의 예에서는 `app/layout.js`의 컴포넌트가 이제 `@analytics` 및 `@team` slots props를 받아들이고, `children` prop과 함께 병렬로 렌더링할 수 있습니다:
 
 ```tsx filename="app/layout.tsx" switcher
 export default function Layout({
@@ -38,9 +42,9 @@ export default function Layout({
   team,
   analytics,
 }: {
-  children: React.ReactNode
-  analytics: React.ReactNode
-  team: React.ReactNode
+  children: React.ReactNode;
+  analytics: React.ReactNode;
+  team: React.ReactNode;
 }) {
   return (
     <>
@@ -48,7 +52,7 @@ export default function Layout({
       {team}
       {analytics}
     </>
-  )
+  );
 }
 ```
 
@@ -60,32 +64,32 @@ export default function Layout({ children, team, analytics }) {
       {team}
       {analytics}
     </>
-  )
+  );
 }
 ```
 
-However, slots are **not** [route segments](/docs/app/building-your-application/routing#route-segments) and do not affect the URL structure. For example, for `/@analytics/views`, the URL will be `/views` since `@analytics` is a slot.
+하지만, slots는 [route segments](/docs/app/building-your-application/routing#route-segments)가 아니며 URL 구조에 영향을 미치지 않습니다. 예를 들어, `/@analytics/views`의 경우 URL은 `@analytics`가 slot이므로 `/views`가 됩니다.
 
-> **Good to know**:
+> **알아두면 좋은 점**:
 >
-> - The `children` prop is an implicit slot that does not need to be mapped to a folder. This means `app/page.js` is equivalent to `app/@children/page.js`.
+> - `children` prop은 폴더에 매핑될 필요가 없는 암묵적 slot입니다. 이는 `app/page.js`가 `app/@children/page.js`와 동일함을 의미합니다.
 
 ## Active state and navigation
 
-By default, Next.js keeps track of the active _state_ (or subpage) for each slot. However, the content rendered within a slot will depend on the type of navigation:
+기본적으로 Next.js는 각 slot에 대한 활성 _state_ (또는 하위 페이지)를 추적합니다. 그러나 slot 내에서 렌더링되는 콘텐츠는 탐색 유형에 따라 달라집니다:
 
-- [**Soft Navigation**](/docs/app/building-your-application/routing/linking-and-navigating#5-soft-navigation): During client-side navigation, Next.js will perform a [partial render](/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering), changing the subpage within the slot, while maintaining the other slot's active subpages, even if they don't match the current URL.
-- **Hard Navigation**: After a full-page load (browser refresh), Next.js cannot determine the active state for the slots that don't match the current URL. Instead, it will render a [`default.js`](#defaultjs) file for the unmatched slots, or `404` if `default.js` doesn't exist.
+- [**Soft Navigation**](/docs/app/building-your-application/routing/linking-and-navigating#5-soft-navigation): 클라이언트 측 탐색 중에 Next.js는 [부분 렌더링](/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering)을 수행하여 현재 URL과 일치하지 않더라도 다른 slot의 활성 하위 페이지를 유지하면서 slot 내의 하위 페이지를 변경합니다.
+- **Hard Navigation**: 전체 페이지 로드(브라우저 새로 고침) 후 Next.js는 현재 URL과 일치하지 않는 slots의 활성 상태를 결정할 수 없습니다. 대신, 일치하지 않는 slots에 대해 [`default.js`](#defaultjs) 파일을 렌더링하거나, `default.js`가 없으면 `404`를 렌더링합니다.
 
-> **Good to know**:
+> **알아두면 좋은 점**:
 >
-> - The `404` for unmatched routes helps ensure that you don't accidentally render a parallel route on a page that it was not intended for.
+> - 일치하지 않는 경로에 대한 `404`는 의도하지 않은 페이지에 Parallel Route가 렌더링되지 않도록 보장합니다.
 
 ### `default.js`
 
-You can define a `default.js` file to render as a fallback for unmatched slots during the initial load or full-page reload.
+초기 로드 또는 전체 페이지 새로 고침 시 일치하지 않는 slots에 대한 대체 렌더링을 위해 `default.js` 파일을 정의할 수 있습니다.
 
-Consider the following folder structure. The `@team` slot has a `/settings` page, but `@analytics` does not.
+다음 폴더 구조를 고려하세요. `@team` slot에는 `/settings` 페이지가 있지만, `@analytics`에는 없습니다.
 
 <Image
   alt="Parallel Routes unmatched routes"
@@ -95,45 +99,45 @@ Consider the following folder structure. The `@team` slot has a `/settings` page
   height="930"
 />
 
-When navigating to `/settings`, the `@team` slot will render the `/settings` page while maintaining the currently active page for the `@analytics` slot.
+`/settings`로 이동할 때, `@team` slot은 `/settings` 페이지를 렌더링하면서 `@analytics` slot의 현재 활성 페이지를 유지합니다.
 
-On refresh, Next.js will render a `default.js` for `@analytics`. If `default.js` doesn't exist, a `404` is rendered instead.
+새로 고침 시, Next.js는 `@analytics`에 대해 `default.js`를 렌더링합니다. `default.js`가 없으면 대신 `404`가 렌더링됩니다.
 
-Additionally, since `children` is an implicit slot, you also need to create a `default.js` file to render a fallback for `children` when Next.js cannot recover the active state of the parent page.
+추가로, `children`은 암묵적 slot이므로 Next.js가 부모 페이지의 활성 상태를 복구할 수 없을 때 `children`에 대한 대체 렌더링을 위해 `default.js` 파일을 생성해야 합니다.
 
 ### `useSelectedLayoutSegment(s)`
 
-Both [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) and [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments) accept a `parallelRoutesKey` parameter, which allows you to read the active route segment within a slot.
+[`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) 및 [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)는 `parallelRoutesKey` 매개변수를 받아 slot 내의 활성 라우트 세그먼트를 읽을 수 있게 합니다.
 
 ```tsx filename="app/layout.tsx" switcher
-'use client'
+"use client";
 
-import { useSelectedLayoutSegment } from 'next/navigation'
+import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function Layout({ auth }: { auth: React.ReactNode }) {
-  const loginSegment = useSelectedLayoutSegment('auth')
+  const loginSegment = useSelectedLayoutSegment("auth");
   // ...
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-'use client'
+"use client";
 
-import { useSelectedLayoutSegment } from 'next/navigation'
+import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function Layout({ auth }) {
-  const loginSegment = useSelectedLayoutSegment('auth')
+  const loginSegment = useSelectedLayoutSegment("auth");
   // ...
 }
 ```
 
-When a user navigates to `app/@auth/login` (or `/login` in the URL bar), `loginSegment` will be equal to the string `"login"`.
+사용자가 `app/@auth/login` (또는 URL 바의 `/login`)으로 이동하면, `loginSegment`는 문자열 `"login"`과 동일합니다.
 
 ## Examples
 
 ### Conditional Routes
 
-You can use Parallel Routes to conditionally render routes based on certain conditions, such as user role. For example, to render a different dashboard page for the `/admin` or `/user` roles:
+Parallel Routes를 사용하여 사용자 역할과 같은 특정 조건에 따라 라우트를 조건부로 렌더링할 수 있습니다. 예를 들어, `/admin` 또는 `/user` 역할에 대해 다른 대시보드 페이지를 렌더링하려면:
 
 <Image
   alt="Conditional routes diagram"
@@ -144,34 +148,34 @@ You can use Parallel Routes to conditionally render routes based on certain cond
 />
 
 ```tsx filename="app/dashboard/layout.tsx" switcher
-import { checkUserRole } from '@/lib/auth'
+import { checkUserRole } from "@/lib/auth";
 
 export default function Layout({
   user,
   admin,
 }: {
-  user: React.ReactNode
-  admin: React.ReactNode
+  user: React.ReactNode;
+  admin: React.ReactNode;
 }) {
-  const role = checkUserRole()
-  return <>{role === 'admin' ? admin : user}</>
+  const role = checkUserRole();
+  return <>{role === "admin" ? admin : user}</>;
 }
 ```
 
 ```jsx filename="app/dashboard/layout.js" switcher
-import { checkUserRole } from '@/lib/auth'
+import { checkUserRole } from "@/lib/auth";
 
 export default function Layout({ user, admin }) {
-  const role = checkUserRole()
-  return <>{role === 'admin' ? admin : user}</>
+  const role = checkUserRole();
+  return <>{role === "admin" ? admin : user}</>;
 }
 ```
 
 ### Tab Groups
 
-You can add a `layout` inside a slot to allow users to navigate the slot independently. This is useful for creating tabs.
+사용자가 slot을 독립적으로 탐색할 수 있도록 slots 내에 `layout`을 추가할 수 있습니다. 이는 탭을 만드는 데 유용합니다.
 
-For example, the `@analytics` slot has two subpages: `/page-views` and `/visitors`.
+예를 들어, `@analytics` slot에는 두 개의 하위 페이지 `/page-views`와 `/visitors`가 있습니다.
 
 <Image
   alt="Analytics slot with two subpages and a layout"
@@ -181,10 +185,10 @@ For example, the `@analytics` slot has two subpages: `/page-views` and `/visitor
   height="768"
 />
 
-Within `@analytics`, create a [`layout`](/docs/app/building-your-application/routing/layouts-and-templates) file to share the tabs between the two pages:
+`@analytics` 내에 [`layout`](/docs/app/building-your-application/routing/layouts-and-templates) 파일을 생성하여 두 페이지 간에 탭을 공유하게 합니다:
 
 ```tsx filename="app/@analytics/layout.tsx" switcher
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -195,14 +199,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </nav>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/@analytics/layout.js" switcher
-import Link from 'next/link'
+import Link from "next/link";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }) {
   return (
     <>
       <nav>
@@ -211,20 +215,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </nav>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
 ### Modals
 
-Parallel Routes can be used together with [Intercepting Routes](/docs/app/building-your-application/routing/intercepting-routes) to create modals that support deep linking. This allows you to solve common challenges when building modals, such as:
+Parallel Routes는 [Intercepting Routes](/docs/app/building-your-application/routing/intercepting-routes)와 함께 사용하여 딥 링크를 지원하는 모달을 생성할 수 있습니다. 이를 통해 모달을 구축할 때 일반적으로 발생하는 문제를 해결할 수 있습니다:
 
-- Making the modal content **shareable through a URL**.
-- **Preserving context** when the page is refreshed, instead of closing the modal.
-- **Closing the modal on backwards navigation** rather than going to the previous route.
-- **Reopening the modal on forwards navigation**.
+- 모달 콘텐츠를 **URL을 통해 공유 가능**하게 만들기.
+- 페이지를 새로 고침할 때 **컨텍스트를 유지**하여 모달을 닫
 
-Consider the following UI pattern, where a user can open a login modal from a layout using client-side navigation, or access a separate `/login` page:
+지 않기.
+
+- 이전 탐색 시 **모달 닫기**.
+- 앞으로 탐색 시 **모달 다시 열기**.
+
+사용자가 클라이언트 측 탐색을 사용하여 레이아웃에서 로그인 모달을 열거나 별도의 `/login` 페이지에 접근할 수 있는 다음 UI 패턴을 고려해보세요:
 
 <Image
   alt="Parallel Routes Diagram"
@@ -234,7 +241,7 @@ Consider the following UI pattern, where a user can open a login modal from a la
   height="687"
 />
 
-To implement this pattern, start by creating a `/login` route that renders your **main** login page.
+이 패턴을 구현하려면, 먼저 **주요** 로그인 페이지를 렌더링하는 `/login` 라우트를 생성합니다.
 
 <Image
   alt="Parallel Routes Diagram"
@@ -245,83 +252,83 @@ To implement this pattern, start by creating a `/login` route that renders your 
 />
 
 ```tsx filename="app/login/page.tsx" switcher
-import { Login } from '@/app/ui/login'
+import { Login } from "@/app/ui/login";
 
 export default function Page() {
-  return <Login />
+  return <Login />;
 }
 ```
 
 ```jsx filename="app/login/page.js" switcher
-import { Login } from '@/app/ui/login'
+import { Login } from "@/app/ui/login";
 
 export default function Page() {
-  return <Login />
+  return <Login />;
 }
 ```
 
-Then, inside the `@auth` slot, add [`default.js`](/docs/app/api-reference/file-conventions/default) file that returns `null`. This ensures that the modal is not rendered when it's not active.
+그런 다음, `@auth` slot 내에 [`default.js`](/docs/app/api-reference/file-conventions/default) 파일을 추가하여 모달이 활성 상태가 아닐 때 렌더링되지 않도록 합니다.
 
 ```tsx filename="app/@auth/default.tsx" switcher
 export default function Default() {
-  return '...'
+  return "...";
 }
 ```
 
 ```jsx filename="app/@auth/default.js" switcher
 export default function Default() {
-  return '...'
+  return "...";
 }
 ```
 
-Inside your `@auth` slot, intercept the `/login` route by updating the `/(.)login` folder. Import the `<Modal>` component and its children into the `/(.)login/page.tsx` file:
+`@auth` slot 내에서 `/(.)login` 폴더를 업데이트하여 `/login` 라우트를 가로챕니다. `/(.)login/page.tsx` 파일에 `<Modal>` 컴포넌트와 자식을 가져옵니다:
 
 ```tsx filename="app/@auth/(.)login/page.tsx" switcher
-import { Modal } from '@/app/ui/modal'
-import { Login } from '@/app/ui/login'
+import { Modal } from "@/app/ui/modal";
+import { Login } from "@/app/ui/login";
 
 export default function Page() {
   return (
     <Modal>
       <Login />
     </Modal>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/@auth/(.)login/page.js" switcher
-import { Modal } from '@/app/ui/modal'
-import { Login } from '@/app/ui/login'
+import { Modal } from "@/app/ui/modal";
+import { Login } from "@/app/ui/login";
 
 export default function Page() {
   return (
     <Modal>
       <Login />
     </Modal>
-  )
+  );
 }
 ```
 
-> **Good to know:**
+> **알아두면 좋은 점**:
 >
-> - The convention used to intercept the route, e.g. `(.)`, depends on your file-system structure. See [Intercepting Routes convention](/docs/app/building-your-application/routing/intercepting-routes#convention).
-> - By separating the `<Modal>` functionality from the modal content (`<Login>`), you can ensure any content inside the modal, e.g. [forms](/docs/app/building-your-application/data-fetching/server-actions-and-mutations#forms), are Server Components. See [Interleaving Client and Server Components](/docs/app/building-your-application/rendering/composition-patterns#supported-pattern-passing-server-components-to-client-components-as-props) for more information.
+> - 라우트를 가로채기 위해 사용하는 규칙, 예: `(.)`는 파일 시스템 구조에 따라 다릅니다. [Intercepting Routes convention](/docs/app/building-your-application/routing/intercepting-routes#convention)을 참조하세요.
+> - 모달 콘텐츠 (`<Login>`)에서 `<Modal>` 기능을 분리함으로써 모달 내의 모든 콘텐츠, 예: [forms](/docs/app/building-your-application/data-fetching/server-actions-and-mutations#forms),가 서버 컴포넌트가 되도록 할 수 있습니다. 자세한 내용은 [Interleaving Client and Server Components](/docs/app/building-your-application/rendering/composition-patterns#supported-pattern-passing-server-components-to-client-components-as-props)를 참조하세요.
 
-#### Opening the modal
+#### 모달 열기
 
-Now, you can leverage the Next.js router to open and close the modal. This ensures the URL is correctly updated when the modal is open, and when navigating backwards and forwards.
+이제 Next.js 라우터를 활용하여 모달을 열고 닫을 수 있습니다. 이를 통해 모달이 열릴 때와 이전 및 이후 탐색 시 URL이 올바르게 업데이트되도록 보장할 수 있습니다.
 
-To open the modal, pass the `@auth` slot as a prop to the parent layout and render it alongside the `children` prop.
+모달을 열려면, 부모 레이아웃에 `@auth` slot을 prop으로 전달하고 `children` prop과 함께 렌더링합니다.
 
 ```tsx filename="app/layout.tsx" switcher
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Layout({
   auth,
   children,
 }: {
-  auth: React.ReactNode
-  children: React.ReactNode
+  auth: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -331,12 +338,12 @@ export default function Layout({
       <div>{auth}</div>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function Layout({ auth, children }) {
   return (
@@ -347,66 +354,66 @@ export default function Layout({ auth, children }) {
       <div>{auth}</div>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
-When the user clicks the `<Link>`, the modal will open instead of navigating to the `/login` page. However, on refresh or initial load, navigating to `/login` will take the user to the main login page.
+사용자가 `<Link>`를 클릭하면 `/login` 페이지로 이동하는 대신 모달이 열립니다. 그러나 새로 고침 또는 초기 로드 시 `/login`으로 이동하면 주요 로그인 페이지로 이동합니다.
 
-#### Closing the modal
+#### 모달 닫기
 
-You can close the modal by calling `router.back()` or by using the `Link` component.
+모달을 닫으려면 `router.back()`을 호출하거나 `Link` 컴포넌트를 사용할 수 있습니다.
 
 ```tsx filename="app/ui/modal.tsx" switcher
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 export function Modal({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
       <button
         onClick={() => {
-          router.back()
+          router.back();
         }}
       >
         Close modal
       </button>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/ui/modal.js" switcher
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 export function Modal({ children }) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <>
       <button
         onClick={() => {
-          router.back()
+          router.back();
         }}
       >
         Close modal
       </button>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
-When using the `Link` component to navigate away from a page that shouldn't render the `@auth` slot anymore, we need to make sure the parallel route matches to a component that returns `null`. For example, when navigating back to the root page, we create a `@auth/page.tsx` component:
+`Link` 컴포넌트를 사용하여 더 이상 `@auth` slot을 렌더링하지 않아야 하는 페이지로 이동할 때는 평행 라우트가 `null`을 반환하는 컴포넌트와 일치하도록 해야 합니다. 예를 들어, 루트 페이지로 돌아갈 때 `@auth/page.tsx` 컴포넌트를 생성합니다:
 
 ```tsx filename="app/ui/modal.tsx" switcher
-import Link from 'next/link'
+import Link from "next/link";
 
 export function Modal({ children }: { children: React.ReactNode }) {
   return (
@@ -414,12 +421,12 @@ export function Modal({ children }: { children: React.ReactNode }) {
       <Link href="/">Close modal</Link>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
 ```jsx filename="app/ui/modal.js" switcher
-import Link from 'next/link'
+import Link from "next/link";
 
 export function Modal({ children }) {
   return (
@@ -427,45 +434,45 @@ export function Modal({ children }) {
       <Link href="/">Close modal</Link>
       <div>{children}</div>
     </>
-  )
+  );
 }
 ```
 
 ```tsx filename="app/@auth/page.tsx" switcher
 export default function Page() {
-  return '...'
+  return "...";
 }
 ```
 
 ```jsx filename="app/@auth/page.js" switcher
 export default function Page() {
-  return '...'
+  return "...";
 }
 ```
 
-Or if navigating to any other page (such as `/foo`, `/foo/bar`, etc), you can use a catch-all slot:
+또는 다른 페이지(예: `/foo`, `/foo/bar` 등)로 이동할 때 catch-all slot을 사용할 수 있습니다:
 
 ```tsx filename="app/@auth/[...catchAll]/page.tsx" switcher
 export default function CatchAll() {
-  return '...'
+  return "...";
 }
 ```
 
 ```jsx filename="app/@auth/[...catchAll]/page.js" switcher
 export default function CatchAll() {
-  return '...'
+  return "...";
 }
 ```
 
-> **Good to know:**
+> **알아두면 좋은 점**:
 >
-> - We use a catch-all route in our `@auth` slot to close the modal because of the behavior described in [Active state and navigation](#active-state-and-navigation). Since client-side navigations to a route that no longer match the slot will remain visible, we need to match the slot to a route that returns `null` to close the modal.
-> - Other examples could include opening a photo modal in a gallery while also having a dedicated `/photo/[id]` page, or opening a shopping cart in a side modal.
-> - [View an example](https://github.com/vercel-labs/nextgram) of modals with Intercepted and Parallel Routes.
+> - [Active state and navigation](#active-state-and-navigation)에서 설명한 동작으로 인해 slot과 더 이상 일치하지 않는 라우트로 클라이언트 측 탐색 시 slot이 계속 표시되므로 모달을 닫기 위해 slot이 `null`을 반환하는 라우트와 일치시켜야 합니다.
+> - 다른 예로는 전용 `/photo/[id]` 페이지가 있는 갤러리에서 사진 모달을 열거나, 사이드 모달에서 쇼핑 카트를 여는 것이 포함될 수 있습니다.
+> - Intercepted 및 Parallel Routes가 포함된 모달의 [예제 보기](https://github.com/vercel-labs/nextgram).
 
 ### Loading and Error UI
 
-Parallel Routes can be streamed independently, allowing you to define independent error and loading states for each route:
+Parallel Routes는 독립적으로 스트리밍될 수 있으므로 각 라우트에 대해 독립적인 오류 및 로딩 상태를 정의할 수 있습니다:
 
 <Image
   alt="Parallel routes enable custom error and loading states"
@@ -475,4 +482,4 @@ Parallel Routes can be streamed independently, allowing you to define independen
   height="1218"
 />
 
-See the [Loading UI](/docs/app/building-your-application/routing/loading-ui-and-streaming) and [Error Handling](/docs/app/building-your-application/routing/error-handling) documentation for more information.
+[Loading UI](/docs/app/building-your-application/routing/loading-ui-and-streaming) 및 [Error Handling](/docs/app/building-your-application/routing/error-handling) 문서를 참조하여 자세한 정보를 확인하세요.

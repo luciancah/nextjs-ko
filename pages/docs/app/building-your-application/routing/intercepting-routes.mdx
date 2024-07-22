@@ -8,9 +8,15 @@ related:
     - app/building-your-application/routing/parallel-routes
 ---
 
-Intercepting routes allows you to load a route from another part of your application within the current layout. This routing paradigm can be useful when you want to display the content of a route without the user switching to a different context.
+import Image from "next/image";
+import AppOnly from "components/apponly";
+import PagesOnly from "components/pagesonly";
 
-For example, when clicking on a photo in a feed, you can display the photo in a modal, overlaying the feed. In this case, Next.js intercepts the `/photo/123` route, masks the URL, and overlays it over `/feed`.
+# Intercepting Routes
+
+Intercepting routes를 사용하면 현재 레이아웃 내에서 애플리케이션의 다른 부분의 라우트를 로드할 수 있습니다. 이 라우팅 패러다임은 사용자가 다른 컨텍스트로 전환하지 않고도 라우트의 콘텐츠를 표시하려는 경우에 유용합니다.
+
+예를 들어, 피드에서 사진을 클릭할 때 사진을 피드 위에 모달로 오버레이하여 표시할 수 있습니다. 이 경우, Next.js는 `/photo/123` 라우트를 가로채고 URL을 마스킹하여 `/feed` 위에 오버레이합니다.
 
 <Image
   alt="Intercepting routes soft navigation"
@@ -20,7 +26,7 @@ For example, when clicking on a photo in a feed, you can display the photo in a 
   height="617"
 />
 
-However, when navigating to the photo by clicking a shareable URL or by refreshing the page, the entire photo page should render instead of the modal. No route interception should occur.
+하지만, 공유 가능한 URL을 클릭하거나 페이지를 새로 고침하여 사진으로 이동하는 경우에는 전체 사진 페이지가 모달 대신 렌더링되어야 합니다. 이때는 라우트 가로채기가 발생하지 않습니다.
 
 <Image
   alt="Intercepting routes hard navigation"
@@ -32,16 +38,16 @@ However, when navigating to the photo by clicking a shareable URL or by refreshi
 
 ## Convention
 
-Intercepting routes can be defined with the `(..)` convention, which is similar to relative path convention `../` but for segments.
+Intercepting routes는 `(..)` 규칙으로 정의할 수 있으며, 이는 세그먼트에 대해 상대 경로 규칙 `../`와 유사합니다.
 
-You can use:
+다음과 같은 방법으로 사용할 수 있습니다:
 
-- `(.)` to match segments on the **same level**
-- `(..)` to match segments **one level above**
-- `(..)(..)` to match segments **two levels above**
-- `(...)` to match segments from the **root** `app` directory
+- `(.)`는 **동일 레벨**의 세그먼트를 매칭합니다.
+- `(..)`는 **한 레벨 위**의 세그먼트를 매칭합니다.
+- `(..)(..)`는 **두 레벨 위**의 세그먼트를 매칭합니다.
+- `(...)`는 **루트** `app` 디렉토리의 세그먼트를 매칭합니다.
 
-For example, you can intercept the `photo` segment from within the `feed` segment by creating a `(..)photo` directory.
+예를 들어, `feed` 세그먼트 내에서 `photo` 세그먼트를 가로채려면 `(..)photo` 디렉토리를 생성할 수 있습니다.
 
 <Image
   alt="Intercepting routes folder structure"
@@ -51,20 +57,20 @@ For example, you can intercept the `photo` segment from within the `feed` segmen
   height="604"
 />
 
-> Note that the `(..)` convention is based on _route segments_, not the file-system.
+> `(..)` 규칙은 *라우트 세그먼트*를 기반으로 하며, 파일 시스템을 기반으로 하지 않는다는 점에 유의하세요.
 
 ## Examples
 
 ### Modals
 
-Intercepting Routes can be used together with [Parallel Routes](/docs/app/building-your-application/routing/parallel-routes) to create modals. This allows you to solve common challenges when building modals, such as:
+Intercepting Routes는 [Parallel Routes](/docs/app/building-your-application/routing/parallel-routes)와 함께 사용되어 모달을 생성할 수 있습니다. 이를 통해 모달을 구축할 때 일반적으로 발생하는 문제를 해결할 수 있습니다:
 
-- Making the modal content **shareable through a URL**.
-- **Preserving context** when the page is refreshed, instead of closing the modal.
-- **Closing the modal on backwards navigation** rather than going to the previous route.
-- **Reopening the modal on forwards navigation**.
+- 모달 콘텐츠를 **URL을 통해 공유 가능**하게 만들기.
+- 페이지를 새로 고침할 때 **컨텍스트를 유지**하여 모달을 닫지 않기.
+- 이전 탐색 시 **모달 닫기**.
+- 앞으로 탐색 시 **모달 다시 열기**.
 
-Consider the following UI pattern, where a user can open a photo modal from a gallery using client-side navigation, or navigate to the photo page directly from a shareable URL:
+사용자가 클라이언트 측 탐색을 사용하여 갤러리에서 사진 모달을 열거나 공유 가능한 URL에서 직접 사진 페이지로 이동할 수 있는 다음 UI 패턴을 고려해보세요:
 
 <Image
   alt="Intercepting routes modal example"
@@ -74,10 +80,10 @@ Consider the following UI pattern, where a user can open a photo modal from a ga
   height="976"
 />
 
-In the above example, the path to the `photo` segment can use the `(..)` matcher since `@modal` is a slot and **not** a segment. This means that the `photo` route is only one segment level higher, despite being two file-system levels higher.
+위 예제에서 `photo` 세그먼트로의 경로는 `(..)` 매처를 사용할 수 있습니다. `@modal`은 세그먼트가 **아니기** 때문입니다. 즉, 파일 시스템 상으로는 두 레벨 위에 있지만 라우트 세그먼트 상으로는 한 레벨 위에 있습니다.
 
-See the [Parallel Routes](/docs/app/building-your-application/routing/parallel-routes#modals) documentation for a step-by-step example, or see our [image gallery example](https://github.com/vercel-labs/nextgram).
+단계별 예제를 보려면 [Parallel Routes](/docs/app/building-your-application/routing/parallel-routes#modals) 문서를 참조하거나 [image gallery example](https://github.com/vercel-labs/nextgram)을 참조하세요.
 
-> **Good to know:**
+> **알아두면 좋은 점**:
 >
-> - Other examples could include opening a login modal in a top navbar while also having a dedicated `/login` page, or opening a shopping cart in a side modal.
+> - 다른 예로는 상단 내비게이션 바에서 로그인 모달을 열거나 전용 `/login` 페이지를 가지는 경우, 또는 사이드 모달에서 쇼핑 카트를 여는 경우가 포함될 수 있습니다.

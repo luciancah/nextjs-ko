@@ -8,7 +8,11 @@ related:
     - app/api-reference/file-conventions/route
 ---
 
-Route Handlers allow you to create custom request handlers for a given route using the Web [Request](https://developer.mozilla.org/docs/Web/API/Request) and [Response](https://developer.mozilla.org/docs/Web/API/Response) APIs.
+import Image from "next/image";
+
+Route Handlers를 사용하면 웹 [Request](https://developer.mozilla.org/docs/Web/API/Request)와 [Response](https://developer.mozilla.org/docs/Web/API/Response) API를 사용하여 특정 라우트에 대한 사용자 정의 요청 핸들러를 만들 수 있습니다.
+
+# Route Handlers
 
 <Image
   alt="Route.js Special File"
@@ -18,11 +22,11 @@ Route Handlers allow you to create custom request handlers for a given route usi
   height="444"
 />
 
-> **Good to know**: Route Handlers are only available inside the `app` directory. They are the equivalent of [API Routes](/docs/pages/building-your-application/routing/api-routes) inside the `pages` directory meaning you **do not** need to use API Routes and Route Handlers together.
+> **알아두면 좋은 점**: Route Handlers는 `app` 디렉토리 내에서만 사용할 수 있습니다. 이는 `pages` 디렉토리 내의 [API Routes](/docs/pages/building-your-application/routing/api-routes)와 동일한 기능을 하므로, API Routes와 Route Handlers를 함께 사용할 필요가 **없습니다**.
 
 ## Convention
 
-Route Handlers are defined in a [`route.js|ts` file](/docs/app/api-reference/file-conventions/route) inside the `app` directory:
+Route Handlers는 `app` 디렉토리 내의 [`route.js|ts` 파일](/docs/app/api-reference/file-conventions/route)로 정의됩니다:
 
 ```ts filename="app/api/route.ts" switcher
 export async function GET(request: Request) {}
@@ -32,64 +36,64 @@ export async function GET(request: Request) {}
 export async function GET(request) {}
 ```
 
-Route Handlers can be nested anywhere inside the `app` directory, similar to `page.js` and `layout.js`. But there **cannot** be a `route.js` file at the same route segment level as `page.js`.
+Route Handlers는 `page.js` 및 `layout.js`와 유사하게 `app` 디렉토리 내 어디에나 중첩될 수 있습니다. 하지만 `page.js`와 동일한 라우트 세그먼트 레벨에 `route.js` 파일이 **있을 수 없습니다**.
 
 ### Supported HTTP Methods
 
-The following [HTTP methods](https://developer.mozilla.org/docs/Web/HTTP/Methods) are supported: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, and `OPTIONS`. If an unsupported method is called, Next.js will return a `405 Method Not Allowed` response.
+다음 [HTTP 메서드](https://developer.mozilla.org/docs/Web/HTTP/Methods)를 지원합니다: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`. 지원되지 않는 메서드가 호출되면 Next.js는 `405 Method Not Allowed` 응답을 반환합니다.
 
 ### Extended `NextRequest` and `NextResponse` APIs
 
-In addition to supporting the native [Request](https://developer.mozilla.org/docs/Web/API/Request) and [Response](https://developer.mozilla.org/docs/Web/API/Response) APIs, Next.js extends them with [`NextRequest`](/docs/app/api-reference/functions/next-request) and [`NextResponse`](/docs/app/api-reference/functions/next-response) to provide convenient helpers for advanced use cases.
+Next.js는 기본 [Request](https://developer.mozilla.org/docs/Web/API/Request) 및 [Response](https://developer.mozilla.org/docs/Web/API/Response) API를 지원하는 것 외에도, [`NextRequest`](/docs/app/api-reference/functions/next-request)와 [`NextResponse`](/docs/app/api-reference/functions/next-response)를 확장하여 고급 사용 사례를 위한 편리한 헬퍼를 제공합니다.
 
 ## Behavior
 
 ### Caching
 
-Route Handlers are not cached by default. You can, however, opt into caching for `GET` methods. To do so, use a [route config option](/docs/app/api-reference/file-conventions/route-segment-config#dynamic) such as `export const dynamic = 'force-static'` in your Route Handler file.
+Route Handlers는 기본적으로 캐시되지 않습니다. 그러나 `GET` 메서드에 대해 캐시를 선택할 수 있습니다. 이를 위해 Route Handler 파일에 `export const dynamic = 'force-static'`과 같은 [route config option](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 사용합니다.
 
 ```ts filename="app/items/route.ts" switcher
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
 
 export async function GET() {
-  const res = await fetch('https://data.mongodb-api.com/...', {
+  const res = await fetch("https://data.mongodb-api.com/...", {
     headers: {
-      'Content-Type': 'application/json',
-      'API-Key': process.env.DATA_API_KEY,
+      "Content-Type": "application/json",
+      "API-Key": process.env.DATA_API_KEY,
     },
-  })
-  const data = await res.json()
+  });
+  const data = await res.json();
 
-  return Response.json({ data })
+  return Response.json({ data });
 }
 ```
 
 ```js filename="app/items/route.js" switcher
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
 
 export async function GET() {
-  const res = await fetch('https://data.mongodb-api.com/...', {
+  const res = await fetch("https://data.mongodb-api.com/...", {
     headers: {
-      'Content-Type': 'application/json',
-      'API-Key': process.env.DATA_API_KEY,
+      "Content-Type": "application/json",
+      "API-Key": process.env.DATA_API_KEY,
     },
-  })
-  const data = await res.json()
+  });
+  const data = await res.json();
 
-  return Response.json({ data })
+  return Response.json({ data });
 }
 ```
 
 ### Special Route Handlers
 
-Special Route Handlers like [`sitemap.ts`](/docs/app/api-reference/file-conventions/metadata/sitemap), [`opengraph-image.tsx`](/docs/app/api-reference/file-conventions/metadata/opengraph-image), and [`icon.tsx`](/docs/app/api-reference/file-conventions/metadata/app-icons), and other [metadata files](/docs/app/api-reference/file-conventions/metadata) remain static by default unless they use dynamic functions or dynamic config options.
+[`sitemap.ts`](/docs/app/api-reference/file-conventions/metadata/sitemap), [`opengraph-image.tsx`](/docs/app/api-reference/file-conventions/metadata/opengraph-image), [`icon.tsx`](/docs/app/api-reference/file-conventions/metadata/app-icons) 및 기타 [메타데이터 파일](/docs/app/api-reference/file-conventions/metadata)과 같은 특별한 Route Handlers는 동적 함수나 동적 구성 옵션을 사용하지 않는 한 기본적으로 정적입니다.
 
 ### Route Resolution
 
-You can consider a `route` the lowest level routing primitive.
+`route`는 가장 낮은 레벨의 라우팅 원시 형태로 간주할 수 있습니다.
 
-- They **do not** participate in layouts or client-side navigations like `page`.
-- There **cannot** be a `route.js` file at the same route as `page.js`.
+- `page`와 같은 레이아웃이나 클라이언트 측 탐색에 참여하지 **않습니다**.
+- `page.js`와 동일한 라우트에 `route.js` 파일이 **있을 수 없습니다**.
 
 | Page                 | Route              | Result                       |
 | -------------------- | ------------------ | ---------------------------- |
@@ -97,11 +101,11 @@ You can consider a `route` the lowest level routing primitive.
 | `app/page.js`        | `app/api/route.js` | <Check size={18} /> Valid    |
 | `app/[user]/page.js` | `app/api/route.js` | <Check size={18} /> Valid    |
 
-Each `route.js` or `page.js` file takes over all HTTP verbs for that route.
+각 `route.js` 또는 `page.js` 파일은 해당 라우트에 대한 모든 HTTP 메서드를 처리합니다.
 
 ```jsx filename="app/page.js"
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>
+  return <h1>Hello, Next.js!</h1>;
 }
 
 // ❌ Conflict
@@ -111,106 +115,108 @@ export async function POST(request) {}
 
 ## Examples
 
-The following examples show how to combine Route Handlers with other Next.js APIs and features.
+다음 예제는 Route Handlers를 다른 Next.js API 및 기능과 결합하는 방법을 보여줍니다.
 
 ### Revalidating Cached Data
 
-You can [revalidate cached data](/docs/app/building-your-application/data-fetching/caching-and-revalidating#revalidating-data) using the [`next.revalidate`](/docs/app/building-your-application/data-fetching/caching-and-revalidating#revalidating-data) option:
+[`next.revalidate`](/docs/app/building-your-application/data-fetching/caching-and-revalidating#revalidating-data) 옵션을 사용하여 [캐시된 데이터를 재검증](/docs/app/building-your-application/data-fetching/caching-and-revalidating#revalidating-data)할 수 있습니다:
 
 ```ts filename="app/items/route.ts" switcher
 export async function GET() {
-  const res = await fetch('https://data.mongodb-api.com/...', {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  })
-  const data = await res.json()
+  const res = await fetch("https://data.mongodb-api.com/...", {
+    next: { revalidate: 60 }, // 60초마다 재검증
+  });
+  const data = await res.json();
 
-  return Response.json(data)
+  return Response.json(data);
 }
 ```
 
 ```js filename="app/items/route.js" switcher
 export async function GET() {
-  const res = await fetch('https://data.mongodb-api.com/...', {
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
-  })
-  const data = await res.json()
+  const res = await fetch("https://data.mongodb-api.com/...", {
+    next: { revalidate: 60 }, // 60초마다 재검증
+  });
+  const data = await res.json();
 
-  return Response.json(data)
+  return Response.json(data);
 }
 ```
 
-Alternatively, you can use the [`revalidate` segment config option](/docs/app/api-reference/file-conventions/route-segment-config#revalidate):
+또는 [`revalidate` 세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config#revalidate)을 사용할 수 있습니다:
 
 ```ts
-export const revalidate = 60
+export const revalidate = 60;
 ```
 
 ### Dynamic Functions
 
-Route Handlers can be used with dynamic functions from Next.js, like [`cookies`](/docs/app/api-reference/functions/cookies) and [`headers`](/docs/app/api-reference/functions/headers).
+Route Handlers는 Next.js의 [`cookies`](/docs/app/api-reference/functions/cookies) 및 [`headers`](/docs/app/api-reference/functions/headers)와 같은 동적 함수와 함께 사용할 수 있습니다.
 
 #### Cookies
 
-You can read or set cookies with [`cookies`](/docs/app/api-reference/functions/cookies) from `next/headers`. This server function can be called directly in a Route Handler, or nested inside of another function.
+`next/headers`에서 [`cookies`](/docs/app/api-reference/functions/cookies)를 사용하여 쿠키를 읽거나 설정할 수 있습니다. 이 서버 함수는 Route Handler에서 직접 호출되거나 다른 함수 내에서 중첩될 수 있습니다.
 
-Alternatively, you can return a new `Response` using the [`Set-Cookie`](https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie) header.
+또는 [`Set-Cookie`](https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie) 헤더를 사용하여 새 `Response`를 반환할 수 있습니다.
 
 ```ts filename="app/api/route.ts" switcher
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
 
 export async function GET(request: Request) {
-  const cookieStore = cookies()
-  const token = cookieStore.get('token')
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
 
-  return new Response('Hello, Next.js!', {
+  return new Response("Hello, Next.js!", {
     status: 200,
-    headers: { 'Set-Cookie': `token=${token.value}` },
-  })
+    headers: { "Set-Cookie": `token=${token.value}` },
+  });
 }
 ```
 
 ```js filename="app/api/route.js" switcher
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers";
 
 export async function GET(request) {
-  const cookieStore = cookies()
-  const token = cookieStore.get('token')
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
 
-  return new Response('Hello, Next.js!', {
+  return new Response("Hello, Next.js!", {
     status: 200,
-    headers: { 'Set-Cookie': `token=${token}` },
-  })
+    headers: { "Set-Cookie": `token=${token}` },
+  });
 }
 ```
 
-You can also use the underlying Web APIs to read cookies from the request ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
+기본 웹 API를 사용하여 요청에서 쿠키를 읽을 수도 있습니다 ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
 
 ```ts filename="app/api/route.ts" switcher
-import { type NextRequest } from 'next/server'
+import { type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const token = request.cookies.get('token')
+  const token = request.cookies.get("token");
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function GET(request) {
-  const token = request.cookies.get('token')
+  const token = request.cookies.get("token");
 }
 ```
 
 #### Headers
 
-You can read headers with [`headers`](/docs/app/api-reference/functions/headers) from `next/headers`. This server function can be called directly in a Route Handler, or nested inside of another function.
+`next/headers`에서 [`headers`](/docs/app/api-reference/functions/headers)를 사용하여 헤더를 읽을 수 있습니다. 이 서버 함수는 Route Handler에서 직접 호출되거나 다른 함수 내에서 중첩될 수 있습니다.
 
-This `headers` instance is read-only. To set headers, you need to return a new `Response` with new `headers`.
+이 `headers` 인스턴스는 읽기 전용입니다. 헤더를 설정하려면 새 `headers`와 함께 새 `Response`를 반환해야 합니다.
 
 ```ts filename="app/api/route.ts" switcher
 import { headers } from 'next/headers'
 
 export async function GET(request: Request) {
   const headersList = headers()
-  const referer = headersList.get('referer')
+  const referer = headersList.get('refer
+
+er')
 
   return new Response('Hello, Next.js!', {
     status: 200,
@@ -220,71 +226,71 @@ export async function GET(request: Request) {
 ```
 
 ```js filename="app/api/route.js" switcher
-import { headers } from 'next/headers'
+import { headers } from "next/headers";
 
 export async function GET(request) {
-  const headersList = headers()
-  const referer = headersList.get('referer')
+  const headersList = headers();
+  const referer = headersList.get("referer");
 
-  return new Response('Hello, Next.js!', {
+  return new Response("Hello, Next.js!", {
     status: 200,
     headers: { referer: referer },
-  })
+  });
 }
 ```
 
-You can also use the underlying Web APIs to read headers from the request ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
+기본 웹 API를 사용하여 요청에서 헤더를 읽을 수도 있습니다 ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
 
 ```ts filename="app/api/route.ts" switcher
-import { type NextRequest } from 'next/server'
+import { type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const requestHeaders = new Headers(request.headers)
+  const requestHeaders = new Headers(request.headers);
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function GET(request) {
-  const requestHeaders = new Headers(request.headers)
+  const requestHeaders = new Headers(request.headers);
 }
 ```
 
 ### Redirects
 
 ```ts filename="app/api/route.ts" switcher
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 export async function GET(request: Request) {
-  redirect('https://nextjs.org/')
+  redirect("https://nextjs.org/");
 }
 ```
 
 ```js filename="app/api/route.js" switcher
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 export async function GET(request) {
-  redirect('https://nextjs.org/')
+  redirect("https://nextjs.org/");
 }
 ```
 
 ### Dynamic Route Segments
 
-> We recommend reading the [Defining Routes](/docs/app/building-your-application/routing/defining-routes) page before continuing.
+> 계속하기 전에 [Defining Routes](/docs/app/building-your-application/routing/defining-routes) 페이지를 읽어보는 것을 권장합니다.
 
-Route Handlers can use [Dynamic Segments](/docs/app/building-your-application/routing/dynamic-routes) to create request handlers from dynamic data.
+Route Handlers는 [Dynamic Segments](/docs/app/building-your-application/routing/dynamic-routes)를 사용하여 동적 데이터를 기반으로 요청 핸들러를 생성할 수 있습니다.
 
 ```ts filename="app/items/[slug]/route.ts" switcher
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
 ) {
-  const slug = params.slug // 'a', 'b', or 'c'
+  const slug = params.slug; // 'a', 'b', 또는 'c'
 }
 ```
 
 ```js filename="app/items/[slug]/route.js" switcher
 export async function GET(request, { params }) {
-  const slug = params.slug // 'a', 'b', or 'c'
+  const slug = params.slug; // 'a', 'b', 또는 'c'
 }
 ```
 
@@ -296,99 +302,99 @@ export async function GET(request, { params }) {
 
 ### URL Query Parameters
 
-The request object passed to the Route Handler is a `NextRequest` instance, which has [some additional convenience methods](/docs/app/api-reference/functions/next-request#nexturl), including for more easily handling query parameters.
+Route Handler에 전달되는 요청 객체는 `NextRequest` 인스턴스로, 쿼리 매개변수를 보다 쉽게 처리할 수 있는 [편리한 추가 메서드](/docs/app/api-reference/functions/next-request#nexturl)를 제공합니다.
 
 ```ts filename="app/api/search/route.ts" switcher
-import { type NextRequest } from 'next/server'
+import { type NextRequest } from "next/server";
 
 export function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  const query = searchParams.get('query')
-  // query is "hello" for /api/search?query=hello
+  const searchParams = request.nextUrl.searchParams;
+  const query = searchParams.get("query");
+  // query는 /api/search?query=hello일 때 "hello"입니다.
 }
 ```
 
 ```js filename="app/api/search/route.js" switcher
 export function GET(request) {
-  const searchParams = request.nextUrl.searchParams
-  const query = searchParams.get('query')
-  // query is "hello" for /api/search?query=hello
+  const searchParams = request.nextUrl.searchParams;
+  const query = searchParams.get("query");
+  // query는 /api/search?query=hello일 때 "hello"입니다.
 }
 ```
 
 ### Streaming
 
-Streaming is commonly used in combination with Large Language Models (LLMs), such as OpenAI, for AI-generated content. Learn more about the [AI SDK](https://sdk.vercel.ai/docs/introduction).
+스트리밍은 OpenAI와 같은 대형 언어 모델(LLM)과 함께 AI 생성 콘텐츠를 위해 일반적으로 사용됩니다. [AI SDK](https://sdk.vercel.ai/docs/introduction)에서 자세히 알아보세요.
 
 ```ts filename="app/api/chat/route.ts" switcher
-import { openai } from '@ai-sdk/openai'
-import { StreamingTextResponse, streamText } from 'ai'
+import { openai } from "@ai-sdk/openai";
+import { StreamingTextResponse, streamText } from "ai";
 
 export async function POST(req) {
-  const { messages } = await req.json()
+  const { messages } = await req.json();
   const result = await streamText({
-    model: openai('gpt-4-turbo'),
+    model: openai("gpt-4-turbo"),
     messages,
-  })
+  });
 
-  return new StreamingTextResponse(result.toAIStream())
+  return new StreamingTextResponse(result.toAIStream());
 }
 ```
 
 ```js filename="app/api/chat/route.js" switcher
-import { openai } from '@ai-sdk/openai'
-import { StreamingTextResponse, streamText } from 'ai'
+import { openai } from "@ai-sdk/openai";
+import { StreamingTextResponse, streamText } from "ai";
 
 export async function POST(req: Request) {
-  const { messages } = await req.json()
+  const { messages } = await req.json();
   const result = await streamText({
-    model: openai('gpt-4-turbo'),
+    model: openai("gpt-4-turbo"),
     messages,
-  })
+  });
 
-  return new StreamingTextResponse(result.toAIStream())
+  return new StreamingTextResponse(result.toAIStream());
 }
 ```
 
-These abstractions use the Web APIs to create a stream. You can also use the underlying Web APIs directly.
+이러한 추상화는 스트림을 생성하기 위해 웹 API를 사용합니다. 기본 웹 API를 직접 사용할 수도 있습니다.
 
 ```ts filename="app/api/route.ts" switcher
 // https://developer.mozilla.org/docs/Web/API/ReadableStream#convert_async_iterator_to_stream
 function iteratorToStream(iterator: any) {
   return new ReadableStream({
     async pull(controller) {
-      const { value, done } = await iterator.next()
+      const { value, done } = await iterator.next();
 
       if (done) {
-        controller.close()
+        controller.close();
       } else {
-        controller.enqueue(value)
+        controller.enqueue(value);
       }
     },
-  })
+  });
 }
 
 function sleep(time: number) {
   return new Promise((resolve) => {
-    setTimeout(resolve, time)
-  })
+    setTimeout(resolve, time);
+  });
 }
 
-const encoder = new TextEncoder()
+const encoder = new TextEncoder();
 
 async function* makeIterator() {
-  yield encoder.encode('<p>One</p>')
-  await sleep(200)
-  yield encoder.encode('<p>Two</p>')
-  await sleep(200)
-  yield encoder.encode('<p>Three</p>')
+  yield encoder.encode("<p>One</p>");
+  await sleep(200);
+  yield encoder.encode("<p>Two</p>");
+  await sleep(200);
+  yield encoder.encode("<p>Three</p>");
 }
 
 export async function GET() {
-  const iterator = makeIterator()
-  const stream = iteratorToStream(iterator)
+  const iterator = makeIterator();
+  const stream = iteratorToStream(iterator);
 
-  return new Response(stream)
+  return new Response(stream);
 }
 ```
 
@@ -397,161 +403,164 @@ export async function GET() {
 function iteratorToStream(iterator) {
   return new ReadableStream({
     async pull(controller) {
-      const { value, done } = await iterator.next()
+      const { value, done } = await iterator.next();
 
       if (done) {
-        controller.close()
+        controller.close();
       } else {
-        controller.enqueue(value)
+        controller.enqueue(value);
       }
     },
-  })
+  });
 }
 
 function sleep(time) {
   return new Promise((resolve) => {
-    setTimeout(resolve, time)
-  })
+    setTimeout(resolve, time);
+  });
 }
 
-const encoder = new TextEncoder()
+const encoder = new TextEncoder();
 
 async function* makeIterator() {
-  yield encoder.encode('<p>One</p>')
-  await sleep(200)
-  yield encoder.encode('<p>Two</p>')
-  await sleep(200)
-  yield encoder.encode('<p>Three</p>')
+  yield encoder.encode("<p>One</p>");
+  await sleep(200);
+  yield encoder.encode("<p>Two</p>");
+  await sleep(200);
+  yield encoder.encode("<p>Three</p>");
 }
 
 export async function GET() {
-  const iterator = makeIterator()
-  const stream = iteratorToStream(iterator)
+  const iterator = makeIterator();
+  const stream = iteratorToStream(iterator);
 
-  return new Response(stream)
+  return new Response(stream);
 }
 ```
 
 ### Request Body
 
-You can read the `Request` body using the standard Web API methods:
+기본 웹 API 메서드를 사용하여 `Request` 본문을 읽을 수 있습니다:
 
 ```ts filename="app/items/route.ts" switcher
 export async function POST(request: Request) {
-  const res = await request.json()
-  return Response.json({ res })
+  const res = await request.json();
+  return Response.json({ res });
 }
 ```
 
 ```js filename="app/items/route.js" switcher
 export async function POST(request) {
-  const res = await request.json()
-  return Response.json({ res })
+  const res = await request.json();
+  return Response.json({ res });
 }
 ```
 
 ### Request Body FormData
 
-You can read the `FormData` using the `request.formData()` function:
+`request.formData()` 함수를 사용하여 `FormData`를 읽을 수 있습니다:
 
 ```ts filename="app/items/route.ts" switcher
 export async function POST(request: Request) {
-  const formData = await request.formData()
-  const name = formData.get('name')
-  const email = formData.get('email')
-  return Response.json({ name, email })
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const email = formData.get("email");
+  return Response.json({ name, email });
 }
 ```
 
 ```js filename="app/items/route.js" switcher
 export async function POST(request) {
-  const formData = await request.formData()
-  const name = formData.get('name')
-  const email = formData.get('email')
-  return Response.json({ name, email })
+  const formData = await request.formData();
+  const name = formData.get("name");
+  const email = formData.get("email");
+  return Response.json({ name, email });
 }
 ```
 
-Since `formData` data are all strings, you may want to use [`zod-form-data`](https://www.npmjs.com/zod-form-data) to validate the request and retrieve data in the format you prefer (e.g. `number`).
+`formData` 데이터는 모두 문자열이므로 [`zod-form-data`](https://www.npmjs.com/zod-form-data)를 사용하여 요청을 검증하고 원하는 형식(예: `number`)으로 데이터를 가져올 수 있습니다.
 
 ### CORS
 
-You can set CORS headers for a specific Route Handler using the standard Web API methods:
+기본 웹 API 메서드를 사용하여 특정 Route Handler에 대한 CORS 헤더를 설정할 수 있습니다:
 
 ```ts filename="app/api/route.ts" switcher
 export async function GET(request: Request) {
-  return new Response('Hello, Next.js!', {
+  return new Response("Hello, Next.js!", {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
     },
-  })
+  });
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function GET(request) {
-  return new Response('Hello, Next.js!', {
+  return new Response("Hello, Next.js!", {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
     },
-  })
+  });
 }
 ```
 
-> **Good to know**:
+> **알아두면 좋은 점**:
 >
-> - To add CORS headers to multiple Route Handlers, you can use [Middleware](/docs/app/building-your-application/routing/middleware#cors) or the [`next.config.js` file](/docs/app/api-reference/next-config-js/headers#cors).
-> - Alternatively, see our [CORS example](https://github.com/vercel/examples/blob/main/edge-functions/cors/lib/cors.ts) package.
+> - 여러 Route Handlers에 CORS 헤더를 추가하려면 [Middleware](/docs/app/building-your-application/routing/middleware#cors) 또는 [`
+
+next.config.js` 파일](/docs/app/api-reference/next-config-js/headers#cors)을 사용할 수 있습니다.
+
+> - 또는 [CORS 예제](https://github.com/vercel/examples/blob/main/edge-functions/cors/lib/cors.ts) 패키지를 참조하세요.
 
 ### Webhooks
 
-You can use a Route Handler to receive webhooks from third-party services:
+Route Handler를 사용하여 타사 서비스의 웹훅을 수신할 수 있습니다:
 
 ```ts filename="app/api/route.ts" switcher
 export async function POST(request: Request) {
   try {
-    const text = await request.text()
-    // Process the webhook payload
+    const text = await request.text();
+    // 웹훅 페이로드 처리
   } catch (error) {
     return new Response(`Webhook error: ${error.message}`, {
       status: 400,
-    })
+    });
   }
 
-  return new Response('Success!', {
+  return new Response("Success!", {
     status: 200,
-  })
+  });
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function POST(request) {
   try {
-    const text = await request.text()
-    // Process the webhook payload
+    const text = await request.text();
+    // 웹훅 페이로드 처리
   } catch (error) {
     return new Response(`Webhook error: ${error.message}`, {
       status: 400,
-    })
+    });
   }
 
-  return new Response('Success!', {
+  return new Response("Success!", {
     status: 200,
-  })
+  });
 }
 ```
 
-Notably, unlike API Routes with the Pages Router, you do not need to use `bodyParser` to use any additional configuration.
+특히, Pages Router의 API Routes와 달리 `bodyParser`를 사용하여 추가 구성을 할 필요가 없습니다.
 
 ### Non-UI Responses
 
-You can use Route Handlers to return non-UI content. Note that [`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generating-a-sitemap-using-code-js-ts), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), and [open graph images](/docs/app/api-reference/file-conventions/metadata/opengraph-image) all have built-in support.
+Route Handlers를 사용하여 UI가 아닌 콘텐츠를 반환할 수 있습니다. [`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generating-a-sitemap-using-code-js-ts), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), [open graph images](/docs/app/api-reference/file-conventions/metadata/opengraph-image) 등은 모두 기본적으로 지원됩니다.
 
 ```ts filename="app/rss.xml/route.ts" switcher
 export async function GET() {
@@ -568,10 +577,10 @@ export async function GET() {
 </rss>`,
     {
       headers: {
-        'Content-Type': 'text/xml',
+        "Content-Type": "text/xml",
       },
     }
-  )
+  );
 }
 ```
 
@@ -586,30 +595,30 @@ export async function GET() {
   <description>The React Framework for the Web</description>
 </channel>
 
-</rss>`)
+</rss>`);
 }
 ```
 
 ### Segment Config Options
 
-Route Handlers use the same [route segment configuration](/docs/app/api-reference/file-conventions/route-segment-config) as pages and layouts.
+Route Handlers는 페이지 및 레이아웃과 동일한 [route segment configuration](/docs/app/api-reference/file-conventions/route-segment-config)을 사용합니다.
 
 ```ts filename="app/items/route.ts" switcher
-export const dynamic = 'auto'
-export const dynamicParams = true
-export const revalidate = false
-export const fetchCache = 'auto'
-export const runtime = 'nodejs'
-export const preferredRegion = 'auto'
+export const dynamic = "auto";
+export const dynamicParams = true;
+export const revalidate = false;
+export const fetchCache = "auto";
+export const runtime = "nodejs";
+export const preferredRegion = "auto";
 ```
 
 ```js filename="app/items/route.js" switcher
-export const dynamic = 'auto'
-export const dynamicParams = true
-export const revalidate = false
-export const fetchCache = 'auto'
-export const runtime = 'nodejs'
-export const preferredRegion = 'auto'
+export const dynamic = "auto";
+export const dynamicParams = true;
+export const revalidate = false;
+export const fetchCache = "auto";
+export const runtime = "nodejs";
+export const preferredRegion = "auto";
 ```
 
-See the [API reference](/docs/app/api-reference/file-conventions/route-segment-config) for more details.
+자세한 내용은 [API 참조](/docs/app/api-reference/file-conventions/route-segment-config)를 참조하세요.
