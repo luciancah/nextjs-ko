@@ -1,0 +1,627 @@
+---
+title: Data Fetching
+nav_title: Fetching
+description: Learn best practices for fetching data on the server or client in Next.js.
+---
+
+import Image from "next/image";
+
+# Data Fetching
+
+데이터 가져오기는 모든 애플리케이션의 핵심 부분입니다. 이 페이지에서는 선호하는 방법을 사용하여 데이터를 가져오는 모범 사례에 대해 설명합니다.
+
+## 서버에서 데이터를 가져올까요, 클라이언트에서 데이터를 가져올까요?
+
+서버에서 데이터를 가져올지 클라이언트에서 데이터를 가져올지는 구축 중인 UI의 유형에 따라 다릅니다.
+
+실시간 데이터(예: 폴링)가 필요하지 않은 대부분의 경우, [Server Components](/docs/app/building-your-application/rendering/server-components)를 사용하여 서버에서 데이터를 가져올 수 있습니다. 이렇게 하면 몇 가지 이점이 있습니다:
+
+- 단일 서버 라운드 트립으로 데이터를 가져올 수 있어 네트워크 요청 수와 클라이언트-서버 워터폴을 줄일 수 있습니다.
+- 클라이언트에 노출되면 안 되는 민감한 정보(예: 액세스 토큰 및 API 키)를 보호할 수 있습니다.
+- 애플리케이션 코드와 데이터베이스가 동일한 지역에 있는 경우 데이터 소스에 가까운 곳에서 데이터를 가져옴으로써 지연 시간을 줄일 수 있습니다.
+- 데이터 요청은 [캐시](/docs/app/building-your-application/data-fetching/caching-and-revalidating#caching)되고 [재검증](/docs/app/building-your-application/data-fetching/caching-and-revalidating#revalidating-data)될 수 있습니다.
+
+그러나 서버 측 데이터 가져오기는 전체 페이지가 서버에서 다시 렌더링되게 합니다. 작은 UI 조각을 변형/재검증하거나 실시간 데이터를 지속적으로 가져와야 하는 경우(예: 실시간 뷰) 클라이언트 측 데이터 가져오기가 더 적합할 수 있으며, 이는 클라이언트에서 특정 UI 조각을 다시 렌더링할 수 있게 해줍니다.
+
+Next.js에서 데이터를 가져오는 네 가지 방법이 있습니다:
+
+- 서버의 [`fetch` API](#fetch-api).
+- 서버의 [ORM 또는 데이터베이스 클라이언트](#orms-and-database-clients).
+- 클라이언트를 통한 서버의 [Route Handlers](#route-handlers).
+- 클라이언트의 [데이터 가져오기 라이브러리](#data-fetching-libraries).
+
+## `fetch` API
+
+Next.js는 서버에서 각 fetch 요청의 [캐싱](/docs/app/building-your-application/data-fetching/caching-and-revalidating#fetch-requests) 및 [재검증](/docs/app/building-your-application/data-fetching/caching-and-revalidating#revalidating-data) 동작을 구성할 수 있도록 네이티브 [`fetch` Web API](https://developer.mozilla.org/docs/Web/API/Fetch_API) `fetch`를 확장합니다. `fetch`를 [Server Components](/docs/app/building-your-application/rendering/server-components), [Route Handlers](/docs/app/building-your-application/routing/route-handlers), 및 [Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)에서 사용할 수 있습니다. 예를 들어:
+
+```tsx filename="app/page.tsx" switcher
+export default async function Page() {
+  const data = await fetch("https://api.example.com/...").then((res) =>
+    res.json()
+  );
+
+  return "...";
+}
+```
+
+```jsx filename="app/page.js" switcher
+export default async function Page() {
+  const data = await fetch("https://api.example.com/...").then((res) =>
+    res.json()
+  );
+
+  return "...";
+}
+```
+
+기본적으로 `fetch` 요청은 새로운 데이터를 검색합니다. 이를 사용하면 전체 경로가 [동적으로 렌더링](/docs/app/building-your-application/rendering/server-components#dynamic-rendering)되며 데이터는 캐시되지 않습니다.
+
+`fetch` 요청을 캐시하려면 `cache` 옵션을 `force-cache`로 설정합니다. 이렇게 하면 데이터가 캐시되며, 해당 구성 요소가 [정적으로 렌더링](/docs/app/building-your-application/rendering/server-components#static-rendering-default)됩니다:
+
+```js
+fetch("https://...", { cache: "force-cache" });
+```
+
+또한, [PPR](/docs/app/building-your-application/rendering/partial-prerendering)를 사용하는 경우, `fetch` 요청을 사용하는 구성 요소를 Suspense 경계로 감싸는 것을 권장합니다. 이렇게 하면 전체 페이지 대신 `fetch`를 사용하는 구성 요소만 동적으로 렌더링되고 스트리밍됩니다:
+
+```tsx filename="@/app/ui/cart.tsx switcher
+import { Suspense } from 'react'
+
+
+export default async function Cart() {
+  const res = await fetch('https://api.example.com/...')
+
+  return '...'
+}
+
+export default function Navigation() {
+  return (
+    <>
+      <Suspense fallback={<LoadingIcon />}>
+        <Cart />
+      </Suspense>
+    <>
+  )
+}
+```
+
+자세한 내용은 [캐싱 및 재검증](/docs/app/building-your-application/data-fetching/caching-and-revalidating) 문서를 참조하세요.
+
+> **알아두면 좋은 점:** Next.js 14 및 이전 버전에서는 `fetch` 요청이 기본적으로 캐시되었습니다. 자세한 내용은 [업그레이드 가이드](/docs/app/building-your-application/upgrading/version-15)를 참조하세요.
+
+### Request Memoization
+
+트리의 여러 구성 요소에서 동일한 데이터를 가져와야 하는 경우, 데이터를 전역적으로 가져와서 props를 전달할 필요가 없습니다. 대신, 데이터를 필요로 하는 구성 요소 내에서 데이터를 가져와도 동일한 데이터에 대한 여러 요청을 수행하는 성능 문제를 걱정할 필요가 없습니다.
+
+이는 동일한 URL 및 옵션을 사용하는 `fetch` 요청이 React 렌더링 패스 동안 자동으로 메모이제이션되기 때문에 가능합니다.
+
+자세한 내용은 [request memoization](/docs/app/building-your-application/caching#request-memoization) 문서를 참조하세요.
+
+## ORMs and Database Clients
+
+[Server Components](/docs/app/building-your-application/rendering/server-components), [Route Handlers](/docs/app/building-your-application/routing/route-handlers), 및 [Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)에서 ORM 또는 데이터베이스 클라이언트를 호출할 수 있습니다.
+
+[React `cache`](https://react.dev/reference/react/cache)를 사용하여 React 렌더링 패스 동안 데이터 요청을 메모이제이션할 수 있습니다. 예를 들어, `getItem` 함수가 레이아웃과 페이지에서 호출되더라도 데이터베이스에 대한 쿼리는 한 번만 수행됩니다:
+
+```ts filename="app/utils.ts" switcher
+import { cache } from "react";
+
+export const getItem = cache(async (id: string) => {
+  const item = await db.item.findUnique({ id });
+  return item;
+});
+```
+
+```js filename="app/utils.js" switcher
+import { cache } from "react";
+
+export const getItem = cache(async (id) => {
+  const item = await db.item.findUnique({ id });
+  return item;
+});
+```
+
+```tsx filename="app/item/[id]/layout.tsx" switcher
+import { getItem } from "@/utils/get-item";
+
+export default async function Layout({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  const item = await getItem(id);
+  // ...
+}
+```
+
+```jsx filename="app/item/[id]/layout.js" switcher
+import { getItem } from "@/utils/get-item";
+
+export default async function Layout({ params: { id } }) {
+  const item = await getItem(id);
+  // ...
+}
+```
+
+```tsx filename="app/item/[id]/page.tsx" switcher
+import { getItem } from "@/utils/get-item";
+
+export default async function Page({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  const item = await getItem(id);
+  // ...
+}
+```
+
+```jsx filename="app/item/[id]/page.js" switcher
+import { getItem } from "@/utils/get-item";
+
+export default async function Page({ params: { id } }) {
+  const item = await getItem(id);
+  // ...
+}
+```
+
+이 요청의 캐싱 및 재검증 동작은 실험적인 [`unstable_cache`](/docs/app/api-reference/functions/unstable_cache) 및 [`unstable_noStore`](/docs/app/api-reference/functions/unstable_noStore) API를 사용하여 구성할 수 있습니다.
+
+## Data Fetching Libraries
+
+[SWR](https://swr.vercel.app/) 또는 [React Query](https://tanstack.com/query/latest)와 같은 데이터 가져오기 라이브러리를 사용하여 클라이언트 구성 요소에서 데이터를 가져올 수 있습니다. 이러한 라이브러리는 데이터의 캐싱, 재검증 및 변형을 위한 자체 API를 제공합니다.
+
+예를 들어, SWR을 사용하여 클라이언트에서 주기적으로 데이터를 가져오는 방법은 다음과 같습니다:
+
+```tsx filename="app/page.tsx switcher
+"use client"
+
+import useSWR from 'swr'
+import fetcher from '@/utils/fetcher'
+
+export default function PollingComponent {
+  // 폴링 간격을 2000 밀리초로 설정
+  const {
+
+ data } = useSWR('/api/data', fetcher, { refreshInterval: 2000 });
+
+  return '...'
+}
+```
+
+```js filename="app/page.tsx" switcher
+"use client"
+
+import useSWR from 'swr'
+import fetcher from '@/utils/fetcher'
+
+export default function PollingComponent {
+  // 폴링 간격을 2000 밀리초로 설정
+  const { data } = useSWR('/api/data', fetcher, { refreshInterval: 2000 });
+
+  return '...'
+}
+```
+
+## Route Handlers
+
+API 엔드포인트를 만들어야 하는 경우, Next.js는 [Route Handlers](/docs/app/building-your-application/routing/route-handlers)를 지원합니다. Route Handlers는 서버에서 실행되며 민감한 정보(예: API 자격 증명)가 클라이언트에 노출되지 않도록 합니다.
+
+예를 들어, Route Handler를 호출하기 위해 SWR을 사용하는 방법은 다음과 같습니다:
+
+```tsx filename="app/ui/message.tsx" switcher
+"use client";
+
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
+
+export default function Message() {
+  const { data } = useSWR("/api/messages", fetcher);
+
+  return "...";
+}
+```
+
+```jsx filename="app/ui/message.js" switcher
+"use client";
+
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
+
+export default function Message() {
+  const { data } = useSWR("/api/messages", fetcher);
+
+  return "...";
+}
+```
+
+```tsx filename="app/api/messages/route.ts" switcher
+export async function GET() {
+  const data = await fetch("https://...", {
+    headers: {
+      "Content-Type": "application/json",
+      "API-Key": process.env.DATA_API_KEY,
+    },
+  }).then((res) => res.json());
+
+  return Response.json({ data });
+}
+```
+
+```js filename="app/api/messages/route.js" switcher
+export async function GET() {
+  const data = await fetch("https://...", {
+    headers: {
+      "Content-Type": "application/json",
+      "API-Key": process.env.DATA_API_KEY,
+    },
+  }).then((res) => res.json());
+
+  return Response.json({ data });
+}
+```
+
+자세한 예는 [Route Handler](/docs/app/building-your-application/routing/route-handlers) 문서를 참조하세요.
+
+> **알아두면 좋은 점:** Server Components는 서버에서 렌더링되므로, Server Component에서 Route Handler를 호출할 필요가 없습니다. 데이터를 직접 액세스할 수 있습니다.
+
+## Patterns
+
+### 병렬 및 순차 데이터 가져오기
+
+구성 요소 내에서 데이터를 가져올 때는 두 가지 데이터 가져오기 패턴을 인지해야 합니다: 병렬 및 순차.
+
+<Image
+  alt="Sequential and Parallel Data Fetching"
+  srcLight="/docs/light/sequential-parallel-data-fetching.png"
+  srcDark="/docs/dark/sequential-parallel-data-fetching.png"
+  width="1600"
+  height="525"
+/>
+
+- **순차적:** 구성 요소 트리의 요청이 서로 종속적입니다. 이는 더 긴 로딩 시간을 초래할 수 있습니다.
+- **병렬:** 경로의 요청이 미리 시작되어 동시에 데이터를 로드합니다. 이렇게 하면 데이터를 로드하는 데 걸리는 총 시간이 줄어듭니다.
+
+#### Sequential data fetching
+
+중첩된 구성 요소가 있고 각 구성 요소가 자체 데이터를 가져오는 경우, 이러한 데이터 요청이 [메모이제이션](/docs/app/building-your-application/caching#request-memoization)되지 않은 경우 데이터 가져오기는 순차적으로 발생합니다.
+
+하나의 fetch가 다른 fetch의 결과에 의존하는 경우 이러한 패턴이 필요할 수 있습니다. 예를 들어, `Playlists` 구성 요소는 `artistID` prop에 의존하기 때문에 `Artist` 구성 요소가 데이터를 가져온 후에만 데이터를 가져오기 시작합니다:
+
+```tsx filename="app/artist/[username]/page.tsx" switcher
+export default async function Page({
+  params: { username },
+}: {
+  params: { username: string };
+}) {
+  // 아티스트 정보를 가져옵니다.
+  const artist = await getArtist(username);
+
+  return (
+    <>
+      <h1>{artist.name}</h1>
+      {/* Playlists 구성 요소가 로딩되는 동안 대체 UI를 표시합니다 */}
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* artist ID를 Playlists 구성 요소에 전달합니다 */}
+        <Playlists artistID={artist.id} />
+      </Suspense>
+    </>
+  );
+}
+
+async function Playlists({ artistID }: { artistID: string }) {
+  // 아티스트 ID를 사용하여 플레이리스트를 가져옵니다.
+  const playlists = await getArtistPlaylists(artistID);
+
+  return (
+    <ul>
+      {playlists.map((playlist) => (
+        <li key={playlist.id}>{playlist.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+```jsx filename="app/artist/[username]/page.js" switcher
+export default async function Page({ params: { username } }) {
+  // 아티스트 정보를 가져옵니다.
+  const artist = await getArtist(username);
+
+  return (
+    <>
+      <h1>{artist.name}</h1>
+      {/* Playlists 구성 요소가 로딩되는 동안 대체 UI를 표시합니다 */}
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* artist ID를 Playlists 구성 요소에 전달합니다 */}
+        <Playlists artistID={artist.id} />
+      </Suspense>
+    </>
+  );
+}
+
+async function Playlists({ artistID }) {
+  // 아티스트 ID를 사용하여 플레이리스트를 가져옵니다.
+  const playlists = await getArtistPlaylists(artistID);
+
+  return (
+    <ul>
+      {playlists.map((playlist) => (
+        <li key={playlist.id}>{playlist.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+경로 세그먼트에 대해 [`loading.js`](/docs/app/building-your-application/routing/loading-ui-and-streaming) 또는 중첩된 구성 요소에 대해 [React `<Suspense>`](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense)를 사용하여 즉시 로딩 상태를 표시하면서 React가 결과를 스트리밍하도록 할 수 있습니다.
+
+이렇게 하면 전체 경로가 데이터 요청에 의해 차단되지 않으며, 사용자는 준비된 페이지 부분과 상호작용할 수 있습니다.
+
+#### Parallel Data Fetching
+
+기본적으로 레이아웃 및 페이지 세그먼트는 병렬로 렌더링됩니다. 이는 요청이 병렬로 시작된다는 것을 의미합니다.
+
+그러나 `async`/`await`의 특성상 동일한 세그먼트 또는 구성 요소 내에서 기다리는 요청은 아래의 모든 요청을 차단합니다.
+
+데이터를 병렬로 가져오려면 데이터를 사용하는 구성 요소 외부에서 요청을 미리 정의하여 요청을 미리 시작할 수 있습니다. 이렇게 하면 두 요청을 병렬로 시작하여 시간을 절약할 수 있지만, 두 프라미스가 모두 해결될 때까지 렌더링된 결과를 볼 수 없습니다.
+
+아래 예제에서는 `getArtist` 및 `getAlbums` 함수가 `Page` 구성 요소 외부에서 정의되고 `Promise.all`을 사용하여 구성 요소 내부에서 시작됩니다:
+
+```tsx filename="app/artist/[username]/page.tsx" switcher
+import Albums from "./albums";
+
+async function getArtist(username: string) {
+  const res = await fetch(`https://api.example.com/artist/${username}`);
+  return res.json();
+}
+
+async function getAlbums(username: string) {
+  const res = await fetch(`https://api.example.com/artist/${username}/albums`);
+  return res.json();
+}
+
+export default async function Page({
+  params: { username },
+}: {
+  params: { username: string };
+}) {
+  const artistData = getArtist(username);
+  const albumsData = getAlbums(username);
+
+  // 두 요청을 병렬로 시작합니다.
+  const [artist, albums] = await Promise.all([artistData, albumsData]);
+
+  return (
+    <>
+      <h1>{artist.name}</h1>
+      <Albums list={albums} />
+    </>
+  );
+}
+```
+
+```jsx filename="app/artist/[username]/page.js" switcher
+import Albums from "./albums";
+
+async function getArtist(username) {
+  const res = await fetch(`https://api.example.com/artist/${username}`);
+  return res.json();
+}
+
+async function getAlbums(username) {
+  const res = await fetch(`https://api.example.com/artist/${username}/albums`);
+  return res.json();
+}
+
+export default async function Page({ params: { username } }) {
+  const artistData = getArtist(username);
+  const albumsData = getAlbums(username);
+
+  // 두 요청을 병렬로 시작합니다.
+  const [artist, albums] = await Promise.all([artistData, albumsData]);
+
+  return (
+    <>
+      <h1>{artist.name}</h1>
+      <Albums list={albums} />
+    </>
+  );
+}
+```
+
+또한, [Suspense 경계](/docs/app/building-your-application/routing/loading-ui-and-streaming)를 추가하여 렌더링 작업을 나누고 가능한 빨리 결과의 일부를 표시할 수 있습니다.
+
+### Preloading Data
+
+워터폴을 방지하는 또 다른 방법은 블로킹 요청 위에 있는 유틸리
+
+티 함수를 만들어 미리 호출하는 _preload_ 패턴을 사용하는 것입니다. 예를 들어, `checkIsAvailable()`가 `<Item/>`의 렌더링을 차단하므로, `preload()`를 호출하여 `<Item/>` 데이터 종속성을 미리 시작할 수 있습니다. `<Item/>`이 렌더링될 때 이미 데이터가 가져와집니다.
+
+참고로 `preload` 함수는 `checkIsAvailable()`의 실행을 차단하지 않습니다.
+
+```tsx filename="components/Item.tsx" switcher
+import { getItem } from "@/utils/get-item";
+
+export const preload = (id: string) => {
+  // void는 주어진 표현식을 평가하고 undefined를 반환합니다.
+  // https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/void
+  void getItem(id);
+};
+export default async function Item({ id }: { id: string }) {
+  const result = await getItem(id);
+  // ...
+}
+```
+
+```jsx filename="components/Item.js" switcher
+import { getItem } from "@/utils/get-item";
+
+export const preload = (id) => {
+  // void는 주어진 표현식을 평가하고 undefined를 반환합니다.
+  // https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/void
+  void getItem(id);
+};
+export default async function Item({ id }) {
+  const result = await getItem(id);
+  // ...
+}
+```
+
+```tsx filename="app/item/[id]/page.tsx" switcher
+import Item, { preload, checkIsAvailable } from "@/components/Item";
+
+export default async function Page({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
+  // 아이템 데이터 로딩 시작
+  preload(id);
+  // 다른 비동기 작업 수행
+  const isAvailable = await checkIsAvailable();
+
+  return isAvailable ? <Item id={id} /> : null;
+}
+```
+
+```jsx filename="app/item/[id]/page.js" switcher
+import Item, { preload, checkIsAvailable } from "@/components/Item";
+
+export default async function Page({ params: { id } }) {
+  // 아이템 데이터 로딩 시작
+  preload(id);
+  // 다른 비동기 작업 수행
+  const isAvailable = await checkIsAvailable();
+
+  return isAvailable ? <Item id={id} /> : null;
+}
+```
+
+> **알아두면 좋은 점:** "preload" 함수는 패턴이지 API가 아니므로, 다른 이름을 가질 수 있습니다.
+
+#### React `cache` 및 `server-only`를 Preload 패턴과 함께 사용하기
+
+`cache` 함수, `preload` 패턴 및 `server-only` 패키지를 결합하여 애플리케이션 전체에서 사용할 수 있는 데이터 가져오기 유틸리티를 만들 수 있습니다.
+
+```ts filename="utils/get-item.ts" switcher
+import { cache } from "react";
+import "server-only";
+
+export const preload = (id: string) => {
+  void getItem(id);
+};
+
+export const getItem = cache(async (id: string) => {
+  // ...
+});
+```
+
+```js filename="utils/get-item.js" switcher
+import { cache } from "react";
+import "server-only";
+
+export const preload = (id) => {
+  void getItem(id);
+};
+
+export const getItem = cache(async (id) => {
+  // ...
+});
+```
+
+이 접근 방식을 사용하면 데이터를 미리 가져오고 응답을 캐시하며, 이 데이터 가져오기가 [서버에서만 발생](/docs/app/building-your-application/rendering/composition-patterns#keeping-server-only-code-out-of-the-client-environment)한다는 보장을 할 수 있습니다.
+
+`utils/get-item` 내보내기는 레이아웃, 페이지 또는 다른 구성 요소에 의해 사용되어 아이템 데이터를 언제 가져올지에 대한 제어를 제공합니다.
+
+> **알아두면 좋은 점:**
+>
+> - 서버 데이터 가져오기 함수가 클라이언트에서 절대 사용되지 않도록 하기 위해 [`server-only` 패키지](/docs/app/building-your-application/rendering/composition-patterns#keeping-server-only-code-out-of-the-client-environment)를 사용하는 것이 좋습니다.
+
+### 클라이언트에 민감한 데이터가 노출되지 않도록 하기
+
+React의 taint API, [`taintObjectReference`](https://react.dev/reference/react/experimental_taintObjectReference) 및 [`taintUniqueValue`](https://react.dev/reference/react/experimental_taintUniqueValue)를 사용하여 전체 객체 인스턴스 또는 민감한 값을 클라이언트에 전달하지 않도록 하는 것을 권장합니다.
+
+애플리케이션에서 tainting을 활성화하려면 Next.js Config `experimental.taint` 옵션을 `true`로 설정합니다:
+
+```js filename="next.config.js"
+module.exports = {
+  experimental: {
+    taint: true,
+  },
+};
+```
+
+그런 다음 `experimental_taintObjectReference` 또는 `experimental_taintUniqueValue` 함수에 taint하려는 객체 또는 값을 전달합니다:
+
+```ts filename="app/utils.ts" switcher
+import { queryDataFromDB } from "./api";
+import {
+  experimental_taintObjectReference,
+  experimental_taintUniqueValue,
+} from "react";
+
+export async function getUserData() {
+  const data = await queryDataFromDB();
+  experimental_taintObjectReference(
+    "전체 사용자 객체를 클라이언트에 전달하지 마십시오",
+    data
+  );
+  experimental_taintUniqueValue(
+    "사용자의 주소를 클라이언트에 전달하지 마십시오",
+    data,
+    data.address
+  );
+  return data;
+}
+```
+
+```js filename="app/utils.js" switcher
+import { queryDataFromDB } from "./api";
+import {
+  experimental_taintObjectReference,
+  experimental_taintUniqueValue,
+} from "react";
+
+export async function getUserData() {
+  const data = await queryDataFromDB();
+  experimental_taintObjectReference(
+    "전체 사용자 객체를 클라이언트에 전달하지 마십시오",
+    data
+  );
+  experimental_taintUniqueValue(
+    "사용자의 주소를 클라이언트에 전달하지 마십시오",
+    data,
+    data.address
+  );
+  return data;
+}
+```
+
+```tsx filename="app/page.tsx" switcher
+import { getUserData } from "./data";
+
+export async function Page() {
+  const userData = getUserData();
+  return (
+    <ClientComponent
+      user={userData} // taintObjectReference로 인해 오류가 발생합니다
+      address={userData.address} // taintUniqueValue로 인해 오류가 발생합니다
+    />
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+import { getUserData } from "./data";
+
+export async function Page() {
+  const userData = await getUserData();
+  return (
+    <ClientComponent
+      user={userData} // taintObjectReference로 인해 오류가 발생합니다
+      address={userData.address} // taintUniqueValue로 인해 오류가 발생합니다
+    />
+  );
+}
+```
