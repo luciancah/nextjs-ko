@@ -3,7 +3,7 @@ import React from 'react'
 const Cross = ({ size = 24, className = '' }) => {
   const styles = {
     icon: {
-      color: '#000000',
+      color: '#3d3d3d',
     },
   }
 
