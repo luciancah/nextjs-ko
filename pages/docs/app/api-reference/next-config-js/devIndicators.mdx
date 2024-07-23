@@ -3,62 +3,62 @@ title: devIndicators
 description: Optimized pages include an indicator to let you know if it's being statically optimized. You can opt-out of it here.
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+# devIndicators
 
 <AppOnly>
 
-When you edit your code, and Next.js is compiling the application, a compilation indicator appears in the bottom right corner of the page.
+코드를 수정하고 Next.js가 애플리케이션을 컴파일할 때, 페이지의 오른쪽 하단에 컴파일 지시자가 나타납니다.
 
-> **Good to know**: This indicator is only present in development mode and will not appear when building and running the app in production mode.
+> **Good to know**: 이 지시자는 개발 모드에서만 나타나며, 프로덕션 모드에서 빌드하고 애플리케이션을 실행할 때는 나타나지 않습니다.
 
-In some cases this indicator can be misplaced on your page, for example, when conflicting with a chat launcher. To change its position, open `next.config.js` and set the `buildActivityPosition` in the `devIndicators` object to `bottom-right` (default), `bottom-left`, `top-right` or `top-left`:
+때때로 이 지시자가 페이지에 잘못된 위치에 나타날 수 있습니다. 예를 들어, 채팅 런처와 충돌할 때입니다. 위치를 변경하려면 `next.config.js` 파일을 열고 `devIndicators` 객체에서 `buildActivityPosition`을 `bottom-right`(기본값), `bottom-left`, `top-right` 또는 `top-left`로 설정하세요:
 
 ```js filename="next.config.js"
 module.exports = {
   devIndicators: {
-    buildActivityPosition: 'bottom-right',
+    buildActivityPosition: "bottom-right",
   },
-}
+};
 ```
 
-In some cases this indicator might not be useful for you. To remove it, open `next.config.js` and disable the `buildActivity` config in `devIndicators` object:
+때때로 이 지시자가 유용하지 않을 수 있습니다. 지시자를 제거하려면 `next.config.js` 파일을 열고 `devIndicators` 객체에서 `buildActivity` 설정을 비활성화하세요:
 
 ```js filename="next.config.js"
 module.exports = {
   devIndicators: {
     buildActivity: false,
   },
-}
+};
 ```
 
-There is also an indicator to show whether a page will be prerendered during a build in dev. It can be hidden per-page by clicking although if you never want it to show it can be disabled:
+또한 개발 중 빌드에서 페이지가 사전 렌더링될지 여부를 표시하는 지시자가 있습니다. 이는 페이지를 클릭하여 숨길 수 있지만, 항상 숨기고 싶다면 다음과 같이 설정을 비활성화할 수 있습니다:
 
 ```js filename="next.config.js"
 module.exports = {
   devIndicators: {
     appIsrStatus: false,
   },
-}
+};
 ```
 
 </AppOnly>
 
 <PagesOnly>
 
-> **Good to know**: This indicator was removed in Next.js version 10.0.1. We recommend upgrading to the latest version of Next.js.
+> **Good to know**: 이 지시자는 Next.js 버전 10.0.1에서 제거되었습니다. 최신 버전의 Next.js로 업그레이드할 것을 권장합니다.
 
-When a page qualifies for [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) we show an indicator to let you know.
+페이지가 [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization) 자격을 갖추면 이를 알려주는 지시자가 표시됩니다.
 
-This is helpful since automatic static optimization can be very beneficial and knowing immediately in development if the page qualifies can be useful.
+자동 정적 최적화는 매우 유익할 수 있으며, 개발 중에 페이지가 자격을 갖추는지 즉시 알 수 있는 것이 유용합니다.
 
-In some cases this indicator might not be useful, like when working on electron applications. To remove it open `next.config.js` and disable the `autoPrerender` config in `devIndicators`:
+때때로 이 지시자가 유용하지 않을 수 있습니다. 예를 들어, 전자 애플리케이션 작업 시 그렇습니다. 지시자를 제거하려면 `next.config.js` 파일을 열고 `devIndicators`에서 `autoPrerender` 설정을 비활성화하세요:
 
 ```js filename="next.config.js"
 module.exports = {
   devIndicators: {
     autoPrerender: false,
   },
-}
+};
 ```
 
 </PagesOnly>

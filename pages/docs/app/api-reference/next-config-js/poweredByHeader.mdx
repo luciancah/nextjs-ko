@@ -3,12 +3,14 @@ title: poweredByHeader
 description: Next.js will add the `x-powered-by` header by default. Learn to opt-out of it here.
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
-By default Next.js will add the `x-powered-by` header. To opt-out of it, open `next.config.js` and disable the `poweredByHeader` config:
+# poweredByHeader
+
+기본적으로 Next.js는 `x-powered-by` 헤더를 추가합니다. 이를 비활성화하려면, `next.config.js`를 열고 `poweredByHeader` 설정을 비활성화하세요:
 
 ```js filename="next.config.js"
 module.exports = {
   poweredByHeader: false,
-}
+};
 ```

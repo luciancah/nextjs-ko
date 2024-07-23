@@ -4,11 +4,13 @@ nav_title: webpack
 description: Learn how to customize the webpack config used by Next.js
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
-> **Good to know**: changes to webpack config are not covered by semver so proceed at your own risk
+# Custom Webpack Config
 
-Before continuing to add custom webpack configuration to your application make sure Next.js doesn't already support your use-case:
+> **알아두면 좋은 점**: webpack 설정에 대한 변경은 서버에 의해 관리되지 않으므로 위험을 감수하고 진행하십시오.
+
+애플리케이션에 사용자 정의 webpack 구성을 추가하기 전에 Next.js가 이미 귀하의 사용 사례를 지원하는지 확인하세요:
 
 <AppOnly>
 
@@ -29,12 +31,12 @@ Before continuing to add custom webpack configuration to your application make s
 
 </PagesOnly>
 
-Some commonly asked for features are available as plugins:
+일부 자주 요청되는 기능은 플러그인으로 제공됩니다:
 
 - [@next/mdx](https://github.com/vercel/next.js/tree/canary/packages/next-mdx)
 - [@next/bundle-analyzer](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)
 
-In order to extend our usage of `webpack`, you can define a function that extends its config inside `next.config.js`, like so:
+`webpack`의 사용을 확장하려면 `next.config.js` 내부에서 구성 요소를 확장하는 함수를 정의할 수 있습니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -42,28 +44,28 @@ module.exports = {
     config,
     { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
   ) => {
-    // Important: return the modified config
-    return config
+    // 중요: 수정된 config를 반환해야 합니다.
+    return config;
   },
-}
+};
 ```
 
-> The `webpack` function is executed three times, twice for the server (nodejs / edge runtime) and once for the client. This allows you to distinguish between client and server configuration using the `isServer` property.
+> `webpack` 함수는 서버(Node.js / edge runtime)에서 두 번, 클라이언트에서 한 번 총 세 번 실행됩니다. 이를 통해 `isServer` 속성을 사용하여 클라이언트와 서버 구성을 구별할 수 있습니다.
 
-The second argument to the `webpack` function is an object with the following properties:
+`webpack` 함수의 두 번째 인수는 다음 속성을 가진 객체입니다:
 
-- `buildId`: `String` - The build id, used as a unique identifier between builds
-- `dev`: `Boolean` - Indicates if the compilation will be done in development
-- `isServer`: `Boolean` - It's `true` for server-side compilation, and `false` for client-side compilation
-- `nextRuntime`: `String | undefined` - The target runtime for server-side compilation; either `"edge"` or `"nodejs"`, it's `undefined` for client-side compilation.
-- `defaultLoaders`: `Object` - Default loaders used internally by Next.js:
-  - `babel`: `Object` - Default `babel-loader` configuration
+- `buildId`: `String` - 빌드 간의 고유 식별자로 사용되는 빌드 ID
+- `dev`: `Boolean` - 컴파일이 개발 환경에서 이루어질지 여부를 나타냅니다.
+- `isServer`: `Boolean` - 서버 측 컴파일의 경우 `true`, 클라이언트 측 컴파일의 경우 `false`
+- `nextRuntime`: `String | undefined` - 서버 측 컴파일을 위한 대상 런타임; `"edge"` 또는 `"nodejs"` 중 하나이며, 클라이언트 측 컴파일의 경우 `undefined`입니다.
+- `defaultLoaders`: `Object` - Next.js에서 내부적으로 사용되는 기본 로더:
+  - `babel`: `Object` - 기본 `babel-loader` 구성
 
-Example usage of `defaultLoaders.babel`:
+`defaultLoaders.babel`의 사용 예시:
 
 ```js
-// Example config for adding a loader that depends on babel-loader
-// This source was taken from the @next/mdx plugin source:
+// babel-loader에 의존하는 로더를 추가하는 예제 구성
+// 이 소스는 @next/mdx 플러그인 소스에서 가져왔습니다:
 // https://github.com/vercel/next.js/tree/canary/packages/next-mdx
 module.exports = {
   webpack: (config, options) => {
@@ -72,17 +74,17 @@ module.exports = {
       use: [
         options.defaultLoaders.babel,
         {
-          loader: '@mdx-js/loader',
+          loader: "@mdx-js/loader",
           options: pluginOptions.options,
         },
       ],
-    })
+    });
 
-    return config
+    return config;
   },
-}
+};
 ```
 
 #### `nextRuntime`
 
-Notice that `isServer` is `true` when `nextRuntime` is `"edge"` or `"nodejs"`, nextRuntime "`edge`" is currently for middleware and Server Components in edge runtime only.
+`isServer`가 `nextRuntime`이 `"edge"` 또는 `"nodejs"`일 때 `true`인 것을 확인하십시오. `nextRuntime` "`edge`"는 현재 edge runtime에서 미들웨어와 서버 컴포넌트에만 해당됩니다.

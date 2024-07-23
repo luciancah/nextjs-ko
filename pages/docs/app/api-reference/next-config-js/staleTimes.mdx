@@ -3,11 +3,13 @@ title: staleTimes (experimental)
 description: Learn how to override the invalidation time of the Client Router Cache.
 ---
 
-> **Warning**: The `staleTimes` configuration is an experimental feature. This configuration strategy will likely change in the future.
+# staleTimes (experimental)
 
-`staleTimes` is an experimental feature that enables caching of page segments in the [client-side router cache](/docs/app/building-your-application/caching#client-side-router-cache).
+> **경고**: `staleTimes` 설정은 실험적 기능입니다. 이 설정 전략은 미래에 변경될 수 있습니다.
 
-You can enable this experimental feature and provide custom revalidation times by setting the experimental `staleTimes` flag:
+`staleTimes`는 [클라이언트 측 라우터 캐시](/docs/app/building-your-application/caching#client-side-router-cache)에서 페이지 세그먼트를 캐시할 수 있게 해주는 실험적 기능입니다.
+
+이 실험적 기능을 활성화하고 사용자 정의 재검증 시간을 제공하려면 실험적 `staleTimes` 플래그를 설정하세요:
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -18,30 +20,30 @@ const nextConfig = {
       static: 180,
     },
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
-The `static` and `dynamic` properties correspond with the time period (in seconds) based on different types of [link prefetching](/docs/app/api-reference/components/link#prefetch).
+`static` 및 `dynamic` 속성은 다른 유형의 [링크 프리페칭](/docs/app/api-reference/components/link#prefetch)에 따라 설정된 시간(초)을 나타냅니다.
 
-- The `dynamic` property is used when the `prefetch` prop on `Link` is left unspecified or is set to `false`.
-  - Default: 0 seconds (not cached)
-- The `static` property is used when the `prefetch` prop on `Link` is set to `true`, or when calling [`router.prefetch`](/docs/app/building-your-application/caching#routerprefetch).
-  - Default: 5 minutes
+- `dynamic` 속성은 `Link`의 `prefetch` 속성이 지정되지 않았거나 `false`로 설정된 경우에 사용됩니다.
+  - 기본값: 0초 (캐시되지 않음)
+- `static` 속성은 `Link`의 `prefetch` 속성이 `true`로 설정되었거나 [`router.prefetch`](/docs/app/building-your-application/caching#routerprefetch)를 호출할 때 사용됩니다.
+  - 기본값: 5분
 
-> **Good to know:**
+> **알아두면 좋은 점:**
 >
-> - [Loading boundaries](/docs/app/api-reference/file-conventions/loading) are considered reusable for the `static` period defined in this configuration.
-> - This doesn't affect [partial rendering](/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering), **meaning shared layouts won't automatically be refetched on every navigation, only the page segment that changes.**
-> - This doesn't change [back/forward caching](/docs/app/building-your-application/caching#client-side-router-cache) behavior to prevent layout shift and to prevent losing the browser scroll position.
-> - The different properties of this config refer to variable levels of "liveness" and are unrelated to whether the segment itself is opting into static or dynamic rendering. In other words, the current `static` default of 5 minutes suggests that data feels static by virtue of it being revalidated infrequently.
+> - [로딩 경계](/docs/app/api-reference/file-conventions/loading)는 이 구성에서 정의된 `static` 기간 동안 재사용 가능한 것으로 간주됩니다.
+> - 이것은 [부분 렌더링](/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering)에 영향을 미치지 않으며, **공유 레이아웃이 모든 탐색에서 자동으로 다시 가져오지 않고, 변경되는 페이지 세그먼트만 다시 가져옵니다.**
+> - 이는 [뒤로/앞으로 캐싱](/docs/app/building-your-application/caching#client-side-router-cache) 동작을 변경하지 않으며, 레이아웃 이동을 방지하고 브라우저 스크롤 위치를 유지하기 위해 사용됩니다.
+> - 이 설정의 다른 속성은 다양한 수준의 "라이브니스"를 나타내며, 세그먼트 자체가 정적 또는 동적 렌더링을 선택하는지 여부와는 관련이 없습니다. 즉, 현재 5분의 `static` 기본값은 데이터가 자주 재검증되지 않음으로써 정적으로 느껴지게 합니다.
 
-You can learn more about the Client Router Cache [here](/docs/app/building-your-application/caching#client-side-router-cache).
+클라이언트 라우터 캐시에 대해 자세히 알아보려면 [여기](/docs/app/building-your-application/caching#client-side-router-cache)에서 확인하세요.
 
 ### Version History
 
-| Version   | Changes                                                            |
-| --------- | ------------------------------------------------------------------ |
-| `v15.0.0` | `staleTimes` enables and configures the duration for page segments |
-| `v14.2.0` | experimental `staleTimes` introduced                               |
+| Version   | Changes                                                 |
+| --------- | ------------------------------------------------------- |
+| `v15.0.0` | `staleTimes` 페이지 세그먼트의 기간을 활성화하고 구성함 |
+| `v14.2.0` | 실험적 `staleTimes` 도입                                |

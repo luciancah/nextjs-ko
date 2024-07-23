@@ -3,17 +3,19 @@ title: swrDelta
 description: Set a custom stale-while-revalidate period for ISR enabled pages.
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
-You can specify a custom stale-while-revalidate period for CDNs to consume in the `Cache-Control` header for ISR enabled pages.
+# swrDelta
 
-Open `next.config.js` and add the `swrDelta` config:
+ISR(Incremental Static Regeneration)이 활성화된 페이지에 대해 CDN이 소비할 `Cache-Control` 헤더의 stale-while-revalidate 기간을 사용자 정의할 수 있습니다.
+
+`next.config.js` 파일을 열고 `swrDelta` 설정을 추가하세요:
 
 ```js filename="next.config.js"
 module.exports = {
-  // one year in seconds
+  // 1년을 초 단위로 설정
   swrDelta: 31536000,
-}
+};
 ```
 
-Now instead of an empty `stale-while-revalidate` period being provided in the `Cache-Control` header, the custom period will be included.
+이제 `Cache-Control` 헤더에 빈 `stale-while-revalidate` 기간 대신 사용자 정의된 기간이 포함됩니다.

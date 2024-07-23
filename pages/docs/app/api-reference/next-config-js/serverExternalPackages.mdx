@@ -3,20 +3,22 @@ title: serverExternalPackages
 description: Opt-out specific dependencies from the Server Components bundling and use native Node.js `require`.
 ---
 
-Dependencies used inside [Server Components](/docs/app/building-your-application/rendering/server-components) and [Route Handlers](/docs/app/building-your-application/routing/route-handlers) will automatically be bundled by Next.js.
+# serverExternalPackages
 
-If a dependency is using Node.js specific features, you can choose to opt-out specific dependencies from the Server Components bundling and use native Node.js `require`.
+[Server Components](/docs/app/building-your-application/rendering/server-components) 및 [Route Handlers](/docs/app/building-your-application/routing/route-handlers) 내에서 사용되는 종속성은 Next.js에 의해 자동으로 번들됩니다.
+
+종속성이 Node.js의 특정 기능을 사용하는 경우, 특정 종속성을 Server Components 번들링에서 제외하고 네이티브 Node.js `require`를 사용하도록 선택할 수 있습니다.
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ['@acme/ui'],
-}
+  serverExternalPackages: ["@acme/ui"],
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
-Next.js includes a [short list of popular packages](https://github.com/vercel/next.js/blob/canary/packages/next/src/lib/server-external-packages.json) that currently are working on compatibility and automatically opt-ed out:
+Next.js는 현재 호환성을 작업 중인 [인기 패키지의 짧은 목록](https://github.com/vercel/next.js/blob/canary/packages/next/src/lib/server-external-packages.json)을 포함하며, 자동으로 제외됩니다:
 
 - `@appsignal/nodejs`
 - `@aws-sdk/client-s3`
@@ -76,6 +78,6 @@ Next.js includes a [short list of popular packages](https://github.com/vercel/ne
 - `websocket`
 - `zeromq`
 
-| Version   | Changes                                                                                                        |
-| --------- | -------------------------------------------------------------------------------------------------------------- |
-| `v15.0.0` | Moved from experimental to stable. Renamed from `serverComponentsExternalPackages` to `serverExternalPackages` |
+| Version   | Changes                                                                                                                                  |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `v15.0.0` | 실험적 기능에서 안정된 기능으로 전환되었습니다. `serverComponentsExternalPackages`에서 `serverExternalPackages`로 이름이 변경되었습니다. |

@@ -8,14 +8,16 @@ related:
     - app/building-your-application/optimizing/instrumentation
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
-The experimental `instrumentationHook` option allows you to set up instrumentation via the [`instrumentation` file](/docs/app/api-reference/file-conventions/instrumentation) in your Next.js App.
+# instrumentationHook
+
+실험적인 `instrumentationHook` 옵션을 사용하면 Next.js 앱에서 [`instrumentation` 파일](/docs/app/api-reference/file-conventions/instrumentation)을 통해 계측을 설정할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
   experimental: {
     instrumentationHook: true,
   },
-}
+};
 ```

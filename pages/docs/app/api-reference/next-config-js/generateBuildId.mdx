@@ -3,17 +3,17 @@ title: generateBuildId
 description: Configure the build id, which is used to identify the current build in which your application is being served.
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+# generateBuildId
 
-Next.js generates an ID during `next build` to identify which version of your application is being served. The same build should be used and boot up multiple containers.
+Next.js는 `next build` 중에 ID를 생성하여 애플리케이션이 제공되는 현재 빌드를 식별합니다. 동일한 빌드는 여러 컨테이너를 부팅하고 사용해야 합니다.
 
-If you are rebuilding for each stage of your environment, you will need to generate a consistent build ID to use between containers. Use the `generateBuildId` command in `next.config.js`:
+환경의 각 단계에 대해 다시 빌드를 하는 경우, 컨테이너 간에 사용할 일관된 빌드 ID를 생성해야 합니다. 이를 위해 `next.config.js`에서 `generateBuildId` 명령을 사용하십시오:
 
 ```jsx filename="next.config.js"
 module.exports = {
   generateBuildId: async () => {
-    // This could be anything, using the latest git hash
-    return process.env.GIT_HASH
+    // 이 값은 무엇이든 될 수 있으며, 최신 git 해시를 사용합니다.
+    return process.env.GIT_HASH;
   },
-}
+};
 ```

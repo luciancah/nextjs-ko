@@ -4,7 +4,9 @@ nav_title: typedRoutes
 description: Enable experimental support for statically typed links.
 ---
 
-Experimental support for [statically typed links](/docs/app/building-your-application/configuring/typescript#statically-typed-links). This feature requires using the App Router as well as TypeScript in your project.
+# typedRoutes (experimental)
+
+정적 타입 링크에 대한 [실험적 지원](/docs/app/building-your-application/configuring/typescript#statically-typed-links). 이 기능을 사용하려면 App Router와 TypeScript를 프로젝트에서 사용해야 합니다.
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
@@ -12,7 +14,7 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```

@@ -3,20 +3,22 @@ title: reactStrictMode
 description: The complete Next.js runtime is now Strict Mode-compliant, learn how to opt-in
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
-> **Good to know**: Since Next.js 13.4, Strict Mode is `true` by default with `app` router, so the above configuration is only necessary for `pages`. You can still disable Strict Mode by setting `reactStrictMode: false`.
+# reactStrictMode
 
-> **Suggested**: We strongly suggest you enable Strict Mode in your Next.js application to better prepare your application for the future of React.
+> **참고:** Next.js 13.4부터 Strict Mode는 `app` 라우터에서 기본적으로 `true`로 설정되므로, 위의 설정은 `pages`에만 필요합니다. 여전히 `reactStrictMode: false`로 설정하여 Strict Mode를 비활성화할 수 있습니다.
 
-React's [Strict Mode](https://react.dev/reference/react/StrictMode) is a development mode only feature for highlighting potential problems in an application. It helps to identify unsafe lifecycles, legacy API usage, and a number of other features.
+> **권장:** React의 미래를 대비하기 위해 Next.js 애플리케이션에서 Strict Mode를 활성화하는 것을 강력히 권장합니다.
 
-The Next.js runtime is Strict Mode-compliant. To opt-in to Strict Mode, configure the following option in your `next.config.js`:
+React의 [Strict Mode](https://react.dev/reference/react/StrictMode)는 애플리케이션의 잠재적인 문제를 강조하기 위한 개발 모드 전용 기능입니다. 이는 안전하지 않은 생명주기, 레거시 API 사용 및 기타 여러 기능을 식별하는 데 도움이 됩니다.
+
+Next.js 런타임은 Strict Mode를 준수합니다. Strict Mode를 선택하려면 `next.config.js`에서 다음 옵션을 구성하세요:
 
 ```js filename="next.config.js"
 module.exports = {
   reactStrictMode: true,
-}
+};
 ```
 
-If you or your team are not ready to use Strict Mode in your entire application, that's OK! You can incrementally migrate on a page-by-page basis using `<React.StrictMode>`.
+애플리케이션 전체에서 Strict Mode를 사용할 준비가 되지 않았다면 괜찮습니다! `<React.StrictMode>`를 사용하여 페이지별로 점진적으로 마이그레이션할 수 있습니다.

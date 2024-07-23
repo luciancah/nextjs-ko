@@ -3,36 +3,38 @@ title: pageExtensions
 description: Extend the default page extensions used by Next.js when resolving pages in the Pages Router.
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
+
+# pageExtensions
 
 <AppOnly>
 
-By default, Next.js accepts files with the following extensions: `.tsx`, `.ts`, `.jsx`, `.js`. This can be modified to allow other extensions like markdown (`.md`, `.mdx`).
+기본적으로 Next.js는 `.tsx`, `.ts`, `.jsx`, `.js` 확장자를 가진 파일을 허용합니다. 이를 수정하여 마크다운(`.md`, `.mdx`)과 같은 다른 확장자를 허용할 수 있습니다.
 
 ```js filename="next.config.js"
-const withMDX = require('@next/mdx')()
+const withMDX = require("@next/mdx")();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-}
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+};
 
-module.exports = withMDX(nextConfig)
+module.exports = withMDX(nextConfig);
 ```
 
 </AppOnly>
 
 <PagesOnly>
 
-You can extend the default Page extensions (`.tsx`, `.ts`, `.jsx`, `.js`) used by Next.js. Inside `next.config.js`, add the `pageExtensions` config:
+Next.js에서 사용하는 기본 페이지 확장자(`.tsx`, `.ts`, `.jsx`, `.js`)를 확장할 수 있습니다. `next.config.js` 내부에 `pageExtensions` 설정을 추가하세요:
 
 ```js filename="next.config.js"
 module.exports = {
-  pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
-}
+  pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
+};
 ```
 
-Changing these values affects _all_ Next.js pages, including the following:
+이 값을 변경하면 다음을 포함한 _모든_ Next.js 페이지에 영향을 미칩니다:
 
 - [`middleware.js`](/docs/pages/building-your-application/routing/middleware)
 - [`instrumentation.js`](/docs/pages/building-your-application/optimizing/instrumentation)
@@ -40,18 +42,18 @@ Changing these values affects _all_ Next.js pages, including the following:
 - `pages/_app.js`
 - `pages/api/`
 
-For example, if you reconfigure `.ts` page extensions to `.page.ts`, you would need to rename pages like `middleware.page.ts`, `instrumentation.page.ts`, `_app.page.ts`.
+예를 들어, `.ts` 페이지 확장자를 `.page.ts`로 재구성하는 경우, `middleware.page.ts`, `instrumentation.page.ts`, `_app.page.ts`와 같이 페이지의 이름을 변경해야 합니다.
 
-## Including non-page files in the `pages` directory
+## `pages` 디렉토리에서 페이지가 아닌 파일 포함
 
-You can colocate test files or other files used by components in the `pages` directory. Inside `next.config.js`, add the `pageExtensions` config:
+테스트 파일이나 컴포넌트에서 사용되는 다른 파일을 `pages` 디렉토리에 함께 배치할 수 있습니다. `next.config.js` 내부에 `pageExtensions` 설정을 추가하세요:
 
 ```js filename="next.config.js"
 module.exports = {
-  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
-}
+  pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
+};
 ```
 
-Then, rename your pages to have a file extension that includes `.page` (e.g. rename `MyPage.tsx` to `MyPage.page.tsx`). Ensure you rename _all_ Next.js pages, including the files mentioned above.
+그런 다음, 페이지 파일의 확장자를 `.page`를 포함하도록 이름을 변경하세요(예: `MyPage.tsx`를 `MyPage.page.tsx`로 이름 변경). 위에서 언급한 파일들을 포함하여 _모든_ Next.js 페이지의 이름을 변경하세요.
 
 </PagesOnly>

@@ -3,21 +3,23 @@ title: transpilePackages
 description: Automatically transpile and bundle dependencies from local packages (like monorepos) or from external dependencies (`node_modules`).
 ---
 
-{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
-Next.js can automatically transpile and bundle dependencies from local packages (like monorepos) or from external dependencies (`node_modules`). This replaces the `next-transpile-modules` package.
+# transpilePackages
+
+Next.js는 로컬 패키지(모노레포와 같은) 또는 외부 종속성(`node_modules`)에서 종속성을 자동으로 트랜스파일하고 번들링할 수 있습니다. 이는 `next-transpile-modules` 패키지를 대체합니다.
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['package-name'],
-}
+  transpilePackages: ["package-name"],
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
 ## Version History
 
-| Version   | Changes                    |
-| --------- | -------------------------- |
-| `v13.0.0` | `transpilePackages` added. |
+| Version   | Changes                     |
+| --------- | --------------------------- |
+| `v13.0.0` | `transpilePackages` 추가됨. |
