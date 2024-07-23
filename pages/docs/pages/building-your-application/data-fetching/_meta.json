@@ -1,0 +1,20 @@
+{
+  "get-static-props": {
+    "title": "Get Static Props"
+  },
+  "get-static-paths": {
+    "title": "Get Static Paths"
+  },
+  "forms-and-mutations": {
+    "title": "Forms and Mutations"
+  },
+  "get-server-side-props": {
+    "title": "Get Server-Side Props"
+  },
+  "incremental-static-regeneration": {
+    "title": "Incremental Static Regeneration"
+  },
+  "client-side": {
+    "title": "Client-Side"
+  }
+}

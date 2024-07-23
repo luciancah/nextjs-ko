@@ -1,0 +1,36 @@
+---
+title: src Directory
+description: Save pages under the `src` directory as an alternative to the root `pages` directory.
+related:
+  links:
+    - app/building-your-application/routing/colocation
+---
+
+# src Directory
+
+{/* 이 문서의 내용은 app과 pages 라우터 간에 공유됩니다. Pages Router에만 해당되는 내용을 추가하려면 `<PagesOnly>Content</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유되는 내용은 컴포넌트로 감싸지 않아야 합니다. */}
+
+Next.js의 특별한 `app` 또는 `pages` 디렉토리를 프로젝트 루트에 두는 대신, `src` 디렉토리 아래에 애플리케이션 코드를 배치하는 일반적인 패턴도 지원합니다.
+
+이 방법은 애플리케이션 코드를 프로젝트 구성 파일과 분리하며, 이는 일부 개인 및 팀에서 선호됩니다.
+
+`src` 디렉토리를 사용하려면 `app` Router 폴더 또는 `pages` Router 폴더를 각각 `src/app` 또는 `src/pages`로 이동합니다.
+
+<Image
+  alt="An example folder structure with the `src` directory"
+  srcLight="/docs/light/project-organization-src-directory.png"
+  srcDark="/docs/dark/project-organization-src-directory.png"
+  width="1600"
+  height="687"
+/>
+
+> **참고**
+>
+> - `/public` 디렉토리는 프로젝트 루트에 그대로 유지해야 합니다.
+> - `package.json`, `next.config.js`, `tsconfig.json`과 같은 구성 파일은 프로젝트 루트에 그대로 유지해야 합니다.
+> - `.env.*` 파일은 프로젝트 루트에 그대로 유지해야 합니다.
+> - 루트 디렉토리에 `app` 또는 `pages`가 있는 경우 `src/app` 또는 `src/pages`는 무시됩니다.
+> - `src`를 사용하는 경우 `/components` 또는 `/lib`와 같은 다른 애플리케이션 폴더도 이동할 가능성이 큽니다.
+> - Middleware를 사용하는 경우 이를 `src` 디렉토리에 배치해야 합니다.
+> - Tailwind CSS를 사용하는 경우, `tailwind.config.js` 파일의 [content 섹션](https://tailwindcss.com/docs/content-configuration)에서 `/src` 접두사를 추가해야 합니다.
+> - `@/*`와 같은 TypeScript 경로를 사용 중이라면, `tsconfig.json`의 `paths` 객체를 업데이트하여 `src/`를 포함해야 합니다.

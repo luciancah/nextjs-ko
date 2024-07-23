@@ -1,0 +1,23 @@
+{
+  "components": {
+    "title": "Components"
+  },
+  "file-conventions": {
+    "title": "File Conventions"
+  },
+  "functions": {
+    "title": "Functions"
+  },
+  "next-config-js": {
+    "title": "next.config.js Options"
+  },
+  "create-next-app": {
+    "title": "create-next-app"
+  },
+  "edge": {
+    "title": "Edge Runtime"
+  },
+  "next-cli": {
+    "title": "Next.js CLI"
+  }
+}

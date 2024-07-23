@@ -1,0 +1,47 @@
+{
+  "typescript": {
+    "title": "TypeScript"
+  },
+  "eslint": {
+    "title": "ESLint"
+  },
+  "environment-variables": {
+    "title": "Environment Variables"
+  },
+  "absolute-imports-and-module-aliases": {
+    "title": "Absolute Imports and Module Aliases"
+  },
+  "src-directory": {
+    "title": "src Directory"
+  },
+  "mdx": {
+    "title": "MDX"
+  },
+  "amp": {
+    "title": "AMP"
+  },
+  "babel": {
+    "title": "Babel"
+  },
+  "post-css": {
+    "title": "Post CSS"
+  },
+  "custom-server": {
+    "title": "Custom Server"
+  },
+  "draft-mode": {
+    "title": "Draft Mode"
+  },
+  "error-handling": {
+    "title": "Error Handling"
+  },
+  "debugging": {
+    "title": "Debugging"
+  },
+  "preview-mode": {
+    "title": "Preview Mode"
+  },
+  "content-security-policy": {
+    "title": "Content Security Policy"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "server-side-rendering": {
+    "title": "Server-Side Rendering"
+  },
+  "static-site-generation": {
+    "title": "Static Site Generation"
+  },
+  "automatic-static-optimization": {
+    "title": "Automatic Static Optimization"
+  },
+  "client-side-rendering": {
+    "title": "Client-Side Rendering"
+  },
+  "edge-and-nodejs-runtimes": {
+    "title": "Edge and Node.js Runtimes"
+  }
+}

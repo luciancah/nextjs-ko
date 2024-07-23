@@ -1,0 +1,104 @@
+{
+  "assetPrefix": {
+    "title": "assetPrefix"
+  },
+  "basePath": {
+    "title": "basePath"
+  },
+  "compress": {
+    "title": "compress"
+  },
+  "crossOrigin": {
+    "title": "crossOrigin"
+  },
+  "devIndicators": {
+    "title": "devIndicators"
+  },
+  "distDir": {
+    "title": "distDir"
+  },
+  "env": {
+    "title": "env"
+  },
+  "eslint": {
+    "title": "eslint"
+  },
+  "exportPathMap": {
+    "title": "exportPathMap"
+  },
+  "generateBuildId": {
+    "title": "generateBuildId"
+  },
+  "generateEtags": {
+    "title": "generateEtags"
+  },
+  "headers": {
+    "title": "headers"
+  },
+  "httpAgentOptions": {
+    "title": "httpAgentOptions"
+  },
+  "images": {
+    "title": "images"
+  },
+  "incrementalCacheHandlerPath": {
+    "title": "incrementalCacheHandlerPath"
+  },
+  "instrumentationHook": {
+    "title": "instrumentationHook"
+  },
+  "onDemandEntries": {
+    "title": "onDemandEntries"
+  },
+  "optimizePackageImports": {
+    "title": "optimizePackageImports"
+  },
+  "output": {
+    "title": "output"
+  },
+  "pageExtensions": {
+    "title": "pageExtensions"
+  },
+  "poweredByHeader": {
+    "title": "poweredByHeader"
+  },
+  "productionBrowserSourceMaps": {
+    "title": "productionBrowserSourceMaps"
+  },
+  "reactStrictMode": {
+    "title": "reactStrictMode"
+  },
+  "redirects": {
+    "title": "redirects"
+  },
+  "rewrites": {
+    "title": "rewrites"
+  },
+  "runtime-configuration": {
+    "title": "runtime-configuration"
+  },
+  "serverExternalPackages": {
+    "title": "serverExternalPackages"
+  },
+  "trailingSlash": {
+    "title": "trailingSlash"
+  },
+  "transpilePackages": {
+    "title": "transpilePackages"
+  },
+  "turbo": {
+    "title": "turbo"
+  },
+  "typescript": {
+    "title": "typescript"
+  },
+  "urlImports": {
+    "title": "urlImports"
+  },
+  "webpack": {
+    "title": "webpack"
+  },
+  "webVitalsAttribution": {
+    "title": "webVitalsAttribution"
+  }
+}

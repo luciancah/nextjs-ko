@@ -1,0 +1,32 @@
+{
+  "images": {
+    "title": "Images"
+  },
+  "fonts": {
+    "title": "Fonts"
+  },
+  "scripts": {
+    "title": "Scripts"
+  },
+  "static-assets": {
+    "title": "Static Assets"
+  },
+  "package-bundling": {
+    "title": "Package Bundling"
+  },
+  "analytics": {
+    "title": "Analytics"
+  },
+  "lazy-loading": {
+    "title": "Lazy Loading"
+  },
+  "instrumentation": {
+    "title": "Instrumentation"
+  },
+  "open-telemetry": {
+    "title": "Open Telemetry"
+  },
+  "third-party-libraries": {
+    "title": "Third-Party Libraries"
+  }
+}

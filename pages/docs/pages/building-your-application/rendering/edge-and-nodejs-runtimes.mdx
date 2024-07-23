@@ -1,0 +1,23 @@
+---
+title: Edge and Node.js Runtimes
+description: Learn more about the switchable runtimes (Edge and Node.js) in Next.js.
+source: app/building-your-application/rendering/edge-and-nodejs-runtimes
+---
+
+# Runtimes
+
+Next.js에는 애플리케이션에서 사용할 수 있는 두 가지 서버 런타임이 있습니다:
+
+- **Node.js Runtime** (기본값): 모든 Node.js API 및 생태계의 호환 가능한 패키지에 접근할 수 있습니다.
+- **Edge Runtime**: 더 제한된 [API 세트](/docs/app/api-reference/edge)를 포함합니다.
+
+## Use Cases
+
+- Node.js 런타임은 애플리케이션 렌더링에 사용됩니다.
+- Edge 런타임은 미들웨어(리다이렉트, 리라이트 및 헤더 설정과 같은 라우팅 규칙)에 사용됩니다.
+
+## Caveats
+
+- Edge 런타임은 모든 Node.js API를 지원하지 않습니다. 일부 패키지는 작동하지 않습니다. 지원되지 않는 API에 대해 자세히 알아보려면 [Edge Runtime](/docs/app/api-reference/edge#unsupported-apis)을 참조하세요.
+- Edge 런타임은 Incremental Static Regeneration (ISR)을 지원하지 않습니다.
+- 두 런타임 모두 배포 인프라에 따라 [스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming)을 지원할 수 있습니다.

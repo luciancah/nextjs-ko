@@ -1,0 +1,254 @@
+---
+title: Deploying
+description: Learn how to deploy your Next.js app to production, either managed or self-hosted.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# Deploying
+
+축하합니다, 이제 프로덕션으로 배포할 시간입니다.
+
+[managed Next.js with Vercel](#managed-nextjs-with-vercel)을 사용하여 배포하거나, Node.js 서버, Docker 이미지 또는 정적 HTML 파일로 직접 호스팅할 수 있습니다. `next start`를 사용하여 배포할 때 모든 Next.js 기능이 지원됩니다.
+
+## Production Builds
+
+`next build`를 실행하면 프로덕션을 위한 최적화된 버전의 애플리케이션이 생성됩니다. 페이지를 기반으로 HTML, CSS, JavaScript 파일이 생성됩니다. JavaScript는 **컴파일**되고 브라우저 번들은 [Next.js Compiler](/docs/architecture/nextjs-compiler)를 사용하여 **최소화**되어 최고의 성능을 달성하고 [모든 최신 브라우저](/docs/architecture/supported-browsers)를 지원합니다.
+
+Next.js는 관리형 및 자가 호스팅 Next.js에서 사용되는 표준 배포 출력을 생성합니다. 이를 통해 모든 기능이 두 가지 배포 방식 모두에서 지원됩니다. 다음 주요 버전에서는 이 출력을 [Build Output API 사양](https://vercel.com/docs/build-output-api/v3?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)으로 전환할 예정입니다.
+
+## Managed Next.js with Vercel
+
+Next.js의 창시자이자 유지 관리자인 [Vercel](https://vercel.com/docs/frameworks/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)은 Next.js 애플리케이션을 위한 관리형 인프라와 개발자 경험 플랫폼을 제공합니다.
+
+Vercel에 배포하는 것은 설정이 필요 없으며, 전 세계적으로 확장성, 가용성 및 성능을 향상시키기 위한 추가 기능을 제공합니다. 그러나 모든 Next.js 기능은 자가 호스팅할 때도 여전히 지원됩니다.
+
+[Next.js on Vercel](https://vercel.com/docs/frameworks/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)에 대해 자세히 알아보거나 [템플릿을 무료로 배포](https://vercel.com/templates/next.js?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)하여 시도해 보세요.
+
+## Self-Hosting
+
+Next.js를 자가 호스팅하는 방법은 세 가지가 있습니다:
+
+- [Node.js 서버](#nodejs-server)
+- [Docker 컨테이너](#docker-image)
+- [정적 HTML 내보내기](#static-html-export)
+
+### Node.js Server
+
+Next.js는 Node.js를 지원하는 모든 호스팅 제공업체에 배포할 수 있습니다. `package.json`에 `"build"` 및 `"start"` 스크립트가 있는지 확인하세요:
+
+```json filename="package.json"
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  }
+}
+```
+
+그런 다음 `npm run build`를 실행하여 애플리케이션을 빌드합니다. 마지막으로 `npm run start`를 실행하여 Node.js 서버를 시작합니다. 이 서버는 모든 Next.js 기능을 지원합니다.
+
+### Docker Image
+
+Next.js는 [Docker](https://www.docker.com/) 컨테이너를 지원하는 모든 호스팅 제공업체에 배포할 수 있습니다. 이 접근 방식은 [Kubernetes](https://kubernetes.io/)와 같은 컨테이너 오케스트레이터에 배포할 때나 클라우드 제공업체의 컨테이너 내에서 실행할 때 사용할 수 있습니다.
+
+1. [Docker 설치](https://docs.docker.com/get-docker/)하기
+2. [예제 클론](https://github.com/vercel/next.js/tree/canary/examples/with-docker)하기 (또는 [다중 환경 예제](https://github.com/vercel/next.js/tree/canary/examples/with-docker-multi-env))
+3. 컨테이너 빌드하기: `docker build -t nextjs-docker .`
+4. 컨테이너 실행하기: `docker run -p 3000:3000 nextjs-docker`
+
+Docker를 통한 Next.js는 모든 Next.js 기능을 지원합니다.
+
+### Static HTML Export
+
+Next.js는 정적 사이트 또는 단일 페이지 애플리케이션(SPA)으로 시작한 후 서버가 필요한 기능을 선택적으로 업그레이드할 수 있습니다.
+
+Next.js는 이 [정적 내보내기](/docs/app/building-your-application/deploying/static-exports)를 지원하므로 HTML/CSS/JS 정적 자산을 제공할 수 있는 모든 웹 서버에 배포 및 호스팅할 수 있습니다. 여기에는 AWS S3, Nginx, Apache와 같은 도구가 포함됩니다.
+
+[정적 내보내기](/docs/app/building-your-application/deploying/static-exports)로 실행하면 서버가 필요한 Next.js 기능이 지원되지 않습니다. [자세히 알아보기](/docs/app/building-your-application/deploying/static-exports#unsupported-features).
+
+> **참고:**
+>
+> - [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)는 정적 내보내기와 함께 지원됩니다.
+
+## Features
+
+### Image Optimization
+
+`next/image`를 통한 [이미지 최적화](/docs/app/building-your-application/optimizing/images)는 `next start`를 사용하여 배포할 때 설정 없이 자가 호스팅으로 작동합니다. 별도의 서비스를 사용하여 이미지를 최적화하려는 경우, [이미지 로더를 구성](/docs/app/building-your-application/optimizing/images#loaders)할 수 있습니다.
+
+이미지 최적화는 `next.config.js`에서 사용자 정의 이미지 로더를 정의하여 [정적 내보내기](/docs/app/building-your-application/deploying/static-exports#image-optimization)와 함께 사용할 수 있습니다. 이미지는 빌드 중이 아닌 런타임에 최적화됩니다.
+
+> **참고:**
+>
+> - glibc 기반 리눅스 시스템에서는 과도한 메모리 사용을 방지하기 위해 [추가 구성](https://sharp.pixelplumbing.com/install#linux-memory-allocator)이 필요할 수 있습니다.
+> - 최적화된 이미지의 [캐싱 동작](/docs/app/api-reference/components/image#caching-behavior) 및 TTL 구성 방법에 대해 자세히 알아보세요.
+> - 이미지를 따로 최적화하는 경우에도 `next/image`를 사용하여 다른 이점을 유지하려면 [이미지 최적화 비활성화](/docs/app/api-reference/components/image#unoptimized)를 할 수 있습니다.
+
+### Middleware
+
+[미들웨어](/docs/app/building-your-application/routing/middleware)는 `next start`를 사용하여 배포할 때 설정 없이 자가 호스팅으로 작동합니다. 들어오는 요청에 액세스해야 하므로 [정적 내보내기](/docs/app/building-your-application/deploying/static-exports)에서는 지원되지 않습니다.
+
+미들웨어는 모든 사용 가능한 Node.js API의 하위 집합인 [런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 사용하여 낮은 지연 시간을 보장합니다. 이는 애플리케이션의 모든 경로나 자산 앞에서 실행될 수 있기 때문입니다. 이 런타임은 "엣지"에서 실행할 필요가 없으며 단일 지역 서버에서 작동합니다. 여러 지역에서 미들웨어를 실행하려면 추가 구성과 인프라가 필요합니다.
+
+모든 Node.js API가 필요한 로직을 추가하거나 외부 패키지를 사용하려는 경우, 이를 [레이아웃](/docs/app/building-your-application/routing/layouts-and-templates#layouts)에서 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)로 이동할 수 있습니다. 예를 들어, [헤더](/docs/app/api-reference/functions/headers)를 확인하고 [리디렉션](/docs/app/api-reference/functions/redirect)하는 경우입니다. `next.config.js`를 통해 헤더, 쿠키, 쿼리 매개변수를 사용하여 [리디렉션](/docs/app/api-reference/next-config-js/redirects#header-cookie-and-query-matching)하거나 [재작성](/docs/app/api-reference/next-config-js/rewrites#header-cookie-and-query-matching)할 수도 있습니다. 그것이 불가능하다면, [사용자 정의 서버](/docs/pages/building-your-application/configuring/custom-server)를 사용할 수도 있습니다.
+
+### Environment Variables
+
+Next.js는 빌드 타임 및 런타임 환경 변수를 모두 지원할 수 있습니다.
+
+**기본적으로, 환경 변수는 서버에서만 사용 가능합니다**. 브라우저에 환경 변수를 노출하려면 `NEXT_PUBLIC_` 접두어를 붙여야 합니다. 그러나 이러한 공개 환경 변수는 `next build` 동안 JavaScript 번들에 인라인됩니다.
+
+런타임 환경 변수를 읽으려면 `getServerSideProps`를 사용하거나 [App Router를 점진적으로 도입](/docs/app/building-your-application/upgrading/app-router-migration)하는 것을 권장합니다. App Router를 사용하면 동적 렌더링 중에 서버에서 안전하게 환경 변수를 읽을 수 있습니다. 이를 통해
+
+여러 환경에서 다른 값을 사용하여 단일 Docker 이미지를 승격시킬 수 있습니다.
+
+```jsx
+import { unstable_noStore as noStore } from 'next/cache';
+
+export default function Component() {
+  noStore();
+  // cookies(), headers(), and other dynamic functions
+  // will also opt into dynamic rendering, making
+  // this env variable is evaluated at runtime
+  const value = process.env.MY_VALUE
+  ...
+}
+```
+
+> **참고:**
+>
+> - [`register` 함수](/docs/app/building-your-application/optimizing/instrumentation)를 사용하여 서버 시작 시 코드를 실행할 수 있습니다.
+> - [runtimeConfig](/docs/pages/api-reference/next-config-js/runtime-configuration) 옵션을 사용하는 것을 권장하지 않습니다. 이는 독립 실행형 출력 모드에서 작동하지 않습니다. 대신, App Router를 [점진적으로 도입](/docs/app/building-your-application/upgrading/app-router-migration)하는 것을 권장합니다.
+
+### Caching and ISR
+
+Next.js는 응답, 생성된 정적 페이지, 빌드 출력 및 이미지, 글꼴, 스크립트와 같은 기타 정적 자산을 캐시할 수 있습니다.
+
+페이지를 캐시하고 다시 유효성 검사를 수행하는 것(Incremental Static Regeneration (ISR) 또는 App Router의 최신 기능 사용)은 **동일한 공유 캐시**를 사용합니다. 기본적으로 이 캐시는 Next.js 서버의 파일 시스템(디스크)에 저장됩니다. **자가 호스팅할 때 자동으로 작동합니다**. Pages와 App Router 모두 사용 가능합니다.
+
+캐시된 페이지와 데이터를 내구성 있는 스토리지에 저장하거나 Next.js 애플리케이션의 여러 컨테이너 또는 인스턴스 간에 캐시를 공유하려는 경우 Next.js 캐시 위치를 구성할 수 있습니다.
+
+#### Automatic Caching
+
+- Next.js는 진정으로 변경되지 않는 자산에 대해 `public, max-age=31536000, immutable`의 `Cache-Control` 헤더를 설정합니다. 이는 재정의할 수 없습니다. 이러한 변경 불가능한 파일에는 파일 이름에 SHA 해시가 포함되어 있어 무기한 안전하게 캐시할 수 있습니다. 예를 들어, [정적 이미지 가져오기](/docs/app/building-your-application/optimizing/images#local-images). 이미지의 TTL을 [구성할 수 있습니다](/docs/app/api-reference/components/image#caching-behavior).
+- Incremental Static Regeneration (ISR)은 `s-maxage: <revalidate in getStaticProps>, stale-while-revalidate`의 `Cache-Control` 헤더를 설정합니다. 이 재검증 시간은 [`getStaticProps` 함수](/docs/pages/building-your-application/data-fetching/get-static-props)에서 초 단위로 정의됩니다. `revalidate: false`로 설정하면 기본적으로 1년 캐시 기간이 설정됩니다.
+- 동적으로 렌더링된 페이지는 `private, no-cache, no-store, max-age=0, must-revalidate`의 `Cache-Control` 헤더를 설정하여 사용자별 데이터가 캐시되지 않도록 합니다. 이는 App Router와 Pages Router 모두에 적용됩니다. 여기에는 [Draft Mode](/docs/app/building-your-application/configuring/draft-mode)도 포함됩니다.
+
+#### Static Assets
+
+정적 자산을 다른 도메인이나 CDN에 호스팅하려는 경우 `next.config.js`에서 `assetPrefix` [구성](/docs/app/api-reference/next-config-js/assetPrefix)을 사용할 수 있습니다. Next.js는 JavaScript 또는 CSS 파일을 검색할 때 이 자산 접두사를 사용합니다. 자산을 다른 도메인으로 분리하면 DNS 및 TLS 해상도에 추가 시간이 소요된다는 단점이 있습니다.
+
+[`assetPrefix`에 대해 자세히 알아보기](/docs/app/api-reference/next-config-js/assetPrefix).
+
+#### Configuring Caching
+
+기본적으로 생성된 캐시 자산은 메모리(기본값은 50mb)와 디스크에 저장됩니다. Kubernetes와 같은 컨테이너 오케스트레이션 플랫폼을 사용하여 Next.js를 호스팅하는 경우, 각 포드는 캐시 사본을 가질 것입니다. 기본적으로 포드 간에 캐시가 공유되지 않기 때문에 캐시가 공유되지 않도록 하려면 Next.js 캐시를 구성하여 캐시 핸들러를 제공하고 메모리 캐싱을 비활성화해야 합니다.
+
+자가 호스팅할 때 ISR/데이터 캐시 위치를 구성하려면 `next.config.js` 파일에서 사용자 정의 핸들러를 구성할 수 있습니다:
+
+```jsx filename="next.config.js"
+module.exports = {
+  cacheHandler: require.resolve('./cache-handler.js'),
+  cacheMaxMemorySize: 0, // 기본 메모리 캐싱 비활성화
+}
+```
+
+그런 다음 프로젝트 루트에 `cache-handler.js`를 생성합니다. 예를 들어:
+
+```jsx filename="cache-handler.js"
+const cache = new Map()
+
+module.exports = class CacheHandler {
+  constructor(options) {
+    this.options = options
+  }
+
+  async get(key) {
+    // 이는 어디에나 저장될 수 있습니다. 예: 내구성 있는 스토리지
+    return cache.get(key)
+  }
+
+  async set(key, data, ctx) {
+    // 이는 어디에나 저장될 수 있습니다. 예: 내구성 있는 스토리지
+    cache.set(key, {
+      value: data,
+      lastModified: Date.now(),
+      tags: ctx.tags,
+    })
+  }
+
+  async revalidateTag(tag) {
+    // 캐시의 모든 항목을 반복합니다
+    for (let [key, value] of cache) {
+      // 값의 태그에 지정된 태그가 포함된 경우 이 항목을 삭제합니다
+      if (value.tags.includes(tag)) {
+        cache.delete(key)
+      }
+    }
+  }
+}
+```
+
+사용자 정의 캐시 핸들러를 사용하면 Next.js 애플리케이션을 호스팅하는 모든 포드 간의 일관성을 보장할 수 있습니다. 예를 들어, [Redis](https://github.com/vercel/next.js/tree/canary/examples/cache-handler-redis) 또는 AWS S3에 캐시된 값을 저장할 수 있습니다.
+
+> **참고:**
+>
+> - `revalidatePath`는 캐시 태그 위에 있는 편의 계층입니다. `revalidatePath`를 호출하면 제공된 페이지에 대한 특별한 기본 태그로 `revalidateTag` 함수를 호출합니다.
+
+### Build Cache
+
+Next.js는 `next build` 중에 애플리케이션의 버전을 식별하기 위해 ID를 생성합니다. 동일한 빌드는 여러 컨테이너를 부팅하고 사용할 수 있어야 합니다.
+
+환경의 각 단계마다 다시 빌드하는 경우, 컨테이너 간에 일관된 빌드 ID를 생성해야 합니다. `next.config.js`에서 `generateBuildId` 명령을 사용하세요:
+
+```jsx filename="next.config.js"
+module.exports = {
+  generateBuildId: async () => {
+    // 이는 어떤 것이든 될 수 있습니다. 최신 git 해시를 사용하는 경우
+    return process.env.GIT_HASH
+  },
+}
+```
+
+### Version Skew
+
+Next.js는 대부분의 [버전 스큐](https://www.industrialempathy.com/posts/version-skew/) 인스턴스를 자동으로 완화하고 자동으로 애플리케이션을 다시 로드하여 새 자산을 검색합니다. 예를 들어, `deploymentId`에 불일치가 있는 경우 페이지 간 전환은 미리 가져온 값을 사용하지 않고 하드 탐색을 수행합니다.
+
+애플리케이션이 다시 로드될 때 페이지 탐색 간에 지속되지 않는 상태로 설계되지 않은 경우 애플리케이션 상태가 손실될 수 있습니다. 예를 들어, URL 상태나 로컬 스토리지를 사용하면 페이지 새로 고침 후 상태가 유지됩니다. 그러나 `useState`와 같은 컴포넌트 상태는 이러한 탐색에서 손실됩니다.
+
+Vercel은 새로운 버전이 배포된 후에도 이전 버전의 자산과 기능이 이전 클라이언트에 계속 제공되도록 Next.js 애플리케이션을 위한 추가 [skew protection](https://vercel.com/docs/deployments/skew-protection?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)을 제공합니다.
+
+각 요청이 `?dpl` 쿼리 문자열 또는 `x-deployment-id` 헤더를 사용하도록 `next.config.js` 파일에서 `deploymentId` 속성을 수동으로 구성할 수 있습니다.
+
+## Manual Graceful Shutdowns
+
+자가 호스팅할 때 `SIGTERM` 또는 `SIGINT` 신호에서 서버가 종료될 때 코드를 실행하려고 할 수 있습니다.
+
+환경 변수를 `NEXT_MANUAL_SIG_HANDLE`로 `true`로 설정한 다음, `_document.js` 파일 내에서 해당 신호에 대한 핸들러를 등록할 수 있습니다. 환경 변수는 `.env` 파일이 아닌 `package.json` 스크립트에 직접 등록해야 합니다.
+
+> **참고:** `next dev`에서는 수동 신호 처리가 제공되지 않습니다.
+
+```json filename="package.json"
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "NEXT_MANUAL_SIG_HANDLE=true next start"
+  }
+}
+```
+
+```js filename="pages/_document.js"
+if (process.env.NEXT_MANUAL_SIG_HANDLE) {
+  process.on('SIGTERM', () => {
+    console.log('Received SIGTERM: cleaning up')
+    process.exit(0)
+  })
+  process.on('SIGINT', () => {
+    console.log('Received SIGINT: cleaning up')
+    process.exit(0)
+  })
+}
+```

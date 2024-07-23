@@ -11,6 +11,9 @@
   "app": {
     "title": "App Router"
   },
+  "pages": {
+    "title": "Pages Router"
+  },
   "architecture": {
     "title": "Architecture"
   },

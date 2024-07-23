@@ -1,0 +1,644 @@
+---
+title: Font Optimization
+nav_title: Fonts
+description: Optimize your application's web fonts with the built-in `next/font` loaders.
+related:
+  title: API Reference
+  description: Learn more about the next/font API.
+  links:
+    - app/api-reference/components/font
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# Font Optimization
+
+[**`next/font`**](/docs/app/api-reference/components/font)는 자동으로 폰트(사용자 정의 폰트 포함)를 최적화하고, 외부 네트워크 요청을 제거하여 개인 정보 보호와 성능을 향상시킵니다.
+
+> **🎥 보기:** `next/font` 사용에 대해 더 알아보기 → [YouTube (6분)](https://www.youtube.com/watch?v=L8_98i_bMMA).
+
+`next/font`에는 **모든** 폰트 파일에 대해 **내장된 자동 자체 호스팅** 기능이 포함되어 있습니다. 이는 기본 CSS `size-adjust` 속성을 사용하여 레이아웃 변경 없이 웹 폰트를 최적으로 로드할 수 있음을 의미합니다.
+
+이 새로운 폰트 시스템은 성능과 개인 정보 보호를 염두에 두고 모든 Google Fonts를 편리하게 사용할 수 있도록 합니다. CSS 및 폰트 파일은 빌드 시 다운로드되며 정적 자산의 나머지 부분과 함께 자체 호스팅됩니다. **브라우저에서 Google에 요청을 보내지 않습니다.**
+
+## Google Fonts
+
+자동으로 모든 Google Fonts를 자체 호스팅합니다. 폰트는 배포에 포함되어 배포와 동일한 도메인에서 제공됩니다. **브라우저에서 Google에 요청을 보내지 않습니다.**
+
+`next/font/google`에서 사용하려는 폰트를 함수로 가져와 시작하세요. 최상의 성능과 유연성을 위해 [variable fonts](https://fonts.google.com/variablefonts)를 사용하는 것이 좋습니다.
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import { Inter } from 'next/font/google'
+
+// 가변 폰트를 로드하는 경우 폰트 굵기를 지정할 필요가 없습니다.
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { Inter } from 'next/font/google'
+
+// 가변 폰트를 로드하는 경우 폰트 굵기를 지정할 필요가 없습니다.
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+가변 폰트를 사용할 수 없는 경우 **굵기를 지정해야 합니다**:
+
+```tsx filename="app/layout.tsx" switcher
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={roboto.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={roboto.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+모든 페이지에서 폰트를 사용하려면, 아래와 같이 `/pages`의 [`_app.js` 파일](/docs/pages/building-your-application/routing/custom-app)에 추가하세요:
+
+```jsx filename="pages/_app.js"
+import { Inter } from 'next/font/google'
+
+// 가변 폰트를 로드하는 경우 폰트 굵기를 지정할 필요가 없습니다.
+const inter = Inter({ subsets: ['latin'] })
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={inter.className}>
+      <Component {...pageProps} />
+    </main>
+  )
+}
+```
+
+가변 폰트를 사용할 수 없는 경우 **굵기를 지정해야 합니다**:
+
+```jsx filename="pages/_app.js"
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+})
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={roboto.className}>
+      <Component {...pageProps} />
+    </main>
+  )
+}
+```
+
+</PagesOnly>
+
+여러 굵기 및/또는 스타일을 배열로 지정할 수 있습니다:
+
+```jsx filename="app/layout.js"
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+})
+```
+
+> **알아두면 좋은 점**: 여러 단어로 구성된 폰트 이름에는 밑줄(\_)을 사용하세요. 예: `Roboto Mono`는 `Roboto_Mono`로 가져와야 합니다.
+
+<PagesOnly>
+
+### `<head>`에 폰트 적용
+
+래퍼와 `className` 없이도 `<head>` 내에 폰트를 주입하여 사용할 수 있습니다:
+
+```jsx filename="pages/_app.js"
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <Component {...pageProps} />
+    </>
+  )
+}
+```
+
+### 단일 페이지 사용
+
+특정 페이지에서 폰트를 사용하려면, 아래와 같이 해당 페이지에 추가하세요:
+
+```jsx filename="pages/index.js"
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+
+export default function Home() {
+  return (
+    <div className={inter.className}>
+      <p>Hello World</p>
+    </div>
+  )
+}
+```
+
+</PagesOnly>
+
+### Specifying a subset
+
+Google Fonts는 자동으로 [서브셋](https://fonts.google.com/knowledge/glossary/subsetting)됩니다. 이는 폰트 파일의 크기를 줄이고 성능을 향상시킵니다. 미리 로드할 서브셋을 정의해야 합니다. [`preload`](/docs/app/api-reference/components/font#preload)가 `true`일 때 서브셋을 지정하지 않으면 경고가 발생합니다.
+
+이 작업은 함수 호출에 추가하여 수행할 수 있습니다:
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+const inter = Inter({ subsets: ['latin'] })
+```
+
+```jsx filename="app/layout.js" switcher
+const inter = Inter({ subsets: ['latin'] })
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+```jsx filename="pages/_app.js"
+const inter = Inter({ subsets: ['latin'] })
+```
+
+</PagesOnly>
+
+더 많은 정보는 [Font API Reference](/docs/app/api-reference/components/font)를 참조하세요.
+
+### Using Multiple Fonts
+
+애플리케이션에서 여러 폰트를 가져와 사용할 수 있습니다. 두 가지 접근 방식을 사용할 수 있습니다.
+
+첫 번째 접근 방식은 폰트를 내보내는 유틸리티 함수를 만들고, 이를 가져와 필요한 곳에 `className`을 적용하는 것입니다. 이는 렌더링될 때만 폰트가 미리 로드되도록 보장합니다:
+
+```ts filename="app/fonts.ts" switcher
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+export const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+})
+```
+
+```js filename="app/fonts.js" switcher
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+export const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+})
+```
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import { inter } from './fonts'
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>
+        <div>{children}</div>
+      </body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { inter } from './fonts'
+
+export default function Layout({ children }) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>
+        <div>{children}</div>
+      </body>
+    </html>
+  )
+}
+```
+
+```tsx filename="app/page.tsx" switcher
+import { roboto_mono } from './fonts'
+
+export default function Page() {
+  return (
+    <>
+      <h1 className={roboto_mono.className}>My page</h1>
+    </>
+  )
+}
+```
+
+```jsx filename="app/page.js" switcher
+import { roboto_mono } from './fonts'
+
+export default function Page() {
+  return (
+    <>
+      <h1 className={roboto_mono.className}>My page</h1>
+    </>
+  )
+}
+```
+
+</AppOnly>
+
+위 예제에서 `Inter`는 전역적으로 적용되며, `Roboto Mono`는 필요에 따라 가져와 적용할 수 있습니다.
+
+대안으로, [CSS 변수](/docs/app/api-reference/components/font#variable)를 생성하여 선호하는 CSS 솔루션과 함께 사용할 수 있습니다:
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import { Inter, Roboto_Mono } from 'next/font/google'
+import styles from './global.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  variable: '--font-roboto-mono',
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
+      <body>
+        <h1>My App</h1>
+        <div>{children}</div>
+      </body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  variable: '--font-roboto-mono',
+  display: 'swap',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
+      <body>
+        <h1>My App</h1>
+        <div>{children}</div>
+      </body>
+    </html>
+  )
+}
+```
+
+</AppOnly>
+
+```css filename="app/global.css"
+html {
+  font-family: var(--font-inter);
+}
+
+h1 {
+  font-family: var(--font-roboto-mono);
+}
+```
+
+위 예제에서 `Inter`는 전역적으로 적용되며, 모든 `<h1>` 태그는 `Roboto Mono`로 스타일링됩니다.
+
+> **Recommendation**: 클라이언트가 다운로드해야 하는 추가 리소스가 있기 때문에 여러 폰트를 보수적으로 사용하는 것이 좋습니다.
+
+## Local Fonts
+
+`next/font/local`을 가져와 로컬 폰트 파일의 `src`를 지정하세요. 최상의 성능과 유연성을 위해 [variable fonts](https://fonts.google.com/variablefonts)를 사용하는 것이 좋습니다.
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import localFont from 'next/font/local'
+
+// 폰트 파일은 `app` 내부에 위치할 수 있습니다.
+const myFont = localFont({
+  src: './my-font.woff2',
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={myFont.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import localFont from 'next/font/local'
+
+// 폰트 파일은 `app` 내부에 위치할 수 있습니다.
+const myFont = localFont({
+  src: './my-font.woff2',
+  display: 'swap',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={myFont.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+```jsx filename="pages/_app.js"
+import localFont from 'next/font/local'
+
+// 폰트 파일은 `pages` 내부에 위치할 수 있습니다.
+const myFont = localFont({ src: './my-font.woff2' })
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={myFont.className}>
+      <Component {...pageProps} />
+    </main>
+  )
+}
+```
+
+</PagesOnly>
+
+단일 폰트 패밀리용으로 여러 파일을 사용하려는 경우 `src`는 배열이 될 수 있습니다:
+
+```js
+const roboto = localFont({
+  src: [
+    {
+      path: './Roboto-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './Roboto-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: './Roboto-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './Roboto-BoldItalic.woff2',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+})
+```
+
+더 많은 정보는 [Font API Reference](/docs/app/api-reference/components/font)를 참조하세요.
+
+## With Tailwind CSS
+
+`next/font`는 [CSS 변수](/docs/app/api-reference/components/font#css-variables)를 통해 [Tailwind CSS](https://tailwindcss.com/)와 함께 사용할 수 있습니다.
+
+아래 예제에서는 `next/font/google`의 `Inter` 폰트를 사용합니다(로컬 폰트 또는 Google 폰트 중 아무거나 사용할 수 있습니다). CSS 변수 이름을 정의하는 `variable` 옵션을 사용하여 폰트를 로드하고, 이를 `inter`에 할당합니다. 그런 다음, `inter.variable`을 사용하여 CSS 변수를 HTML 문서에 추가합니다.
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { Inter, Roboto_Mono } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const roboto_mono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={`${inter.variable} ${roboto_mono.variable}`}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+```jsx filename="pages/_app.js"
+import { Inter } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={`${inter.variable} font-sans`}>
+      <Component {...pageProps} />
+    </main>
+  )
+}
+```
+
+</PagesOnly>
+
+마지막으로, [Tailwind CSS 설정](/docs/app/building-your-application/styling/tailwind-css#configuring-tailwind)에 CSS 변수를 추가하세요:
+
+```js filename="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)'],
+        mono: ['var(--font-roboto-mono)'],
+      },
+    },
+  },
+  plugins: [],
+}
+```
+
+이제 `font-sans` 및 `font-mono` 유틸리티 클래스를 사용하여 요소에 폰트를 적용할 수 있습니다.
+
+## Preloading
+
+<AppOnly>
+사이트의 페이지에서 폰트 함수를 호출할 때, 해당 폰트는 모든 경로에서 전역적으로 사용 가능하고 미리 로드되지 않습니다. 대신, 폰트는 사용된 파일 유형에 따라 관련 경로에서만 미리 로드됩니다:
+
+- [고유한 페이지](/docs/app/building-your-application/routing/pages)인 경우, 해당 페이지의 고유한 경로에서 미리 로드됩니다.
+- [레이아웃](/docs/app/building-your-application/routing/layouts-and-templates#layouts)인 경우, 레이아웃으로 감싸진 모든 경로에서 미리 로드됩니다.
+- [루트 레이아웃](/docs/app/building-your-application/routing/layouts-and-templates#root-layout-required)인 경우, 모든 경로에서 미리 로드됩니다.
+
+</AppOnly>
+
+<PagesOnly>
+
+사이트의 페이지에서 폰트 함수를 호출할 때, 해당 폰트는 모든 경로에서 전역적으로 사용 가능하고 미리 로드되지 않습니다. 대신, 사용된 파일 유형에 따라 관련 경로에서만 미리 로드됩니다:
+
+- [고유한 페이지](/docs/pages/building-your-application/routing/pages-and-layouts)인 경우, 해당 페이지의 고유한 경로에서 미리 로드됩니다.
+- [커스텀 앱](/docs/pages/building-your-application/routing/custom-app)인 경우, `/pages`의 모든 경로에서 미리 로드됩니다.
+
+</PagesOnly>
+
+## Reusing fonts
+
+`localFont` 또는 Google 폰트 함수를 호출할 때마다 해당 폰트는 애플리케이션에 하나의 인스턴스로 호스팅됩니다. 따라서 동일한 폰트 함수를 여러 파일에서 로드하면 동일한 폰트의 여러 인스턴스가 호스팅됩니다. 이 상황에서는 다음을 권장합니다:
+
+- 하나의 공유 파일에서 폰트 로더 함수를 호출합니다.
+- 이를 상수로 내보냅니다.
+- 이 폰트를 사용하려는 각 파일에서 상수를 가져옵니다.

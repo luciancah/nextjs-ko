@@ -1,0 +1,32 @@
+{
+  "routing": {
+    "title": "Routing"
+  },
+  "rendering": {
+    "title": "Rendering"
+  },
+  "data-fetching": {
+    "title": "Data Fetching"
+  },
+  "styling": {
+    "title": "Styling"
+  },
+  "optimizing": {
+    "title": "Optimizing"
+  },
+  "configuring": {
+    "title": "Configuring"
+  },
+  "testing": {
+    "title": "Testing"
+  },
+  "authentication": {
+    "title": "Authentication"
+  },
+  "deploying": {
+    "title": "Deploying"
+  },
+  "upgrading": {
+    "title": "Upgrading"
+  }
+}

@@ -1,0 +1,73 @@
+---
+title: userAgent
+description: The userAgent helper extends the Web Request API with additional properties and methods to interact with the user agent object from the request.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# userAgent
+
+`userAgent` 도우미는 [Web Request API](https://developer.mozilla.org/docs/Web/API/Request)를 확장하여 요청의 사용자 에이전트 객체와 상호작용할 수 있는 추가 속성과 메서드를 제공합니다.
+
+```ts filename="middleware.ts" switcher
+import { NextRequest, NextResponse, userAgent } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  const url = request.nextUrl
+  const { device } = userAgent(request)
+  const viewport = device.type === 'mobile' ? 'mobile' : 'desktop'
+  url.searchParams.set('viewport', viewport)
+  return NextResponse.rewrite(url)
+}
+```
+
+```js filename="middleware.js" switcher
+import { NextResponse, userAgent } from 'next/server'
+
+export function middleware(request) {
+  const url = request.nextUrl
+  const { device } = userAgent(request)
+  const viewport = device.type === 'mobile' ? 'mobile' : 'desktop'
+  url.searchParams.set('viewport', viewport)
+  return NextResponse.rewrite(url)
+}
+```
+
+## `isBot`
+
+요청이 알려진 봇으로부터 왔는지를 나타내는 부울 값입니다.
+
+## `browser`
+
+요청에 사용된 브라우저에 대한 정보를 포함하는 객체입니다.
+
+- `name`: 브라우저의 이름을 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+- `version`: 브라우저의 버전을 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+
+## `device`
+
+요청에 사용된 장치에 대한 정보를 포함하는 객체입니다.
+
+- `model`: 장치의 모델을 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+- `type`: 장치의 유형을 나타내는 문자열입니다. 가능한 값은 `console`, `mobile`, `tablet`, `smarttv`, `wearable`, `embedded`, 또는 `undefined`입니다.
+- `vendor`: 장치의 제조사를 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+
+## `engine`
+
+브라우저의 엔진에 대한 정보를 포함하는 객체입니다.
+
+- `name`: 엔진의 이름을 나타내는 문자열입니다. 가능한 값은 `Amaya`, `Blink`, `EdgeHTML`, `Flow`, `Gecko`, `Goanna`, `iCab`, `KHTML`, `Links`, `Lynx`, `NetFront`, `NetSurf`, `Presto`, `Tasman`, `Trident`, `w3m`, `WebKit` 또는 `undefined`입니다.
+- `version`: 엔진의 버전을 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+
+## `os`
+
+운영 체제에 대한 정보를 포함하는 객체입니다.
+
+- `name`: 운영 체제의 이름을 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+- `version`: 운영 체제의 버전을 나타내는 문자열입니다. 식별할 수 없는 경우 `undefined`입니다.
+
+## `cpu`
+
+CPU 아키텍처에 대한 정보를 포함하는 객체입니다.
+
+- `architecture`: CPU 아키텍처를 나타내는 문자열입니다. 가능한 값은 `68k`, `amd64`, `arm`, `arm64`, `armhf`, `avr`, `ia32`, `ia64`, `irix`, `irix64`, `mips`, `mips64`, `pa-risc`, `ppc`, `sparc`, `sparc64` 또는 `undefined`입니다.
