@@ -1,0 +1,36 @@
+---
+title: 접근성
+description: The built-in accessibility features of Next.js.
+---
+
+# 접근성
+
+Next.js 팀은 모든 개발자(및 최종 사용자)를 위해 Next.js를 접근 가능하게 만드는 데 전념하고 있습니다. 기본적으로 Next.js에 접근성 기능을 추가하여 모든 사람을 위한 더 포괄적인 웹을 만드는 것을 목표로 하고 있습니다.
+
+## 라우트 알림
+
+서버에서 렌더링된 페이지 간 전환 시(e.g. `<a href>` 태그 사용) 스크린 리더 및 기타 보조 기술은 페이지가 로드될 때 페이지 제목을 알리므로 사용자가 페이지가 변경되었음을 이해할 수 있습니다.
+
+전통적인 페이지 탐색 외에도, Next.js는 성능 향상을 위해 클라이언트 측 전환(`next/link` 사용)을 지원합니다. 클라이언트 측 전환도 보조 기술에 알리기 위해, Next.js는 기본적으로 라우트 알림 기능을 포함하고 있습니다.
+
+Next.js 라우트 알림 기능은 페이지 이름을 알리기 위해 먼저 `document.title`을 검사한 후 `<h1>` 요소, 마지막으로 URL 경로명을 검사합니다. 가장 접근 가능한 사용자 경험을 제공하려면 애플리케이션의 각 페이지에 고유하고 설명적인 제목을 지정하세요.
+
+## 린팅
+
+Next.js는 Next.js를 위한 맞춤형 규칙을 포함한 [통합 ESLint 경험](/docs/pages/building-your-application/configuring/eslint)을 기본으로 제공합니다. 기본적으로 Next.js는 접근성 문제를 조기에 감지하는 데 도움이 되는 `eslint-plugin-jsx-a11y`를 포함하고 있으며, 다음과 같은 항목에 대해 경고합니다:
+
+- [aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
+- [aria-proptypes](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-proptypes.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
+- [aria-unsupported-elements](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/aria-unsupported-elements.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
+- [role-has-required-aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/role-has-required-aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
+- [role-supports-aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/HEAD/docs/rules/role-supports-aria-props.md?rgh-link-date=2021-06-04T02%3A10%3A36Z)
+
+예를 들어, 이 플러그인은 `img` 태그에 대체 텍스트를 추가하고, 올바른 `aria-*` 속성을 사용하며, 올바른 `role` 속성을 사용하는지 등을 보장합니다.
+
+## 접근성 자료
+
+- [WebAIM WCAG 체크리스트](https://webaim.org/standards/wcag/checklist)
+- [WCAG 2.2 지침](https://www.w3.org/TR/WCAG22/)
+- [The A11y Project](https://www.a11yproject.com/)
+- 전경과 배경 요소 간의 [색 대비 비율 확인](https://developer.mozilla.org/docs/Web/Accessibility/Understanding_WCAG/Perceivable/Color_contrast)
+- 애니메이션 작업 시 [`prefers-reduced-motion`](https://web.dev/prefers-reduced-motion/) 사용

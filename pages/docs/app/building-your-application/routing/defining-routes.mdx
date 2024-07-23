@@ -1,0 +1,62 @@
+---
+title: 경로 정의하기
+description: Next.js에서 첫 번째 경로를 만드는 방법을 알아보세요.
+related:
+  description: 페이지와 레이아웃 만들기에 대해 더 알아보세요.
+  links:
+    - app/building-your-application/routing/pages
+---
+
+import Image from "next/image";
+
+# 경로 정의하기
+
+> 계속하기 전에 [라우팅 기본 사항](/docs/app/building-your-application/routing) 페이지를 읽는 것을 추천합니다.
+
+이 페이지에서는 Next.js 애플리케이션에서 경로를 정의하고 구성하는 방법을 안내합니다.
+
+## 경로 생성하기
+
+Next.js는 파일 시스템 기반의 라우터를 사용하여 **폴더**를 경로 정의에 사용합니다.
+
+각 폴더는 **URL** 세그먼트에 매핑되는 [**경로** 세그먼트](/docs/app/building-your-application/routing#route-segments)를 나타냅니다. [중첩 경로](/docs/app/building-your-application/routing#nested-routes)를 생성하려면 폴더를 서로 중첩할 수 있습니다.
+
+<Image
+  alt="라우트 세그먼트가 경로 세그먼트로"
+  srcLight="/docs/light/route-segments-to-path-segments.png"
+  srcDark="/docs/dark/route-segments-to-path-segments.png"
+  width="1600"
+  height="594"
+/>
+
+특수한 [`page.js` 파일](/docs/app/building-your-application/routing/pages)은 경로 세그먼트를 공개적으로 접근할 수 있도록 합니다.
+
+<Image
+  alt="경로 정의하기"
+  srcLight="/docs/light/defining-routes.png"
+  srcDark="/docs/dark/defining-routes.png"
+  width="1600"
+  height="687"
+/>
+
+이 예에서, `/dashboard/analytics` URL 경로는 해당 `page.js` 파일이 없기 때문에 공개적으로 접근할 수 없습니다. 이 폴더는 컴포넌트, 스타일시트, 이미지 또는 다른 콜로케이트 파일을 저장하는 데 사용할 수 있습니다.
+
+> **알아두면 좋은 점**: 특수 파일에는 `.js`, `.jsx` 또는 `.tsx` 파일 확장자를 사용할 수 있습니다.
+
+## UI 생성하기
+
+[특수 파일 규칙](/docs/app/building-your-application/routing#file-conventions)은 각 경로 세그먼트에 대한 UI를 생성하는 데 사용됩니다. 가장 일반적인 것은 경로에 고유한 UI를 표시하는 [pages](/docs/app/building-your-application/routing/pages)와 여러 경로에 걸쳐 공유되는 UI를 표시하는 [layouts](/docs/app/building-your-application/routing/layouts-and-templates#layouts)입니다.
+
+예를 들어, 첫 번째 페이지를 생성하려면 `app` 디렉토리 내에 `page.js` 파일을 추가하고 React 컴포넌트를 내보내세요:
+
+```tsx filename="app/page.tsx" switcher
+export default function Page() {
+  return <h1>Hello, Next.js!</h1>;
+}
+```
+
+```jsx filename="app/page.js" switcher
+export default function Page() {
+  return <h1>Hello, Next.js!</h1>;
+}
+```

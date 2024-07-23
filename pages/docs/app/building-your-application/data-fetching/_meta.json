@@ -1,0 +1,11 @@
+{
+  "fetching": {
+    "title": "Fetching"
+  },
+  "caching-and-revalidating": {
+    "title": "Caching and Revalidating"
+  },
+  "server-actions-and-mutations": {
+    "title": "Server Actions and Mutations"
+  }
+}

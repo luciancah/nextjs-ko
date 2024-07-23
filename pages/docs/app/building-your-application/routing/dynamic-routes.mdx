@@ -1,0 +1,144 @@
+---
+title: Dynamic Routes
+description: Dynamic Routes can be used to programmatically generate route segments from dynamic data.
+related:
+  title: Next Steps
+  description: For more information on what to do next, we recommend the following sections
+  links:
+    - app/building-your-application/routing/linking-and-navigating
+    - app/api-reference/functions/generate-static-params
+---
+
+import Image from "next/image";
+import AppOnly from "components/apponly";
+import PagesOnly from "components/pagesonly";
+
+# Dynamic Routes
+
+동적 라우트를 사용하면 동적 데이터를 기반으로 프로그래매틱하게 라우트 세그먼트를 생성할 수 있습니다.
+
+## Convention
+
+규칙
+
+동적 세그먼트는 폴더 이름을 대괄호로 감싸서 만들 수 있습니다: `[folderName]`. 예를 들어, `[id]` 또는 `[slug]`.
+
+동적 세그먼트는 `params` prop으로 [`layout`](/docs/app/api-reference/file-conventions/layout), [`page`](/docs/app/api-reference/file-conventions/page), [`route`](/docs/app/building-your-application/routing/route-handlers), 및 [`generateMetadata`](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function) 함수에 전달됩니다.
+
+## Example
+
+예제
+
+예를 들어, 블로그는 `[slug]`가 블로그 게시물의 동적 세그먼트인 `app/blog/[slug]/page.js` 라우트를 포함할 수 있습니다.
+
+```tsx filename="app/blog/[slug]/page.tsx" switcher
+export default function Page({ params }: { params: { slug: string } }) {
+  return <div>My Post: {params.slug}</div>;
+}
+```
+
+```jsx filename="app/blog/[slug]/page.js" switcher
+export default function Page({ params }) {
+  return <div>My Post: {params.slug}</div>;
+}
+```
+
+| Route                     | Example URL | `params`        |
+| ------------------------- | ----------- | --------------- |
+| `app/blog/[slug]/page.js` | `/blog/a`   | `{ slug: 'a' }` |
+| `app/blog/[slug]/page.js` | `/blog/b`   | `{ slug: 'b' }` |
+| `app/blog/[slug]/page.js` | `/blog/c`   | `{ slug: 'c' }` |
+
+세그먼트에 대한 `params`를 생성하는 방법은 [generateStaticParams()](#generating-static-params) 페이지를 참조하세요.
+
+> **참고**: 동적 세그먼트는 `pages` 디렉토리의 [동적 라우트](/docs/app/building-your-application/routing/dynamic-routes)와 동일합니다.
+
+## Generating Static Params
+
+정적 매개변수 생성
+
+`generateStaticParams` 함수는 [동적 경로 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)와 결합하여 빌드 시 [**정적 생성**](/docs/app/building-your-application/rendering/server-components#static-rendering-default) 라우트를 생성하는 데 사용할 수 있습니다.
+
+```tsx filename="app/blog/[slug]/page.tsx" switcher
+export async function generateStaticParams() {
+  const posts = await fetch("https://.../posts").then((res) => res.json());
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+```jsx filename="app/blog/[slug]/page.js" switcher
+export async function generateStaticParams() {
+  const posts = await fetch("https://.../posts").then((res) => res.json());
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+`generateStaticParams` 함수의 주요 이점은 데이터의 스마트한 검색입니다. `generateStaticParams` 함수 내에서 `fetch` 요청을 사용하여 콘텐츠를 검색하면 요청이 [자동으로 메모이제이션](/docs/app/building-your-application/caching#request-memoization)됩니다. 즉, 여러 `generateStaticParams`, 레이아웃 및 페이지에서 동일한 인수를 사용하는 `fetch` 요청은 한 번만 수행되어 빌드 시간을 단축합니다.
+
+`pages` 디렉토리에서 마이그레이션하는 경우 [마이그레이션 가이드](/docs/app/building-your-application/upgrading/app-router-migration#dynamic-paths-getstaticpaths)를 사용하세요.
+
+더 많은 정보와 고급 사용 사례는 [`generateStaticParams` 서버 함수 문서](/docs/app/api-reference/functions/generate-static-params)를 참조하세요.
+
+## Catch-all Segments
+
+Catch-all 세그먼트
+
+동적 세그먼트는 대괄호 안에 줄임표를 추가하여 **모든 후속 세그먼트를 포괄**하도록 확장할 수 있습니다: `[...folderName]`.
+
+예를 들어, `app/shop/[...slug]/page.js`는 `/shop/clothes`뿐만 아니라 `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts` 등에도 일치합니다.
+
+| Route                        | Example URL   | `params`                    |
+| ---------------------------- | ------------- | --------------------------- |
+| `app/shop/[...slug]/page.js` | `/shop/a`     | `{ slug: ['a'] }`           |
+| `app/shop/[...slug]/page.js` | `/shop/a/b`   | `{ slug: ['a', 'b'] }`      |
+| `app/shop/[...slug]/page.js` | `/shop/a/b/c` | `{ slug: ['a', 'b', 'c'] }` |
+
+## Optional Catch-all Segments
+
+선택적 Catch-all 세그먼트
+
+Catch-all 세그먼트는 매개변수를 이중 대괄호로 포함하여 **선택 사항**으로 만들 수 있습니다: `[[...folderName]]`.
+
+예를 들어, `app/shop/[[...slug]]/page.js`는 `/shop/clothes`, `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`뿐만 아니라 `/shop`과도 일치합니다.
+
+**catch-all**과 **optional catch-all** 세그먼트의 차이점은 optional의 경우 매개변수 없이도 경로가 일치한다는 점입니다(위 예제의 `/shop`).
+
+| Route                          | Example URL   | `params`                    |
+| ------------------------------ | ------------- | --------------------------- |
+| `app/shop/[[...slug]]/page.js` | `/shop`       | `{}`                        |
+| `app/shop/[[...slug]]/page.js` | `/shop/a`     | `{ slug: ['a'] }`           |
+| `app/shop/[[...slug]]/page.js` | `/shop/a/b`   | `{ slug: ['a', 'b'] }`      |
+| `app/shop/[[...slug]]/page.js` | `/shop/a/b/c` | `{ slug: ['a', 'b', 'c'] }` |
+
+## TypeScript
+
+TypeScript
+
+TypeScript를 사용할 때, 구성된 경로 세그먼트에 따라 `params`에 대한 타입을 추가할 수 있습니다.
+
+```tsx filename="app/blog/[slug]/page.tsx" switcher
+export default function Page({ params }: { params: { slug: string } }) {
+  return <h1>My Page</h1>;
+}
+```
+
+```jsx filename="app/blog/[slug]/page.js" switcher
+export default function Page({ params }) {
+  return <h1>My Page</h1>;
+}
+```
+
+| Route                               | `params` Type Definition                 |
+| ----------------------------------- | ---------------------------------------- |
+| `app/blog/[slug]/page.js`           | `{ slug: string }`                       |
+| `app/shop/[...slug]/page.js`        | `{ slug: string[] }`                     |
+| `app/shop/[[...slug]]/page.js`      | `{ slug?: string[] }`                    |
+| `app/[categoryId]/[itemId]/page.js` | `{ categoryId: string, itemId: string }` |
+
+> **참고**: 이는 [TypeScript 플러그인](/docs/app/building-your-application/configuring/typescript#typescript-plugin)에 의해 자동으로 수행될 수 있습니다.

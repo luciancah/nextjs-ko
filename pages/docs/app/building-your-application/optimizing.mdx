@@ -1,0 +1,48 @@
+---
+title: Optimizations
+nav_title: Optimizing
+description: Optimize your Next.js application for best performance and user experience.
+---
+
+{/* 이 문서의 내용은 app과 pages 라우터 간에 공유됩니다. Pages Router에 특정한 내용을 추가하려면 `<PagesOnly>Content</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 모든 공유 내용은 컴포넌트로 감싸지 않아야 합니다. */}
+
+# Optimizations
+
+Next.js는 애플리케이션의 속도와 [Core Web Vitals](https://web.dev/vitals/)를 향상시키기 위한 다양한 내장 최적화 기능을 제공합니다. 이 가이드에서는 사용자 경험을 향상시키기 위해 활용할 수 있는 최적화 방법들을 다룹니다.
+
+## Built-in Components
+
+내장된 컴포넌트는 공통 UI 최적화를 구현하는 복잡성을 추상화합니다. 이러한 컴포넌트는 다음과 같습니다:
+
+- **Images**: 기본 `<img>` 요소를 기반으로 합니다. 이미지 컴포넌트는 지연 로딩과 기기 크기에 따른 자동 크기 조정을 통해 이미지를 성능에 최적화합니다.
+- **Link**: 기본 `<a>` 태그를 기반으로 합니다. 링크 컴포넌트는 페이지를 백그라운드에서 프리페치하여 더 빠르고 부드러운 페이지 전환을 제공합니다.
+- **Scripts**: 기본 `<script>` 태그를 기반으로 합니다. 스크립트 컴포넌트는 서드 파티 스크립트의 로딩 및 실행을 제어할 수 있습니다.
+
+## Metadata
+
+메타데이터는 검색 엔진이 콘텐츠를 더 잘 이해하도록 도우며(이는 더 나은 SEO로 이어질 수 있음), 소셜 미디어에서 콘텐츠가 어떻게 표시되는지 맞춤 설정할 수 있게 해주어 다양한 플랫폼에서 더 매력적이고 일관된 사용자 경험을 창출할 수 있습니다.
+
+<AppOnly>
+
+Next.js의 Metadata API를 사용하면 페이지의 `<head>` 요소를 수정할 수 있습니다. 메타데이터를 구성하는 방법은 두 가지가 있습니다:
+
+- **Config-based Metadata**: `layout.js` 또는 `page.js` 파일에서 [정적 `metadata` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)나 동적 [`generateMetadata` 함수](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 내보냅니다.
+- **File-based Metadata**: 정적 또는 동적으로 생성된 특수 파일을 경로 세그먼트에 추가합니다.
+
+추가적으로, [imageResponse](/docs/app/api-reference/functions/image-response) 생성자를 사용하여 JSX와 CSS로 동적 Open Graph 이미지를 생성할 수 있습니다.
+
+</AppOnly>
+
+<PagesOnly>
+
+Next.js의 Head 컴포넌트를 사용하면 페이지의 `<head>`를 수정할 수 있습니다. 자세한 내용은 [Head Component](/docs/pages/api-reference/components/head) 문서를 참조하세요.
+
+</PagesOnly>
+
+## Static Assets
+
+Next.js의 `/public` 폴더는 이미지, 폰트 및 기타 파일과 같은 정적 자산을 제공하는 데 사용할 수 있습니다. `/public` 내부의 파일은 CDN 제공업체에 의해 캐시되어 효율적으로 전달될 수 있습니다.
+
+## Analytics and Monitoring
+
+대규모 애플리케이션의 경우, Next.js는 애플리케이션의 성능을 이해하는 데 도움이 되는 인기 있는 분석 및 모니터링 도구와 통합됩니다. 자세한 내용은 <PagesOnly>[Analytics](/docs/app/building-your-application/optimizing/analytics), </PagesOnly> [OpenTelemetry](/docs/pages/building-your-application/optimizing/open-telemetry)<PagesOnly>,</PagesOnly> 및 [Instrumentation](/docs/pages/building-your-application/optimizing/instrumentation) 가이드를 참조하세요.

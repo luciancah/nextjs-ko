@@ -1,0 +1,70 @@
+---
+title: Turbopack
+description: Turbopack은 JavaScript와 TypeScript에 최적화된 점진적 번들러로, Rust로 작성되었으며 Next.js에 내장되어 있습니다.
+---
+
+# Turbopack
+
+[Turbopack](https://turbo.build/pack) (베타)는 JavaScript와 TypeScript에 최적화된 점진적 번들러로, Rust로 작성되었으며 Next.js에 내장되어 있습니다.
+
+## 사용법
+
+Turbopack은 Next.js의 `pages` 및 `app` 디렉토리에서 더 빠른 로컬 개발을 위해 사용할 수 있습니다. Next.js 개발 서버를 실행할 때 `--turbo` 플래그를 사용하여 Turbopack을 활성화하세요.
+
+```json filename="package.json" highlight={3}
+{
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+```
+
+## 지원되는 기능
+
+Next.js의 Turbopack은 대부분의 사용자에게 별도의 구성 없이 사용할 수 있으며, 더 고급 사용 사례를 위해 확장할 수 있습니다. 현재 Turbopack에서 지원되는 기능에 대해 자세히 알아보려면 [API 레퍼런스](/docs/app/api-reference/next-config-js/turbo)를 참조하세요.
+
+## 지원되지 않는 기능
+
+현재 Turbopack은 `next dev`만 지원하며 `next build`는 지원하지 않습니다. 안정성 향상을 위해 빌드 지원 작업을 진행 중입니다.
+
+현재 지원되지 않는 기능은 다음과 같습니다:
+
+- `next.config.js`의 [`webpack()`](/docs/app/api-reference/next-config-js/webpack) 구성
+  - Turbopack은 Webpack을 대체하므로 Webpack 구성은 지원되지 않습니다.
+  - Turbopack을 구성하려면 [문서](/docs/app/api-reference/next-config-js/turbo)를 참조하세요.
+  - Turbopack에서는 [Webpack 로더](/docs/app/api-reference/next-config-js/turbo#webpack-loaders)의 하위 집합을 지원합니다.
+- Babel (`.babelrc`)
+  - Turbopack은 모든 변환 및 최적화를 위해 [SWC](/docs/architecture/nextjs-compiler#why-swc) 컴파일러를 사용합니다. 따라서 Babel은 기본적으로 포함되지 않습니다.
+  - `.babelrc` 파일이 있는 경우, Next.js에 포함된 일반적인 Babel 플러그인이 SWC 변환으로 제공되므로 더 이상 필요하지 않을 수 있습니다. 자세한 내용은 [컴파일러 문서](docs/architecture/nextjs-compiler#supported-features)를 참조하세요.
+  - 특정 사용 사례가 포함되지 않은 경우 Babel을 계속 사용해야 한다면, Turbopack의 [사용자 정의 Webpack 로더 지원](/docs/app/api-reference/next-config-js/turbo#webpack-loaders)을 활용하여 `babel-loader`를 포함할 수 있습니다.
+- App Router에서 루트 레이아웃 자동 생성.
+  - 이 동작은 입력 파일을 변경하기 때문에 현재 지원되지 않으며, 대신 원하는 위치에 수동으로 루트 레이아웃을 추가하라는 오류가 표시됩니다.
+- `@next/font` (레거시 폰트 지원).
+  - `@next/font`는 `next/font`로 대체되었습니다. [`next/font`](/docs/app/building-your-application/optimizing/fonts)는 Turbopack에서 완전히 지원됩니다.
+- `new Worker('file', import.meta.url)`.
+  - 이 기능은 향후 구현할 예정입니다.
+- [Relay 변환](/docs/architecture/nextjs-compiler#relay)
+  - 이 기능은 향후 구현할 예정입니다.
+- [`experimental.typedRoutes`](https://nextjs.org/docs/app/api-reference/next-config-js/typedRoutes)
+  - 이 기능은 향후 구현할 예정입니다.
+- `experimental.nextScriptWorkers`
+  - 이 기능은 향후 구현할 예정입니다.
+- `experimental.sri.algorithm`
+  - 이 기능은 향후 구현할 예정입니다.
+- `experimental.esmExternals`
+  - 현재 Turbopack과 함께 Next.js에서 레거시 esmExternals 구성을 지원할 계획이 없습니다.
+- [AMP](/docs/pages/building-your-application/configuring/amp).
+  - 현재 Turbopack과 함께 Next.js에서 AMP를 지원할 계획이 없습니다.
+- Yarn PnP
+  - 현재 Turbopack과 함께 Next.js에서 Yarn PnP를 지원할 계획이 없습니다.
+- [`experimental.urlImports`](/docs/app/api-reference/next-config-js/urlImports)
+  - 현재 Turbopack과 함께 Next.js에서 `experimental.urlImports`를 지원할 계획이 없습니다.
+
+## 트레이스 파일 생성
+
+트레이스 파일은 Next.js 팀이 성능 메트릭 및 메모리 사용량을 조사하고 개선하는 데 도움이 됩니다. 트레이스 파일을 생성하려면 `next dev --turbo` 명령에 `NEXT_TURBOPACK_TRACING=1`을 추가하면 `.next/trace.log` 파일이 생성됩니다.
+
+Turbopack의 성능 및 메모리 사용과 관련된 문제를 보고할 때, [GitHub](https://github.com/vercel/next.js) 이슈에 트레이스 파일을 포함시켜 주세요.

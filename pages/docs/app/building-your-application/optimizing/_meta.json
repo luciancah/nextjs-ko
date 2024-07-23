@@ -1,0 +1,41 @@
+{
+  "images": {
+    "title": "Images"
+  },
+  "videos": {
+    "title": "Videos"
+  },
+  "fonts": {
+    "title": "Fonts"
+  },
+  "metadata": {
+    "title": "Metadata"
+  },
+  "scripts": {
+    "title": "Scripts"
+  },
+  "package-bundling": {
+    "title": "Package Bundling"
+  },
+  "lazy-loading": {
+    "title": "Lazy Loading"
+  },
+  "analytics": {
+    "title": "Analytics"
+  },
+  "instrumentation": {
+    "title": "Instrumentation"
+  },
+  "open-telemetry": {
+    "title": "Open Telemetry"
+  },
+  "static-assets": {
+    "title": "Static Assets"
+  },
+  "third-party-libraries": {
+    "title": "Third Party Libraries"
+  },
+  "memory-usage": {
+    "title": "Memory Usage"
+  }
+}

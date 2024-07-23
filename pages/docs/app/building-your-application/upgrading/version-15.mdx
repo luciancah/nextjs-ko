@@ -1,0 +1,149 @@
+---
+title: Version 15
+description: Upgrade your Next.js Application from Version 14 to 15.
+---
+
+# Version 15
+
+## Upgrading from 14 to 15
+
+Next.js 버전 15로 업데이트하려면, 선호하는 패키지 매니저를 사용하여 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+npm i next@rc react@rc react-dom@rc eslint-config-next@rc
+```
+
+```bash filename="Terminal"
+yarn add next@rc react@rc react-dom@rc eslint-config-next@rc
+```
+
+```bash filename="Terminal"
+pnpm up next@rc react@rc react-dom@rc eslint-config-next@rc
+```
+
+```bash filename="Terminal"
+bun add next@rc react@rc react-dom@rc eslint-config-next@rc
+```
+
+> **알아두면 좋은 사항:** TypeScript를 사용하는 경우 `@types/react` 및 `@types/react-dom`도 최신 버전으로 업그레이드하세요.
+
+## 최소 React 버전
+
+- 최소 `react` 및 `react-dom` 버전은 이제 19입니다.
+
+## `fetch` 요청
+
+[`fetch` 요청](/docs/app/api-reference/functions/fetch)은 기본적으로 더 이상 캐시되지 않습니다.
+
+특정 `fetch` 요청을 캐시에 포함시키려면 `cache: 'force-cache'` 옵션을 사용할 수 있습니다.
+
+```js filename="app/layout.js"
+export default async function RootLayout() {
+  const a = await fetch("https://..."); // 캐시되지 않음
+  const b = await fetch("https://...", { cache: "force-cache" }); // 캐시됨
+
+  // ...
+}
+```
+
+레이아웃이나 페이지의 모든 `fetch` 요청을 캐시에 포함시키려면, `export const fetchCache = 'default-cache'` [세그먼트 설정 옵션](/docs/app/api-reference/file-conventions/route-segment-config)을 사용할 수 있습니다. 개별 `fetch` 요청이 `cache` 옵션을 지정한 경우 해당 옵션이 우선 적용됩니다.
+
+```js filename="app/layout.js"
+// 이것이 루트 레이아웃이므로, 앱 내의 모든 fetch 요청은 자체 캐시 옵션을 설정하지 않는 한 캐시됩니다.
+export const fetchCache = "default-cache";
+
+export default async function RootLayout() {
+  const a = await fetch("https://..."); // 캐시됨
+  const b = await fetch("https://...", { cache: "no-store" }); // 캐시되지 않음
+
+  // ...
+}
+```
+
+## Route Handlers
+
+[Route Handlers](/docs/app/api-reference/file-conventions/route)에서 `GET` 함수는 기본적으로 더 이상 캐시되지 않습니다. `GET` 메서드를 캐시에 포함시키려면, Route Handler 파일에 [route 설정 옵션](/docs/app/api-reference/file-conventions/route-segment-config)인 `export const dynamic = 'force-static'`을 사용할 수 있습니다.
+
+```js filename="app/api/route.js"
+export const dynamic = "force-static";
+
+export async function GET() {}
+```
+
+## 클라이언트 사이드 라우터 캐시
+
+`<Link>` 또는 `useRouter`를 통해 페이지 간 탐색할 때, [페이지](/docs/app/api-reference/file-conventions/page) 세그먼트는 더 이상 클라이언트 사이드 라우터 캐시에서 재사용되지 않습니다. 그러나 브라우저 뒤로 가기 및 앞으로 가기 탐색과 공유 레이아웃에서는 여전히 재사용됩니다.
+
+페이지 세그먼트를 캐시에 포함시키려면, [`staleTimes`](/docs/app/api-reference/next-config-js/staleTimes) 설정 옵션을 사용할 수 있습니다:
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    staleTimes: {
+      dynamic: 30,
+      static: 180,
+    },
+  },
+};
+
+module.exports = nextConfig;
+```
+
+[레이아웃](/docs/app/api-reference/file-conventions/layout) 및 [로딩 상태](/docs/app/api-reference/file-conventions/loading)는 여전히 탐색 시 캐시되고 재사용됩니다.
+
+## `next/font`
+
+`@next/font` 패키지는 내장 [`next/font`](/docs/app/api-reference/components/font)로 대체되었습니다. [codemod를 사용할 수 있습니다](/docs/app/building-your-application/upgrading/codemods#built-in-next-font) 이를 통해 안전하고 자동으로 가져오기를 이름 변경할 수 있습니다.
+
+```js filename="app/layout.js"
+// 변경 전
+import { Inter } from "@next/font/google";
+
+// 변경 후
+import { Inter } from "next/font/google";
+```
+
+## bundlePagesRouterDependencies
+
+`experimental.bundlePagesExternals`가 이제 안정화되어 `bundlePagesRouterDependencies`로 이름이 변경되었습니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // 변경 전
+  experimental: {
+    bundlePagesExternals: true,
+  },
+
+  // 변경 후
+  bundlePagesRouterDependencies: true,
+};
+
+module.exports = nextConfig;
+```
+
+## serverExternalPackages
+
+`experimental.serverComponentsExternalPackages`가 이제 안정화되어 `serverExternalPackages`로 이름이 변경되었습니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // 변경 전
+  experimental: {
+    serverComponentsExternalPackages: ["package-name"],
+  },
+
+  // 변경 후
+  serverExternalPackages: ["package-name"],
+};
+
+module.exports = nextConfig;
+```
+
+## Speed Insights
+
+Speed Insights의 자동 계측이 Next.js 15에서 제거되었습니다.
+
+Speed Insights를 계속 사용하려면, [Vercel Speed Insights Quickstart](https://vercel.com/docs/speed-insights/quickstart) 가이드를 따르세요.

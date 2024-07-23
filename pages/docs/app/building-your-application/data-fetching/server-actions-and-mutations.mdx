@@ -1,0 +1,1010 @@
+---
+title: Server Actions and Mutations
+nav_title: Server Actions and Mutations
+description: Learn how to handle form submissions and data mutations with Next.js.
+related:
+  description: Learn how to configure Server Actions in Next.js
+  links:
+    - app/api-reference/next-config-js/serverActions
+---
+
+# Server Actions and Mutations
+
+[Server Actions](https://react.dev/reference/rsc/server-actions)는 Next.js 애플리케이션에서 폼 제출 및 데이터 변조를 처리하기 위해 서버에서 실행되는 **비동기 함수**입니다. 이들은 Server 및 Client Components에서 호출될 수 있습니다.
+
+> **🎥 시청:** Server Actions를 사용한 변조에 대해 더 알아보기 → [YouTube (10분)](https://youtu.be/dDpZfOQBMaU?si=cJZHlUu_jFhCzHUg).
+
+## Convention
+
+Server Action은 React [`"use server"`](https://react.dev/reference/react/use-server) 지시어로 정의할 수 있습니다. `async` 함수 상단에 지시어를 추가하여 해당 함수를 Server Action으로 표시하거나, 별도의 파일 상단에 지시어를 추가하여 해당 파일의 모든 내보내기를 Server Action으로 표시할 수 있습니다.
+
+### Server Components
+
+Server Components는 인라인 함수 레벨 또는 모듈 레벨의 `"use server"` 지시어를 사용할 수 있습니다. Server Action을 인라인으로 추가하려면, 함수 본문 상단에 `"use server"`를 추가하세요:
+
+```tsx filename="app/page.tsx" switcher
+export default function Page() {
+  // Server Action
+  async function create() {
+    "use server";
+    // 데이터 변조
+  }
+
+  return "...";
+}
+```
+
+```jsx filename="app/page.jsx" switcher
+export default function Page() {
+  // Server Action
+  async function create() {
+    "use server";
+    // 데이터 변조
+  }
+
+  return "...";
+}
+```
+
+### Client Components
+
+Client Component에서 Server Action을 호출하려면 새 파일을 생성하고 파일 상단에 `"use server"` 지시어를 추가하세요. 파일 내의 모든 함수는 Server 및 Client Components에서 재사용할 수 있는 Server Actions로 표시됩니다:
+
+```tsx filename="app/actions.ts" switcher
+"use server";
+
+export async function create() {}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+export async function create() {}
+```
+
+```tsx filename="app/ui/button.tsx" switcher
+"use client";
+
+import { create } from "@/app/actions";
+
+export function Button() {
+  return <Button onClick={create} />;
+}
+```
+
+```jsx filename="app/ui/button.js" switcher
+"use client";
+
+import { create } from "@/app/actions";
+
+export function Button() {
+  return <Button onClick={create} />;
+}
+```
+
+### Passing actions as props
+
+Server Action을 Client Component에 prop으로 전달할 수도 있습니다:
+
+```jsx
+<ClientComponent updateItemAction={updateItem} />
+```
+
+```tsx filename="app/client-component.tsx" switcher
+"use client";
+
+export default function ClientComponent({
+  updateItemAction,
+}: {
+  updateItemAction: (formData: FormData) => void;
+}) {
+  return <form action={updateItemAction}>{/* ... */}</form>;
+}
+```
+
+```jsx filename="app/client-component.jsx" switcher
+"use client";
+
+export default function ClientComponent({ updateItemAction }) {
+  return <form action={updateItemAction}>{/* ... */}</form>;
+}
+```
+
+보통 Next.js TypeScript 플러그인은 `client-component.tsx`에서 `updateItemAction`이 직렬화할 수 없는 함수이기 때문에 이를 플래그로 표시합니다.
+하지만 `action` 또는 `Action`으로 끝나는 props는 Server Actions를 받는 것으로 간주됩니다.
+이것은 TypeScript 플러그인이 실제로 Server Action인지 일반 함수인지 알지 못하기 때문에 사용하는 추측입니다.
+런타임 타입 체크는 실수로 Client Component에 함수를 전달하지 않도록 보장합니다.
+
+## Behavior
+
+- Server Actions는 [`<form>` 요소](#forms)에서 `action` 속성을 사용하여 호출할 수 있습니다:
+  - Server Components는 기본적으로 점진적 향상을 지원하므로 JavaScript가 아직 로드되지 않았거나 비활성화된 경우에도 폼이 제출됩니다.
+  - Client Components에서는 Server Actions를 호출하는 폼이 JavaScript가 아직 로드되지 않은 경우 제출을 대기하여 클라이언트 하이드레이션을 우선시합니다.
+  - 하이드레이션 후, 폼 제출 시 브라우저가 새로 고침되지 않습니다.
+- Server Actions는 `<form>`에만 국한되지 않으며, 이벤트 핸들러, `useEffect`, 서드파티 라이브러리 및 `<button>`과 같은 다른 폼 요소에서도 호출할 수 있습니다.
+- Server Actions는 Next.js [캐싱 및 재검증](/docs/app/building-your-application/caching) 아키텍처와 통합됩니다. 액션이 호출되면 Next.js는 단일 서버 라운드트립에서 업데이트된 UI와 새로운 데이터를 반환할 수 있습니다.
+- 백그라운드에서는 액션이 `POST` 메서드를 사용하며, 이 HTTP 메서드만 액션을 호출할 수 있습니다.
+- Server Actions의 인수와 반환 값은 React에 의해 직렬화할 수 있어야 합니다. 직렬화 가능한 인수 및 값을 보려면 React 문서를 참조하세요 [직렬화 가능한 인수 및 값](https://react.dev/reference/react/use-server#serializable-parameters-and-return-values).
+- Server Actions는 함수입니다. 이는 애플리케이션 어디에서나 재사용할 수 있음을 의미합니다.
+- Server Actions는 사용되는 페이지나 레이아웃에서 [런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)을 상속받습니다.
+- Server Actions는 사용되는 페이지나 레이아웃에서 [Route Segment Config](/docs/app/api-reference/file-conventions/route-segment-config)를 상속받아 `maxDuration`과 같은 필드를 포함합니다.
+
+## Examples
+
+### Forms
+
+React는 HTML [`<form>`](https://developer.mozilla.org/docs/Web/HTML/Element/form) 요소를 확장하여 `action` prop으로 Server Actions를 호출할 수 있습니다.
+
+폼에서 호출될 때, 액션은 자동으로 [`FormData`](https://developer.mozilla.org/docs/Web/API/FormData/FormData) 객체를 받습니다. 필드를 관리하기 위해 React `useState`를 사용할 필요 없이, 기본 [`FormData` 메서드](https://developer.mozilla.org/en-US/docs/Web/API/FormData#instance_methods)를 사용하여 데이터를 추출할 수 있습니다:
+
+```tsx filename="app/invoices/page.tsx" switcher
+export default function Page() {
+  async function createInvoice(formData: FormData) {
+    "use server";
+
+    const rawFormData = {
+      customerId: formData.get("customerId"),
+      amount: formData.get("amount"),
+      status: formData.get("status"),
+    };
+
+    // 데이터 변조
+    // 캐시 재검증
+  }
+
+  return <form action={createInvoice}>...</form>;
+}
+```
+
+```jsx filename="app/invoices/page.jsx" switcher
+export default function Page() {
+  async function createInvoice(formData) {
+    "use server";
+
+    const rawFormData = {
+      customerId: formData.get("customerId"),
+      amount: formData.get("amount"),
+      status: formData.get("status"),
+    };
+
+    // 데이터 변조
+    // 캐시 재검증
+  }
+
+  return <form action={createInvoice}>...</form>;
+}
+```
+
+> **알아두면 좋은 정보:**
+>
+> - 예시: [로딩 및 오류 상태를 포함한 폼](https://github.com/vercel/next.js/tree/canary/examples/next-forms)
+> - 필드가 많은 폼을 작업할 때는, JavaScript의 [`Object.fromEntries()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries) 메서드와 [`entries()`](https://developer.mozilla.org/en-US/docs/Web/API/FormData/entries) 메서드를 사용하여 데이터를 추출하는 것을 고려해보세요. 예: `const rawFormData = Object.fromEntries(formData)`. 주의할 점은 `formData`에 추가적인 `$ACTION_` 속성이 포함될 수 있다는 것입니다.
+> - 더 알아보려면 [React `<form>` 문서](https://react.dev/reference/react-dom/components/form#handle-form-submission-with-a-server-action)를 참조하세요.
+
+### Passing additional arguments
+
+JavaScript `bind` 메서드를 사용하여 Server Action에 추가 인수를 전달할 수 있습니다.
+
+```tsx filename="app/client-component.tsx" highlight={6} switcher
+"use client";
+
+import { updateUser } from "./actions";
+
+export function UserProfile({ userId }: { userId: string }) {
+  const updateUserWithId = updateUser.bind(null, userId);
+
+  return (
+    <form action={updateUserWithId}>
+      <input type="text" name="name" />
+      <button type="submit">Update User Name</button>
+    </form>
+  );
+}
+```
+
+```jsx filename="app/client-component.js" highlight={6} switcher
+"use client";
+
+import { updateUser } from "./actions";
+
+export function UserProfile({ userId }) {
+  const updateUserWithId = updateUser.bind(null, userId);
+
+  return (
+    <form action={updateUserWithId}>
+      <input type="text" name="name" />
+      <button type="submit">Update User Name</button>
+    </form>
+  );
+}
+```
+
+Server Action은 폼 데이터 외에 `userId` 인수를 받습니다:
+
+```js filename="app/actions.js"
+"use server";
+
+export async function updateUser(userId, formData) {}
+```
+
+> **알아두면 좋은 정보**:
+>
+> - 대안으로는 폼에 숨겨진 입력 필드로 인수를 전달하는 방법이 있습니다 (예: `<input type="hidden" name="userId" value={userId} />`). 하지만 이 값은 렌더된 HTML의 일부가 되어 인코딩되지 않습니다.
+> - `.bind`는 Server 및 Client Components 모두에서 작동합니다. 또한 점진적 향상도 지원합니다.
+
+### Nested form elements
+
+`<form>` 내부에 있는 `<button>`, `<input type="submit">`, `<input type="image">`와 같은 요소에 Server Action을 호출할 수도 있습니다. 이러한 요소들은 `formAction` prop이나 [이벤트 핸들러](#event-handlers)를 받을 수 있습니다.
+
+이 방법은 폼 내에서 여러 서버 액션을 호출하려는 경우 유용합니다. 예를 들어, 게시물을 저장하는 버튼을 추가로 생성하여 게시할 수 있습니다. 자세한 내용은 [React `<form>` 문서](https://react.dev/reference/react-dom/components/form#handling-multiple-submission-types)를 참조하세요.
+
+### Programmatic form submission
+
+[`requestSubmit()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/requestSubmit) 메서드를 사용하여 프로그램적으로 폼 제출을 트리거할 수 있습니다. 예를 들어, 사용자가 `⌘` + `Enter` 키보드 단축키를 사용하여 폼을 제출할 때 `onKeyDown` 이벤트를 감지할 수 있습니다:
+
+```tsx filename="app/entry.tsx" switcher
+"use client";
+
+export function Entry() {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (
+      (e.ctrlKey || e.metaKey) &&
+      (e.key === "Enter" || e.key === "NumpadEnter")
+    ) {
+      e.preventDefault();
+      e.currentTarget.form?.requestSubmit();
+    }
+  };
+
+  return (
+    <div>
+      <textarea name="entry" rows={20} required onKeyDown={handleKeyDown} />
+    </div>
+  );
+}
+```
+
+```jsx filename="app/entry.jsx" switcher
+"use client";
+
+export function Entry() {
+  const handleKeyDown = (e) => {
+    if (
+      (e.ctrlKey || e.metaKey) &&
+      (e.key === "Enter" || e.key === "NumpadEnter")
+    ) {
+      e.preventDefault();
+      e.currentTarget.form?.requestSubmit();
+    }
+  };
+
+  return (
+    <div>
+      <textarea name="entry" rows={20} required onKeyDown={handleKeyDown} />
+    </div>
+  );
+}
+```
+
+이는 Server Action을 호출하는 가장 가까운 `<form>` 조상의 제출을 트리거합니다.
+
+### Server-side form validation
+
+기본 클라이언트 측 폼 검증을 위해 `required` 및 `type="email"`과 같은 HTML 검증을 사용하는 것이 좋습니다.
+
+더 고급 서버 측 검증을 위해 [zod](https://zod.dev/)와 같은 라이브러리를 사용하여 데이터 변조 전에 폼 필드를 검증할 수 있습니다:
+
+```tsx filename="app/actions.ts" switcher
+"use server";
+
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string({
+    invalid_type_error: "Invalid Email",
+  }),
+});
+
+export default async function createUser(formData: FormData) {
+  const validatedFields = schema.safeParse({
+    email: formData.get("email"),
+  });
+
+  // 폼 데이터가 유효하지 않은 경우 조기 반환
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  // 데이터 변조
+}
+```
+
+```jsx filename="app/actions.js" switcher
+"use server";
+
+import { z } from "zod";
+
+const schema = z.object({
+  email: z.string({
+    invalid_type_error: "Invalid Email",
+  }),
+});
+
+export default async function createsUser(formData) {
+  const validatedFields = schema.safeParse({
+    email: formData.get("email"),
+  });
+
+  // 폼 데이터가 유효하지 않은 경우 조기 반환
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  // 데이터 변조
+}
+```
+
+서버에서 필드가 검증되면, 액션에서 직렬화 가능한 객체를 반환하고 React [`useActionState`](https://react.dev/reference/react/useActionState) 훅을 사용하여 사용자에게 메시지를 표시할 수 있습니다.
+
+- 액션을 `useActionState`에 전달하면 액션의 함수 시그니처가 새로운 `prevState` 또는 `initialState` 매개변수를 첫 번째 인수로 받도록 변경됩니다.
+- `useActionState`는 React 훅이므로 Client Component에서만 사용해야 합니다.
+
+```tsx filename="app/actions.ts" switcher
+"use server";
+
+import { redirect } from "next/navigation";
+
+export async function createUser(prevState: any, formData: FormData) {
+  const res = await fetch("https://...");
+  const json = await res.json();
+
+  if (!res.ok) {
+    return { message: "Please enter a valid email" };
+  }
+
+  redirect("/dashboard");
+}
+```
+
+```jsx filename="app/actions.js" switcher
+"use server";
+
+import { redirect } from "next/navigation";
+
+export async function createUser(prevState, formData) {
+  const res = await fetch("https://...");
+  const json = await res.json();
+
+  if (!res.ok) {
+    return { message: "Please enter a valid email" };
+  }
+
+  redirect("/dashboard");
+}
+```
+
+그런 다음, `useActionState` 훅에 액션을 전달하고 반환된 `state`를 사용하여 오류 메시지를 표시할 수 있습니다.
+
+```tsx filename="app/ui/signup.tsx" highlight={11,18-20} switcher
+"use client";
+
+import { useActionState } from "react";
+import { createUser } from "@/app/actions";
+
+const initialState = {
+  message: "",
+};
+
+export function Signup() {
+  const [state, formAction] = useActionState(createUser, initialState);
+
+  return (
+    <form action={formAction}>
+      <label htmlFor="email">Email</label>
+      <input type="text" id="email" name="email" required />
+      {/* ... */}
+      <p aria-live="polite">{state?.message}</p>
+      <button>Sign up</button>
+    </form>
+  );
+}
+```
+
+```jsx filename="app/ui/signup.js" highlight={11,18-20} switcher
+"use client";
+
+import { useActionState } from "react";
+import { createUser } from "@/app/actions";
+
+const initialState = {
+  message: "",
+};
+
+export function Signup() {
+  const [state, formAction] = useActionState(createUser, initialState);
+
+  return (
+    <form action={formAction}>
+      <label htmlFor="email">Email</label>
+      <input type="text" id="email" name="email" required />
+      {/* ... */}
+      <p aria-live="polite">{state?.message}</p>
+      <button>Sign up</button>
+    </form>
+  );
+}
+```
+
+> **알아두면 좋은 정보:**
+>
+> - 데이터를 변조하기 전에 사용자가 해당 작업을 수행할 권한이 있는지 항상 확인해야 합니다. [인증 및 권한 부여](#authentication-and-authorization)를 참조하세요.
+> - 초기 React Canary 버전에서는 이 API가 React DOM의 일부였으며 `useFormState`라고 불렸습니다.
+
+### Pending states
+
+[`useActionState`](https://react.dev/reference/react/useActionState) 훅은 액션이 실행되는 동안 로딩 인디케이터를 표시하는 데 사용할 수 있는 `pending` 상태를 노출합니다.
+
+```tsx filename="app/submit-button.tsx" highlight={11,21-23} switcher
+"use client";
+
+import { useActionState } from "react";
+import { createUser } from "@/app/actions";
+
+const initialState = {
+  message: "",
+};
+
+export function Signup() {
+  const [state, formAction, pending] = useActionState(createUser, initialState);
+
+  return (
+    <form action={formAction}>
+      <label htmlFor="email">Email</label>
+      <input type="text" id="email" name="email" required />
+      {/* ... */}
+      <p aria-live="polite" className="sr-only">
+        {state?.message}
+      </p>
+      <button aria-disabled={pending} type="submit">
+        {pending ? "Submitting..." : "Sign up"}
+      </button>
+    </form>
+  );
+}
+```
+
+```jsx filename="app/submit-button.jsx" highlight={11,21-23} switcher
+"use client";
+
+import { useActionState } from "react";
+import { createUser } from "@/app/actions";
+
+const initialState = {
+  message: "",
+};
+
+export function Signup() {
+  const [state, formAction, pending] = useActionState(createUser, initialState);
+
+  return (
+    <form action={formAction}>
+      <label htmlFor="email">Email</label>
+      <input type="text" id="email" name="email" required />
+      {/* ... */}
+      <p aria-live="polite" className="sr-only">
+        {state?.message}
+      </p>
+      <button aria-disabled={pending} type="submit">
+        {pending ? "Submitting..." : "Sign up"}
+      </button>
+    </form>
+  );
+}
+```
+
+> **알아두면 좋은 정보:** 특정 폼에 대한 대기 상태를 표시하려면 [`useFormStatus`](https://react.dev/reference/react-dom/hooks/useFormStatus) 훅을 사용할 수도 있습니다.
+
+### Optimistic updates
+
+React [`useOptimistic`](https://react.dev/reference/react/useOptimistic) 훅을 사용하여 Server Action이 실행되기 전에 UI를 낙관적으로 업데이트할 수 있습니다:
+
+```tsx filename="app/page.tsx" switcher
+"use client";
+
+import { useOptimistic } from "react";
+import { send } from "./actions";
+
+type Message = {
+  message: string;
+};
+
+export function Thread({ messages }: { messages: Message[] }) {
+  const [optimisticMessages, addOptimisticMessage] = useOptimistic<
+    Message[],
+    string
+  >(messages, (state, newMessage) => [...state, { message: newMessage }]);
+
+  const formAction = async (formData) => {
+    const message = formData.get("message") as string;
+    addOptimisticMessage(message);
+    await send(message);
+  };
+
+  return (
+    <div>
+      {optimisticMessages.map((m, i) => (
+        <div key={i}>{m.message}</div>
+      ))}
+      <form action={formAction}>
+        <input type="text" name="message" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
+}
+```
+
+```jsx filename="app/page.jsx" switcher
+"use client";
+
+import { useOptimistic } from "react";
+import { send } from "./actions";
+
+export function Thread({ messages }) {
+  const [optimisticMessages, addOptimisticMessage] = useOptimistic(
+    messages,
+    (state, newMessage) => [...state, { message: newMessage }]
+  );
+
+  const formAction = async (formData) => {
+    const message = formData.get("message");
+    addOptimisticMessage(message);
+    await send(message);
+  };
+
+  return (
+    <div>
+      {optimisticMessages.map((m) => (
+        <div>{m.message}</div>
+      ))}
+      <form action={formAction}>
+        <input type="text" name="message" />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
+}
+```
+
+### Event handlers
+
+Server Actions를 `<form>` 요소 내에서 사용하는 것이 일반적이지만, `onClick`과 같은 이벤트 핸들러로도 호출할 수 있습니다. 예를 들어, 좋아요 수를 증가시키려면 다음과 같이 합니다:
+
+```tsx filename="app/like-button.tsx" switcher
+"use client";
+
+import { incrementLike } from "./actions";
+import { useState } from "react";
+
+export default function LikeButton({ initialLikes }: { initialLikes: number }) {
+  const [likes, setLikes] = useState(initialLikes);
+
+  return (
+    <>
+      <p>Total Likes: {likes}</p>
+      <button
+        onClick={async () => {
+          const updatedLikes = await incrementLike();
+          setLikes(updatedLikes);
+        }}
+      >
+        Like
+      </button>
+    </>
+  );
+}
+```
+
+```jsx filename="app/like-button.js" switcher
+"use client";
+
+import { incrementLike } from "./actions";
+import { useState } from "react";
+
+export default function LikeButton({ initialLikes }) {
+  const [likes, setLikes] = useState(initialLikes);
+
+  return (
+    <>
+      <p>Total Likes: {likes}</p>
+      <button
+        onClick={async () => {
+          const updatedLikes = await incrementLike();
+          setLikes(updatedLikes);
+        }}
+      >
+        Like
+      </button>
+    </>
+  );
+}
+```
+
+이벤트 핸들러를 폼 요소에 추가할 수도 있습니다. 예를 들어, `onChange` 이벤트로 폼 필드를 저장하려면 다음과 같이 합니다:
+
+```tsx filename="app/ui/edit-post.tsx"
+"use client";
+
+import { publishPost, saveDraft } from "./actions";
+
+export default function EditPost() {
+  return (
+    <form action={publishPost}>
+      <textarea
+        name="content"
+        onChange={async (e) => {
+          await saveDraft(e.target.value);
+        }}
+      />
+      <button type="submit">Publish</button>
+    </form>
+  );
+}
+```
+
+이와 같이 여러 이벤트가 빠르게 연속으로 발생할 수 있는 경우, 불필요한 Server Action 호출을 방지하기 위해 **디바운싱**을 권장합니다.
+
+### `useEffect`
+
+React [`useEffect`](https://react.dev/reference/react/useEffect) 훅을 사용하여 컴포넌트가 마운트될 때 또는 종속성이 변경될 때 Server Action을 호출할 수 있습니다. 이는 전역 이벤트에 의존하거나 자동으로 트리거되어야 하는 변조에 유용합니다. 예를 들어, 앱 단축키를 위한 `onKeyDown`, 무한 스크롤링을 위한 인터섹션 옵저버 훅, 또는 컴포넌트가 마운트될 때 조회수를 업데이트하는 경우가 있습니다:
+
+```tsx filename="app/view-count.tsx" switcher
+"use client";
+
+import { incrementViews } from "./actions";
+import { useState, useEffect } from "react";
+
+export default function ViewCount({ initialViews }: { initialViews: number }) {
+  const [views, setViews] = useState(initialViews);
+
+  useEffect(() => {
+    const updateViews = async () => {
+      const updatedViews = await incrementViews();
+      setViews(updatedViews);
+    };
+
+    updateViews();
+  }, []);
+
+  return <p>Total Views: {views}</p>;
+}
+```
+
+```jsx filename="app/view-count.js" switcher
+"use client";
+
+import { incrementViews } from "./actions";
+import { useState, useEffect } from "react";
+
+export default function ViewCount({ initialViews }) {
+  const [views, setViews] = useState(initialViews);
+
+  useEffect(() => {
+    const updateViews = async () => {
+      const updatedViews = await incrementViews();
+      setViews(updatedViews);
+    };
+
+    updateViews();
+  }, []);
+
+  return <p>Total Views: {views}</p>;
+}
+```
+
+`useEffect`의 [동작 및 주의사항](https://react.dev/reference/react/useEffect#caveats)을 고려하세요.
+
+### Error Handling
+
+오류가 발생하면 클라이언트의 가장 가까운 [`error.js`](/docs/app/building-your-application/routing/error-handling) 또는 `<Suspense>` 경계에 의해 잡힙니다. UI에서 오류를 처리하려면 `try/catch`를 사용하는 것이 좋습니다.
+
+예를 들어, 새로운 항목을 생성하는 Server Action이 오류를 처리하여 메시지를 반환하는 경우:
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+export async function createTodo(prevState: any, formData: FormData) {
+  try {
+    // 데이터 변조
+  } catch (e) {
+    throw new Error("Failed to create task");
+  }
+}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+export async function createTodo(prevState, formData) {
+  try {
+    //  데이터 변조
+  } catch (e) {
+    throw new Error("Failed to create task");
+  }
+}
+```
+
+> **알아두면 좋은 정보:**
+>
+> - 오류를 던지는 것 외에도 `useActionState`에서 처리할 수 있도록 객체를 반환할 수 있습니다. [서버 측 검증 및 오류 처리](#server-side-form-validation)를 참조하세요.
+
+### Revalidating data
+
+[`revalidatePath`](/docs/app/api-reference/functions/revalidatePath) API를 사용하여 Server Actions 내에서 Next.js 캐시를 재검증할 수 있습니다:
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+export async function createPost() {
+  try {
+    // ...
+  } catch (error) {
+    // ...
+  }
+
+  revalidatePath("/posts");
+}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+export async function createPost() {
+  try {
+    // ...
+  } catch (error) {
+    // ...
+  }
+
+  revalidatePath("/posts");
+}
+```
+
+또는 [`revalidateTag`](/docs/app/api-reference/functions/revalidateTag)를 사용하여 특정 데이터 fetch를 캐시 태그와 함께 무효화합니다:
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export async function createPost() {
+  try {
+    // ...
+  } catch (error) {
+    // ...
+  }
+
+  revalidateTag("posts");
+}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export async function createPost() {
+  try {
+    // ...
+  } catch (error) {
+    // ...
+  }
+
+  revalidateTag("posts");
+}
+```
+
+### Redirecting
+
+Server Action 완료 후 사용자를 다른 경로로
+
+리디렉션하려면 [`redirect`](/docs/app/api-reference/functions/redirect) API를 사용할 수 있습니다. `redirect`는 `try/catch` 블록 외부에서 호출해야 합니다:
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
+
+export async function createPost(id: string) {
+  try {
+    // ...
+  } catch (error) {
+    // ...
+  }
+
+  revalidateTag("posts"); // 캐시된 게시물 업데이트
+  redirect(`/post/${id}`); // 새로운 게시물 페이지로 이동
+}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
+
+export async function createPost(id) {
+  try {
+    // ...
+  } catch (error) {
+    // ...
+  }
+
+  revalidateTag("posts"); // 캐시된 게시물 업데이트
+  redirect(`/post/${id}`); // 새로운 게시물 페이지로 이동
+}
+```
+
+### Cookies
+
+[`cookies`](/docs/app/api-reference/functions/cookies) API를 사용하여 Server Action 내에서 쿠키를 `get`, `set`, `delete` 할 수 있습니다:
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+import { cookies } from "next/headers";
+
+export async function exampleAction() {
+  // 쿠키 가져오기
+  const value = cookies().get("name")?.value;
+
+  // 쿠키 설정
+  cookies().set("name", "Delba");
+
+  // 쿠키 삭제
+  cookies().delete("name");
+}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+import { cookies } from "next/headers";
+
+export async function exampleAction() {
+  // 쿠키 가져오기
+  const value = cookies().get("name")?.value;
+
+  // 쿠키 설정
+  cookies().set("name", "Delba");
+
+  // 쿠키 삭제
+  cookies().delete("name");
+}
+```
+
+Server Actions에서 쿠키를 삭제하는 [추가 예제](/docs/app/api-reference/functions/cookies#deleting-cookies)를 참조하세요.
+
+## Security
+
+### Authentication and authorization
+
+Server Actions를 공개 API 엔드포인트처럼 취급하고 사용자가 해당 작업을 수행할 권한이 있는지 확인해야 합니다. 예를 들어:
+
+```tsx filename="app/actions.ts"
+"use server";
+
+import { auth } from "./lib";
+
+export function addItem() {
+  const { user } = auth();
+  if (!user) {
+    throw new Error("You must be signed in to perform this action");
+  }
+
+  // ...
+}
+```
+
+### Closures and encryption
+
+컴포넌트 내에 Server Action을 정의하면 [클로저](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)가 생성되어 액션이 외부 함수의 스코프에 접근할 수 있습니다. 예를 들어, `publish` 액션은 `publishVersion` 변수에 접근할 수 있습니다:
+
+```tsx filename="app/page.tsx" switcher
+export default async function Page() {
+  const publishVersion = await getLatestVersion();
+
+  async function publish() {
+    "use server";
+    if (publishVersion !== await getLatestVersion()) {
+      throw new Error('The version has changed since pressing publish');
+    }
+    ...
+  }
+
+  return (
+    <form>
+      <button formAction={publish}>Publish</button>
+    </form>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+export default async function Page() {
+  const publishVersion = await getLatestVersion();
+
+  async function publish() {
+    "use server";
+    if (publishVersion !== await getLatestVersion()) {
+      throw new Error('The version has changed since pressing publish');
+    }
+    ...
+  }
+
+  return (
+    <form>
+      <button formAction={publish}>Publish</button>
+    </form>
+  );
+}
+```
+
+클로저는 렌더링 시점에 데이터(`publishVersion`)의 *스냅샷*을 캡처하여 액션이 호출될 때 나중에 사용할 수 있도록 하는 데 유용합니다.
+
+그러나 이를 위해 캡처된 변수는 클라이언트로 전송되었다가 액션이 호출될 때 서버로 다시 전송됩니다. 민감한 데이터가 클라이언트에 노출되지 않도록 Next.js는 클로저 변수를 자동으로 암호화합니다. 새로운 개인 키는 Next.js 애플리케이션이 빌드될 때마다 각 액션에 대해 생성됩니다. 이는 특정 빌드에 대해서만 액션을 호출할 수 있음을 의미합니다.
+
+> **알아두면 좋은 정보:** 민감한 값이 클라이언트에 노출되지 않도록 암호화에만 의존하는 것은 권장하지 않습니다. 대신, [React 오염 API](/docs/app/building-your-application/data-fetching/fetching#preventing-sensitive-data-from-being-exposed-to-the-client)를 사용하여 특정 데이터가 클라이언트로 전송되지 않도록 사전에 방지하는 것이 좋습니다.
+
+### Overwriting encryption keys (advanced)
+
+여러 서버에 걸쳐 Next.js 애플리케이션을 자체 호스팅할 때 각 서버 인스턴스는 서로 다른 암호화 키를 가지게 되어 잠재적 불일치가 발생할 수 있습니다.
+
+이를 완화하기 위해 `process.env.NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` 환경 변수를 사용하여 암호화 키를 덮어쓸 수 있습니다. 이 변수를 지정하면 암호화 키가 빌드 간에 지속되며 모든 서버 인스턴스가 동일한 키를 사용합니다.
+
+이는 여러 배포 간에 일관된 암호화 동작이 중요한 고급 사용 사례입니다. 키 회전 및 서명과 같은 표준 보안 관행을 고려해야 합니다.
+
+> **알아두면 좋은 정보:** Vercel에 배포된 Next.js 애플리케이션은 이를 자동으로 처리합니다.
+
+### Allowed origins (advanced)
+
+Server Actions는 `<form>` 요소 내에서 호출될 수 있기 때문에 [CSRF 공격](https://developer.mozilla.org/en-US/docs/Glossary/CSRF)에 노출될 수 있습니다.
+
+백그라운드에서 Server Actions는 `POST` 메서드를 사용하며, 이 HTTP 메서드만 액션을 호출할 수 있습니다. 이는 [SameSite 쿠키](https://web.dev/articles/samesite-cookies-explained)가 기본값인 현대 브라우저에서 대부분의 CSRF 취약점을 방지합니다.
+
+추가적인 보호를 위해, Next.js의 Server Actions는 [Origin 헤더](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin)를 [Host 헤더](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host)(또는 `X-Forwarded-Host`)와 비교합니다. 이들이 일치하지 않으면 요청이 중단됩니다. 즉, Server Actions는 이를 호스팅하는 페이지와 동일한 호스트에서만 호출될 수 있습니다.
+
+리버스 프록시 또는 다계층 백엔드 아키텍처를 사용하는 대규모 애플리케이션의 경우, 서버 API가 프로덕션 도메인과 다를 때 `serverActions.allowedOrigins` 구성 옵션을 사용하여 안전한 출처 목록을 지정하는 것이 좋습니다. 이 옵션은 문자열 배열을 허용합니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+module.exports = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["my-proxy.com", "*.my-proxy.com"],
+    },
+  },
+};
+```
+
+[보안 및 Server Actions](https://nextjs.org/blog/security-nextjs-server-components-actions)에 대해 더 알아보세요.
+
+## Additional resources
+
+Server Actions에 대한 자세한 내용은 다음 React 문서를 참조하세요:
+
+- [Server Actions](https://react.dev/reference/rsc/server-actions)
+- [`"use server"`](https://react.dev/reference/react/use-server)
+- [`<form>`](https://react.dev/reference/react-dom/components/form)
+- [`useFormStatus`](https://react.dev/reference/react-dom/hooks/useFormStatus)
+- [`useActionState`](https://react.dev/reference/react/useActionState)
+- [`useOptimistic`](https://react.dev/reference/react/useOptimistic)

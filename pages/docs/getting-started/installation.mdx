@@ -1,0 +1,187 @@
+---
+title: Installation
+description: Create a new Next.js application with `create-next-app`. Set up TypeScript, styles, and configure your `next.config.js` file.
+related:
+  title: Next Steps
+  description: Learn about the files and folders in your Next.js project.
+  links:
+    - getting-started/project-structure
+---
+
+# 설치
+
+시스템 요구 사항:
+
+- [Node.js 18.18](https://nodejs.org/) 이상.
+- macOS, Windows (WSL 포함), Linux 지원.
+
+## 자동 설치
+
+[`create-next-app`](/docs/app/api-reference/create-next-app)을 사용하여 새로운 Next.js 앱을 시작하는 것이 좋습니다. 이 도구는 모든 설정을 자동으로 해줍니다. 프로젝트를 만들려면 다음을 실행하세요:
+
+```bash filename="Terminal"
+npx create-next-app@latest
+```
+
+설치 시 다음과 같은 프롬프트가 표시됩니다:
+
+```txt filename="Terminal"
+What is your project named? my-app
+Would you like to use TypeScript? No / Yes
+Would you like to use ESLint? No / Yes
+Would you like to use Tailwind CSS? No / Yes
+Would you like your code inside a `src/` directory? No / Yes
+Would you like to use App Router? (recommended) No / Yes
+Would you like to use Turbopack for `next dev`?  No / Yes
+Would you like to customize the import alias (`@/*` by default)? No / Yes
+What import alias would you like configured? @/*
+```
+
+프롬프트 이후, [`create-next-app`](/docs/app/api-reference/create-next-app)은 프로젝트 이름으로 폴더를 만들고 필요한 종속성을 설치합니다.
+
+Next.js를 처음 사용한다면 애플리케이션의 모든 파일과 폴더에 대한 개요를 보려면 [프로젝트 구조](/docs/getting-started/project-structure) 문서를 참조하세요.
+
+> **알아두면 좋은 점**:
+>
+> - Next.js는 이제 기본적으로 [TypeScript](/docs/app/building-your-application/configuring/typescript), [ESLint](/docs/app/building-your-application/configuring/eslint), [Tailwind CSS](/docs/app/building-your-application/styling/tailwind-css) 구성을 제공합니다.
+> - 프로젝트의 루트에 `src` 디렉토리를 사용하여 애플리케이션 코드를 구성 파일과 분리할 수 있습니다.
+
+## 수동 설치
+
+새로운 Next.js 앱을 수동으로 만들려면 다음 패키지를 설치하세요:
+
+```bash filename="Terminal"
+npm install next@latest react@latest react-dom@latest
+```
+
+`package.json` 파일을 열고 다음 `scripts`를 추가하세요:
+
+```json filename="package.json"
+{
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  }
+}
+```
+
+이 스크립트는 애플리케이션 개발의 다양한 단계를 나타냅니다:
+
+- `dev`: 개발 모드에서 Next.js를 시작하기 위해 [`next dev`](/docs/app/api-reference/next-cli#development)를 실행합니다.
+- `build`: 프로덕션 사용을 위해 애플리케이션을 빌드하기 위해 [`next build`](/docs/app/api-reference/next-cli#build)를 실행합니다.
+- `start`: Next.js 프로덕션 서버를 시작하기 위해 [`next start`](/docs/app/api-reference/next-cli#production)를 실행합니다.
+- `lint`: Next.js의 내장된 ESLint 구성을 설정하기 위해 [`next lint`](/docs/app/api-reference/next-cli#lint)를 실행합니다.
+
+### 디렉토리 생성
+
+Next.js는 파일 시스템 라우팅을 사용하므로 애플리케이션의 라우트는 파일 구조에 의해 결정됩니다.
+
+#### `app` 디렉토리
+
+새로운 애플리케이션에는 [App Router](/docs/app)를 사용하는 것이 좋습니다. 이 라우터는 React의 최신 기능을 사용할 수 있으며, 커뮤니티 피드백을 기반으로 한 [Pages Router](/docs/pages)의 발전된 버전입니다.
+
+`app/` 폴더를 만들고 `layout.tsx` 및 `page.tsx` 파일을 추가하세요. 이 파일들은 사용자가 애플리케이션의 루트(`/`)를 방문할 때 렌더링됩니다.
+
+```tsx filename="app/layout.tsx" switcher
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+마지막으로, 초기 콘텐츠가 포함된 홈 페이지 `app/page.tsx`를 만드세요:
+
+```tsx filename="app/page.tsx" switcher
+export default function Page() {
+  return <h1>Hello, Next.js!</h1>;
+}
+```
+
+```jsx filename="app/page.js" switcher
+export default function Page() {
+  return <h1>Hello, Next.js!</h1>;
+}
+```
+
+> **알아두면 좋은 점**: `layout.tsx`를 만드는 것을 잊으면 Next.js는 `next dev`로 개발 서버를 실행할 때 자동으로 이 파일을 생성합니다.
+
+[App Router 사용법](/docs/app/building-your-application/routing/defining-routes)에 대해 더 알아보세요.
+
+#### `pages` 디렉토리 (선택 사항)
+
+App Router 대신 Pages Router를 사용하려면 프로젝트 루트에 `pages/` 디렉토리를 만들 수 있습니다.
+
+그런 다음, `pages` 폴더 안에 `index.tsx` 파일을 추가하세요. 이것이 홈 페이지(`/`)가 됩니다:
+
+```tsx filename="pages/index.tsx" switcher
+export default function Page() {
+  return <h1>Hello, Next.js!</h1>;
+}
+```
+
+다음으로, `pages/` 안에 `_app.tsx` 파일을 추가하여 글로벌 레이아웃을 정의하세요. [커스텀 App 파일](/docs/pages/building-your-application/routing/custom-app)에 대해 더 알아보세요.
+
+```tsx filename="pages/_app.tsx" switcher
+import type { AppProps } from "next/app";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+```
+
+```jsx filename="pages/_app.js" switcher
+export default function App({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+
+마지막으로, 서버에서 초기 응답을 제어하기 위해 `pages/` 안에 `_document.tsx` 파일을 추가하세요. [커스텀 Document 파일](/docs/pages/building-your-application/routing/custom-document)에 대해 더 알아보세요.
+
+```tsx filename="pages/_document.tsx" switcher
+import { Html, Head, Main, NextScript } from "next/document";
+
+export default function Document() {
+  return (
+    <Html>
+      <Head />
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+```
+
+[Pages Router 사용법](/docs/pages/building-your-application/routing/pages-and-layouts)에 대해 더 알아보세요.
+
+> **알아두면 좋은 점**: 동일한 프로젝트에서 두 라우터를 모두 사용할 수 있지만, `app`의 라우트가 `pages`보다 우선됩니다. 혼란을 피하기 위해 새로운 프로젝트에서는 하나의 라우터만 사용하는 것이 좋습니다.
+
+#### `public` 폴더 (선택 사항)
+
+이미지, 폰트 등 정적 자산을 저장하기 위해 `public` 폴더를 만드세요. `public` 디렉토리 내의 파일은 기본 URL(`/`)을 기준으로 코드에서 참조할 수 있습니다.
+
+## 개발 서버 실행
+
+1. `npm run dev`를 실행하여 개발 서버를 시작하세요.
+2. `http://localhost:3000`에서 애플리케이션을 확인하세요.
+3. `app/page.tsx` (또는 `pages/index.tsx`) 파일을 편집하고 저장하여 브라우저에서 업데이트된 결과를 확인하세요.

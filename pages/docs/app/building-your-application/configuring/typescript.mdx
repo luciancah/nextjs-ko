@@ -1,0 +1,349 @@
+---
+title: TypeScript
+description: Next.js provides a TypeScript-first development experience for building your React application.
+---
+
+{/* 이 문서의 내용은 app과 pages 라우터 간에 공유됩니다. Pages Router에만 해당되는 내용을 추가하려면 `<PagesOnly>Content</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유되는 내용은 컴포넌트로 감싸지 않아야 합니다. */}
+
+import Image from "next/image";
+
+# TypeScript
+
+Next.js는 React 애플리케이션을 구축하기 위한 TypeScript 우선 개발 환경을 제공합니다.
+
+필요한 패키지를 자동으로 설치하고 적절한 설정을 구성하는 내장 TypeScript 지원을 제공합니다.
+
+<AppOnly>
+
+에디터용 [TypeScript Plugin](#typescript-plugin)도 포함되어 있습니다.
+
+> **🎥 시청하기:** 내장된 TypeScript 플러그인에 대해 알아보세요 → [YouTube (3분)](https://www.youtube.com/watch?v=pqMqn9fKEf8)
+
+</AppOnly>
+
+## New Projects
+
+`create-next-app`은 이제 기본적으로 TypeScript를 포함합니다.
+
+```bash filename="Terminal"
+npx create-next-app@latest
+```
+
+## Existing Projects
+
+`.ts` / `.tsx` 파일로 이름을 변경하여 프로젝트에 TypeScript를 추가하세요. `next dev` 및 `next build`를 실행하면 필요한 종속성을 자동으로 설치하고 권장 설정 옵션이 포함된 `tsconfig.json` 파일을 추가합니다.
+
+이미 `jsconfig.json` 파일이 있는 경우, 이전 `jsconfig.json`에서 `paths` 컴파일러 옵션을 새 `tsconfig.json` 파일로 복사하고 이전 `jsconfig.json` 파일을 삭제하세요.
+
+또한, 더 나은 타입 추론을 위해 `next.config.js`보다 [`next.config.ts`](#type-checking-nextconfigts)를 사용하는 것을 권장합니다.
+
+<AppOnly>
+
+## TypeScript Plugin
+
+Next.js는 고급 타입 체크 및 자동 완성을 위한 사용자 정의 TypeScript 플러그인과 타입 체커를 포함합니다. VSCode 및 기타 코드 편집기에서 이를 사용할 수 있습니다.
+
+VS Code에서 플러그인을 활성화하려면:
+
+1. 명령 팔레트를 엽니다 (`Ctrl/⌘` + `Shift` + `P`)
+2. "TypeScript: Select TypeScript Version"을 검색합니다.
+3. "Use Workspace Version"을 선택합니다.
+
+<Image
+  alt="TypeScript Command Palette"
+  srcLight="/docs/light/typescript-command-palette.png"
+  srcDark="/docs/dark/typescript-command-palette.png"
+  width="1600"
+  height="637"
+/>
+
+이제 파일을 편집할 때 사용자 정의 플러그인이 활성화됩니다. `next build`를 실행할 때 사용자 정의 타입 체커가 사용됩니다.
+
+### Plugin Features
+
+TypeScript 플러그인은 다음과 같은 기능을 제공합니다:
+
+- [segment config options](/docs/app/api-reference/file-conventions/route-segment-config)에 유효하지 않은 값이 전달되면 경고합니다.
+- 사용 가능한 옵션과 상황별 문서를 표시합니다.
+- `use client` 지시어가 올바르게 사용되었는지 확인합니다.
+- 클라이언트 훅(`useState` 등)이 Client Components에서만 사용되는지 확인합니다.
+
+> **참고**: 향후 더 많은 기능이 추가될 예정입니다.
+
+</AppOnly>
+
+## Minimum TypeScript Version
+
+[import 이름에 타입 수정자](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#type-on-import-names) 및 [성능 개선](https://devblogs.microsoft.com/typescript/announcing-typescript-4-5/#real-path-sync-native)과 같은 구문 기능을 얻으려면 최소 `v4.5.2` 이상의 TypeScript를 사용하는 것이 좋습니다.
+
+## Type checking in Next.js Configuration
+
+### Type checking next.config.js
+
+`next.config.js` 파일을 사용할 때, JSDoc을 사용하여 IDE에서 일부 타입 체크를 추가할 수 있습니다:
+
+```js filename="next.config.js"
+// @ts-check
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  /* config options here */
+};
+
+module.exports = nextConfig;
+```
+
+### Type checking next.config.ts
+
+`next.config.ts` 파일을 사용하여 Next.js 구성에서 TypeScript와 타입을 가져올 수 있습니다.
+
+```ts filename="next.config.ts"
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+```
+
+> **참고**: 추가 구성 없이 `next.config.ts`에서 Native ESM 모듈을 가져올 수 있습니다. `.cjs`, `.cts`, `.mjs`, `.mts`와 같은 확장자를 가져오는 것을 지원합니다.
+
+<AppOnly>
+
+## Statically Typed Links
+
+Next.js는 `next/link`를 사용할 때 타이포 및 기타 오류를 방지하기 위해 링크를 정적으로 타입할 수 있으며, 페이지 간 이동 시 타입 안전성을 향상시킵니다.
+
+이 기능을 사용하려면 `experimental.typedRoutes`를 활성화하고 프로젝트가 TypeScript를 사용해야 합니다.
+
+```ts filename="next.config.ts"
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  experimental: {
+    typedRoutes: true,
+  },
+};
+
+export default nextConfig;
+```
+
+Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 링크 정의를 `.next/types`에 생성하며, TypeScript는 이를 사용하여 잘못된 링크에 대한 피드백을 에디터에 제공합니다.
+
+현재 실험적 지원은 동적 세그먼트를 포함한 모든 문자열 리터럴을 포함합니다. 비리터럴 문자열의 경우 `as Route`를 사용하여 `href`를 수동으로 캐스팅해야 합니다:
+
+```tsx
+import type { Route } from 'next';
+import Link from 'next/link'
+
+// 유효한 경로이면 TypeScript 오류 없음
+<Link href="/about" />
+<Link href="/blog/nextjs" />
+<Link href={`/blog/${slug}`} />
+<Link href={('/blog' + slug) as Route} />
+
+// 유효하지 않은 경로이면 TypeScript 오류 발생
+<Link href="/aboot" />
+```
+
+`next/link`를 래핑하는 사용자 정의 컴포넌트에서 `href`를 허용하려면 제네릭을 사용하세요:
+
+```tsx
+import type { Route } from "next";
+import Link from "next/link";
+
+function Card<T extends string>({ href }: { href: Route<T> | URL }) {
+  return (
+    <Link href={href}>
+      <div>My Card</div>
+    </Link>
+  );
+}
+```
+
+> **작동 원리**
+>
+> `next dev` 또는 `next build`를 실행할 때, Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 숨겨진 `.d.ts` 파일을 `.next` 내부에 생성합니다. 이 `.d.ts` 파일은 `tsconfig.json`에 포함되며 TypeScript 컴파일러는 이 `.d.ts` 파일을 체크하여 잘못된 링크에 대한 피드백을 에디터에 제공합니다.
+
+## End-to-End Type Safety
+
+Next.js App Router는 **강화된 타입 안전성**을 제공합니다. 여기에는 다음이 포함됩니다:
+
+1. **페칭 함수와 페이지 간 데이터 직렬화 없음**: 컴포넌트, 레이아웃 및 페이지에서 서버에 직접 `fetch`할 수 있습니다. 이 데이터는 클라이언트 측에서 사용하기 위해 직렬화(문자열로 변환)할 필요가 없습니다. 대신, `app`은 기본적으로 Server Components를 사용하므로 `Date`, `Map`, `Set` 등의 값을 추가 단계 없이 사용할 수 있습니다. 이전에는 Next.js 전용 타입으로 서버와 클라이언트 간 경계를 수동으로 타입 지정해야 했습니다.
+2. **컴포넌트 간 데이터 흐름 간소화**: 루트 레이아웃을 사용하도록 `_app`을 제거하면서 컴포넌트와 페이지 간 데이터 흐름을 시각화하기가 더 쉬워졌습니다. 이전에는 개별 `pages`와 `_app` 간에 데이터가 흐르면서 타입 지정이 어렵고 혼란스러운 버그가 발생할 수 있었습니다. App Router의 [공동 위치 데이터 페칭](/docs/app/building-your-application/data-fetching/caching-and-revalidating)을 통해 더 이상 문제가 되지 않습니다.
+
+[Next.js의 데이터 페칭](/docs/app/building-your-application/data-fetching/caching-and-revalidating)은 데이터베이스나 콘텐츠 제공자 선택에 대한 제한 없이 가능한 한 끝에서 끝까지 타입 안전성을 제공합니다.
+
+일반적인 TypeScript와 같이 응답 데이터를 타입 지정할 수 있습니다. 예를 들어:
+
+```tsx filename="app/page.tsx"
+async function getData() {
+  const res = await fetch("https://api.example.com/...");
+  // 반환 값은 직렬화되지 않습니다
+  // Date, Map, Set 등을 반환할 수 있습니다
+  return res.json();
+}
+
+export default async function Page() {
+  const name = await getData();
+
+  return "...";
+}
+```
+
+완전한 끝에서 끝까지 타입 안전성을 위해서는 데이터베이스나 콘텐츠 제공자가 TypeScript를 지원해야 합니다. 이를 위해 [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) 또는 타입 안전 쿼리 빌더를 사용할 수 있습니다.
+
+## Async Server Component TypeScript Error
+
+TypeScript와 함께 `async` Server Component를 사용하려
+
+면, TypeScript `5.1.3` 이상과 `@types/react` `18.2.8` 이상을 사용해야 합니다.
+
+이전 버전의 TypeScript를 사용하는 경우 `'Promise<Element>' is not a valid JSX element` 타입 오류가 발생할 수 있습니다. 최신 버전의 TypeScript와 `@types/react`로 업데이트하면 이 문제가 해결됩니다.
+
+## Passing Data Between Server & Client Components
+
+Server 및 Client Component 간에 props를 통해 데이터를 전달할 때, 이 데이터는 여전히 브라우저에서 사용하기 위해 직렬화(문자열로 변환)됩니다. 그러나 특별한 타입이 필요하지 않습니다. 다른 컴포넌트 간에 props를 전달하는 것과 동일하게 타입 지정됩니다.
+
+게다가, 직렬화되는 코드가 줄어들어 렌더링되지 않은 데이터는 서버와 클라이언트 간에 교차되지 않습니다(서버에 남아 있음). 이는 Server Components 지원을 통해서만 가능합니다.
+
+</AppOnly>
+
+<PagesOnly>
+
+## Static Generation and Server-side Rendering
+
+[`getStaticProps`](/docs/pages/api-reference/functions/get-static-props), [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths) 및 [`getServerSideProps`](/docs/pages/api-reference/functions/get-server-side-props)에 대해 각각 `GetStaticProps`, `GetStaticPaths`, `GetServerSideProps` 타입을 사용할 수 있습니다:
+
+```tsx filename="pages/blog/[slug].tsx"
+import type { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
+
+export const getStaticProps = (async (context) => {
+  // ...
+}) satisfies GetStaticProps;
+
+export const getStaticPaths = (async () => {
+  // ...
+}) satisfies GetStaticPaths;
+
+export const getServerSideProps = (async (context) => {
+  // ...
+}) satisfies GetServerSideProps;
+```
+
+> **참고**: `satisfies`는 TypeScript [4.9](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html)에 추가되었습니다. 최신 버전의 TypeScript로 업그레이드하는 것을 권장합니다.
+
+## API Routes
+
+다음은 API 라우트에 내장된 타입을 사용하는 예입니다:
+
+```ts
+import type { NextApiRequest, NextApiResponse } from "next";
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  res.status(200).json({ name: "John Doe" });
+}
+```
+
+응답 데이터를 타입 지정할 수도 있습니다:
+
+```ts
+import type { NextApiRequest, NextApiResponse } from "next";
+
+type Data = {
+  name: string;
+};
+
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  res.status(200).json({ name: "John Doe" });
+}
+```
+
+## Custom `App`
+
+[custom `App`](/docs/pages/building-your-application/routing/custom-app)가 있는 경우, 내장 타입 `AppProps`를 사용하고 파일 이름을 `./pages/_app.tsx`로 변경하세요:
+
+```ts
+import type { AppProps } from "next/app";
+
+export default function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
+}
+```
+
+</PagesOnly>
+
+## Path aliases and baseUrl
+
+Next.js는 `tsconfig.json`의 `"paths"` 및 `"baseUrl"` 옵션을 자동으로 지원합니다.
+
+<AppOnly>
+
+이 기능에 대해 더 알아보려면 [Module Path aliases documentation](/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases)를 참조하세요.
+
+</AppOnly>
+
+<PagesOnly>
+
+이 기능에 대해 더 알아보려면 [Module Path aliases documentation](/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases)를 참조하세요.
+
+</PagesOnly>
+
+## Incremental type checking
+
+`v10.2.1` 이후 Next.js는 `tsconfig.json`에서 [incremental type checking](https://www.typescriptlang.org/tsconfig#incremental)이 활성화된 경우 이를 지원하여 대규모 애플리케이션에서 타입 체크 속도를 높일 수 있습니다.
+
+## Ignoring TypeScript Errors
+
+Next.js는 프로젝트에 TypeScript 오류가 있는 경우 **production build** (`next build`)를 실패합니다.
+
+애플리케이션에 오류가 있는 경우에도 Next.js가 위험하게 프로덕션 코드를 생성하도록 하려면, 내장된 타입 체크 단계를 비활성화할 수 있습니다.
+
+비활성화된 경우, 빌드 또는 배포 프로세스의 일부로 타입 체크를 실행하고 있는지 확인하세요. 그렇지 않으면 매우 위험할 수 있습니다.
+
+`next.config.ts`를 열고 `typescript` 구성에서 `ignoreBuildErrors` 옵션을 활성화하세요:
+
+```ts filename="next.config.ts"
+export default {
+  typescript: {
+    // !! 경고 !!
+    // 프로젝트에 타입 오류가 있어도 프로덕션 빌드를 성공적으로 완료하도록 허용
+    // !! 경고 !!
+    ignoreBuildErrors: true,
+  },
+};
+```
+
+## Custom Type Declarations
+
+커스텀 타입을 선언해야 할 때, `next-env.d.ts`를 수정하고 싶을 수 있습니다. 그러나 이 파일은 자동으로 생성되므로 변경 사항이 덮어쓰여질 것입니다. 대신 새 파일을 생성하고 `new-types.d.ts`라고 이름을 짓고 이를 `tsconfig.json`에 참조하세요:
+
+```json filename="tsconfig.json"
+{
+  "compilerOptions": {
+    "skipLibCheck": true
+    //...생략...
+  },
+  "include": [
+    "new-types.d.ts",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
+}
+```
+
+## Version Changes
+
+| Version   | Changes                                                                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `v15.0.0` | [`next.config.ts`](#type-checking-nextconfigts) support added for TypeScript projects.                                               |
+| `v13.2.0` | Statically typed links are available in beta.                                                                                        |
+| `v12.0.0` | [SWC](/docs/architecture/nextjs-compiler) is now used by default to compile TypeScript and TSX for faster builds.                    |
+| `v10.2.1` | [Incremental type checking](https://www.typescriptlang.org/tsconfig#incremental) support added when enabled in your `tsconfig.json`. |

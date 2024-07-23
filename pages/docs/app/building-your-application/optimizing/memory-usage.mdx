@@ -1,0 +1,105 @@
+---
+title: Memory Usage
+description: Optimize memory used by your application in development and production.
+---
+
+# Memory Usage
+
+애플리케이션이 성장하고 기능이 풍부해짐에 따라 로컬 개발이나 프로덕션 빌드를 생성할 때 더 많은 리소스를 요구할 수 있습니다.
+
+Next.js에서 메모리를 최적화하고 일반적인 메모리 문제를 해결하기 위한 전략과 기술을 살펴보겠습니다.
+
+## 의존성 수 줄이기
+
+많은 양의 의존성을 가진 애플리케이션은 더 많은 메모리를 사용합니다.
+
+[Bundle Analyzer](/docs/app/building-your-application/optimizing/package-bundling#analyzing-javascript-bundles)는 애플리케이션에서 제거할 수 있는 큰 의존성을 조사하여 성능과 메모리 사용량을 개선하는 데 도움이 될 수 있습니다.
+
+## `experimental.webpackMemoryOptimizations` 시도하기
+
+`v15.0.0`부터 `next.config.js` 파일에 `experimental.webpackMemoryOptimizations: true`를 추가하여 Webpack에서 최대 메모리 사용량을 줄이는 동작을 변경할 수 있지만, 컴파일 시간이 약간 증가할 수 있습니다.
+
+> **알아두면 좋은 점**: 이 기능은 더 많은 프로젝트에서 먼저 테스트하기 위해 현재 실험적입니다. 그러나 낮은 위험도로 간주됩니다.
+
+## `next build`를 `--experimental-debug-memory-usage`와 함께 실행하기
+
+`14.2.0`부터 `next build --experimental-debug-memory-usage`를 실행하여 빌드 전체에서 메모리 사용량, 힙 사용량 및 가비지 컬렉션 통계를 지속적으로 출력하는 모드에서 빌드를 실행할 수 있습니다. 메모리 사용량이 설정된 한계에 가까워질 때 자동으로 힙 스냅샷도 찍습니다.
+
+> **알아두면 좋은 점**: 이 기능은 커스텀 Webpack 설정이 있는 경우 자동으로 활성화되는 Webpack 빌드 워커 옵션과 호환되지 않습니다.
+
+## 힙 프로파일 기록
+
+메모리 문제를 확인하기 위해 Node.js에서 힙 프로파일을 기록하고 Chrome DevTools에서 로드하여 잠재적인 메모리 누수 원인을 식별할 수 있습니다.
+
+터미널에서 Next.js 빌드를 시작할 때 `--heap-prof` 플래그를 Node.js에 전달하십시오:
+
+```sh
+node --heap-prof node_modules/next/dist/bin/next build
+```
+
+빌드가 끝나면 Node.js에서 `.heapprofile` 파일이 생성됩니다.
+
+Chrome DevTools에서 메모리 탭을 열고 "Load Profile" 버튼을 클릭하여 파일을 시각화할 수 있습니다.
+
+## 힙 스냅샷 분석
+
+애플리케이션의 메모리 사용량을 분석하기 위해 검사 도구를 사용할 수 있습니다.
+
+`next build` 또는 `next dev` 명령을 실행할 때 명령의 시작 부분에 `NODE_OPTIONS=--inspect`를 추가하십시오. 이렇게 하면 기본 포트에서 검사 에이전트가 노출됩니다. 사용자 코드가 시작되기 전에 중단하려면 대신 `--inspect-brk`를 전달할 수 있습니다. 프로세스가 실행되는 동안 Chrome DevTools와 같은 도구를 사용하여 디버깅 포트에 연결하여 힙 스냅샷을 기록하고 분석하여 어떤 메모리가 유지되고 있는지 확인할 수 있습니다.
+
+`14.2.0`부터는 `--experimental-debug-memory-usage` 플래그와 함께 `next build`를 실행하여 힙 스냅샷을 더 쉽게 찍을 수 있습니다.
+
+이 모드에서 실행되는 동안 언제든지 프로세스에 `SIGUSR2` 신호를 보내면 프로세스가 힙 스냅샷을 찍습니다.
+
+힙 스냅샷은 Next.js 애플리케이션의 프로젝트 루트에 저장되며 Chrome DevTools와 같은 힙 분석 도구에서 로드하여 어떤 메모리가 유지되고 있는지 확인할 수 있습니다. 이 모드는 아직 Webpack 빌드 워커와 호환되지 않습니다.
+
+[힙 스냅샷 기록 및 분석 방법](https://developer.chrome.com/docs/devtools/memory-problems/heap-snapshots)에 대해 자세히 알아보세요.
+
+## Webpack 빌드 워커
+
+Webpack 빌드 워커는 별도의 Node.js 워커에서 Webpack 컴파일을 실행할 수 있도록 하여 빌드 중 애플리케이션의 메모리 사용량을 줄입니다.
+
+이 옵션은 `v14.1.0`부터 애플리케이션에 커스텀 Webpack 설정이 없는 경우 기본적으로 활성화됩니다.
+
+이전 버전의 Next.js를 사용하거나 커스텀 Webpack 설정이 있는 경우, `next.config.js` 내에 `experimental.webpackBuildWorker: true`를 설정하여 이 옵션을 활성화할 수 있습니다.
+
+> **알아두면 좋은 점**: 이 기능은 모든 커스텀 Webpack 플러그인과 호환되지 않을 수 있습니다.
+
+## Webpack 캐시 비활성화
+
+[Webpack 캐시](https://webpack.js.org/configuration/cache/)는 생성된 Webpack 모듈을 메모리 및/또는 디스크에 저장하여 빌드 속도를 향상시킵니다. 이는 성능에 도움이 되지만 캐시된 데이터를 저장하기 위해 애플리케이션의 메모리 사용량을 증가시킵니다.
+
+애플리케이션에 [커스텀 Webpack 설정](/docs/app/api-reference/next-config-js/webpack)을 추가하여 이 동작을 비활성화할 수 있습니다:
+
+```js filename="next.config.mjs"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: (
+    config,
+    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+  ) => {
+    if (config.cache && !dev) {
+      config.cache = Object.freeze({
+        type: "memory",
+      });
+      config.cache.maxMemoryGenerations = 0;
+    }
+    // 중요: 수정된 구성을 반환해야 합니다.
+    return config;
+  },
+};
+
+export default nextConfig;
+```
+
+## 소스 맵 비활성화
+
+소스 맵을 생성하는 것은 빌드 과정에서 추가 메모리를 소비합니다.
+
+소스 맵 생성을 비활성화하려면 Next.js 구성에 `productionBrowserSourceMaps: false` 및 `experimental.serverSourceMaps: false`를 추가하세요.
+
+> **알아두면 좋은 점**: 일부 플러그인은 소스 맵을 활성화할 수 있으며 비활성화하려면 커스텀 구성이 필요할 수 있습니다.
+
+## Edge 메모리 문제
+
+Next.js `v14.1.3`은 Edge 런타임을 사용할 때의 메모리 문제를 수정했습니다. 이 버전(또는 이후 버전)으로 업데이트하여 문제가 해결되는지 확인하세요.

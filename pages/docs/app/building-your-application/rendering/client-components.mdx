@@ -1,0 +1,110 @@
+---
+title: Client Components
+description: Learn how to use Client Components to render parts of your application on the client.
+---
+
+import Image from "next/image";
+
+# Client Components
+
+Client Components를 사용하면 [서버에서 미리 렌더링된](https://github.com/reactwg/server-components/discussions/4) 후 클라이언트 JavaScript를 사용하여 브라우저에서 실행할 수 있는 인터랙티브 UI를 작성할 수 있습니다.
+
+이 페이지에서는 Client Components가 어떻게 작동하는지, 어떻게 렌더링되는지, 그리고 언제 사용하면 좋은지 설명합니다.
+
+## Benefits of Client Rendering
+
+클라이언트에서 렌더링 작업을 수행하면 몇 가지 이점이 있습니다:
+
+- **상호작용**: Client Components는 상태, 효과 및 이벤트 리스너를 사용할 수 있으므로 사용자에게 즉각적인 피드백을 제공하고 UI를 업데이트할 수 있습니다.
+- **브라우저 API**: Client Components는 [지오로케이션](https://developer.mozilla.org/docs/Web/API/Geolocation_API)이나 [로컬 스토리지](https://developer.mozilla.org/docs/Web/API/Window/localStorage)와 같은 브라우저 API에 접근할 수 있습니다.
+
+## Using Client Components in Next.js
+
+Client Components를 사용하려면 파일 상단에 React [`"use client"` 지시어](https://react.dev/reference/react/use-client)를 import 위에 추가하면 됩니다.
+
+`"use client"`는 Server와 Client Component 모듈 간의 [경계](/docs/app/building-your-application/rendering#network-boundary)를 선언하는 데 사용됩니다. 즉, 파일에 `"use client"`를 정의하면 해당 파일에 import된 모든 모듈, 자식 컴포넌트를 포함하여 클라이언트 번들의 일부로 간주됩니다.
+
+```tsx filename="app/counter.tsx" highlight={1} switcher
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
+
+```jsx filename="app/counter.js" highlight={1} switcher
+"use client";
+
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+```
+
+아래 다이어그램은 중첩된 컴포넌트(`toggle.js`)에서 `onClick` 및 `useState`를 사용할 때 `"use client"` 지시어가 정의되지 않으면 오류가 발생하는 이유를 보여줍니다. 기본적으로 App Router의 모든 컴포넌트는 이러한 API가 사용되지 않는 Server Components입니다. `toggle.js`에서 `"use client"` 지시어를 정의함으로써 이러한 API가 사용 가능한 클라이언트 경계에 들어가도록 React에 지시할 수 있습니다.
+
+<Image
+  alt="Use Client Directive and Network Boundary"
+  srcLight="/docs/light/use-client-directive.png"
+  srcDark="/docs/dark/use-client-directive.png"
+  width="1600"
+  height="1320"
+/>
+
+> **여러 `use client` 진입점을 정의하는 경우**:
+>
+> React Component 트리에서 여러 "use client" 진입점을 정의할 수 있습니다. 이를 통해 애플리케이션을 여러 클라이언트 번들로 분할할 수 있습니다.
+>
+> 그러나, 클라이언트에서 렌더링해야 하는 모든 컴포넌트에 `"use client"`를 정의할 필요는 없습니다. 한 번 경계를 정의하면 모든 자식 컴포넌트와 import된 모듈이 클라이언트 번들의 일부로 간주됩니다.
+
+## How are Client Components Rendered?
+
+Next.js에서 Client Components는 요청이 전체 페이지 로드(애플리케이션을 처음 방문하거나 브라우저 새로 고침으로 인한 페이지 다시 로드)인지 또는 후속 탐색인지에 따라 다르게 렌더링됩니다.
+
+### Full page load
+
+초기 페이지 로드를 최적화하기 위해 Next.js는 Client 및 Server Components에 대해 서버에서 정적 HTML 미리보기를 렌더링하기 위해 React의 API를 사용합니다. 즉, 사용자가 애플리케이션을 처음 방문할 때 클라이언트가 Client Component JavaScript 번들을 다운로드, 파싱 및 실행할 필요 없이 페이지 내용을 즉시 볼 수 있습니다.
+
+서버에서는:
+
+1. React는 Server Components를 [**React Server Component Payload (RSC Payload)**](/docs/app/building-your-application/rendering/server-components#what-is-the-react-server-component-payload-rsc)라는 특별한 데이터 형식으로 렌더링하며, 여기에는 Client Components에 대한 참조가 포함됩니다.
+2. Next.js는 RSC Payload와 Client Component JavaScript 지침을 사용하여 서버에서 경로에 대한 **HTML**을 렌더링합니다.
+
+그런 다음 클라이언트에서는:
+
+1. HTML을 사용하여 경로의 빠른 비인터랙티브 초기 미리보기를 즉시 표시합니다.
+2. React Server Components Payload를 사용하여 Client와 Server Component 트리를 조정하고 DOM을 업데이트합니다.
+3. JavaScript 지침을 사용하여 Client Components를 [하이드레이션](https://react.dev/reference/react-dom/client/hydrateRoot)하고 UI를 인터랙티브하게 만듭니다.
+
+> **하이드레이션이란?**
+>
+> 하이드레이션은 이벤트 리스너를 DOM에 연결하여 정적 HTML을 인터랙티브하게 만드는 과정입니다. 하이드레이션은 [`hydrateRoot`](https://react.dev/reference/react-dom/client/hydrateRoot) React API를 사용하여 백그라운드에서 수행됩니다.
+
+### Subsequent Navigations
+
+후속 탐색에서는 Client Components가 서버 렌더링된 HTML 없이 클라이언트에서 완전히 렌더링됩니다.
+
+이는 Client Component JavaScript 번들이 다운로드되고 파싱됨을 의미합니다. 번들이 준비되면 React는 [RSC Payload](/docs/app/building-your-application/rendering/server-components#what-is-the-react-server-component-payload-rsc)를 사용하여 Client와 Server Component 트리를 조정하고 DOM을 업데이트합니다.
+
+## Going back to the Server Environment
+
+때때로 `"use client"` 경계를 선언한 후 서버 환경으로 돌아가고 싶을 수 있습니다. 예를 들어, 클라이언트 번들 크기를 줄이거나 서버에서 데이터를 페칭하거나 서버에서만 사용 가능한 API를 사용하고 싶을 때가 있습니다.
+
+Client Components 내부에 이론적으로 중첩된 코드를 유지하면서도 Server Components 및 [Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)를 사용하여 코드를 서버에 유지할 수 있습니다. 자세한 내용은 [Composition Patterns](/docs/app/building-your-application/rendering/composition-patterns) 페이지를 참조하세요.

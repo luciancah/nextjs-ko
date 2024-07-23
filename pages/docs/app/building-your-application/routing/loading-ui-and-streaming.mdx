@@ -1,0 +1,82 @@
+---
+title: Loading UI and Streaming
+description: Built on top of Suspense, Loading UI allows you to create a fallback for specific route segments, and automatically stream content as it becomes ready.
+---
+
+import Image from "next/image";
+
+# Loading UI and Streaming
+
+특정 경로 세그먼트에 대한 폴백을 생성하고, 콘텐츠가 준비되는 대로 자동으로 스트리밍할 수 있게 하는 Suspense 기반의 로딩 UI를 사용하세요.
+
+## Instant Loading States
+
+즉시 로딩 상태
+
+`loading.js` 파일을 추가하여 폴더 내에 로딩 상태를 생성합니다.
+
+## Streaming with Suspense
+
+Suspense를 사용한 스트리밍
+
+Suspense 경계는 UI 컴포넌트를 수동으로 스트리밍할 수 있도록 합니다. Node.js 및 Edge 런타임에서도 사용할 수 있습니다.
+
+### What is Streaming?
+
+스트리밍이란?
+
+스트리밍은 SSR의 단점을 해결하기 위해 페이지의 HTML을 더 작은 청크로 나누고 서버에서 클라이언트로 점진적으로 전송하는 방식입니다.
+
+### Example
+
+예제
+
+```tsx filename="app/dashboard/page.tsx" switcher
+import { Suspense } from "react";
+import { PostFeed, Weather } from "./Components";
+
+export default function Posts() {
+  return (
+    <section>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <PostFeed />
+      </Suspense>
+      <Suspense fallback={<p>Loading weather...</p>}>
+        <Weather />
+      </Suspense>
+    </section>
+  );
+}
+```
+
+```jsx filename="app/dashboard/page.js" switcher
+import { Suspense } from "react";
+import { PostFeed, Weather } from "./Components";
+
+export default function Posts() {
+  return (
+    <section>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <PostFeed />
+      </Suspense>
+      <Suspense fallback={<p>Loading weather...</p>}>
+        <Weather />
+      </Suspense>
+    </section>
+  );
+}
+```
+
+더 많은 Suspense 예제와 사용 사례는 [React Documentation](https://react.dev/reference/react/Suspense)을 참조하세요.
+
+### SEO
+
+SEO
+
+Next.js는 UI를 스트리밍하기 전에 `generateMetadata` 내부에서 데이터 페칭이 완료될 때까지 대기합니다. 이는 스트리밍 응답의 첫 번째 부분에 `<head>` 태그가 포함되도록 보장합니다.
+
+### Status Codes
+
+상태 코드
+
+스트리밍 시 `200` 상태 코드를 반환하여 요청이 성공했음을 알립니다. `redirect` 또는 `notFound`를 사용할 때와 같이 스트리밍된 콘텐츠 내에서 오류를 클라이언트에 전달할 수 있습니다. 응답 헤더는 이미 클라이언트에 전송되었기 때문에 응답의 상태 코드를 업데이트할 수는 없습니다. 이는 SEO에 영향을 미치지 않습니다.

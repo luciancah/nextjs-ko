@@ -1,0 +1,381 @@
+---
+title: Script Optimization
+nav_title: Scripts
+description: Optimize 3rd party scripts with the built-in Script component.
+related:
+  title: API Reference
+  description: Learn more about the next/script API.
+  links:
+    - app/api-reference/components/script
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+import Image from "next/image";
+
+# Script Optimization
+
+<AppOnly>
+
+### Layout Scripts
+
+여러 경로에 대해 서드파티 스크립트를 로드하려면 `next/script`를 가져와 레이아웃 컴포넌트에 스크립트를 직접 포함하세요:
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+import Script from "next/script";
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <section>{children}</section>
+      <Script src="https://example.com/script.js" />
+    </>
+  );
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+import Script from "next/script";
+
+export default function DashboardLayout({ children }) {
+  return (
+    <>
+      <section>{children}</section>
+      <Script src="https://example.com/script.js" />
+    </>
+  );
+}
+```
+
+폴더 경로(e.g. `dashboard/page.js`) 또는 중첩된 경로(e.g. `dashboard/settings/page.js`)에 사용자가 접근할 때 서드파티 스크립트가 가져옵니다. Next.js는 동일한 레이아웃에서 사용자가 여러 경로를 이동하더라도 스크립트가 **한 번만 로드**되도록 보장합니다.
+
+</AppOnly>
+
+### Application Scripts
+
+<AppOnly>
+
+모든 경로에 대해 서드파티 스크립트를 로드하려면 `next/script`를 가져와 루트 레이아웃에 스크립트를 직접 포함하세요:
+
+```tsx filename="app/layout.tsx" switcher
+import Script from "next/script";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+      <Script src="https://example.com/script.js" />
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import Script from "next/script";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+      <Script src="https://example.com/script.js" />
+    </html>
+  );
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+모든 경로에 대해 서드파티 스크립트를 로드하려면 `next/script`를 가져와 커스텀 `_app`에 스크립트를 직접 포함하세요:
+
+```jsx filename="pages/_app.js"
+import Script from "next/script";
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <Component {...pageProps} />
+      <Script src="https://example.com/script.js" />
+    </>
+  );
+}
+```
+
+</PagesOnly>
+
+이 스크립트는 애플리케이션의 **어떤** 경로에 접근하더라도 로드되고 실행됩니다. Next.js는 사용자가 여러 페이지를 이동하더라도 스크립트가 **한 번만 로드**되도록 보장합니다.
+
+> **Recommendation**: 성능에 불필요한 영향을 최소화하기 위해 서드파티 스크립트를 특정 페이지나 레이아웃에만 포함하는 것이 좋습니다.
+
+### Strategy
+
+기본 `next/script` 동작을 통해 페이지나 레이아웃에 서드파티 스크립트를 로드할 수 있지만, `strategy` 속성을 사용하여 로딩 동작을 미세 조정할 수 있습니다:
+
+- `beforeInteractive`: 모든 Next.js 코드와 페이지 수화가 발생하기 전에 스크립트를 로드합니다.
+- `afterInteractive`: (**기본값**) 페이지 일부가 수화된 후 일찍 스크립트를 로드합니다.
+- `lazyOnload`: 브라우저가 유휴 상태일 때 나중에 스크립트를 로드합니다.
+- `worker`: (실험적) 웹 워커에서 스크립트를 로드합니다.
+
+각 전략과 사용 사례에 대해 자세히 알아보려면 [`next/script`](/docs/app/api-reference/components/script#strategy) API 참조 문서를 참조하세요.
+
+### Offloading Scripts To A Web Worker (experimental)
+
+> **Warning:** `worker` 전략은 아직 안정적이지 않으며 [`app`](/docs/app/building-your-application/routing/defining-routes) 디렉토리와 함께 작동하지 않습니다. 주의하여 사용하세요.
+
+`worker` 전략을 사용하는 스크립트는 [Partytown](https://partytown.builder.io/)을 통해 웹 워커로 오프로드되고 실행됩니다. 이를 통해 사이트 성능을 개선하고 메인 스레드를 나머지 애플리케이션 코드에 전용할 수 있습니다.
+
+이 전략은 아직 실험적이며 `next.config.js`에서 `nextScriptWorkers` 플래그를 활성화해야만 사용할 수 있습니다:
+
+```js filename="next.config.js"
+module.exports = {
+  experimental: {
+    nextScriptWorkers: true,
+  },
+};
+```
+
+그런 다음 `next`를 실행합니다(일반적으로 `npm run dev` 또는 `yarn dev`). Next.js는 설정을 완료하기 위해 필요한 패키지 설치를 안내합니다:
+
+```bash filename="Terminal"
+npm run dev
+```
+
+다음과 같은 안내를 볼 수 있습니다: `npm install @builder.io/partytown`을 실행하여 Partytown을 설치하세요.
+
+설정이 완료되면 `strategy="worker"`를 정의하면 애플리케이션에서 Partytown이 자동으로 인스턴스화되고 스크립트가 웹 워커로 오프로드됩니다.
+
+```tsx filename="pages/home.tsx" switcher
+import Script from "next/script";
+
+export default function Home() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" strategy="worker" />
+    </>
+  );
+}
+```
+
+```jsx filename="pages/home.js" switcher
+import Script from "next/script";
+
+export default function Home() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" strategy="worker" />
+    </>
+  );
+}
+```
+
+웹 워커에서 서드파티 스크립트를 로드할 때 고려해야 할 여러 트레이드 오프가 있습니다. 자세한 내용은 Partytown의 [tradeoffs](https://partytown.builder.io/trade-offs) 문서를 참조하세요.
+
+### Inline Scripts
+
+외부 파일에서 로드되지 않는 인라인 스크립트도 Script 컴포넌트에서 지원됩니다. 중괄호 안에 JavaScript를 넣어 작성할 수 있습니다:
+
+```jsx
+<Script id="show-banner">
+  {`document.getElementById('banner').classList.remove('hidden')`}
+</Script>
+```
+
+또는 `dangerouslySetInnerHTML` 속성을 사용할 수 있습니다:
+
+```jsx
+<Script
+  id="show-banner"
+  dangerouslySetInnerHTML={{
+    __html: `document.getElementById('banner').classList.remove('hidden')`,
+  }}
+/>
+```
+
+> **Warning**: 인라인 스크립트에 대해 Next.js가 스크립트를 추적하고 최적화할 수 있도록 `id` 속성을 할당해야 합니다.
+
+### Executing Additional Code
+
+이벤트 핸들러를 사용하여 특정 이벤트가 발생한 후 추가 코드를 실행할 수 있습니다:
+
+- `onLoad`: 스크립트 로드가 완료된 후 코드를 실행합니다.
+- `onReady`: 스크립트 로드가 완료되고 컴포넌트가 마운트될 때마다 코드를 실행합니다.
+- `onError`: 스크립트 로드에 실패하면 코드를 실행합니다.
+
+<AppOnly>
+
+이 핸들러는 `next/script`가 [클라이언트 컴포넌트](/docs/app/building-your-application/rendering/client-components) 내부에 사용되고 코드의 첫 번째 줄에 `"use client"`가 정의된 경우에만 작동합니다:
+
+```tsx filename="app/page.tsx" switcher
+"use client";
+
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        onLoad={() => {
+          console.log("Script has loaded");
+        }}
+      />
+    </>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+"use client";
+
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        onLoad={() => {
+          console.log("Script has loaded");
+        }}
+      />
+    </>
+  );
+}
+```
+
+각 이벤트 핸들러에 대해 자세히 알아보고 예제를 보려면 [`next/script`](/docs/app/api-reference/components/script#onload) API 참조를 참조하세요.
+
+</AppOnly>
+
+<PagesOnly>
+
+이 핸들러는 `next/script`가 [클라이언트 컴포넌트](/docs/app/building-your-application/rendering/client-components) 내부에 사용되고 코드의 첫 번째 줄에 `"use client"`가 정의된 경우에만 작동합니다
+
+:
+
+```tsx filename="pages/index.tsx" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        onLoad={() => {
+          console.log("Script has loaded");
+        }}
+      />
+    </>
+  );
+}
+```
+
+```jsx filename="pages/index.js" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        onLoad={() => {
+          console.log("Script has loaded");
+        }}
+      />
+    </>
+  );
+}
+```
+
+각 이벤트 핸들러에 대해 자세히 알아보고 예제를 보려면 [`next/script`](/docs/pages/api-reference/components/script#onload) API 참조를 참조하세요.
+
+</PagesOnly>
+
+### Additional Attributes
+
+[`nonce`](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/nonce) 또는 [custom data attributes](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/data-*)와 같이 Script 컴포넌트에서 사용되지 않는 많은 DOM 속성을 `<script>` 요소에 할당할 수 있습니다. 추가 속성을 포함하면 자동으로 최종 최적화된 `<script>` 요소로 전달됩니다.
+
+<AppOnly>
+
+```tsx filename="app/page.tsx" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        id="example-script"
+        nonce="XUENAJFW"
+        data-test="script"
+      />
+    </>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        id="example-script"
+        nonce="XUENAJFW"
+        data-test="script"
+      />
+    </>
+  );
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+```tsx filename="pages/index.tsx" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        id="example-script"
+        nonce="XUENAJFW"
+        data-test="script"
+      />
+    </>
+  );
+}
+```
+
+```jsx filename="pages/index.js" switcher
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script
+        src="https://example.com/script.js"
+        id="example-script"
+        nonce="XUENAJFW"
+        data-test="script"
+      />
+    </>
+  );
+}
+```
+
+</PagesOnly>

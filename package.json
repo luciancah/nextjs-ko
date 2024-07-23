@@ -1,7 +1,7 @@
 {
-  "name": "nextra-docs-template",
+  "name": "nextjs-ko",
   "version": "0.0.1",
-  "description": "Nextra docs template",
+  "description": "nextjs 공식문서 한국어 번역",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+    "url": "git+https://github.com/luciancah/nextjs-ko.git"
   },
-  "author": "Shu Ding <g@shud.in>",
+  "author": "Jinhyung Lee <luciancah@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shuding/nextra-docs-template/issues"
+    "url": "https://github.com/luciancah/nextjs-ko/issues"
   },
-  "homepage": "https://github.com/shuding/nextra-docs-template#readme",
+  "homepage": "https://github.com/nextjs-ko#readme",
   "dependencies": {
     "next": "^13.0.6",
     "nextra": "latest",

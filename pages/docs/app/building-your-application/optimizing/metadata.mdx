@@ -1,0 +1,366 @@
+---
+title: Metadata
+description: Use the Metadata API to define metadata in any layout or page.
+related:
+  description: View all the Metadata API options.
+  links:
+    - app/api-reference/functions/generate-metadata
+    - app/api-reference/file-conventions/metadata
+    - app/api-reference/functions/generate-viewport
+---
+
+# Metadata
+
+Next.js에는 SEO와 웹 공유성을 향상시키기 위해 애플리케이션 메타데이터(e.g. HTML `head` 요소 내의 `meta` 및 `link` 태그)를 정의하는 데 사용할 수 있는 Metadata API가 있습니다.
+
+애플리케이션에 메타데이터를 추가하는 방법에는 두 가지가 있습니다:
+
+- **Config-based Metadata**: `layout.js` 또는 `page.js` 파일에서 [정적 `metadata` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object) 또는 동적 [`generateMetadata` 함수](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 내보냅니다.
+- **File-based Metadata**: 경로 세그먼트에 정적 또는 동적으로 생성된 특수 파일을 추가합니다.
+
+이 두 옵션을 사용하면 Next.js가 페이지에 대한 관련 `<head>` 요소를 자동으로 생성합니다. 또한 [`ImageResponse`](/docs/app/api-reference/functions/image-response) 생성자를 사용하여 동적 OG 이미지를 만들 수 있습니다.
+
+## Static Metadata
+
+정적 메타데이터를 정의하려면 `layout.js` 또는 정적 `page.js` 파일에서 [`Metadata` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)를 내보냅니다.
+
+```tsx filename="layout.tsx | page.tsx" switcher
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "...",
+  description: "...",
+};
+
+export default function Page() {}
+```
+
+```jsx filename="layout.js | page.js" switcher
+export const metadata = {
+  title: "...",
+  description: "...",
+};
+
+export default function Page() {}
+```
+
+사용 가능한 모든 옵션은 [API Reference](/docs/app/api-reference/functions/generate-metadata)를 참조하세요.
+
+## Dynamic Metadata
+
+동적 값이 필요한 메타데이터를 `fetch`하기 위해 `generateMetadata` 함수를 사용할 수 있습니다.
+
+```tsx filename="app/products/[id]/page.tsx" switcher
+import type { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // 경로 매개변수 읽기
+  const id = params.id;
+
+  // 데이터 가져오기
+  const product = await fetch(`https://.../${id}`).then((res) => res.json());
+
+  // 부모 메타데이터를 확장하는 옵션 (대체하지 않고)
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: product.title,
+    openGraph: {
+      images: ["/some-specific-page-image.jpg", ...previousImages],
+    },
+  };
+}
+
+export default function Page({ params, searchParams }: Props) {}
+```
+
+```jsx filename="app/products/[id]/page.js" switcher
+export async function generateMetadata({ params, searchParams }, parent) {
+  // 경로 매개변수 읽기
+  const id = params.id;
+
+  // 데이터 가져오기
+  const product = await fetch(`https://.../${id}`).then((res) => res.json());
+
+  // 부모 메타데이터를 확장하는 옵션 (대체하지 않고)
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: product.title,
+    openGraph: {
+      images: ["/some-specific-page-image.jpg", ...previousImages],
+    },
+  };
+}
+
+export default function Page({ params, searchParams }) {}
+```
+
+사용 가능한 모든 매개변수는 [API Reference](/docs/app/api-reference/functions/generate-metadata)를 참조하세요.
+
+> **알아두면 좋은 점**:
+>
+> - `generateMetadata`를 통한 정적 및 동적 메타데이터는 **서버 컴포넌트에서만 지원**됩니다.
+> - `fetch` 요청은 `generateMetadata`, `generateStaticParams`, 레이아웃, 페이지 및 서버 컴포넌트 전반에 걸쳐 동일한 데이터를 위해 자동으로 [메모이제이션](/docs/app/building-your-application/caching#request-memoization)됩니다. `fetch`를 사용할 수 없는 경우 React [`cache`를 사용할 수 있습니다](/docs/app/building-your-application/caching#react-cache-function).
+> - Next.js는 UI를 클라이언트로 스트리밍하기 전에 `generateMetadata` 내부의 데이터 가져오기가 완료될 때까지 기다립니다. 이는 [스트리밍된 응답](/docs/app/building-your-application/routing/loading-ui-and-streaming)의 첫 번째 부분에 `<head>` 태그가 포함되도록 보장합니다.
+
+## File-based metadata
+
+다음과 같은 특수 파일은 메타데이터에 사용할 수 있습니다:
+
+- [favicon.ico, apple-icon.jpg, 그리고 icon.jpg](/docs/app/api-reference/file-conventions/metadata/app-icons)
+- [opengraph-image.jpg 및 twitter-image.jpg](/docs/app/api-reference/file-conventions/metadata/opengraph-image)
+- [robots.txt](/docs/app/api-reference/file-conventions/metadata/robots)
+- [sitemap.xml](/docs/app/api-reference/file-conventions/metadata/sitemap)
+
+이 파일들을 정적 메타데이터에 사용할 수 있으며, 코드로 프로그래밍 방식으로 생성할 수도 있습니다.
+
+구현 및 예제는 [Metadata Files](/docs/app/api-reference/file-conventions/metadata) API Reference와 [Dynamic Image Generation](#dynamic-image-generation)을 참조하세요.
+
+## Behavior
+
+파일 기반 메타데이터가 더 높은 우선순위를 가지며, config 기반 메타데이터를 덮어씁니다.
+
+### Default Fields
+
+경로가 메타데이터를 정의하지 않아도 항상 추가되는 두 개의 기본 `meta` 태그가 있습니다:
+
+- [meta charset 태그](https://developer.mozilla.org/docs/Web/HTML/Element/meta#attr-charset)는 웹사이트의 문자 인코딩을 설정합니다.
+- [meta viewport 태그](https://developer.mozilla.org/docs/Web/HTML/Viewport_meta_tag)는 웹사이트의 뷰포트 너비와 스케일을 설정하여 다양한 기기에 맞게 조정합니다.
+
+```html
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+```
+
+> **알아두면 좋은 점**: 기본 [`viewport`](/docs/app/api-reference/functions/generate-metadata#viewport) 메타 태그를 덮어쓸 수 있습니다.
+
+### Ordering
+
+메타데이터는 루트 세그먼트에서 최종 `page.js` 세그먼트에 가장 가까운 세그먼트까지 순서대로 평가됩니다. 예를 들어:
+
+1. `app/layout.tsx` (루트 레이아웃)
+2. `app/blog/layout.tsx` (중첩된 블로그 레이아웃)
+3. `app/blog/[slug]/page.tsx` (블로그 페이지)
+
+### Merging
+
+[평가 순서](#ordering)에 따라 동일한 경로의 여러 세그먼트에서 내보낸 메타데이터 객체는 **얕게** 병합되어 경로의 최종 메타데이터 출력이 됩니다. 중복 키는 순서에 따라 **교체**됩니다.
+
+이는 [`openGraph`](/docs/app/api-reference/functions/generate-metadata#opengraph) 및 [`robots`](/docs/app/api-reference/functions/generate-metadata#robots)와 같은 중첩된 필드를 가진 메타데이터가 이전 세그먼트에 정의된 경우 마지막 세그먼트에 의해 **덮어쓰여지는** 것을 의미합니다.
+
+#### Overwriting fields
+
+```jsx filename="app/layout.js"
+export const metadata = {
+  title: "Acme",
+  openGraph: {
+    title: "Acme",
+    description: "Acme is a...",
+  },
+};
+```
+
+```jsx filename="app/blog/page.js"
+export const metadata = {
+  title: "Blog",
+  openGraph: {
+    title: "Blog",
+  },
+};
+
+// Output:
+// <title>Blog</title>
+// <meta property="og:title" content="Blog" />
+```
+
+위 예제에서:
+
+- `app/layout.js`의 `title`은 `app/blog/page.js`의 `title`로 **교체**됩니다.
+- `app/layout.js`의 모든 `openGraph` 필드는 `app/blog/page.js`에서 `openGraph` 메타데이터를 설정하므로 **교체**됩니다. `openGraph.description`이 없는 것을 확인하세요.
+
+세그먼트 간에 일부 중첩된 필드를 공유하면서 다른 필드를 덮어쓰려면 별도의 변수로 분리할 수 있습니다:
+
+```jsx filename="app/shared-metadata.js"
+export const openGraphImage = { images: ["http://..."] };
+```
+
+```jsx filename="app/page.js"
+import { openGraphImage } from "./shared-metadata";
+
+export const metadata = {
+  openGraph: {
+    ...openGraphImage,
+    title: "Home",
+  },
+};
+```
+
+```jsx filename="app/about/page.js"
+import { openGraphImage } from "../shared-metadata";
+
+export const metadata = {
+  openGraph: {
+    ...openGraphImage,
+    title: "About",
+  },
+};
+```
+
+위 예제에서, OG 이미지는 `app/layout.js`와 `app/about/page.js` 간에 공유되지만 제목은 다릅니다.
+
+#### Inheriting fields
+
+```jsx filename="app/layout.js"
+export const metadata = {
+  title: "Acme",
+  openGraph: {
+    title: "Acme",
+    description: "Acme is a...",
+  },
+};
+```
+
+```jsx filename="app/about/page.js"
+export const metadata = {
+  title: "About",
+};
+
+// Output:
+// <title>About</title>
+// <meta property="og:title" content="Acme" />
+// <meta property="og:description" content="Acme is a..." />
+```
+
+**참고 사항**
+
+- `app/layout.js`의 `title`은 `app/about/page.js`의 `title`로 **교체**됩니다.
+- `app/about/page.js`가 `openGraph` 메타데이터를 설정하지 않기 때문에 `app/layout.js`의 모든 `openGraph` 필드는 `app/about/page.js`에서 **상속**됩니다.
+
+## Dynamic Image Generation
+
+`ImageResponse` 생성자를 사용하여 JSX와 CSS를 사용하여 동적 이미지를 생성할 수 있습니다. 이는 Open Graph 이미지, Twitter 카드 등 소셜 미디어 이미지를 만드는 데 유용합니다.
+
+이를 사용하려면 `next/og`에서 `ImageResponse`를 가져올 수 있습니다:
+
+```jsx filename="app/about/route.js"
+import { ImageResponse } from "next/og";
+
+export async function GET() {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          fontSize: 128,
+          background: "white",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          textAlign: "center",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        Hello world!
+      </div>
+    ),
+    {
+      width: 1200,
+      height: 600,
+    }
+  );
+}
+```
+
+`ImageResponse`는 [Route Handlers](/docs/app/building-your-application/routing/route-handlers) 및 파일 기반 메타데이터를 포함한 다른 Next.js API와 잘 통합됩니다. 예를 들어, 빌드 타임 또는 요청 시 동적으로 Open Graph 이미지를 생성하기 위해 `opengraph-image.tsx` 파일에서 `ImageResponse`를 사용할 수 있습니다.
+
+`ImageResponse`는 flexbox 및 절대 위치 지정, 사용자 정의 폰트, 텍스트 줄 바꿈, 중앙 정렬, 중첩된 이미지 등 일반적인 CSS 속성을 지원합니다. [지원되는 CSS 속성의 전체 목록을 확인하세요](/docs/app/api-reference/functions/image-response).
+
+> **알아두면 좋은 점**:
+>
+> - 예제는 [Vercel OG Playground](https://og-playground.vercel.app/)에서 확인할 수 있습니다.
+> - `ImageResponse`는 [@vercel/og](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation), [Satori](https://github.com/vercel/satori), 그리고 Resvg를 사용하여 HTML 및 CSS를 PNG로 변환합니다.
+> - Edge Runtime만 지원됩니다. 기본 Node.js 런타임은 작동하지 않습니다.
+> - flexbox 및 일부 CSS 속성만 지원됩니다. 고급 레이아웃(e.g. `display: grid`)은 작동하지 않습니다.
+> - 최대 번들 크기는 `500KB`입니다. 번들 크기에는 JSX, CSS, 폰트, 이미지 및 기타 모든 자산이 포함됩니다. 제한을 초과하는 경우, 자산 크기를 줄이거나 런타임에 가져오는 것을 고려하세요.
+> - `ttf`, `otf`, 그리고 `woff` 폰트 형식만 지원됩니다. 폰트 파싱 속도를 최대화하려면 `ttf` 또는 `otf`가 `woff`보다 선호됩니다.
+
+## JSON-LD
+
+[JSON-LD](https://json-ld.org/)는 검색 엔진이 콘텐츠를 이해할 수 있도록 하는 구조화된 데이터 형식입니다. 예를 들어, 사람, 이벤트, 조직, 영화, 책, 레시피 등 다양한 유형의 엔티티를 설명하는 데 사용할 수 있습니다.
+
+현재 JSON-LD에 대한 권장 사항은 `layout.js` 또는 `page.js` 컴포넌트에서 `<script>` 태그로 구조화된 데이터를 렌더링하는 것입니다. 예를 들어:
+
+```tsx filename="app/products/[id]/page.tsx" switcher
+export default async function Page({ params }) {
+  const product = await getProduct(params.id);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.image,
+    description: product.description,
+  };
+
+  return (
+    <section>
+      {/* 페이지에 JSON-LD 추가 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* ... */}
+    </section>
+  );
+}
+```
+
+```jsx filename="app/products/[id]/page.js" switcher
+export default async function Page({ params }) {
+  const product = await getProduct(params.id);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.image,
+    description: product.description,
+  };
+
+  return (
+    <section>
+      {/* 페이지에 JSON-LD 추가 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* ... */}
+    </section>
+  );
+}
+```
+
+Google의 [Rich Results Test](https://search.google.com/test/rich-results) 또는 일반적인 [Schema Markup Validator](https://validator.schema.org/)를 사용하여 구조화된 데이터를 검증하고 테스트할 수 있습니다.
+
+TypeScript를 사용하여 JSON-LD를 입력하려면 [`schema-dts`](https://www.npmjs.com/package/schema-dts)와 같은 커뮤니티 패키지를 사용할 수 있습니다:
+
+```tsx
+import { Product, WithContext } from "schema-dts";
+
+const jsonLd: WithContext<Product> = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Next.js Sticker",
+  image: "https://nextjs.org/imgs/sticker.png",
+  description: "Dynamic at the speed of static.",
+};
+```

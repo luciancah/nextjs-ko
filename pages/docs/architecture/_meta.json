@@ -1,0 +1,17 @@
+{
+  "accessibility": {
+    "title": "Accessibility"
+  },
+  "fast-refresh": {
+    "title": "Fast Refresh"
+  },
+  "nextjs-compiler": {
+    "title": "Next.js Compiler"
+  },
+  "supported-browsers": {
+    "title": "Supported Browsers"
+  },
+  "turbopack": {
+    "title": "Turbopack"
+  }
+}

@@ -1,0 +1,201 @@
+---
+title: Caching and Revalidating
+nav_title: Caching and Revalidating
+description: Learn how to cache and revalidate data in your Next.js application.
+---
+
+# Caching
+
+## Caching
+
+Caching은 서버에 요청하는 횟수를 줄이기 위해 데이터를 저장하는 과정입니다. Next.js는 개별 데이터 요청을 위한 [Data Cache](/docs/app/building-your-application/caching)를 내장하고 있어, 캐싱 동작을 세밀하게 제어할 수 있습니다.
+
+### `fetch` requests
+
+기본적으로, `fetch` 요청은 런타임에 새로운 데이터를 가져옵니다.
+
+개별 `fetch` 요청을 캐싱하려면, `cache: 'force-cache'` 옵션을 사용할 수 있습니다:
+
+```js
+// 'force-cache'는 기본값이며, 생략할 수 있습니다
+fetch("https://...", { cache: "force-cache" });
+```
+
+개별 `fetch` 요청에 대한 캐싱을 사용하지 않으려면, `cache: 'no-store'` 옵션을 사용할 수 있습니다:
+
+```js filename="layout.js | page.js"
+fetch("https://...", { cache: "no-store" });
+```
+
+> **Advanced**: 레이아웃이나 페이지 세그먼트에 여러 개의 `fetch` 요청이 있는 경우, `const dynamic = 'force-dynamic'` 또는 `const fetchCache = 'force-no-store'` [Segment Config Options](/docs/app/api-reference/file-conventions/route-segment-config)를 사용하여 세그먼트 내의 모든 데이터 요청에 대한 캐싱 동작을 구성할 수 있습니다.
+
+### Data fetching libraries and ORMs
+
+데이터 요청이 캐시될지 여부는 데이터 페칭 라이브러리, 데이터베이스 클라이언트, ORM의 기본 동작에 따라 달라집니다.
+
+특정 요청을 캐시하려면, [`unstable_cache`](/docs/app/api-reference/functions/unstable_cache) API를 사용할 수 있습니다:
+
+```tsx filename="@/app/lib/data.ts switcher highlight={6}
+import { unstable_cache as cache } from "next/cache";
+
+export async function getPosts() {
+  cache();
+
+  try {
+    // 데이터 페치
+  } catch (error) {}
+}
+```
+
+```jsx filename="@/app/lib/data.js switcher highlight={6}
+import { unstable_cache as cache } from "next/cache";
+
+export async function getPosts() {
+  cache();
+  try {
+    // 데이터 페치
+  } catch (error) {}
+}
+```
+
+특정 요청을 캐시에서 제외하려면, [`unstable_noStore`](/docs/app/api-reference/functions/unstable_noStore) API를 사용할 수 있습니다:
+
+```tsx filename="@/app/lib/data.ts switcher highlight={6}
+import { unstable_noStore as noStore } from "next/cache";
+
+export async function getTransactions() {
+  // 응답을 캐시하지 않도록 설정합니다.
+  // 이는 fetch(..., {cache: 'no-store'})와 동일합니다.
+  noStore();
+
+  try {
+    // 데이터 페치
+  } catch (error) {}
+}
+```
+
+```jsx filename="@/app/lib/data.js switcher highlight={6}
+import { unstable_noStore as noStore } from "next/cache";
+
+export async function getTransactions() {
+  // 응답을 캐시하지 않도록 설정합니다.
+  // 이는 fetch(..., {cache: 'no-store'})와 동일합니다.
+  noStore();
+
+  try {
+    // 데이터 페치
+  } catch (error) {}
+}
+```
+
+## Revalidating data
+
+Revalidation은 데이터 캐시를 비우고 최신 데이터를 다시 가져오는 과정입니다. 이는 데이터가 변경될 때 최신 정보를 표시하면서도 정적 렌더링의 속도 이점을 유지하는 데 유용합니다.
+
+캐시된 데이터는 두 가지 방법으로 revalidate 할 수 있습니다:
+
+- **시간 기반 revalidation**: 일정 시간이 지난 후 자동으로 데이터를 revalidate 합니다. 이는 데이터가 자주 변경되지 않으며, 신선도가 그렇게 중요하지 않은 경우에 유용합니다.
+- **온디맨드 revalidation**: 이벤트(예: 폼 제출)를 기반으로 수동으로 데이터를 revalidate 합니다. 온디맨드 revalidation은 태그 기반 또는 경로 기반 접근 방식을 사용하여 데이터 그룹을 한 번에 revalidate 할 수 있습니다. 이는 헤드리스 CMS의 콘텐츠가 업데이트될 때 가능한 한 빨리 최신 데이터를 표시하려는 경우에 유용합니다.
+
+### Time-based revalidation
+
+정해진 시간 간격으로 데이터를 revalidate 하려면, `fetch`의 `next.revalidate` 옵션을 사용하여 리소스의 캐시 수명을 설정할 수 있습니다(초 단위).
+
+```js
+fetch("https://...", { next: { revalidate: 3600 } }); // 최대 1시간마다 revalidate
+```
+
+또는, 라우트 세그먼트의 모든 요청을 revalidate 하기 위해 [Segment Config Options](/docs/app/api-reference/file-conventions/route-segment-config)를 사용할 수 있습니다.
+
+```jsx filename="layout.js | page.js"
+export const revalidate = 3600; // 최대 1시간마다 revalidate
+```
+
+[시간 기반 revalidation 작동 방식](/docs/app/building-your-application/caching#revalidating-1)에 대해 알아보세요.
+
+> **참고사항:**
+>
+> - 정적으로 렌더링된 라우트에서 여러 fetch 요청이 있고 각 요청의 revalidation 빈도가 다른 경우, 가장 낮은 시간이 모든 요청에 사용됩니다.
+> - 동적으로 렌더링된 라우트에서는 각 `fetch` 요청이 독립적으로 revalidate 됩니다.
+> - 서버 리소스를 절약하기 위해, 가능한 높은 revalidation 시간을 설정하는 것이 좋습니다. 예를 들어, 1초 대신 1시간. 실시간 데이터가 필요한 경우, [dynamic rendering](/docs/app/building-your-application/rendering/server-components#dynamic-rendering) 또는 클라이언트 측 데이터 페칭으로 전환하는 것을 고려하세요.
+
+### On-demand revalidation
+
+데이터는 [`revalidatePath`](/docs/app/api-reference/functions/revalidatePath) 및 [`revalidateTag`](/docs/app/api-reference/functions/revalidateTag) API를 사용하여 온디맨드로 revalidate 할 수 있습니다.
+
+[Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations) 또는 [Route Handler](/docs/app/building-your-application/routing/route-handlers)에서 `revalidatePath`를 사용하여 특정 라우트의 데이터를 revalidate 하세요:
+
+```tsx filename="@/app/actions.tsx switcher
+import { revalidatePath } from 'next/cache'
+
+export default async createPost() {
+  try {
+    // 데이터 수정
+    revalidatePath('/posts')
+  } catch(error) {}
+
+}
+```
+
+```jsx filename="@/app/actions.js switcher
+import { revalidatePath } from 'next/cache'
+
+export default async createPost() {
+  try {
+    // 데이터 수정
+    revalidatePath('/posts')
+  } catch(error) {}
+
+}
+```
+
+`revalidateTag`를 사용하여 여러 라우트에 걸쳐 있는 `fetch` 요청을 revalidate 할 수 있습니다.
+
+1. `fetch`를 사용할 때, 하나 이상의 태그로 캐시 항목을 태그할 수 있는 옵션이 있습니다.
+2. 그런 다음, `revalidateTag`를 호출하여 해당 태그와 연관된 모든 항목을 revalidate 할 수 있습니다.
+
+예를 들어, 다음 `fetch` 요청은 `collection` 캐시 태그를 추가합니다:
+
+```tsx filename="app/page.tsx" switcher
+export default async function Page() {
+  const res = await fetch("https://...", { next: { tags: ["collection"] } });
+  const data = await res.json();
+  // ...
+}
+```
+
+```jsx filename="app/page.js" switcher
+export default async function Page() {
+  const res = await fetch("https://...", { next: { tags: ["collection"] } });
+  const data = await res.json();
+  // ...
+}
+```
+
+그런 다음, `revalidateTag`를 호출하여 `collection`으로 태그된 이 `fetch` 요청을 revalidate 할 수 있습니다:
+
+```ts filename="@/app/actions.ts" switcher
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export default async function action() {
+  revalidateTag("collection");
+}
+```
+
+```js filename="@/app/actions.js" switcher
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export default async function action() {
+  revalidateTag("collection");
+}
+```
+
+[온디맨드 revalidation 작동 방식](/docs/app/building-your-application/caching#on-demand-revalidation)에 대해 알아보세요.
+
+### Error handling and revalidation
+
+데이터를 revalidate 하려는 시도 중에 오류가 발생하면, 마지막으로 성공적으로 생성된 데이터가 캐시에서 계속 제공됩니다. 다음 후속 요청에서 Next.js는 데이터를 다시 revalidate 하려고 시도합니다.

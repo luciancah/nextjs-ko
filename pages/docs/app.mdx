@@ -1,0 +1,75 @@
+---
+title: App Router
+description: Layouts, Server Components, Suspense 등을 포함하여 Next.js와 React의 최신 기능을 사용하는 새로운 App Router.
+---
+
+# App Router
+
+Next.js App Router는 [Server Components](/docs/app/building-your-application/rendering/server-components), [Suspense를 사용한 스트리밍](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense), [Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations) 등 React의 최신 기능을 사용하여 애플리케이션을 구축하기 위한 새로운 모델을 도입합니다.
+
+[처음 페이지 만들기](/docs/app/building-your-application/routing/layouts-and-templates)를 통해 App Router를 시작하세요.
+
+## 자주 묻는 질문
+
+### 레이아웃에서 요청 객체에 접근하려면 어떻게 해야 하나요?
+
+의도적으로 원시 요청 객체에 접근할 수 없습니다. 그러나 서버 전용 함수인 [`headers`](/docs/app/api-reference/functions/headers)와 [`cookies`](/docs/app/api-reference/functions/cookies)를 통해 접근할 수 있습니다. 또한 [쿠키 설정](#how-can-i-set-cookies)도 가능합니다.
+
+[레이아웃](/docs/app/building-your-application/routing/layouts-and-templates#layouts)은 다시 렌더링되지 않습니다. 페이지 간 탐색 시 불필요한 계산을 피하기 위해 캐시되고 재사용될 수 있습니다. 원시 요청에 대한 접근을 제한함으로써 Next.js는 레이아웃 내에서 잠재적으로 느리거나 비용이 많이 드는 사용자 코드 실행을 방지하여 성능에 부정적인 영향을 줄 수 있습니다.
+
+이 디자인은 또한 다양한 페이지에서 레이아웃의 일관되고 예측 가능한 동작을 보장하여 개발 및 디버깅을 단순화합니다.
+
+UI 패턴에 따라 [병렬 라우트](/docs/app/building-your-application/routing/parallel-routes)는 동일한 레이아웃에서 여러 페이지를 렌더링할 수 있으며, 페이지는 라우트 세그먼트와 URL 검색 매개변수에 접근할 수 있습니다.
+
+### 페이지에서 URL에 접근하려면 어떻게 해야 하나요?
+
+기본적으로 페이지는 Server Components입니다. 주어진 페이지의 [`params`](/docs/app/api-reference/file-conventions/page#params-optional) prop을 통해 라우트 세그먼트에 접근할 수 있으며, [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) prop을 통해 URL 검색 매개변수에 접근할 수 있습니다.
+
+Client Components를 사용하는 경우, 보다 복잡한 라우트를 위해 [`usePathname`](/docs/app/api-reference/functions/use-pathname), [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment), [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)를 사용할 수 있습니다.
+
+또한, UI 패턴에 따라 [병렬 라우트](/docs/app/building-your-application/routing/parallel-routes)는 동일한 레이아웃에서 여러 페이지를 렌더링할 수 있으며, 페이지는 라우트 세그먼트와 URL 검색 매개변수에 접근할 수 있습니다.
+
+### Server Component에서 리디렉션하려면 어떻게 해야 하나요?
+
+페이지에서 상대 또는 절대 URL로 리디렉션하려면 [`redirect`](/docs/app/api-reference/functions/redirect)를 사용할 수 있습니다. [`redirect`](/docs/app/api-reference/functions/redirect)는 임시(307) 리디렉션이고, [`permanentRedirect`](/docs/app/api-reference/functions/permanentRedirect)는 영구(308) 리디렉션입니다. 이러한 함수는 UI를 스트리밍하는 동안 사용될 때 클라이언트 측에서 리디렉션을 발생시키기 위해 메타 태그를 삽입합니다.
+
+### App Router에서 인증을 처리하려면 어떻게 해야 하나요?
+
+다음은 App Router를 지원하는 일반적인 인증 솔루션입니다:
+
+- [NextAuth.js](https://next-auth.js.org/configuration/nextjs#in-app-router)
+- [Clerk](https://clerk.com/docs/quickstarts/nextjs)
+- [Lucia](https://lucia-auth.com/getting-started/nextjs-app)
+- [Auth0](https://github.com/auth0/nextjs-auth0#app-router)
+- [Stytch](https://stytch.com/docs/example-apps/frontend/nextjs)
+- [Kinde](https://kinde.com/docs/developer-tools/nextjs-sdk/)
+- [WorkOS](https://workos.com/docs/user-management)
+- 또는 세션이나 JWT를 수동으로 처리하는 방법
+
+### 쿠키를 설정하려면 어떻게 해야 하나요?
+
+[Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations#cookies) 또는 [Route Handlers](/docs/app/building-your-application/routing/route-handlers)에서 [`cookies`](/docs/app/api-reference/functions/cookies) 함수를 사용하여 쿠키를 설정할 수 있습니다.
+
+HTTP는 스트리밍이 시작된 후 쿠키 설정을 허용하지 않기 때문에 페이지나 레이아웃에서 직접 쿠키를 설정할 수 없습니다. 또한 [미들웨어](/docs/app/building-your-application/routing/middleware#using-cookies)에서도 쿠키를 설정할 수 있습니다.
+
+### 멀티 테넌트 앱을 만들려면 어떻게 해야 하나요?
+
+여러 테넌트를 제공하는 단일 Next.js 애플리케이션을 만들고자 하는 경우, [권장 아키텍처를 보여주는 예제](https://vercel.com/templates/next.js/platforms-starter-kit)를 제공하고 있습니다.
+
+### App Router 캐시를 무효화하려면 어떻게 해야 하나요?
+
+Next.js에는 여러 계층의 캐시가 있으며, 따라서 캐시의 다른 부분을 무효화하는 여러 방법이 있습니다. [캐싱에 대해 더 알아보기](/docs/app/building-your-application/caching).
+
+### App Router를 기반으로 한 포괄적인 오픈 소스 애플리케이션이 있나요?
+
+네. [Next.js Commerce](https://vercel.com/templates/next.js/nextjs-commerce) 또는 [Platforms Starter Kit](https://vercel.com/templates/next.js/platforms-starter-kit)을 확인하면 App Router를 사용한 두 가지 큰 예제를 볼 수 있습니다. 이들은 오픈 소스입니다.
+
+## 더 알아보기
+
+- [라우팅 기초](/docs/app/building-your-application/routing)
+- [데이터 가져오기, 캐싱, 재검증](/docs/app/building-your-application/data-fetching/caching-and-revalidating)
+- [폼 및 변형](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+- [캐싱](/docs/app/building-your-application/caching)
+- [렌더링 기초](/docs/app/building-your-application/rendering)
+- [Server Components](/docs/app/building-your-application/rendering/server-components)
+- [Client Components](/docs/app/building-your-application/rendering/client-components)

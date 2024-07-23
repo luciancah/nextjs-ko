@@ -1,0 +1,172 @@
+---
+title: Next.js Project Structure
+nav_title: Project Structure
+description: A list of folders and files conventions in a Next.js project
+---
+
+# Next.js 프로젝트 구조
+
+이 페이지는 Next.js 애플리케이션의 프로젝트 구조에 대한 개요를 제공합니다. 최상위 파일 및 폴더, 구성 파일, 그리고 `app` 및 `pages` 디렉토리 내의 라우팅 관례를 다룹니다.
+
+파일 및 폴더 이름을 클릭하면 각 관례에 대해 더 자세히 알아볼 수 있습니다.
+
+## 최상위 폴더
+
+최상위 폴더는 애플리케이션의 코드와 정적 자산을 구성하는 데 사용됩니다.
+
+import Image from "next/image";
+
+<Image
+  alt="Route segments to path segments"
+  srcLight="/docs/light/top-level-folders.png"
+  srcDark="/docs/dark/top-level-folders.png"
+  width="1600"
+  height="525"
+/>
+
+|                                                                          |                               |
+| ------------------------------------------------------------------------ | ----------------------------- |
+| [`app`](/docs/app/building-your-application/routing)                     | App Router                    |
+| [`pages`](/docs/pages/building-your-application/routing)                 | Pages Router                  |
+| [`public`](/docs/app/building-your-application/optimizing/static-assets) | 정적 자산을 제공              |
+| [`src`](/docs/app/building-your-application/configuring/src-directory)   | 선택적 애플리케이션 소스 폴더 |
+
+## 최상위 파일
+
+최상위 파일은 애플리케이션을 구성하고, 종속성을 관리하며, 미들웨어를 실행하고, 모니터링 도구를 통합하며, 환경 변수를 정의하는 데 사용됩니다.
+
+|                                                                                             |                                     |
+| ------------------------------------------------------------------------------------------- | ----------------------------------- |
+| **Next.js**                                                                                 |                                     |
+| [`next.config.js`](/docs/app/api-reference/next-config-js)                                  | Next.js 구성 파일                   |
+| [`package.json`](/docs/getting-started/installation#manual-installation)                    | 프로젝트 종속성과 스크립트          |
+| [`instrumentation.ts`](/docs/app/building-your-application/optimizing/instrumentation)      | OpenTelemetry 및 계측 파일          |
+| [`middleware.ts`](/docs/app/building-your-application/routing/middleware)                   | Next.js 요청 미들웨어               |
+| [`.env`](/docs/app/building-your-application/configuring/environment-variables)             | 환경 변수                           |
+| [`.env.local`](/docs/app/building-your-application/configuring/environment-variables)       | 로컬 환경 변수                      |
+| [`.env.production`](/docs/app/building-your-application/configuring/environment-variables)  | 프로덕션 환경 변수                  |
+| [`.env.development`](/docs/app/building-your-application/configuring/environment-variables) | 개발 환경 변수                      |
+| [`.eslintrc.json`](/docs/app/building-your-application/configuring/eslint)                  | ESLint 구성 파일                    |
+| `.gitignore`                                                                                | Git에서 무시할 파일 및 폴더         |
+| `next-env.d.ts`                                                                             | Next.js를 위한 TypeScript 선언 파일 |
+| `tsconfig.json`                                                                             | TypeScript 구성 파일                |
+| `jsconfig.json`                                                                             | JavaScript 구성 파일                |
+
+## `app` 라우팅 관례
+
+다음 파일 관례는 [`app` 라우터](/docs/app)에서 라우트를 정의하고 메타데이터를 처리하는 데 사용됩니다.
+
+### 라우팅 파일
+
+|                                                                                 |                     |                         |
+| ------------------------------------------------------------------------------- | ------------------- | ----------------------- |
+| [`layout`](/docs/app/api-reference/file-conventions/layout)                     | `.js` `.jsx` `.tsx` | 레이아웃                |
+| [`page`](/docs/app/api-reference/file-conventions/page)                         | `.js` `.jsx` `.tsx` | 페이지                  |
+| [`loading`](/docs/app/api-reference/file-conventions/loading)                   | `.js` `.jsx` `.tsx` | 로딩 UI                 |
+| [`not-found`](/docs/app/api-reference/file-conventions/not-found)               | `.js` `.jsx` `.tsx` | 찾을 수 없는 UI         |
+| [`error`](/docs/app/api-reference/file-conventions/error)                       | `.js` `.jsx` `.tsx` | 오류 UI                 |
+| [`global-error`](/docs/app/api-reference/file-conventions/error#global-errorjs) | `.js` `.jsx` `.tsx` | 전역 오류 UI            |
+| [`route`](/docs/app/api-reference/file-conventions/route)                       | `.js` `.ts`         | API 엔드포인트          |
+| [`template`](/docs/app/api-reference/file-conventions/template)                 | `.js` `.jsx` `.tsx` | 재렌더링된 레이아웃     |
+| [`default`](/docs/app/api-reference/file-conventions/default)                   | `.js` `.jsx` `.tsx` | 병렬 라우트 대체 페이지 |
+
+### 중첩 라우트
+
+|                                                                              |                      |
+| ---------------------------------------------------------------------------- | -------------------- |
+| [`folder`](/docs/app/building-your-application/routing#route-segments)       | 라우트 세그먼트      |
+| [`folder/folder`](/docs/app/building-your-application/routing#nested-routes) | 중첩 라우트 세그먼트 |
+
+### 동적 라우트
+
+|                                                                                                           |                                    |
+| --------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| [`[folder]`](/docs/app/building-your-application/routing/dynamic-routes#convention)                       | 동적 라우트 세그먼트               |
+| [`[...folder]`](/docs/app/building-your-application/routing/dynamic-routes#catch-all-segments)            | 모든 것을 포함하는 라우트 세그먼트 |
+| [`[[...folder]]`](/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | 선택적 모든 것을 포함하는 라우트   |
+
+### 라우트 그룹 및 비공개 폴더
+
+|                                                                                     |                                            |
+| ----------------------------------------------------------------------------------- | ------------------------------------------ |
+| [`(folder)`](/docs/app/building-your-application/routing/route-groups#convention)   | 라우팅에 영향을 주지 않고 그룹화           |
+| [`_folder`](/docs/app/building-your-application/routing/colocation#private-folders) | 라우팅에서 폴더 및 모든 자식 세그먼트 제외 |
+
+### 병렬 및 가로채기 라우트
+
+|                                                                                                |                         |
+| ---------------------------------------------------------------------------------------------- | ----------------------- |
+| [`@folder`](/docs/app/building-your-application/routing/parallel-routes#slots)                 | 명명된 슬롯             |
+| [`(.)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)      | 동일 레벨에서 가로채기  |
+| [`(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)     | 한 레벨 위에서 가로채기 |
+| [`(..)(..)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention) | 두 레벨 위에서 가로채기 |
+| [`(...)folder`](/docs/app/building-your-application/routing/intercepting-routes#convention)    | 루트에서 가로채기       |
+
+### 메타데이터 파일 관례
+
+#### 앱 아이콘
+
+|                                                                                                                 |                                     |                       |
+| --------------------------------------------------------------------------------------------------------------- | ----------------------------------- | --------------------- |
+| [`favicon`](/docs/app/api-reference/file-conventions/metadata/app-icons#favicon)                                | `.ico`                              | 파비콘 파일           |
+| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#icon)                                      | `.ico` `.jpg` `.jpeg` `.png` `.svg` | 앱 아이콘 파일        |
+| [`icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx)       | `.js` `.ts` `.tsx`                  | 생성된 앱 아이콘      |
+| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#apple-icon)                          | `.jpg` `.jpeg`, `.png`              | 애플 앱 아이콘 파일   |
+| [`apple-icon`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`                  | 생성된 애플 앱 아이콘 |
+
+#### 오픈 그래프 및 트위터 이미지
+
+|                                                                                                                             |                              |                           |
+| --------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------- |
+| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#opengraph-image)                      | `.jpg` `.jpeg` `.png` `.gif` | 오픈 그래프 이미지 파일   |
+| [`opengraph-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx) | `.js` `.ts` `.tsx`           | 생성된 오픈 그래프 이미지 |
+| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#twitter-image)                          | `.jpg` `.jpeg` `.png` `.gif` | 트위터 이미지 파일        |
+
+| [`twitter-image`](/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx) | `.js` `.ts` `.tsx` | 생성된 트위터 이미지 |
+
+#### SEO
+
+|                                                                                                              |             |                  |
+| ------------------------------------------------------------------------------------------------------------ | ----------- | ---------------- |
+| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#sitemap-files-xml)                     | `.xml`      | 사이트맵 파일    |
+| [`sitemap`](/docs/app/api-reference/file-conventions/metadata/sitemap#generating-a-sitemap-using-code-js-ts) | `.js` `.ts` | 생성된 사이트맵  |
+| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#static-robotstxt)                        | `.txt`      | 로봇 파일        |
+| [`robots`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file)                  | `.js` `.ts` | 생성된 로봇 파일 |
+
+## `pages` 라우팅 관례
+
+다음 파일 관례는 [`pages` 라우터](/docs/pages)에서 라우트를 정의하는 데 사용됩니다.
+
+### 특수 파일
+
+|                                                                                                             |                     |                    |
+| ----------------------------------------------------------------------------------------------------------- | ------------------- | ------------------ |
+| [`_app`](/docs/pages/building-your-application/routing/custom-app)                                          | `.js` `.jsx` `.tsx` | 커스텀 앱          |
+| [`_document`](/docs/pages/building-your-application/routing/custom-document)                                | `.js` `.jsx` `.tsx` | 커스텀 문서        |
+| [`_error`](/docs/pages/building-your-application/routing/custom-error#more-advanced-error-page-customizing) | `.js` `.jsx` `.tsx` | 커스텀 오류 페이지 |
+| [`404`](/docs/pages/building-your-application/routing/custom-error#404-page)                                | `.js` `.jsx` `.tsx` | 404 오류 페이지    |
+| [`500`](/docs/pages/building-your-application/routing/custom-error#500-page)                                | `.js` `.jsx` `.tsx` | 500 오류 페이지    |
+
+### 라우트
+
+|                                                                                                |                     |             |
+| ---------------------------------------------------------------------------------------------- | ------------------- | ----------- |
+| **폴더 관례**                                                                                  |                     |             |
+| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 홈 페이지   |
+| [`folder/index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes) | `.js` `.jsx` `.tsx` | 중첩 페이지 |
+| **파일 관례**                                                                                  |                     |             |
+| [`index`](/docs/pages/building-your-application/routing/pages-and-layouts#index-routes)        | `.js` `.jsx` `.tsx` | 홈 페이지   |
+| [`file`](/docs/pages/building-your-application/routing/pages-and-layouts)                      | `.js` `.jsx` `.tsx` | 중첩 페이지 |
+
+### 동적 라우트
+
+|                                                                                                                   |                     |                                    |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------- | ---------------------------------- |
+| **폴더 관례**                                                                                                     |                     |                                    |
+| [`[folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes)                                  | `.js` `.jsx` `.tsx` | 동적 라우트 세그먼트               |
+| [`[...folder]/index`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)            | `.js` `.jsx` `.tsx` | 모든 것을 포함하는 라우트 세그먼트 |
+| [`[[...folder]]/index`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments) | `.js` `.jsx` `.tsx` | 선택적 모든 것을 포함하는 라우트   |
+| **파일 관례**                                                                                                     |                     |                                    |
+| [`[file]`](/docs/pages/building-your-application/routing/dynamic-routes)                                          | `.js` `.jsx` `.tsx` | 동적 라우트 세그먼트               |
+| [`[...file]`](/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments)                    | `.js` `.jsx` `.tsx` | 모든 것을 포함하는 라우트 세그먼트 |
+| [`[[...file]]`](/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments)         | `.js` `.jsx` `.tsx` | 선택적 모든 것을 포함하는 라우트   |
