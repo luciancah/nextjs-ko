@@ -1,0 +1,358 @@
+---
+title: Font Module
+nav_title: Font
+description: Optimizing loading web fonts with the built-in `next/font` loaders.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# Font Module
+
+이 API 참조는 [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) 및 [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts)를 사용하는 방법을 이해하는 데 도움이 됩니다. 기능 및 사용법에 대한 자세한 내용은 [글꼴 최적화](/docs/app/building-your-application/optimizing/fonts) 페이지를 참조하십시오.
+
+### 글꼴 함수 인수
+
+사용법에 대한 자세한 내용은 [Google 글꼴](/docs/app/building-your-application/optimizing/fonts#google-fonts) 및 [로컬 글꼴](/docs/app/building-your-application/optimizing/fonts#local-fonts)을 참조하십시오.
+
+| 키                                          | `font/google`       | `font/local`        | 유형                  | 필수 여부 |
+| ------------------------------------------- | ------------------- | ------------------- | --------------------- | --------- |
+| [`src`](#src)                               | <Cross size={18} /> | <Check size={18} /> | 문자열 또는 객체 배열 | 예        |
+| [`weight`](#weight)                         | <Check size={18} /> | <Check size={18} /> | 문자열 또는 배열      | 필수/선택 |
+| [`style`](#style)                           | <Check size={18} /> | <Check size={18} /> | 문자열 또는 배열      | -         |
+| [`subsets`](#subsets)                       | <Check size={18} /> | <Cross size={18} /> | 문자열 배열           | -         |
+| [`axes`](#axes)                             | <Check size={18} /> | <Cross size={18} /> | 문자열 배열           | -         |
+| [`display`](#display)                       | <Check size={18} /> | <Check size={18} /> | 문자열                | -         |
+| [`preload`](#preload)                       | <Check size={18} /> | <Check size={18} /> | 불리언                | -         |
+| [`fallback`](#fallback)                     | <Check size={18} /> | <Check size={18} /> | 문자열 배열           | -         |
+| [`adjustFontFallback`](#adjustfontfallback) | <Check size={18} /> | <Check size={18} /> | 불리언 또는 문자열    | -         |
+| [`variable`](#variable)                     | <Check size={18} /> | <Check size={18} /> | 문자열                | -         |
+| [`declarations`](#declarations)             | <Cross size={18} /> | <Check size={18} /> | 객체 배열             | -         |
+
+### `src`
+
+글꼴 파일의 경로를 나타내는 문자열 또는 객체 배열(`Array<{path: string, weight?: string, style?: string}>` 유형)입니다. 글꼴 로더 함수가 호출되는 디렉터리를 기준으로 합니다.
+
+`next/font/local`에서 사용됨
+
+- 필수
+
+예시:
+
+- `src:'./fonts/my-font.woff2'` - `my-font.woff2` 파일이 `app` 디렉터리 내 `fonts` 디렉터리에 위치한 경우
+- `src:[{path: './inter/Inter-Thin.ttf', weight: '100',},{path: './inter/Inter-Regular.ttf',weight: '400',},{path: './inter/Inter-Bold-Italic.ttf', weight: '700',style: 'italic',},]`
+- `app/page.tsx`에서 `src:'../styles/fonts/my-font.ttf'`로 호출되는 경우 `my-font.ttf`는 프로젝트 루트의 `styles/fonts`에 위치해야 합니다
+
+### `weight`
+
+글꼴의 [`weight`](https://fonts.google.com/knowledge/glossary/weight)로 다음과 같은 값을 가질 수 있습니다:
+
+- 특정 글꼴에 사용할 수 있는 무게 값의 문자열 또는 [가변 글꼴](https://fonts.google.com/variablefonts)의 경우 범위 값
+- 글꼴이 [가변 Google 글꼴](https://fonts.google.com/variablefonts)이 아닌 경우 값 배열. 이는 `next/font/google`에만 적용됩니다.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 사용된 글꼴이 [가변](https://fonts.google.com/variablefonts) 글꼴이 아닌 경우 필수
+
+예시:
+
+- `weight: '400'`: 단일 무게 값의 문자열 - [`Inter`](https://fonts.google.com/specimen/Inter?query=inter) 글꼴의 가능한 값은 `'100'`, `'200'`, `'300'`, `'400'`, `'500'`, `'600'`, `'700'`, `'800'`, `'900'` 또는 `'variable'`입니다. 여기서 `'variable'`이 기본값입니다)
+- `weight: '100 900'`: 가변 글꼴의 경우 `100`에서 `900` 사이의 범위를 나타내는 문자열
+- `weight: ['100','400','900']`: 비가변 글꼴의 3가지 가능한 값의 배열
+
+### `style`
+
+글꼴의 [`style`](https://developer.mozilla.org/docs/Web/CSS/font-style)로 다음과 같은 값을 가질 수 있습니다:
+
+- 기본값이 `'normal'`인 문자열 [값](https://developer.mozilla.org/docs/Web/CSS/font-style#values)
+- 글꼴이 [가변 Google 글꼴](https://fonts.google.com/variablefonts)이 아닌 경우 값 배열. 이는 `next/font/google`에만 적용됩니다.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `style: 'italic'`: 문자열 - `next/font/google`에서는 `normal` 또는 `italic`일 수 있습니다
+- `style: 'oblique'`: 문자열 - `next/font/local`에서는 [표준 글꼴 스타일](https://developer.mozilla.org/docs/Web/CSS/font-style)에서 제공되는 값이지만, 어떤 값이든 가질 수 있습니다.
+- `style: ['italic','normal']`: `next/font/google`의 두 값 배열 - 값은 `normal` 및 `italic`입니다
+
+### `subsets`
+
+미리 로드할 [`subsets`](https://fonts.google.com/knowledge/glossary/subsetting)을 정의하는 문자열 값의 배열입니다. [`preload`](#preload) 옵션이 참일 때 기본적으로 링크 preload 태그가 head에 삽입됩니다.
+
+`next/font/google`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `subsets: ['latin']`: `latin` 하위 집합이 포함된 배열
+
+글꼴의 Google Fonts 페이지에서 모든 하위 집합 목록을 찾을 수 있습니다.
+
+### `axes`
+
+일부 가변 글꼴에는 포함할 수 있는 추가 `axes`가 있습니다. 기본적으로 파일 크기를 줄이기 위해 글꼴 무게만 포함됩니다. `axes`의 가능한 값은 특정 글꼴에 따라 다릅니다.
+
+`next/font/google`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `axes: ['slnt']`: `Inter` 가변 글꼴의 경우 추가 `axes`로 `slnt` 값을 가지는 배열. 가능한 `axes` 값은 [Google 가변 글꼴 페이지](https://fonts.google.com/variablefonts#font-families)에서 필터를 사용하여 `wght` 이외의 axes를 찾아볼 수 있습니다.
+
+### `display`
+
+글꼴 [`display`](https://developer.mozilla.org/docs/Web/CSS/@font-face/font-display)로 가능한 문자열 값은 `'auto'`, `'block'`, `'swap'`, `'fallback'`, `'optional'`이며 기본값은 `'swap'`입니다.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `display: 'optional'`: `optional` 값이 할당된 문자열
+
+### `preload`
+
+글꼴을 미리 로드할지 여부를 지정하는 불리언 값입니다. 기본값은 `true`입니다.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `preload: false`
+
+### `fallback`
+
+글꼴을 로드할 수 없는 경우 사용할 대체 글꼴. 기본값 없이 대체 글꼴의 문자열 배열.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `fallback: ['system-ui', 'arial']`: `system-ui` 또는 `arial`을 대체 글꼴로 설정한 배열
+
+### `adjustFontFallback`
+
+- `next/font/google`의 경우: 자동 대체 글꼴을 사용할지 여부를 설정하는 불리언 값으로 [누적 레이아웃 이동](https://web.dev/cls)을 줄이기 위한 것입니다. 기본값은 `true`입니다.
+- `next/font/local`의 경우: 자동 대체 글꼴을 사용할
+
+지 여부를 설정하는 문자열 또는 불리언 `false` 값입니다. 가능한 값은 `'Arial'`, `'Times New Roman'` 또는 `false`입니다. 기본값은 `'Arial'`입니다.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `adjustFontFallback: false`: `next/font/google`의 경우
+- `adjustFontFallback: 'Times New Roman'`: `next/font/local`의 경우
+
+### `variable`
+
+스타일이 [CSS 변수 방법](#css-variables)으로 적용될 때 사용할 CSS 변수 이름을 정의하는 문자열 값입니다.
+
+`next/font/google` 및 `next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `variable: '--my-font'`: CSS 변수 `--my-font`이 선언됩니다
+
+### `declarations`
+
+생성된 `@font-face`를 더 정의하는 글꼴 페이스 [기술자](https://developer.mozilla.org/docs/Web/CSS/@font-face#descriptors) 키-값 쌍의 배열입니다.
+
+`next/font/local`에서 사용됨
+
+- 선택 사항
+
+예시:
+
+- `declarations: [{ prop: 'ascent-override', value: '90%' }]`
+
+## 스타일 적용
+
+글꼴 스타일을 적용하는 세 가지 방법이 있습니다:
+
+- [`className`](#classname)
+- [`style`](#style-1)
+- [CSS 변수](#css-variables)
+
+### `className`
+
+로드된 글꼴에 대한 읽기 전용 CSS `className`을 반환하여 HTML 요소에 전달합니다.
+
+```tsx
+<p className={inter.className}>Hello, Next.js!</p>
+```
+
+### `style`
+
+로드된 글꼴에 대한 읽기 전용 CSS `style` 객체를 반환하여 HTML 요소에 전달하며, `style.fontFamily`를 포함하여 글꼴 이름과 대체 글꼴을 액세스할 수 있습니다.
+
+```tsx
+<p style={inter.style}>Hello World</p>
+```
+
+### CSS 변수
+
+스타일을 외부 스타일 시트에 설정하고 추가 옵션을 지정하려면 CSS 변수 방법을 사용하십시오.
+
+글꼴을 가져오는 것 외에도 CSS 변수가 정의된 CSS 파일을 가져오고 글꼴 로더 객체의 변수 옵션을 다음과 같이 설정합니다:
+
+```tsx filename="app/page.tsx" switcher
+import { Inter } from 'next/font/google'
+import styles from '../styles/component.module.css'
+
+const inter = Inter({
+  variable: '--font-inter',
+})
+```
+
+```jsx filename="app/page.js" switcher
+import { Inter } from 'next/font/google'
+import styles from '../styles/component.module.css'
+
+const inter = Inter({
+  variable: '--font-inter',
+})
+```
+
+글꼴을 사용하려면 텍스트를 스타일링할 부모 컨테이너의 `className`을 글꼴 로더의 `variable` 값으로 설정하고 텍스트의 `className`을 외부 CSS 파일의 `styles` 속성으로 설정합니다.
+
+```tsx filename="app/page.tsx" switcher
+<main className={inter.variable}>
+  <p className={styles.text}>Hello World</p>
+</main>
+```
+
+```jsx filename="app/page.js" switcher
+<main className={inter.variable}>
+  <p className={styles.text}>Hello World</p>
+</main>
+```
+
+`component.module.css` CSS 파일에서 `text` 선택자 클래스를 다음과 같이 정의합니다:
+
+```css filename="styles/component.module.css"
+.text {
+  font-family: var(--font-inter);
+  font-weight: 200;
+  font-style: italic;
+}
+```
+
+위의 예에서 `Hello World` 텍스트는 `Inter` 글꼴과 생성된 글꼴 대체를 사용하여 `font-weight: 200` 및 `font-style: italic`로 스타일이 지정됩니다.
+
+## 글꼴 정의 파일 사용
+
+`localFont` 또는 Google 글꼴 함수를 호출할 때마다 해당 글꼴이 애플리케이션의 하나의 인스턴스로 호스팅됩니다. 따라서 동일한 글꼴을 여러 위치에서 사용해야 하는 경우 한 곳에서 로드하고 필요한 곳에 관련 글꼴 객체를 가져와야 합니다. 이를 위해 글꼴 정의 파일을 사용합니다.
+
+예를 들어, 애플리케이션 디렉터리 루트의 `styles` 폴더에 `fonts.ts` 파일을 생성합니다.
+
+그런 다음 글꼴 정의를 다음과 같이 지정합니다:
+
+```ts filename="styles/fonts.ts" switcher
+import { Inter, Lora, Source_Sans_3 } from 'next/font/google'
+import localFont from 'next/font/local'
+
+// 가변 글꼴 정의
+const inter = Inter()
+const lora = Lora()
+// 가변 글꼴이 아닌 글꼴의 두 가지 무게 정의
+const sourceCodePro400 = Source_Sans_3({ weight: '400' })
+const sourceCodePro700 = Source_Sans_3({ weight: '700' })
+// 사용자 정의 로컬 글꼴 정의
+const greatVibes = localFont({ src: './GreatVibes-Regular.ttf' })
+
+export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes }
+```
+
+```js filename="styles/fonts.js" switcher
+import { Inter, Lora, Source_Sans_3 } from 'next/font/google'
+import localFont from 'next/font/local'
+
+// 가변 글꼴 정의
+const inter = Inter()
+const lora = Lora()
+// 가변 글꼴이 아닌 글꼴의 두 가지 무게 정의
+const sourceCodePro400 = Source_Sans_3({ weight: '400' })
+const sourceCodePro700 = Source_Sans_3({ weight: '700' })
+// 사용자 정의 로컬 글꼴 정의
+const greatVibes = localFont({ src: './GreatVibes-Regular.ttf' })
+
+export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes }
+```
+
+이제 이러한 정의를 코드에서 다음과 같이 사용할 수 있습니다:
+
+```tsx filename="app/page.tsx" switcher
+import { inter, lora, sourceCodePro700, greatVibes } from '../styles/fonts'
+
+export default function Page() {
+  return (
+    <div>
+      <p className={inter.className}>Hello world using Inter font</p>
+      <p style={lora.style}>Hello world using Lora font</p>
+      <p className={sourceCodePro700.className}>
+        Hello world using Source_Sans_3 font with weight 700
+      </p>
+      <p className={greatVibes.className}>My title in Great Vibes font</p>
+    </div>
+  )
+}
+```
+
+```jsx filename="app/page.js" switcher
+import { inter, lora, sourceCodePro700, greatVibes } from '../styles/fonts'
+
+export default function Page() {
+  return (
+    <div>
+      <p className={inter.className}>Hello world using Inter font</p>
+      <p style={lora.style}>Hello world using Lora font</p>
+      <p className={sourceCodePro700.className}>
+        Hello world using Source_Sans_3 font with weight 700
+      </p>
+      <p className={greatVibes.className}>My title in Great Vibes font</p>
+    </div>
+  )
+}
+```
+
+코드에서 글꼴 정의에 쉽게 접근할 수 있도록 `tsconfig.json` 또는 `jsconfig.json` 파일에 경로 별칭을 정의할 수 있습니다:
+
+```json filename="tsconfig.json"
+{
+  "compilerOptions": {
+    "paths": {
+      "@/fonts": ["./styles/fonts"]
+    }
+  }
+}
+```
+
+이제 다음과 같이 글꼴 정의를 가져올 수 있습니다:
+
+```tsx filename="app/about/page.tsx" switcher
+import { greatVibes, sourceCodePro400 } from '@/fonts'
+```
+
+```jsx filename="app/about/page.js" switcher
+import { greatVibes, sourceCodePro400 } from '@/fonts'
+```
+
+## 버전 변경사항
+
+| 버전      | 변경사항                                                                              |
+| --------- | ------------------------------------------------------------------------------------- |
+| `v13.2.0` | `@next/font`가 `next/font`로 이름이 변경되었습니다. 설치가 더 이상 필요하지 않습니다. |
+| `v13.0.0` | `@next/font`가 추가되었습니다.                                                        |

@@ -1,0 +1,79 @@
+---
+title: serverExternalPackages
+description: Opt-out specific dependencies from the Server Components bundling and use native Node.js `require`.
+---
+
+# serverExternalPackages
+
+[Server Components](/docs/app/building-your-application/rendering/server-components) 및 [Route Handlers](/docs/app/building-your-application/routing/route-handlers) 내에서 사용되는 종속성은 Next.js에 의해 자동으로 번들됩니다.
+
+종속성이 Node.js의 특정 기능을 사용하는 경우, 특정 종속성을 Server Components 번들링에서 제외하고 네이티브 Node.js `require`를 사용하도록 선택할 수 있습니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  serverExternalPackages: ['@acme/ui'],
+}
+
+module.exports = nextConfig
+```
+
+Next.js는 현재 호환성을 작업 중인 [인기 패키지의 짧은 목록](https://github.com/vercel/next.js/blob/canary/packages/next/src/lib/server-external-packages.json)을 포함하며, 자동으로 제외됩니다:
+
+- `@appsignal/nodejs`
+- `@aws-sdk/client-s3`
+- `@aws-sdk/s3-presigned-post`
+- `@blockfrost/blockfrost-js`
+- `@highlight-run/node`
+- `@jpg-store/lucid-cardano`
+- `@libsql/client`
+- `@mikro-orm/core`
+- `@mikro-orm/knex`
+- `@node-rs/argon2`
+- `@node-rs/bcrypt`
+- `@prisma/client`
+- `@react-pdf/renderer`
+- `@sentry/profiling-node`
+- `@swc/core`
+- `argon2`
+- `autoprefixer`
+- `aws-crt`
+- `bcrypt`
+- `better-sqlite3`
+- `canvas`
+- `cpu-features`
+- `cypress`
+- `eslint`
+- `express`
+- `firebase-admin`
+- `isolated-vm`
+- `jest`
+- `jsdom`
+- `libsql`
+- `mdx-bundler`
+- `mongodb`
+- `mongoose`
+- `next-mdx-remote`
+- `next-seo`
+- `node-pty`
+- `node-web-audio-api`
+- `oslo`
+- `pg`
+- `playwright`
+- `playwright-core`
+- `postcss`
+- `prettier`
+- `prisma`
+- `puppeteer-core`
+- `puppeteer`
+- `rimraf`
+- `sharp`
+- `shiki`
+- `sqlite3`
+- `ts-node`
+- `ts-morph`
+- `typescript`
+- `vscode-oniguruma`
+- `webpack`
+- `websocket`
+- `zeromq`

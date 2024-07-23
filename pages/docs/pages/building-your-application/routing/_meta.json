@@ -1,0 +1,32 @@
+{
+  "pages-and-layouts": {
+    "title": "Pages and Layouts"
+  },
+  "dynamic-routes": {
+    "title": "Dynamic Routes"
+  },
+  "linking-and-navigating": {
+    "title": "Linking and Navigating"
+  },
+  "redirecting": {
+    "title": "Redirecting"
+  },
+  "custom-app": {
+    "title": "Custom App"
+  },
+  "custom-document": {
+    "title": "Custom Document"
+  },
+  "api-routes": {
+    "title": "API Routes"
+  },
+  "custom-error": {
+    "title": "Custom Error"
+  },
+  "internationalization": {
+    "title": "Internationalization"
+  },
+  "middleware": {
+    "title": "Middleware"
+  }
+}

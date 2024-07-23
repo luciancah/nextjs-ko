@@ -1,0 +1,14 @@
+{
+  "vitest": {
+    "title": "Vitest"
+  },
+  "jest": {
+    "title": "Jest"
+  },
+  "playwright": {
+    "title": "Playwright"
+  },
+  "cypress": {
+    "title": "Cypress"
+  }
+}

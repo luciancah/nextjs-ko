@@ -1,0 +1,20 @@
+{
+  "font": {
+    "title": "Font"
+  },
+  "head": {
+    "title": "Head"
+  },
+  "image-legacy": {
+    "title": "Image (Legacy)"
+  },
+  "image": {
+    "title": "Image"
+  },
+  "link": {
+    "title": "Link"
+  },
+  "script": {
+    "title": "Script"
+  }
+}

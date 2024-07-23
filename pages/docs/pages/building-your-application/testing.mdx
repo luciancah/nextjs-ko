@@ -1,0 +1,28 @@
+---
+title: Testing
+description: Learn how to set up Next.js with four commonly used testing tools — Cypress, Playwright, Vitest, and Jest.
+---
+
+# Testing
+
+React와 Next.js에서는 몇 가지 다른 유형의 테스트를 작성할 수 있으며, 각 테스트는 고유한 목적과 사용 사례를 가지고 있습니다. 이 페이지에서는 애플리케이션을 테스트하는 데 사용할 수 있는 유형과 일반적으로 사용되는 도구에 대한 개요를 제공합니다.
+
+## Types of tests
+
+- **단위 테스트(Unit testing)** 는 개별 단위(또는 코드 블록)를 고립시켜 테스트하는 것입니다. React에서 단위는 단일 함수, 훅 또는 컴포넌트일 수 있습니다.
+  - **컴포넌트 테스트(Component testing)** 는 단위 테스트의 더 집중된 버전으로, 주로 React 컴포넌트를 테스트의 주제로 삼습니다. 여기에는 컴포넌트가 어떻게 렌더링되는지, props와의 상호 작용, 사용자 이벤트에 대한 컴포넌트의 반응을 테스트하는 것이 포함될 수 있습니다.
+  - **통합 테스트(Integration testing)** 는 여러 단위가 함께 작동하는 방식을 테스트하는 것입니다. 여기에는 컴포넌트, 훅, 함수의 조합이 포함될 수 있습니다.
+- **엔드 투 엔드(E2E) 테스트(End-to-End Testing)** 는 브라우저와 같은 실제 사용자 시나리오를 시뮬레이션하는 환경에서 사용자 흐름을 테스트하는 것입니다. 이는 프로덕션과 유사한 환경에서 특정 작업(예: 회원가입 흐름)을 테스트하는 것을 의미합니다.
+- **스냅샷 테스트(Snapshot testing)** 는 컴포넌트의 렌더링된 출력을 캡처하여 스냅샷 파일에 저장하는 것을 포함합니다. 테스트가 실행될 때, 현재 렌더링된 출력이 저장된 스냅샷과 비교됩니다. 스냅샷의 변경 사항은 예상치 못한 동작 변화를 나타내는 데 사용됩니다.
+
+<AppOnly>
+
+## Async Server Components
+
+`async` Server Components는 React 생태계에 새롭게 도입되었기 때문에 일부 도구는 이를 완전히 지원하지 않습니다. 그동안은 `async` 컴포넌트에 대해 **단위 테스트(Unit Testing)**보다는 **엔드 투 엔드(E2E) 테스트(End-to-End Testing)**를 사용하는 것을 권장합니다.
+
+</AppOnly>
+
+## Guides
+
+아래 가이드를 참조하여 일반적으로 사용되는 테스트 도구로 Next.js를 설정하는 방법을 배우세요:

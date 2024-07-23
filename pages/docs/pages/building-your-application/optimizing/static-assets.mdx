@@ -1,0 +1,52 @@
+---
+title: Static Assets in `public`
+nav_title: Static Assets
+description: Next.js allows you to serve static files, like images, in the public directory. You can learn how it works here.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# Static Assets in `public`
+
+Next.js는 루트 디렉토리의 `public` 폴더 아래에서 이미지와 같은 정적 파일을 제공할 수 있습니다. `public` 내부의 파일은 기본 URL(`/`)에서 시작하여 코드에서 참조할 수 있습니다.
+
+예를 들어, `public/avatars/me.png` 파일은 `/avatars/me.png` 경로로 확인할 수 있습니다. 해당 이미지를 표시하는 코드는 다음과 같습니다:
+
+```jsx filename="avatar.js"
+import Image from 'next/image'
+
+export function Avatar({ id, alt }) {
+  return <Image src={`/avatars/${id}.png`} alt={alt} width="64" height="64" />
+}
+
+export function AvatarOfMe() {
+  return <Avatar id="me" alt="A portrait of me" />
+}
+```
+
+## Caching
+
+Next.js는 `public` 폴더의 자산을 안전하게 캐시할 수 없습니다. 이는 변경될 수 있기 때문입니다. 기본 캐싱 헤더는 다음과 같습니다:
+
+```jsx
+Cache-Control: public, max-age=0
+```
+
+## Robots, Favicons, and others
+
+<PagesOnly>
+
+이 폴더는 `robots.txt`, `favicon.ico`, Google Site Verification 및 기타 정적 파일( `.html` 포함)에도 유용합니다. 그러나 `pages/` 디렉토리의 파일과 동일한 이름의 정적 파일을 갖지 않도록 해야 합니다. 이는 오류를 발생시킬 수 있습니다. [더 읽기](/docs/messages/conflicting-public-file-page).
+
+</PagesOnly>
+
+<AppOnly>
+
+`robots.txt`, `favicon.ico` 등과 같은 정적 메타데이터 파일의 경우, `app` 폴더 내의 [특별한 메타데이터 파일](/docs/app/api-reference/file-conventions/metadata)을 사용해야 합니다.
+
+</AppOnly>
+
+> 알아두면 좋은 점:
+>
+> - 디렉토리 이름은 반드시 `public`이어야 합니다. 이름을 변경할 수 없으며 정적 자산을 제공하는 데 사용되는 유일한 디렉토리입니다.
+> - [빌드 시점](/docs/app/api-reference/next-cli#build)에 `public` 디렉토리에 있는 자산만 Next.js에 의해 제공됩니다. 요청 시점에 추가된 파일은 사용할 수 없습니다. 영구 파일 저장소에는 [Vercel Blob](https://vercel.com/docs/storage/vercel-blob?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)과 같은 타사 서비스를 사용하는 것이 좋습니다.

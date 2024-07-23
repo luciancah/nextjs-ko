@@ -1,0 +1,36 @@
+---
+title: Version 14
+description: Upgrade your Next.js Application from Version 13 to 14.
+---
+
+# Version 14
+
+## Upgrading from 13 to 14
+
+Next.js 버전 14로 업데이트하려면, 선호하는 패키지 매니저를 사용하여 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+npm i next@latest react@latest react-dom@latest eslint-config-next@latest
+```
+
+```bash filename="Terminal"
+yarn add next@latest react@latest react-dom@latest eslint-config-next@latest
+```
+
+```bash filename="Terminal"
+pnpm up next react react-dom eslint-config-next --latest
+```
+
+```bash filename="Terminal"
+bun add next@latest react@latest react-dom@latest eslint-config-next@latest
+```
+
+> **알아두면 좋은 사항:** TypeScript를 사용하는 경우 `@types/react` 및 `@types/react-dom`도 최신 버전으로 업그레이드하세요.
+
+### v14 Summary
+
+- 최소 Node.js 버전이 16.14에서 18.17로 상향되었습니다. 16.x는 지원 종료되었습니다.
+- `next export` 명령어는 `output: 'export'` 설정으로 대체되었습니다. 자세한 내용은 [문서](https://nextjs.org/docs/app/building-your-application/deploying/static-exports)를 참조하세요.
+- `next/server`에서 `ImageResponse`의 import가 `next/og`로 변경되었습니다. 안전하고 자동으로 import를 이름 변경할 수 있는 [codemod를 사용할 수 있습니다](/docs/app/building-your-application/upgrading/codemods#next-og-import).
+- `@next/font` 패키지가 내장 `next/font`로 완전히 대체되었습니다. 안전하고 자동으로 import를 이름 변경할 수 있는 [codemod를 사용할 수 있습니다](/docs/app/building-your-application/upgrading/codemods#built-in-next-font).
+- `next-swc`의 WASM 타겟이 제거되었습니다.

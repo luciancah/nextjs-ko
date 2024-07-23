@@ -1,0 +1,32 @@
+{
+  "get-initial-props": {
+    "title": "getInitialProps"
+  },
+  "get-server-side-props": {
+    "title": "getServerSideProps"
+  },
+  "get-static-paths": {
+    "title": "getStaticPaths"
+  },
+  "get-static-props": {
+    "title": "getStaticProps"
+  },
+  "next-request": {
+    "title": "NextRequest"
+  },
+  "next-response": {
+    "title": "NextResponse"
+  },
+  "use-amp": {
+    "title": "useAmp"
+  },
+  "use-report-web-vitals": {
+    "title": "useReportWebVitals"
+  },
+  "use-router": {
+    "title": "useRouter"
+  },
+  "userAgent": {
+    "title": "userAgent"
+  }
+}

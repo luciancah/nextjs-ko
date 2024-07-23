@@ -1,0 +1,91 @@
+---
+title: Multi-Zones
+description: Learn how to build micro-frontends using Next.js Multi-Zones to deploy multiple Next.js apps under a single domain.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# Multi-Zones
+
+<details open>
+  <summary>Examples</summary>
+
+- [With Zones](https://github.com/vercel/next.js/tree/canary/examples/with-zones)
+
+</details>
+
+Multi-Zones는 도메인 내에서 대규모 애플리케이션을 더 작은 Next.js 애플리케이션으로 분리하여 각각 경로 집합을 제공하는 마이크로 프론트엔드 접근 방식입니다. 이는 애플리케이션의 다른 페이지와 관련이 없는 페이지 모음을 별도의 영역(즉, 별도의 애플리케이션)으로 이동하여 각 애플리케이션의 크기를 줄이고 빌드 시간을 단축하며 특정 영역에만 필요한 코드를 제거할 수 있는 경우에 유용합니다.
+
+예를 들어, 다음과 같은 페이지 세트를 분리하고 싶다고 가정해 봅시다:
+
+- 모든 블로그 게시물에 대한 `/blog/*`
+- 사용자가 대시보드에 로그인했을 때의 모든 페이지에 대한 `/dashboard/*`
+- 다른 영역에 포함되지 않은 나머지 웹사이트에 대한 `/*`
+
+Multi-Zones 지원을 통해, 동일한 도메인에서 세 개의 애플리케이션을 만들 수 있으며, 사용자는 동일하게 보이지만 각 애플리케이션을 독립적으로 개발하고 배포할 수 있습니다.
+
+<Image
+  alt="Three zones: A, B, C. Showing a hard navigation between routes from different zones, and soft navigations between routes within the same zone."
+  srcLight="/docs/light/multi-zones.png"
+  srcDark="/docs/dark/multi-zones.png"
+  width="1600"
+  height="750"
+/>
+
+동일한 영역 내의 페이지 간 탐색은 페이지를 다시 로드할 필요가 없는 소프트 탐색을 수행합니다. 예를 들어, 이 다이어그램에서 `/`에서 `/products`로의 탐색은 소프트 탐색이 됩니다.
+
+하나의 영역에서 다른 영역으로 페이지를 탐색하는 경우, 예를 들어 `/`에서 `/dashboard`로의 탐색은 현재 페이지의 리소스를 언로드하고 새 페이지의 리소스를 로드하는 하드 탐색을 수행합니다. 자주 함께 방문하는 페이지는 하드 탐색을 피하기 위해 동일한 영역에 있어야 합니다.
+
+## How to define a zone
+
+새로운 영역을 정의하기 위한 특별한 API는 없습니다. 영역은 또한 다른 영역의 페이지 및 정적 파일과의 충돌을 피하기 위해 [basePath](/docs/app/api-reference/next-config-js/basePath)를 구성하는 일반적인 Next.js 애플리케이션입니다.
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  basePath: '/blog',
+}
+```
+
+보다 구체적인 영역으로 전송되지 않는 모든 경로를 처리할 기본 애플리케이션은 `basePath`가 필요하지 않습니다.
+
+Next.js 자산(예: JavaScript 및 CSS)도 `basePath`로 접두사가 붙어 다른 영역의 자산과 충돌하지 않도록 합니다. 이러한 자산은 각 영역에 대해 `/basePath/_next/...` 아래에 제공됩니다.
+
+영역이 `/home` 및 `/blog`와 같이 공통 경로 접두사를 공유하지 않는 페이지를 제공하는 경우, [`assetPrefix`](/docs/app/api-reference/next-config-js/assetPrefix)를 설정하여 나머지 애플리케이션 경로에 경로 접두사를 추가하지 않고도 모든 Next.js 자산이 고유한 경로 접두사 아래에서 제공되도록 할 수 있습니다.
+
+## How to route requests to the right zone
+
+Multi Zones 설정을 통해 서로 다른 애플리케이션에서 제공되기 때문에 올바른 영역으로 경로를 라우팅해야 합니다. 이를 위해 모든 HTTP 프록시를 사용할 수 있지만, 하나의 Next.js 애플리케이션을 사용하여 전체 도메인에 대한 요청을 라우팅할 수도 있습니다.
+
+Next.js 애플리케이션을 사용하여 올바른 영역으로 라우팅하려면 [`rewrites`](/docs/app/api-reference/next-config-js/rewrites)를 사용할 수 있습니다. 다른 영역에서 제공되는 각 경로에 대해 해당 경로를 다른 영역의 도메인으로 보내는 리라이트 규칙을 추가합니다. 예를 들어:
+
+```js filename="next.config.js"
+async rewrites() {
+    return [
+        {
+            source: '/blog',
+            destination: `${process.env.BLOG_DOMAIN}/blog`,
+        },
+        {
+            source: '/blog/:path+',
+            destination: `${process.env.BLOG_DOMAIN}/blog/:path+`,
+        }
+    ];
+}
+```
+
+`destination`은 스킴과 도메인을 포함하여 영역에서 제공되는 URL이어야 합니다. 이는 영역의 프로덕션 도메인을 가리켜야 하지만, 로컬 개발에서 `localhost`로 요청을 라우팅하는 데에도 사용할 수 있습니다.
+
+> **Good to know**: URL 경로는 영역에 고유해야 합니다. 예를 들어, 두 개의 영역이 `/blog`를 제공하려고 하면 라우팅 충돌이 발생합니다.
+
+## Linking between zones
+
+다른 영역의 경로에 대한 링크는 Next.js [`<Link>`](/docs/pages/api-reference/components/link) 컴포넌트 대신 `a` 태그를 사용해야 합니다. 이는 Next.js가 `<Link>` 컴포넌트의 모든 상대 경로를 프리페칭하고 소프트 탐색하려고 하기 때문이며, 이는 영역 간에 작동하지 않습니다.
+
+## Sharing code
+
+다양한 영역을 구성하는 Next.js 애플리케이션은 모든 저장소에 있을 수 있습니다. 그러나 이러한 영역을 [모노레포](https://en.wikipedia.org/wiki/Monorepo)에 배치하여 코드를 더 쉽게 공유하는 것이 종종 편리합니다. 다른 저장소에 있는 영역의 경우, 코드가 공용 또는 비공용 NPM 패키지를 사용하여 공유될 수 있습니다.
+
+다양한 영역의 페이지가 다른 시간에 릴리스될 수 있으므로, 기능 플래그는 다양한 영역에서 기능을 동시에 활성화 또는 비활성화하는 데 유용할 수 있습니다.
+
+[Next.js on Vercel](https://vercel.com?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) 애플리케이션의 경우, [monorepo](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)를 사용하여 단일 `git push`로 영향을 받는 모든 영역을 배포할 수 있습니다.

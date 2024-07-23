@@ -1,0 +1,14 @@
+{
+  "css-modules": {
+    "title": "CSS Modules"
+  },
+  "tailwind-css": {
+    "title": "Tailwind CSS"
+  },
+  "css-in-js": {
+    "title": "CSS in JS"
+  },
+  "sass": {
+    "title": "Sass"
+  }
+}
