@@ -1,0 +1,61 @@
+---
+title: Custom Next.js Cache Handler
+nav_title: cacheHandler
+description: Configure the Next.js cache used for storing and revalidating data to use any external service like Redis, Memcached, or others.
+---
+
+# Custom Next.js Cache Handler
+
+Next.js에서 Pages와 App Router의 [기본 캐시 핸들러](/docs/app/building-your-application/data-fetching/caching-and-revalidating)는 파일 시스템 캐시를 사용합니다. 이는 별도의 구성이 필요 없지만, `next.config.js` 파일의 `cacheHandler` 필드를 사용하여 캐시 핸들러를 사용자 정의할 수 있습니다.
+
+```js filename="next.config.js"
+module.exports = {
+  cacheHandler: require.resolve("./cache-handler.js"),
+  cacheMaxMemorySize: 0, // 기본 메모리 내 캐싱 비활성화
+};
+```
+
+[사용자 정의 캐시 핸들러](/docs/app/building-your-application/deploying#configuring-caching) 예제를 확인하고 구현에 대해 더 알아보세요.
+
+## API Reference
+
+캐시 핸들러는 다음 메서드를 구현할 수 있습니다: `get`, `set`, 및 `revalidateTag`.
+
+### `get()`
+
+| Parameter | Type     | Description           |
+| --------- | -------- | --------------------- |
+| `key`     | `string` | 캐시된 값의 키입니다. |
+
+캐시된 값을 반환하거나 찾을 수 없는 경우 `null`을 반환합니다.
+
+### `set()`
+
+| Parameter | Type           | Description               |
+| --------- | -------------- | ------------------------- |
+| `key`     | `string`       | 데이터를 저장할 키입니다. |
+| `data`    | Data or `null` | 캐시할 데이터입니다.      |
+| `ctx`     | `{ tags: [] }` | 제공된 캐시 태그입니다.   |
+
+`Promise<void>`를 반환합니다.
+
+### `revalidateTag()`
+
+| Parameter | Type     | Description               |
+| --------- | -------- | ------------------------- |
+| `tag`     | `string` | 재검증할 캐시 태그입니다. |
+
+`Promise<void>`를 반환합니다. [데이터 재검증](/docs/app/building-your-application/data-fetching/caching-and-revalidating) 또는 [`revalidateTag()`](/docs/app/api-reference/functions/revalidateTag) 함수에 대해 더 알아보세요.
+
+**알아두면 좋은 사항:**
+
+- `revalidatePath`는 캐시 태그 위에 있는 편의 레이어입니다. `revalidatePath`를 호출하면 `revalidateTag` 함수가 호출되며, 이 함수를 사용하여 경로를 기반으로 캐시 키를 태그할지 선택할 수 있습니다.
+
+## Version History
+
+| Version   | Changes                                                                              |
+| --------- | ------------------------------------------------------------------------------------ |
+| `v14.1.0` | `cacheHandler` 이름이 안정화되었습니다.                                              |
+| `v13.4.0` | `revalidateTag`를 지원하는 `incrementalCacheHandlerPath` (실험적)이 추가되었습니다.  |
+| `v13.4.0` | 독립 실행형 출력을 지원하는 `incrementalCacheHandlerPath` (실험적)이 추가되었습니다. |
+| `v12.2.0` | `incrementalCacheHandlerPath` (실험적)이 추가되었습니다.                             |

@@ -1,0 +1,226 @@
+---
+title: Route Segment Config
+description: Learn about how to configure options for Next.js route segments.
+---
+
+# Route Segment Config
+
+Route Segment 옵션을 사용하면 [Page](/docs/app/building-your-application/routing/layouts-and-templates), [Layout](/docs/app/building-your-application/routing/layouts-and-templates) 또는 [Route Handler](/docs/app/building-your-application/routing/route-handlers)의 동작을 직접 내보내는 다음 변수를 통해 구성할 수 있습니다:
+
+| Option                                | Type                                                                                                                      | Default                    |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| [`experimental_ppr`](#dynamic)        | `'true' \| 'false'`                                                                                                       |
+| [`dynamic`](#dynamic)                 | `'auto' \| 'force-dynamic' \| 'error' \| 'force-static'`                                                                  | `'auto'`                   |
+| [`dynamicParams`](#dynamicparams)     | `boolean`                                                                                                                 | `true`                     |
+| [`revalidate`](#revalidate)           | `false \| 0 \| number`                                                                                                    | `false`                    |
+| [`fetchCache`](#fetchcache)           | `'auto' \| 'default-cache' \| 'only-cache' \| 'force-cache' \| 'force-no-store' \| 'default-no-store' \| 'only-no-store'` | `'auto'`                   |
+| [`runtime`](#runtime)                 | `'nodejs' \| 'edge'`                                                                                                      | `'nodejs'`                 |
+| [`preferredRegion`](#preferredregion) | `'auto' \| 'global' \| 'home' \| string \| string[]`                                                                      | `'auto'`                   |
+| [`maxDuration`](#maxduration)         | `number`                                                                                                                  | Set by deployment platform |
+
+## Options
+
+### `experimental_ppr`
+
+레이아웃이나 페이지에 대해 [Partial Prerendering (PPR)](/docs/app/building-your-application/rendering/partial-prerendering)을 활성화합니다.
+
+```tsx filename="layout.tsx | page.tsx " switcher
+export const experimental_ppr = true;
+// true | false
+```
+
+```jsx filename="layout.js | page.js " switcher
+export const experimental_ppr = true;
+// true | false
+```
+
+### `dynamic`
+
+레이아웃이나 페이지의 동적 동작을 완전한 정적 또는 완전한 동적으로 변경합니다.
+
+```tsx filename="layout.tsx | page.tsx | route.ts" switcher
+export const dynamic = "auto";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const dynamic = "auto";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
+```
+
+> **알아두면 좋은 점**: `app` 디렉터리의 새로운 모델은 `pages` 디렉터리에서 페이지 수준의 `getServerSideProps` 및 `getStaticProps`의 이진 전부 또는 전무 모델보다 `fetch` 요청 수준에서 세밀한 캐싱 제어를 선호합니다. `dynamic` 옵션은 이전 모델로 다시 선택할 수 있는 편리한 방법을 제공하며, 더 간단한 마이그레이션 경로를 제공합니다.
+
+- **`'auto'`** (기본값): 가능한 한 많이 캐시하여 어떤 컴포넌트도 동적 동작을 선택하지 못하게 합니다.
+- **`'force-dynamic'`**: [동적 렌더링](/docs/app/building-your-application/rendering/server-components#dynamic-rendering)을 강제하여 각 사용자 요청 시 라우트를 렌더링합니다. 이 옵션은 다음과 같습니다:
+
+  - `pages` 디렉터리의 `getServerSideProps()`.
+  - 레이아웃이나 페이지의 모든 `fetch()` 요청에 `{ cache: 'no-store', next: { revalidate: 0 } }`를 설정합니다.
+  - 세그먼트 구성을 `export const fetchCache = 'force-no-store'`로 설정합니다.
+
+- **`'error'`**: [동적 함수](/docs/app/building-your-application/rendering/server-components#dynamic-functions)나 캐시되지 않은 데이터를 사용하는 컴포넌트가 있으면 오류를 발생시켜 레이아웃이나 페이지를 정적 렌더링하고 데이터를 캐시합니다. 이 옵션은 다음과 같습니다:
+  - `pages` 디렉터리의 `getStaticProps()`.
+  - 레이아웃이나 페이지의 모든 `fetch()` 요청에 `{ cache: 'force-cache' }`를 설정합니다.
+  - 세그먼트 구성을 `fetchCache = 'only-cache', dynamicParams = false`로 설정합니다.
+  - `dynamic = 'error'`는 `dynamicParams`의 기본값을 `true`에서 `false`로 변경합니다. `generateStaticParams`에 의해 생성되지 않은 동적 매개변수에 대해 동적 렌더링 페이지로 다시 선택하려면 `dynamicParams = true`를 수동으로 설정할 수 있습니다.
+- **`'force-static'`**: [`cookies()`](/docs/app/api-reference/functions/cookies), [`headers()`](/docs/app/api-reference/functions/headers) 및 [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)가 빈 값을 반환하도록 강제하여 레이아웃이나 페이지를 정적 렌더링하고 데이터를 캐시합니다.
+
+> **알아두면 좋은 점**:
+>
+> - `getServerSideProps` 및 `getStaticProps`에서 `dynamic: 'force-dynamic'` 및 `dynamic: 'error'`로 마이그레이션하는 [방법](/docs/app/building-your-application/upgrading/app-router-migration#step-6-migrating-data-fetching-methods)은 [업그레이드 가이드](/docs/app/building-your-application/upgrading/app-router-migration#step-6-migrating-data-fetching-methods)에서 확인할 수 있습니다.
+
+### `dynamicParams`
+
+[generateStaticParams](/docs/app/api-reference/functions/generate-static-params)으로 생성되지 않은 동적 세그먼트가 방문될 때의 동작을 제어합니다.
+
+```tsx filename="layout.tsx | page.tsx" switcher
+export const dynamicParams = true; // true | false,
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const dynamicParams = true; // true | false,
+```
+
+- **`true`** (기본값): `generateStaticParams`에 포함되지 않은 동적 세그먼트가 필요에 따라 생성됩니다.
+- **`false`**: `generateStaticParams`에 포함되지 않은 동적 세그먼트는 404를 반환합니다.
+
+> **알아두면 좋은 점**:
+>
+> - 이 옵션은 `pages` 디렉터리의 `getStaticPaths`의 `fallback: true | false | blocking` 옵션을 대체합니다.
+> - 처음 방문할 때 모든 경로를 정적으로 렌더링하려면 `generateStaticParams`에서 빈 배열을 반환하거나 `export const dynamic = 'force-static'`을 사용해야 합니다.
+> - `dynamicParams = true`일 때, 세그먼트는 [Streaming Server Rendering](/docs/app/building-your-application/routing/loading-ui-and-streaming#streaming-with-suspense)을 사용합니다.
+> - `dynamic = 'error'` 및 `dynamic = 'force-static'`이 사용되면, `dynamicParams`의 기본값이 `false`로 변경됩니다.
+
+### `revalidate`
+
+레이아웃이나 페이지의 기본 재검증 시간을 설정합니다. 이 옵션은 개별 `fetch` 요청에서 설정된 `revalidate` 값을 덮어쓰지 않습니다.
+
+```tsx filename="layout.tsx | page.tsx | route.ts" switcher
+export const revalidate = false;
+// false | 0 | number
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const revalidate = false;
+// false | 0 | number
+```
+
+- **`false`** (기본값): 동적 함수가 사용되기 전에 `cache` 옵션을 `force-cache`로 설정하거나 발견된 `fetch` 요청을 캐시하려는 기본적인 판단입니다. 이는 `revalidate: Infinity`와 의미적으로 동일하여 리소스를 무기한 캐시해야 함을 의미합니다. 개별 `fetch` 요청은 여전히 `cache: 'no-store'` 또는 `revalidate: 0`을 사용하여 캐시를 피하고 라우트를 동적으로 렌더링할 수 있습니다. 또는 `revalidate`를 기본값보다 낮은 양수로 설정하여 라우트의 재검증 빈도를 높일 수 있습니다.
+- **`0`**: 동적 함수나 캐시되지 않은 데이터 페치가 발견되지 않더라도 레이아웃이나 페이지가 항상 [동적으로 렌더링](/docs/app/building-your-application/rendering/server-components#dynamic-rendering)되도록 합니다. 이 옵션은 `cache` 옵션을 설정하지 않은 `fetch` 요청의 기본값을 `'no-store'`로 변경하지만, `'force-cache'`를 선택하거나 양수 `revalidate`를 사용하는 `fetch` 요청은 그대로 둡니다.
+- **`number`**: (초 단위) 레이아웃이나 페이지의 기본 재검증 빈
+
+도를 `n` 초로 설정합니다.
+
+> **알아두면 좋은 점**:
+>
+> - 재검증 값은 정적으로 분석할 수 있어야 합니다. 예를 들어 `revalidate = 600`은 유효하지만 `revalidate = 60 * 10`은 유효하지 않습니다.
+> - `runtime = 'edge'`를 사용하는 경우 재검증 값을 사용할 수 없습니다.
+
+#### Revalidation Frequency
+
+- 단일 라우트의 각 레이아웃 및 페이지에 대한 가장 낮은 `revalidate`가 전체 라우트의 재검증 빈도를 결정합니다. 이는 자식 페이지가 부모 레이아웃만큼 자주 재검증되도록 보장합니다.
+- 개별 `fetch` 요청은 라우트의 기본 `revalidate`보다 낮은 `revalidate`를 설정하여 전체 라우트의 재검증 빈도를 높일 수 있습니다. 이를 통해 특정 라우트에 대해 일부 기준에 따라 더 자주 재검증할 수 있도록 동적으로 선택할 수 있습니다.
+
+### `fetchCache`
+
+<details>
+  <summary>이 옵션은 기본 동작을 무시해야 할 경우에만 사용해야 하는 고급 옵션입니다.</summary>
+
+기본적으로 Next.js는 **동적 함수**가 사용되기 **전에** 도달 가능한 모든 `fetch()` 요청을 **캐시**하며, 동적 함수가 사용된 후 발견된 `fetch` 요청은 **캐시하지 않습니다**.
+
+`fetchCache`를 사용하면 레이아웃이나 페이지의 모든 `fetch` 요청의 기본 `cache` 옵션을 재정의할 수 있습니다.
+
+```tsx filename="layout.tsx | page.tsx | route.ts" switcher
+export const fetchCache = "auto";
+// 'auto' | 'default-cache' | 'only-cache'
+// 'force-cache' | 'force-no-store' | 'default-no-store' | 'only-no-store'
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const fetchCache = "auto";
+// 'auto' | 'default-cache' | 'only-cache'
+// 'force-cache' | 'force-no-store' | 'default-no-store' | 'only-no-store'
+```
+
+- **`'auto'`** (기본값): 동적 함수 이전의 `fetch` 요청을 해당 `cache` 옵션으로 캐시하고, 동적 함수 이후의 `fetch` 요청을 캐시하지 않는 기본 옵션입니다.
+- **`'default-cache'`**: 모든 `cache` 옵션을 `fetch`에 전달할 수 있도록 하지만, 옵션이 제공되지 않은 경우 `cache` 옵션을 `'force-cache'`로 설정합니다. 이는 동적 함수 이후의 `fetch` 요청도 정적으로 간주합니다.
+- **`'only-cache'`**: 모든 `fetch` 요청이 캐싱을 선택하도록 보장하며, 옵션이 제공되지 않은 경우 기본값을 `cache: 'force-cache'`로 변경하고, `cache: 'no-store'`를 사용하는 모든 `fetch` 요청에 대해 오류를 발생시킵니다.
+- **`'force-cache'`**: 모든 `fetch` 요청이 캐싱을 선택하도록 보장하며, 모든 `fetch` 요청의 `cache` 옵션을 `'force-cache'`로 설정합니다.
+- **`'default-no-store'`**: 모든 `cache` 옵션을 `fetch`에 전달할 수 있도록 하지만, 옵션이 제공되지 않은 경우 `cache` 옵션을 `'no-store'`로 설정합니다. 이는 동적 함수 이전의 `fetch` 요청도 동적으로 간주합니다.
+- **`'only-no-store'`**: 모든 `fetch` 요청이 캐시되지 않도록 보장하며, 옵션이 제공되지 않은 경우 기본값을 `cache: 'no-store'`로 변경하고, `cache: 'force-cache'`를 사용하는 모든 `fetch` 요청에 대해 오류를 발생시킵니다.
+- **`'force-no-store'`**: 모든 `fetch` 요청이 캐시되지 않도록 보장하며, 모든 `fetch` 요청의 `cache` 옵션을 `'no-store'`로 설정합니다. 이는 모든 `fetch` 요청을 요청 시마다 다시 페치하게 합니다, 비록 `force-cache` 옵션을 제공하더라도.
+
+#### Cross-route segment behavior
+
+- 단일 라우트의 각 레이아웃 및 페이지에 설정된 모든 옵션은 서로 호환되어야 합니다.
+  - `'only-cache'`와 `'force-cache'`가 모두 제공된 경우, `'force-cache'`가 우선합니다. `'only-no-store'`와 `'force-no-store'`가 모두 제공된 경우, `'force-no-store'`가 우선합니다. force 옵션은 라우트 전체의 동작을 변경하므로 단일 세그먼트에 `'force-*'`가 있으면 `'only-*'`로 인해 발생하는 오류를 방지합니다.
+  - `'only-*'` 및 `'force-*'` 옵션의 의도는 전체 라우트가 완전히 정적이거나 완전히 동적이 되도록 보장하는 것입니다. 이는 다음을 의미합니다:
+    - 단일 라우트에서 `'only-cache'`와 `'only-no-store'`의 조합은 허용되지 않습니다.
+    - 단일 라우트에서 `'force-cache'`와 `'force-no-store'`의 조합은 허용되지 않습니다.
+  - 자식 세그먼트가 `'auto'` 또는 `'*--cache'`를 제공하는 경우, 부모는 `'default-no-store'`를 제공할 수 없습니다. 이는 동일한 fetch가 다른 동작을 하게 만들 수 있기 때문입니다.
+- 일반적으로 공유 부모 레이아웃을 `'auto'`로 두고 자식 세그먼트가 다르게 설정되는 경우 옵션을 사용자 정의하는 것이 좋습니다.
+
+</details>
+
+### `runtime`
+
+애플리케이션을 렌더링할 때 Node.js 런타임을 사용하는 것을 권장하며, 미들웨어에는 Edge 런타임을 사용하는 것이 유일한 지원 옵션입니다.
+
+```tsx filename="layout.tsx | page.tsx | route.ts" switcher
+export const runtime = "nodejs";
+// 'nodejs' | 'edge'
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const runtime = "nodejs";
+// 'nodejs' | 'edge'
+```
+
+- **`'nodejs'`** (기본값)
+- **`'edge'`**
+
+다양한 런타임에 대한 자세한 내용은 [여기](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)에서 확인하세요.
+
+### `preferredRegion`
+
+```tsx filename="layout.tsx | page.tsx | route.ts" switcher
+export const preferredRegion = "auto";
+// 'auto' | 'global' | 'home' | ['iad1', 'sfo1']
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const preferredRegion = "auto";
+// 'auto' | 'global' | 'home' | ['iad1', 'sfo1']
+```
+
+`preferredRegion`의 지원 여부와 지원되는 지역은 배포 플랫폼에 따라 다릅니다.
+
+> **알아두면 좋은 점**:
+>
+> - `preferredRegion`이 지정되지 않은 경우, 가장 가까운 부모 레이아웃의 옵션을 상속합니다.
+> - 루트 레이아웃의 기본값은 `all` 지역입니다.
+
+### `maxDuration`
+
+기본적으로 Next.js는 서버 측 로직(페이지 렌더링 또는 API 처리)의 실행을 제한하지 않습니다.
+배포 플랫폼은 Next.js 빌드 출력의 `maxDuration`을 사용하여 특정 실행 제한을 추가할 수 있습니다.
+예: [Vercel](https://vercel.com/docs/functions/serverless-functions/runtimes#max-duration).
+
+**참고**: 이 설정은 Next.js `13.4.10` 이상이 필요합니다.
+
+```tsx filename="layout.tsx | page.tsx | route.ts" switcher
+export const maxDuration = 5;
+```
+
+```js filename="layout.js | page.js | route.js" switcher
+export const maxDuration = 5;
+```
+
+> **알아두면 좋은 점**:
+>
+> - [Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)를 사용하는 경우, 페이지 수준에서 `maxDuration`을 설정하여 페이지에서 사용하는 모든 Server Actions의 기본 시간 초과를 변경합니다.
+
+### `generateStaticParams`
+
+`generateStaticParams` 함수는 [동적 라우트 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)와 결합하여 요청 시점이 아닌 빌드 시점에 정적으로 생성될 라우트 세그먼트 매개변수 목록을 정의하는 데 사용할 수 있습니다.
+
+자세한 내용은 [API 참조](/docs/app/api-reference/functions/generate-static-params)를 참조하세요.

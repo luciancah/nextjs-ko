@@ -1,0 +1,79 @@
+---
+title: useSelectedLayoutSegments
+description: API Reference for the useSelectedLayoutSegments hook.
+---
+
+# useSelectedLayoutSegments
+
+`useSelectedLayoutSegments`는 **Client Component** 훅으로, 호출된 Layout 아래 수준의 활성 경로 세그먼트를 읽을 수 있게 해줍니다.
+
+부모 Layout에서 자식 세그먼트의 정보를 필요로 하는 UI, 예를 들어 Breadcrumb과 같은 UI를 만들 때 유용합니다.
+
+```tsx filename="app/example-client-component.tsx" switcher
+"use client";
+
+import { useSelectedLayoutSegments } from "next/navigation";
+
+export default function ExampleClientComponent() {
+  const segments = useSelectedLayoutSegments();
+
+  return (
+    <ul>
+      {segments.map((segment, index) => (
+        <li key={index}>{segment}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+```jsx filename="app/example-client-component.js" switcher
+"use client";
+
+import { useSelectedLayoutSegments } from "next/navigation";
+
+export default function ExampleClientComponent() {
+  const segments = useSelectedLayoutSegments();
+
+  return (
+    <ul>
+      {segments.map((segment, index) => (
+        <li key={index}>{segment}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+> **알아두면 좋은 점**:
+>
+> - `useSelectedLayoutSegments`는 [Client Component](/docs/app/building-your-application/rendering/client-components) 훅이며, Layout은 기본적으로 [Server Components](/docs/app/building-your-application/rendering/server-components)입니다. 따라서 `useSelectedLayoutSegments`는 일반적으로 Layout에 가져온 Client Component를 통해 호출됩니다.
+> - 반환된 세그먼트에는 [Route Groups](/docs/app/building-your-application/routing/route-groups)이 포함될 수 있으며, UI에 포함시키지 않으려면 `filter()` 배열 메서드를 사용하여 괄호로 시작하는 항목을 제거할 수 있습니다.
+
+## Parameters
+
+```tsx
+const segments = useSelectedLayoutSegments(parallelRoutesKey?: string)
+```
+
+`useSelectedLayoutSegments`는 선택적으로 [`parallelRoutesKey`](/docs/app/building-your-application/routing/parallel-routes#useselectedlayoutsegments)를 받아, 해당 슬롯 내에서 활성 경로 세그먼트를 읽을 수 있게 해줍니다.
+
+## Returns
+
+`useSelectedLayoutSegments`는 호출된 Layout 바로 아래 수준의 활성 세그먼트를 문자열 배열로 반환합니다. 세그먼트가 없으면 빈 배열을 반환합니다.
+
+아래의 Layout 및 URL을 예로 들면, 반환되는 세그먼트는 다음과 같습니다:
+
+| Layout                    | 방문한 URL            | 반환된 세그먼트             |
+| ------------------------- | --------------------- | --------------------------- |
+| `app/layout.js`           | `/`                   | `[]`                        |
+| `app/layout.js`           | `/dashboard`          | `['dashboard']`             |
+| `app/layout.js`           | `/dashboard/settings` | `['dashboard', 'settings']` |
+| `app/dashboard/layout.js` | `/dashboard`          | `[]`                        |
+| `app/dashboard/layout.js` | `/dashboard/settings` | `['settings']`              |
+
+## Version History
+
+| Version   | Changes                                 |
+| --------- | --------------------------------------- |
+| `v13.0.0` | `useSelectedLayoutSegments` introduced. |

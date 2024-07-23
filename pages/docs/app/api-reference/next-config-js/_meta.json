@@ -1,0 +1,132 @@
+{
+  "appDir": {
+    "title": "appDir"
+  },
+  "assetPrefix": {
+    "title": "assetPrefix"
+  },
+  "basePath": {
+    "title": "basePath"
+  },
+  "compress": {
+    "title": "compress"
+  },
+  "crossOrigin": {
+    "title": "crossOrigin"
+  },
+  "cssChunking": {
+    "title": "cssChunking"
+  },
+  "devIndicators": {
+    "title": "devIndicators"
+  },
+  "distDir": {
+    "title": "distDir"
+  },
+  "env": {
+    "title": "env"
+  },
+  "eslint": {
+    "title": "eslint"
+  },
+  "exportPathMap": {
+    "title": "exportPathMap"
+  },
+  "generateBuildId": {
+    "title": "generateBuildId"
+  },
+  "generateEtags": {
+    "title": "generateEtags"
+  },
+  "headers": {
+    "title": "headers"
+  },
+  "httpAgentOptions": {
+    "title": "httpAgentOptions"
+  },
+  "images": {
+    "title": "images"
+  },
+  "incrementalCacheHandlerPath": {
+    "title": "incrementalCacheHandlerPath"
+  },
+  "instrumentationHook": {
+    "title": "instrumentationHook"
+  },
+  "logging": {
+    "title": "logging"
+  },
+  "mdxRs": {
+    "title": "mdxRs"
+  },
+  "onDemandEntries": {
+    "title": "onDemandEntries"
+  },
+  "optimizePackageImports": {
+    "title": "optimizePackageImports"
+  },
+  "output": {
+    "title": "output"
+  },
+  "pageExtensions": {
+    "title": "pageExtensions"
+  },
+  "poweredByHeader": {
+    "title": "poweredByHeader"
+  },
+
+  "ppr": {
+    "title": "ppr"
+  },
+  "productionBrowserSourceMaps": {
+    "title": "productionBrowserSourceMaps"
+  },
+  "reactCompiler": {
+    "title": "reactCompiler"
+  },
+  "reactStrictMode": {
+    "title": "reactStrictMode"
+  },
+  "redirects": {
+    "title": "redirects"
+  },
+  "rewrites": {
+    "title": "rewrites"
+  },
+  "serverActions": {
+    "title": "serverActions"
+  },
+  "serverExternalPackages": {
+    "title": "serverExternalPackages"
+  },
+  "staleTimes": {
+    "title": "staleTimes"
+  },
+  "swrDelta": {
+    "title": "swrDelta"
+  },
+  "trailingSlash": {
+    "title": "trailingSlash"
+  },
+  "transpilePackages": {
+    "title": "transpilePackages"
+  },
+  "turbo": {
+    "title": "turbo"
+  },
+  "typedRoutes": {
+    "title": "typedRoutes"
+  },
+  "typescript": {
+    "title": "typescript"
+  },
+  "urlImports": {
+    "title": "urlImports"
+  },
+  "webpack": {
+    "title": "webpack"
+  },
+  "webVitalsAttribution": {
+    "title": "webVitalsAttribution"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "cookies": {
+    "title": "Cookies"
+  },
+  "draft-mode": {
+    "title": "Draft Mode"
+  },
+  "fetch": {
+    "title": "Fetch"
+  },
+  "generate-image-metadata": {
+    "title": "Generate Image Metadata"
+  },
+  "generate-metadata": {
+    "title": "Generate Metadata"
+  },
+  "generate-sitemaps": {
+    "title": "Generate Sitemaps"
+  },
+  "generate-static-params": {
+    "title": "Generate Static Params"
+  },
+  "generate-viewport": {
+    "title": "Generate Viewport"
+  },
+  "headers": {
+    "title": "Headers"
+  },
+  "image-response": {
+    "title": "Image Response"
+  },
+  "next-request": {
+    "title": "Next Request"
+  },
+  "next-response": {
+    "title": "Next Response"
+  },
+  "not-found": {
+    "title": "Not Found"
+  },
+  "permanentRedirect": {
+    "title": "Permanent Redirect"
+  },
+  "redirect": {
+    "title": "Redirect"
+  },
+  "revalidatePath": {
+    "title": "Revalidate Path"
+  },
+  "revalidateTag": {
+    "title": "Revalidate Tag"
+  },
+  "unstable_after": {
+    "title": "unstable_after"
+  },
+  "unstable_cache": {
+    "title": "unstable_cache"
+  },
+  "unstable_noStore": {
+    "title": "unstable_noStore"
+  },
+  "unstable_rethrow": {
+    "title": "unstable_rethrow"
+  },
+  "use-params": {
+    "title": "useParams"
+  },
+  "use-pathname": {
+    "title": "usePathname"
+  },
+  "use-report-web-vitals": {
+    "title": "useReportWebVitals"
+  },
+  "use-router": {
+    "title": "useRouter"
+  },
+  "use-search-params": {
+    "title": "useSearchParams"
+  },
+  "use-selected-layout-segment": {
+    "title": "useSelectedLayoutSegment"
+  },
+  "use-selected-layout-segments": {
+    "title": "useSelectedLayoutSegments"
+  },
+  "userAgent": {
+    "title": "User Agent"
+  }
+}

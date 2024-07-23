@@ -1,0 +1,261 @@
+---
+title: favicon, icon, and apple-icon
+description: API Reference for the Favicon, Icon and Apple Icon file conventions.
+---
+
+# favicon, icon, and apple-icon
+
+`favicon`, `icon`, 또는 `apple-icon` 파일 규칙은 애플리케이션의 아이콘을 설정할 수 있게 해줍니다.
+
+이 규칙은 웹 브라우저 탭, 휴대폰 홈 화면, 검색 엔진 결과 등에서 나타나는 앱 아이콘을 추가하는 데 유용합니다.
+
+앱 아이콘을 설정하는 두 가지 방법이 있습니다:
+
+- [이미지 파일 사용 (.ico, .jpg, .png)](#image-files-ico-jpg-png)
+- [코드를 사용하여 아이콘 생성 (.js, .ts, .tsx)](#generate-icons-using-code-js-ts-tsx)
+
+## Image files (.ico, .jpg, .png)
+
+이미지 파일을 사용하여 앱 아이콘을 설정하려면 `favicon`, `icon`, 또는 `apple-icon` 이미지 파일을 `/app` 디렉터리에 배치하십시오.
+`favicon` 이미지는 `app/`의 최상위 레벨에만 위치할 수 있습니다.
+
+Next.js는 파일을 평가하고 적절한 태그를 앱의 `<head>` 요소에 자동으로 추가합니다.
+
+| File convention             | Supported file types                    | Valid locations |
+| --------------------------- | --------------------------------------- | --------------- |
+| [`favicon`](#favicon)       | `.ico`                                  | `app/`          |
+| [`icon`](#icon)             | `.ico`, `.jpg`, `.jpeg`, `.png`, `.svg` | `app/**/*`      |
+| [`apple-icon`](#apple-icon) | `.jpg`, `.jpeg`, `.png`                 | `app/**/*`      |
+
+### `favicon`
+
+루트 `/app` 라우트 세그먼트에 `favicon.ico` 이미지 파일을 추가하십시오.
+
+```html filename="<head> output"
+<link rel="icon" href="/favicon.ico" sizes="any" />
+```
+
+### `icon`
+
+`icon.(ico|jpg|jpeg|png|svg)` 이미지 파일을 추가하십시오.
+
+```html filename="<head> output"
+<link
+  rel="icon"
+  href="/icon?<generated>"
+  type="image/<generated>"
+  sizes="<generated>"
+/>
+```
+
+### `apple-icon`
+
+`apple-icon.(jpg|jpeg|png)` 이미지 파일을 추가하십시오.
+
+```html filename="<head> output"
+<link
+  rel="apple-touch-icon"
+  href="/apple-icon?<generated>"
+  type="image/<generated>"
+  sizes="<generated>"
+/>
+```
+
+> **알아두면 좋은 점**
+>
+> - 파일 이름에 숫자 접미사를 추가하여 여러 아이콘을 설정할 수 있습니다. 예: `icon1.png`, `icon2.png` 등. 번호가 매겨진 파일은 사전적으로 정렬됩니다.
+> - Favicons는 루트 `/app` 세그먼트에만 설정할 수 있습니다. 더 세밀한 제어가 필요하다면 [`icon`](#icon)을 사용하십시오.
+> - 아이콘 유형 및 평가된 파일의 메타데이터에 따라 적절한 `<link>` 태그와 속성(`rel`, `href`, `type`, `sizes`)이 결정됩니다.
+>   - 예를 들어, 32x32px `.png` 파일은 `type="image/png"` 및 `sizes="32x32"` 속성을 갖습니다.
+> - `sizes="any"`는 [브라우저 버그](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs)를 방지하기 위해 `favicon.ico` 출력에 추가됩니다. 이 버그는 `.ico` 아이콘이 `.svg`보다 우선되는 문제입니다.
+
+## Generate icons using code (.js, .ts, .tsx)
+
+[정적 이미지 파일](#image-files-ico-jpg-png) 외에도 코드를 사용하여 아이콘을 **생성**할 수 있습니다.
+
+`icon` 또는 `apple-icon` 라우트를 생성하고 기본 내보내기 함수로 아이콘을 생성합니다.
+
+| File convention | Supported file types |
+| --------------- | -------------------- |
+| `icon`          | `.js`, `.ts`, `.tsx` |
+| `apple-icon`    | `.js`, `.ts`, `.tsx` |
+
+아이콘을 생성하는 가장 쉬운 방법은 `next/og`의 [`ImageResponse`](/docs/app/api-reference/functions/image-response) API를 사용하는 것입니다.
+
+```tsx filename="app/icon.tsx" switcher
+import { ImageResponse } from "next/og";
+
+// 이미지 메타데이터
+export const size = {
+  width: 32,
+  height: 32,
+};
+export const contentType = "image/png";
+
+// 이미지 생성
+export default function Icon() {
+  return new ImageResponse(
+    (
+      // ImageResponse JSX 요소
+      <div
+        style={{
+          fontSize: 24,
+          background: "black",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+        }}
+      >
+        A
+      </div>
+    ),
+    // ImageResponse 옵션
+    {
+      // 편의를 위해 내보낸 아이콘 크기 메타데이터를 재사용하여 ImageResponse의 너비와 높이도 설정할 수 있습니다.
+      ...size,
+    }
+  );
+}
+```
+
+```jsx filename="app/icon.js" switcher
+import { ImageResponse } from "next/og";
+
+// 이미지 메타데이터
+export const size = {
+  width: 32,
+  height: 32,
+};
+export const contentType = "image/png";
+
+// 이미지 생성
+export default function Icon() {
+  return new ImageResponse(
+    (
+      // ImageResponse JSX 요소
+      <div
+        style={{
+          fontSize: 24,
+          background: "black",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+        }}
+      >
+        A
+      </div>
+    ),
+    // ImageResponse 옵션
+    {
+      // 편의를 위해 내보낸 아이콘 크기 메타데이터를 재사용하여 ImageResponse의 너비와 높이도 설정할 수 있습니다.
+      ...size,
+    }
+  );
+}
+```
+
+```html filename="<head> output"
+<link rel="icon" href="/icon?<generated>" type="image/png" sizes="32x32" />
+```
+
+> **알아두면 좋은 점**
+>
+> - 기본적으로 생성된 아이콘은 [**정적으로 최적화**](/docs/app/building-your-application/rendering/server-components#static-rendering-default)됩니다(빌드 시 생성되고 캐시됨). 단, [동적 함수](/docs/app/building-your-application/rendering/server-components#server-rendering-strategies#dynamic-functions) 또는 캐시되지 않은 데이터를 사용하는 경우는 제외입니다.
+> - [`generateImageMetadata`](/docs/app/api-reference/functions/generate-image-metadata)를 사용하여 동일한 파일에서 여러 아이콘을 생성할 수 있습니다.
+> - `favicon` 아이콘은 생성할 수 없습니다. 대신 [`icon`](#icon) 또는 [favicon.ico](#favicon) 파일을 사용하십시오.
+> - 앱 아이콘은 기본적으로 캐시되는 특수 라우트 핸들러입니다. 단, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions) 또는 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하는 경우는 제외입니다.
+
+### Props
+
+기본 내보내기 함수는 다음 props를 받습니다:
+
+#### `params` (optional)
+
+`params` 객체는 루트 세그먼트부터 `icon` 또는 `apple-icon`이 위치한 세그먼트까지의 [동적 라우트 매개변수](/docs/app/building-your-application/routing/dynamic-routes) 객체를 포함합니다.
+
+```tsx filename="app/shop/[slug]/icon.tsx" switcher
+export default function Icon({ params }: { params: { slug: string } }) {
+  // ...
+}
+```
+
+```jsx filename="app/shop/[slug]/icon.js" switcher
+export default function Icon({ params }) {
+  // ...
+}
+```
+
+| Route                           | URL         | `params`                  |
+| ------------------------------- | ----------- | ------------------------- |
+| `app/shop/icon.js`              | `/shop`     | `undefined`               |
+| `app/shop/[slug]/icon.js`       | `/shop/1`   | `{ slug: '1' }`           |
+| `app/shop/[tag]/[item]/icon.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
+
+### Returns
+
+기본 내보내기 함수는 `Blob` | `ArrayBuffer` | `TypedArray` | `DataView` | `ReadableStream` | `Response`를 반환해야 합니다.
+
+> **알아두면 좋은 점**: `ImageResponse`는 이 반환 유형을 만족합니다.
+
+### Config exports
+
+아이콘의 메타데이터를 구성하려면 `icon` 또는 `apple-icon` 라우트에서 `size` 및 `contentType` 변수를 내보낼 수 있습니다.
+
+| Option                        | Type                                                   |
+| ----------------------------- | ------------------------------------------------------ |
+| [`size`](#size)               | `{ width: number; height: number }`                    |
+| [`contentType`](#contenttype) | `string` - [image MIME type](https://developer.mozilla |
+
+.org/docs/Web/HTTP/Basics_of_HTTP/MIME_types#image_types) |
+
+#### `size`
+
+```tsx filename="icon.tsx | apple-icon.tsx" switcher
+export const size = { width: 32, height: 32 };
+
+export default function Icon() {}
+```
+
+```jsx filename="icon.js | apple-icon.js" switcher
+export const size = { width: 32, height: 32 };
+
+export default function Icon() {}
+```
+
+```html filename="<head> output"
+<link rel="icon" sizes="32x32" />
+```
+
+#### `contentType`
+
+```tsx filename="icon.tsx | apple-icon.tsx" switcher
+export const contentType = "image/png";
+
+export default function Icon() {}
+```
+
+```jsx filename="icon.js | apple-icon.js" switcher
+export const contentType = "image/png";
+
+export default function Icon() {}
+```
+
+```html filename="<head> output"
+<link rel="icon" type="image/png" />
+```
+
+#### Route Segment Config
+
+`icon` 및 `apple-icon`은 Pages 및 Layouts와 동일한 [route segment configuration](/docs/app/api-reference/file-conventions/route-segment-config) 옵션을 사용할 수 있는 특수한 [Route Handlers](/docs/app/building-your-application/routing/route-handlers)입니다.
+
+## Version History
+
+| Version   | Changes                                      |
+| --------- | -------------------------------------------- |
+| `v13.3.0` | `favicon` `icon` and `apple-icon` introduced |

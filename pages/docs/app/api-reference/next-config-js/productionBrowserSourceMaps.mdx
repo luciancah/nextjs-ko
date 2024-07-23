@@ -1,0 +1,23 @@
+---
+title: productionBrowserSourceMaps
+description: Enables browser source map generation during the production build.
+---
+
+{/* 이 문서의 내용은 App Router와 Pages Router에서 공유됩니다. Pages Router에만 해당하는 내용을 추가하려면 `<PagesOnly>내용</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 내용은 컴포넌트로 감싸지 않아야 합니다. */}
+
+# productionBrowserSourceMaps
+
+Source Maps는 개발 중에 기본적으로 활성화됩니다. 프로덕션 빌드 중에는 소스를 클라이언트에 노출하지 않도록 비활성화되지만, 구성 플래그를 사용하여 명시적으로 선택할 수 있습니다.
+
+Next.js는 프로덕션 빌드 중에 브라우저 소스 맵 생성을 활성화할 수 있는 구성 플래그를 제공합니다:
+
+```js filename="next.config.js"
+module.exports = {
+  productionBrowserSourceMaps: true,
+};
+```
+
+`productionBrowserSourceMaps` 옵션이 활성화되면 소스 맵은 JavaScript 파일과 동일한 디렉토리에 출력됩니다. Next.js는 요청 시 이러한 파일을 자동으로 제공합니다.
+
+- 소스 맵을 추가하면 `next build` 시간이 증가할 수 있습니다.
+- `next build` 중 메모리 사용량이 증가합니다.

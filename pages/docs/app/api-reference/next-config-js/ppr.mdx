@@ -1,0 +1,41 @@
+---
+title: Partial Prerendering (experimental)
+nav_title: ppr (experimental)
+description: Learn how to enable Partial Prerendering (experimental) in Next.js 14.
+---
+
+# Partial Prerendering (experimental)
+
+> Partial Prerendering is an **experimental** feature and subject to change.
+
+Partial Prerendering은 경로의 정적 부분을 사전 렌더링하여 캐시에서 제공하고, 동적 부분을 스트리밍하여 단일 HTTP 요청으로 처리할 수 있는 실험적 기능입니다.
+
+Next.js 15에서는 특정 경로와 레이아웃에 대해 Partial Prerendering을 점진적으로 선택할 수 있는 기능이 제공됩니다.
+
+Partial Prerendering을 활성화하려면 실험적인 `ppr` 플래그를 `incremental`로 설정하세요:
+
+```js filename="next.config.js"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    ppr: "incremental",
+  },
+};
+
+module.exports = nextConfig;
+```
+
+## Options
+
+- `incremental`: 레이아웃과 페이지를 점진적으로 선택할 수 있으며, [`experimental_ppr`](/docs/app/api-reference/file-conventions/route-segment-config#experimental_ppr) 경로 설정 옵션과 함께 사용해야 합니다.
+- `true`: 애플리케이션의 모든 경로에 대해 Partial Prerendering을 활성화합니다.
+
+먼저 `incremental`을 사용하는 것을 권장합니다. 애플리케이션의 모든 경로에 PPR이 활성화되면 `ppr` 값을 `true`로 설정하여 전체 앱과 모든 미래 경로에 대해 이를 활성화하는 것이 안전합니다.
+
+> **참고 사항:**
+>
+> - `incremental`을 사용할 때, `experimental_ppr`가 없는 경로는 기본값이 `false`로 설정되며 Partial Prerendering을 사용하지 않습니다. 각 경로에 대해 Partial Prerendering을 명시적으로 선택해야 합니다.
+> - Partial Prerendering은 아직 클라이언트 측 탐색에는 적용되지 않습니다. 이를 적극적으로 개발 중입니다.
+> - Partial Prerendering은 [Node.js 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes)용으로 설계되었습니다. 정적 셸을 즉시 제공할 수 있는 경우 Edge Runtime을 사용할 필요가 없습니다.
+
+Partial Prerendering에 대해 자세히 알아보려면 [Next.js 학습 과정](/learn/dashboard-app/partial-prerendering)을 참조하세요.

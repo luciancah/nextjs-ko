@@ -1,0 +1,44 @@
+---
+title: unstable_noStore (experimental)
+description: API Reference for the unstable_noStore function.
+---
+
+# unstable_noStore (experimental)
+
+`unstable_noStore`는 정적 렌더링을 선택적으로 제외하고 특정 컴포넌트가 캐시되지 않도록 선언적으로 설정할 수 있습니다.
+
+```jsx
+import { unstable_noStore as noStore } from 'next/cache';
+
+export default async function Component() {
+  noStore();
+  const result = await db.query(...);
+  ...
+}
+```
+
+> **참고 사항**:
+>
+> - `unstable_noStore`는 `fetch`에서 `cache: 'no-store'`와 동일합니다.
+> - `unstable_noStore`는 `export const dynamic = 'force-dynamic'`보다 더 세분화되어 있으며 컴포넌트별로 사용할 수 있기 때문에 선호됩니다.
+> - [`unstable_cache`](/docs/app/api-reference/functions/unstable_cache) 내부에서 `unstable_noStore`를 사용하면 정적 생성이 제외되지 않습니다. 대신 결과를 캐시할지 여부를 결정하기 위해 캐시 설정에 따릅니다.
+
+## Usage
+
+`fetch`에 `cache: 'no-store'` 또는 `next: { revalidate: 0 }`와 같은 추가 옵션을 전달하지 않으려면 모든 이러한 사용 사례에 대해 `noStore()`를 대체로 사용할 수 있습니다.
+
+```jsx
+import { unstable_noStore as noStore } from 'next/cache';
+
+export default async function Component() {
+  noStore();
+  const result = await db.query(...);
+  ...
+}
+```
+
+## Version History
+
+| Version   | Changes                        |
+| --------- | ------------------------------ |
+| `v14.0.0` | `unstable_noStore` introduced. |

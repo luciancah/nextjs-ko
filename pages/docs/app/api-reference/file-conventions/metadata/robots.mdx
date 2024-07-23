@@ -1,0 +1,150 @@
+---
+title: robots.txt
+description: API Reference for robots.txt file.
+---
+
+# robots.txt
+
+`app` 디렉터리의 **루트**에 [Robots Exclusion Standard](https://en.wikipedia.org/wiki/Robots.txt#Standard)에 맞는 `robots.txt` 파일을 추가하거나 생성하여 검색 엔진 크롤러가 사이트에서 접근할 수 있는 URL을 지정하십시오.
+
+## Static `robots.txt`
+
+```txt filename="app/robots.txt"
+User-Agent: *
+Allow: /
+Disallow: /private/
+
+Sitemap: https://acme.com/sitemap.xml
+```
+
+## Generate a Robots file
+
+[`Robots` 객체](#robots-object)를 반환하는 `robots.js` 또는 `robots.ts` 파일을 추가하십시오.
+
+> **알아두면 좋은 점**: `robots.js`는 특수한 라우트 핸들러로, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions)나 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하지 않는 한 기본적으로 캐시됩니다.
+
+```ts filename="app/robots.ts" switcher
+import type { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: "/private/",
+    },
+    sitemap: "https://acme.com/sitemap.xml",
+  };
+}
+```
+
+```js filename="app/robots.js" switcher
+export default function robots() {
+  return {
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: "/private/",
+    },
+    sitemap: "https://acme.com/sitemap.xml",
+  };
+}
+```
+
+출력:
+
+```txt
+User-Agent: *
+Allow: /
+Disallow: /private/
+
+Sitemap: https://acme.com/sitemap.xml
+```
+
+### Customizing specific user agents
+
+특정 검색 엔진 봇이 사이트를 크롤링하는 방식을 사용자 정의하려면 `rules` 속성에 사용자 에이전트 배열을 전달할 수 있습니다. 예를 들어:
+
+```ts filename="app/robots.ts" switcher
+import type { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      {
+        userAgent: "Googlebot",
+        allow: ["/"],
+        disallow: "/private/",
+      },
+      {
+        userAgent: ["Applebot", "Bingbot"],
+        disallow: ["/"],
+      },
+    ],
+    sitemap: "https://acme.com/sitemap.xml",
+  };
+}
+```
+
+```js filename="app/robots.js" switcher
+export default function robots() {
+  return {
+    rules: [
+      {
+        userAgent: "Googlebot",
+        allow: ["/"],
+        disallow: ["/private/"],
+      },
+      {
+        userAgent: ["Applebot", "Bingbot"],
+        disallow: ["/"],
+      },
+    ],
+    sitemap: "https://acme.com/sitemap.xml",
+  };
+}
+```
+
+출력:
+
+```txt
+User-Agent: Googlebot
+Allow: /
+Disallow: /private/
+
+User-Agent: Applebot
+Disallow: /
+
+User-Agent: Bingbot
+Disallow: /
+
+Sitemap: https://acme.com/sitemap.xml
+```
+
+### Robots object
+
+```tsx
+type Robots = {
+  rules:
+    | {
+        userAgent?: string | string[];
+        allow?: string | string[];
+        disallow?: string | string[];
+        crawlDelay?: number;
+      }
+    | Array<{
+        userAgent: string | string[];
+        allow?: string | string[];
+        disallow?: string | string[];
+        crawlDelay?: number;
+      }>;
+  sitemap?: string | string[];
+  host?: string;
+};
+```
+
+## Version History
+
+| Version   | Changes              |
+| --------- | -------------------- |
+| `v13.3.0` | `robots` introduced. |

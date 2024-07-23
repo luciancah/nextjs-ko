@@ -1,0 +1,107 @@
+---
+title: fetch
+description: 확장된 fetch 함수에 대한 API 참고 문서.
+---
+
+# fetch
+
+Next.js는 서버에서 각 요청이 고유의 지속적인 캐싱 및 재검증 의미를 설정할 수 있도록 네이티브 [웹 `fetch()` API](https://developer.mozilla.org/docs/Web/API/Fetch_API)를 확장합니다.
+
+브라우저에서 `cache` 옵션은 fetch 요청이 _브라우저의_ HTTP 캐시와 어떻게 상호 작용할지를 나타냅니다. 이 확장을 통해 `cache`는 _서버 측_ fetch 요청이 프레임워크의 지속적인 [데이터 캐시](/docs/app/building-your-application/caching#data-cache)와 어떻게 상호 작용할지를 나타냅니다.
+
+서버 컴포넌트 내에서 `async`와 `await`을 사용하여 `fetch`를 직접 호출할 수 있습니다.
+
+```tsx filename="app/page.tsx" switcher
+export default async function Page() {
+  // 이 요청은 수동으로 무효화될 때까지 캐시되어야 합니다.
+  // `getStaticProps`와 유사합니다.
+  // `force-cache`가 기본값이므로 생략할 수 있습니다.
+  const staticData = await fetch(`https://...`, { cache: "force-cache" });
+
+  // 이 요청은 매 요청마다 다시 가져와야 합니다.
+  // `getServerSideProps`와 유사합니다.
+  const dynamicData = await fetch(`https://...`, { cache: "no-store" });
+
+  // 이 요청은 10초 동안 캐시되어야 합니다.
+  // `revalidate` 옵션이 있는 `getStaticProps`와 유사합니다.
+  const revalidatedData = await fetch(`https://...`, {
+    next: { revalidate: 10 },
+  });
+
+  return <div>...</div>;
+}
+```
+
+```jsx filename="app/page.js" switcher
+export default async function Page() {
+  // 이 요청은 수동으로 무효화될 때까지 캐시되어야 합니다.
+  // `getStaticProps`와 유사합니다.
+  // `force-cache`가 기본값이므로 생략할 수 있습니다.
+  const staticData = await fetch(`https://...`, { cache: "force-cache" });
+
+  // 이 요청은 매 요청마다 다시 가져와야 합니다.
+  // `getServerSideProps`와 유사합니다.
+  const dynamicData = await fetch(`https://...`, { cache: "no-store" });
+
+  // 이 요청은 10초 동안 캐시되어야 합니다.
+  // `revalidate` 옵션이 있는 `getStaticProps`와 유사합니다.
+  const revalidatedData = await fetch(`https://...`, {
+    next: { revalidate: 10 },
+  });
+
+  return <div>...</div>;
+}
+```
+
+## `fetch(url, options)`
+
+Next.js는 [웹 `fetch()` API](https://developer.mozilla.org/docs/Web/API/Fetch_API)를 확장하므로, [네이티브 옵션](https://developer.mozilla.org/docs/Web/API/fetch#parameters)을 모두 사용할 수 있습니다.
+
+### `options.cache`
+
+Next.js [데이터 캐시](/docs/app/building-your-application/caching#data-cache)와의 상호 작용 방식을 설정합니다.
+
+```ts
+fetch(`https://...`, { cache: "force-cache" | "no-store" });
+```
+
+- **`no-store`** (기본값): Next.js는 캐시를 확인하지 않고 매 요청마다 원격 서버에서 리소스를 가져오며, 다운로드한 리소스로 캐시를 업데이트하지 않습니다.
+- **`force-cache`**: Next.js는 데이터 캐시에서 일치하는 요청을 찾습니다.
+  - 일치하는 항목이 있고 신선한 경우, 캐시에서 반환됩니다.
+  - 일치하는 항목이 없거나 오래된 경우, Next.js는 원격 서버에서 리소스를 가져와서 다운로드한 리소스로 캐시를 업데이트합니다.
+
+> **알아두면 좋은 점**: Next.js에서 `no-cache` 옵션은 `no-store`와 동일하게 동작합니다.
+
+### `options.next.revalidate`
+
+```ts
+fetch(`https://...`, { next: { revalidate: false | 0 | number } });
+```
+
+리소스의 캐시 수명을 설정합니다(초 단위).
+
+- **`false`** - 리소스를 무기한 캐시합니다. 의미적으로 `revalidate: Infinity`와 동일합니다. HTTP 캐시는 시간이 지남에 따라 오래된 리소스를 제거할 수 있습니다.
+- **`0`** - 리소스가 캐시되지 않도록 합니다.
+- **`number`** - (초 단위) 리소스가 최대 `n`초 동안 캐시되어야 함을 지정합니다.
+
+> **알아두면 좋은 점**:
+>
+> - 개별 `fetch()` 요청이 경로의 기본 `revalidate` 값보다 낮은 `revalidate` 숫자를 설정하면 전체 경로 재검증 간격이 감소합니다.
+> - 동일한 경로의 두 fetch 요청이 서로 다른 `revalidate` 값을 가지는 경우, 더 낮은 값이 사용됩니다.
+> - 편의상, `revalidate`를 숫자로 설정하면 `cache` 옵션을 설정할 필요가 없습니다.
+> - `{ revalidate: 3600, cache: 'no-store' }`와 같은 상충되는 옵션은 오류를 발생시킵니다.
+
+### `options.next.tags`
+
+```ts
+fetch(`https://...`, { next: { tags: ["collection"] } });
+```
+
+리소스의 캐시 태그를 설정합니다. 데이터는 [`revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag)를 사용하여 온디맨드로 재검증할 수 있습니다. 사용자 지정 태그의 최대 길이는 256자이고 태그 항목의 최대 수는 64개입니다.
+
+## 버전 기록
+
+| 버전      | 변경 사항                                                              |
+| --------- | ---------------------------------------------------------------------- |
+| `v15.0.0` | 기본 `cache` 옵션이 `'force-cache'`에서 `'no-store'`로 변경되었습니다. |
+| `v13.0.0` | `fetch` 도입.                                                          |

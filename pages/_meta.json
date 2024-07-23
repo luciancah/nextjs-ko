@@ -1,19 +1,19 @@
 {
   "index": {
     "type": "page",
-    "title": "Nextra",
+    "title": "Next.js 공식문서 한국어 번역",
     "display": "hidden",
     "theme": {
-      "layout": "full"
+      "layout": "article"
     }
   },
   "docs": {
     "type": "page",
-    "title": "Documentation"
+    "title": "Docs"
   },
-  "about": {
+  "contribution": {
     "type": "page",
-    "title": "About",
+    "title": "Contribution",
     "theme": {
       "typesetting": "article"
     }

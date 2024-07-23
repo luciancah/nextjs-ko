@@ -1,0 +1,41 @@
+{
+  "default": {
+    "title": "Default"
+  },
+  "error": {
+    "title": "Error"
+  },
+  "instrumentation": {
+    "title": "Instrumentation"
+  },
+  "layout": {
+    "title": "Layout"
+  },
+  "loading": {
+    "title": "Loading"
+  },
+  "mdx-components": {
+    "title": "MDX Components"
+  },
+  "middleware": {
+    "title": "Middleware"
+  },
+  "not-found": {
+    "title": "Not Found"
+  },
+  "page": {
+    "title": "Page"
+  },
+  "route-segment-config": {
+    "title": "Route Segment Config"
+  },
+  "route": {
+    "title": "Route"
+  },
+  "template": {
+    "title": "Template"
+  },
+  "metadata": {
+    "title": "Metadata Files"
+  }
+}

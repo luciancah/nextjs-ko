@@ -1,0 +1,438 @@
+---
+title: Next.js CLI
+description: Learn how the Next.js CLI allows you to develop, build, and start your application, and more.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# Next.js CLI
+
+Next.js CLI를 사용하면 애플리케이션을 개발, 빌드, 시작 등 다양한 작업을 수행할 수 있습니다.
+
+프로젝트 디렉토리에서 다음 명령어를 실행하여 사용 가능한 CLI 명령어 목록을 확인할 수 있습니다:
+
+```bash filename="Terminal"
+next -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage next [options] [command]
+
+The Next.js CLI allows you to develop, build, start your application, and more.
+
+Options:
+  -v, --version                Outputs the Next.js version.
+  -h, --help                   Displays this message.
+
+Commands:
+  build [directory] [options]  Creates an optimized production build of your application.
+                               The output displays information about each route.
+  dev [directory] [options]    Starts Next.js in development mode with hot-code reloading,
+                               error reporting, and more.
+  info [options]               Prints relevant details about the current system which can be
+                               used to report Next.js bugs.
+  lint [directory] [options]   Runs ESLint for all files in the `/src`, `/app`, `/pages`,
+                               `/components`, and `/lib` directories. It also provides a
+                               guided setup to install any required dependencies if ESLint
+                               is not already configured in your application.
+  start [directory] [options]  Starts Next.js in production mode. The application should be
+                               compiled with `next build` first.
+  telemetry [options]          Allows you to enable or disable Next.js' completely
+                               anonymous telemetry collection.
+```
+
+`next` 명령어에 [node arguments](https://nodejs.org/api/cli.html#cli_node_options_options)를 전달할 수 있습니다:
+
+```bash filename="Terminal"
+NODE_OPTIONS='--throw-deprecation' next
+NODE_OPTIONS='-r esm' next
+NODE_OPTIONS='--inspect' next
+```
+
+> **알아두면 좋은 점**: `next` 명령어를 실행할 때 명령어를 지정하지 않으면 `next dev`와 동일하게 작동합니다.
+
+## 개발 모드
+
+`next dev`는 애플리케이션을 개발 모드로 시작하며, 코드 핫 리로딩, 오류 보고 등을 지원합니다.
+
+프로젝트 디렉토리에서 `next dev`의 사용 가능한 옵션 목록을 확인하려면 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+next dev -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage: next dev [directory] [options]
+
+Starts Next.js in development mode with hot-code reloading, error reporting, and more.
+
+Arguments:
+  [directory]                              A directory on which to build the application.
+                                           If no directory is provided, the current
+                                           directory will be used.
+
+Options:
+  --turbo                                  Starts development mode using Turbopack (beta).
+  -p, --port <port>                        Specify a port number on which to start the
+                                           application. (default: 3000, env: PORT)
+  -H, --hostname <hostname>                Specify a hostname on which to start the
+                                           application (default: 0.0.0.0).
+  --experimental-https                     Starts the server with HTTPS and generates a
+                                           self-signed certificate.
+  --experimental-https-key, <path>         Path to a HTTPS key file.
+  --experimental-https-cert, <path>        Path to a HTTPS certificate file.
+  --experimental-https-ca, <path>          Path to a HTTPS certificate authority file.
+  --experimental-upload-trace, <traceUrl>  Reports a subset of the debugging trace to a
+                                           remote HTTP URL. Includes sensitive data.
+  -h, --help                               Displays this message.
+```
+
+애플리케이션은 기본적으로 `http://localhost:3000`에서 시작됩니다. 기본 포트는 `-p` 옵션으로 변경할 수 있습니다:
+
+```bash filename="Terminal"
+next dev -p 4000
+```
+
+또는 `PORT` 환경 변수를 사용할 수 있습니다:
+
+```bash filename="Terminal"
+PORT=4000 next dev
+```
+
+> **알아두면 좋은 점**:
+>
+> - `PORT`는 `.env` 파일에 설정할 수 없습니다. HTTP 서버를 부팅하는 과정이 다른 코드가 초기화되기 전에 발생하기 때문입니다.
+> - CLI 옵션 `--port` 또는 `PORT` 환경 변수를 사용하여 포트를 지정하지 않으면 Next.js는 포트가 사용 가능할 때까지 자동으로 다른 포트를 시도합니다.
+
+기본값인 `0.0.0.0`이 아닌 다른 호스트네임을 설정할 수도 있습니다. 이는 네트워크의 다른 장치에서 애플리케이션을 사용할 수 있게 할 때 유용합니다. 기본 호스트네임은 `-H` 옵션으로 변경할 수 있습니다:
+
+```bash filename="Terminal"
+next dev -H 192.168.1.2
+```
+
+### Turbopack
+
+[Turbopack](/docs/architecture/turbopack) (베타)는 Next.js에서 테스트 및 안정화 중인 새로운 번들러로, 애플리케이션 작업 시 로컬 반복 작업을 가속화합니다.
+
+개발 모드에서 Turbopack을 사용하려면 `--turbo` 옵션을 추가하세요:
+
+```bash filename="Terminal"
+next dev --turbo
+```
+
+### 로컬 개발을 위한 HTTPS
+
+웹훅이나 인증과 같은 특정 사용 사례에서는 `localhost`에서 안전한 환경을 제공하기 위해 HTTPS를 사용하는 것이 필요할 수 있습니다. Next.js는 다음과 같이 `next dev`로 자체 서명된 인증서를 생성할 수 있습니다:
+
+```bash filename="Terminal"
+next dev --experimental-https
+```
+
+또한 `--experimental-https-key`와 `--experimental-https-cert`를 사용하여 사용자 정의 인증서 및 키를 제공할 수 있습니다. 선택적으로 `--experimental-https-ca`를 사용하여 사용자 정의 CA 인증서도 제공할 수 있습니다.
+
+```bash filename="Terminal"
+next dev --experimental-https --experimental-https-key ./certificates/localhost-key.pem --experimental-https-cert ./certificates/localhost.pem
+```
+
+`next dev --experimental-https`는 개발을 위해서만 사용되며 `mkcert`로 로컬 신뢰 인증서를 생성합니다. 프로덕션에서는 신뢰할 수 있는 기관에서 발급한 적절한 인증서를 사용하세요. Vercel에 배포할 때는 Next.js 애플리케이션에 대해 HTTPS가 [자동으로 구성됩니다](https://vercel.com/docs/security/encryption).
+
+## 빌드
+
+`next build`는 애플리케이션의 최적화된 프로덕션 빌드를 생성합니다. 출력에는 각 경로에 대한 정보가 표시됩니다:
+
+```bash filename="Terminal"
+Route (app)                               Size     First Load JS
+┌ ○ /                                     5.3 kB         89.5 kB
+├ ○ /_not-found                           885 B          85.1 kB
+└ ○ /about                                137 B          84.4 kB
++ First Load JS shared by all             84.2 kB
+  ├ chunks/184-d3bb186aac44da98.js        28.9 kB
+  ├ chunks/30b509c0-f3503c24f98f3936.js   53.4 kB
+  └ other shared chunks (total)
+
+
+○  (Static)  prerendered as static content
+```
+
+- **Size**: 클라이언트 측에서 페이지로 이동할 때 다운로드되는 자산의 크기입니다. 각 경로의 크기에는 해당 종속성만 포함됩니다.
+- **First Load JS**: 서버에서 페이지를 방문할 때 다운로드되는 자산의 크기입니다. 모든 경로에서 공유되는 JS의 양은 별도의 메트릭으로 표시됩니다.
+
+이 두 값은 모두 [**gzip으로 압축**](/docs/app/api-reference/next-config-js/compress)됩니다. 첫 번째 로드는 녹색, 노란색 또는 빨간색으로 표시됩니다. 성능이 좋은 애플리케이션을 위해 녹색을 목표로 하세요.
+
+프로젝트 디렉토리에서 `next build`의 사용 가능한 옵션 목록을 확인하려면 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+next build -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage: next build [directory] [options]
+
+Creates an optimized production build of your application. The output displays information
+about each route.
+
+Arguments:
+  [directory]                       A directory on which to build the application. If no
+                                    provided, the current directory will be
+                                    used.
+
+Options:
+  -d, --debug                       Enables a more verbose build output.
+  --profile                         Enables production profiling for React.
+  --no-lint                         Disables linting.
+  --no-mangling                     Disables mangling.
+  --experimental-app-only           Builds only App Router routes.
+  --experimental-build-mode [mode]  Uses an experimental build mode. (choices: "compile"
+                                    "generate", default: "
+
+default")
+  -h, --help                        Displays this message.
+```
+
+### 디버그
+
+`next build`에서 `--debug` 플래그를 사용하여 더 상세한 빌드 출력을 활성화할 수 있습니다.
+
+```bash filename="Terminal"
+next build --debug
+```
+
+이 플래그가 활성화되면 리라이트, 리디렉션, 헤더와 같은 추가 빌드 출력이 표시됩니다.
+
+### 린팅
+
+다음과 같이 빌드 시 린팅을 비활성화할 수 있습니다:
+
+```bash filename="Terminal"
+next build --no-lint
+```
+
+### 맹글링
+
+빌드 시 [맹글링](https://en.wikipedia.org/wiki/Name_mangling)을 비활성화할 수 있습니다:
+
+```bash filename="Terminal"
+next build --no-mangling
+```
+
+> **알아두면 좋은 점**: 이는 성능에 영향을 미칠 수 있으며 디버깅 목적으로만 사용해야 합니다.
+
+### 프로파일링
+
+`next build`에서 `--profile` 플래그를 사용하여 React의 프로덕션 프로파일링을 활성화할 수 있습니다.
+
+```bash filename="Terminal"
+next build --profile
+```
+
+그런 다음 개발 중에와 동일한 방식으로 프로파일러를 사용할 수 있습니다.
+
+## 프로덕션
+
+`next start`는 애플리케이션을 프로덕션 모드로 시작합니다. 애플리케이션은 먼저 [`next build`](#build)로 컴파일되어야 합니다.
+
+프로젝트 디렉토리에서 `next start`의 사용 가능한 옵션 목록을 확인하려면 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+next start -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage: next start [directory] [options]
+
+Starts Next.js in production mode. The application should be compiled with `next build`
+first.
+
+Arguments:
+  [directory]                           A directory on which to start the application.
+                                        If not directory is provided, the current
+                                        directory will be used.
+
+Options:
+  -p, --port <port>                     Specify a port number on which to start the
+                                        application. (default: 3000, env: PORT)
+  -H, --hostname <hostname>             Specify a hostname on which to start the
+                                        application (default: 0.0.0.0).
+  --keepAliveTimeout <keepAliveTimeout> Specify the maximum amount of milliseconds to wait
+                                        before closing the inactive connections.
+  -h, --help                            Displays this message.
+```
+
+애플리케이션은 기본적으로 `http://localhost:3000`에서 시작됩니다. 기본 포트는 `-p` 옵션으로 변경할 수 있습니다:
+
+```bash filename="Terminal"
+next start -p 4000
+```
+
+또는 `PORT` 환경 변수를 사용할 수 있습니다:
+
+```bash filename="Terminal"
+PORT=4000 next start
+```
+
+> **알아두면 좋은 점**:
+>
+> - `PORT`는 `.env` 파일에 설정할 수 없습니다. HTTP 서버를 부팅하는 과정이 다른 코드가 초기화되기 전에 발생하기 때문입니다.
+> - `next start`는 `output: 'standalone'` 또는 `output: 'export'`와 함께 사용할 수 없습니다.
+
+### Keep Alive Timeout
+
+Next.js를 하위 프록시(예: AWS ELB/ALB와 같은 로드 밸런서) 뒤에 배포할 때, 하위 프록시의 타임아웃보다 큰 [keep-alive 타임아웃](https://nodejs.org/api/http.html#http_server_keepalivetimeout)으로 Next.js의 기본 HTTP 서버를 구성하는 것이 중요합니다. 그렇지 않으면 특정 TCP 연결에 대한 keep-alive 타임아웃에 도달하면 Node.js는 하위 프록시에 알리지 않고 해당 연결을 즉시 종료합니다. 이로 인해 Node.js가 이미 종료한 연결을 다시 사용하려고 할 때 프록시 오류가 발생합니다.
+
+프로덕션 Next.js 서버의 타임아웃 값을 구성하려면 `--keepAliveTimeout`을 (밀리초 단위로) `next start`에 전달하세요. 예를 들어:
+
+```bash filename="Terminal"
+next start --keepAliveTimeout 70000
+```
+
+## Info
+
+`next info` 명령어는 Next.js 버그를 보고하는 데 사용할 수 있는 현재 시스템에 대한 관련 세부 정보를 출력합니다.
+이 정보에는 운영 체제 플랫폼/아키텍처/버전, 바이너리(Node.js, npm, Yarn, pnpm) 및 npm 패키지 버전(`next`, `react`, `react-dom`)이 포함됩니다.
+
+프로젝트 디렉토리에서 `next info`의 사용 가능한 옵션 목록을 확인하려면 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+next info -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage: next info [options]
+
+Prints relevant details about the current system which can be used to report Next.js bugs.
+
+Options:
+  --verbose   Collections additional information for debugging.
+  -h, --help  Displays this message.
+```
+
+`next info`를 실행하면 다음과 같은 정보를 얻을 수 있습니다:
+
+```bash filename="Terminal"
+
+Operating System:
+  Platform: linux
+  Arch: x64
+  Version: #22-Ubuntu SMP Fri Nov 5 13:21:36 UTC 2021
+  Available memory (MB): 31795
+  Available CPU cores: 16
+Binaries:
+  Node: 16.13.0
+  npm: 8.1.0
+  Yarn: 1.22.17
+  pnpm: 6.24.2
+Relevant Packages:
+  next: 14.1.1-canary.61 // Latest available version is detected (14.1.1-canary.61).
+  react: 18.2.0
+  react-dom: 18.2.0
+Next.js Config:
+  output: N/A
+
+```
+
+이 정보는 GitHub Issues에 붙여넣어야 합니다.
+
+`next info --verbose` 명령어를 실행하면 시스템과 `next` 관련 패키지 설치에 대한 추가 정보를 출력합니다.
+
+## Lint
+
+`next lint`는 `pages/`, `app/`, `components/`, `lib/`, `src/` 디렉토리의 모든 파일에 대해 ESLint를 실행합니다. 또한, 애플리케이션에 ESLint가 아직 구성되지 않은 경우 필요한 종속성을 설치하기 위한 안내 설정을 제공합니다.
+
+프로젝트 디렉토리에서 `next lint`의 사용 가능한 옵션 목록을 확인하려면 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+next lint -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage: next lint [directory] [options]
+
+Runs ESLint for all files in the `/src`, `/app`, `/pages`, `/components`, and `/lib` directories. It also
+provides a guided setup to install any required dependencies if ESLint is not already configured in your
+application.
+
+Arguments:
+  [directory]                                         A base directory on which to lint the application.
+                                                      If no directory is provided, the current directory
+                                                      will be used.
+
+Options:
+  -d, --dir, <dirs...>                                Include directory, or directories, to run ESLint.
+  --file, <files...>                                  Include file, or files, to run ESLint.
+  --ext, [exts...]                                    Specify JavaScript file extensions. (default:
+                                                      [".js", ".mjs", ".cjs", ".jsx", ".ts", ".mts", ".cts", ".tsx"])
+  -c, --config, <config>                              Uses this configuration file, overriding all other
+                                                      configuration options.
+  --resolve-plugins-relative-to, <rprt>               Specify a directory where plugins should be resolved
+                                                      from.
+  --strict                                            Creates a `.eslintrc.json` file using the Next.js
+                                                      strict configuration.
+  --rulesdir, <rulesdir...>                           Uses additional rules from this directory(s).
+  --fix                                               Automatically fix linting issues.
+  --fix-type <fixType>                                Specify the types of fixes to apply (e.g., problem,
+                                                      suggestion, layout).
+  --ignore-path <path>                                Specify a file to ignore.
+  --no-ignore <path>                                  Disables the `--ignore-path` option.
+  --quiet                                             Reports errors only.
+  --max-warnings [maxWarnings]                        Specify the number of warnings before triggering a
+                                                      non-zero exit code. (default: -1)
+  -o, --output-file, <outputFile>                     Specify a file to write report to.
+  -f, --format, <format>                              Uses a specifc output format.
+  --no-inline-config                                  Prevents comments from changing config or rules.
+  --report-unused-disable-directives-severity <level> Specify severity level for unused eslint-disable
+                                                      directives. (choices: "error", "off", "warn")
+  --no-cache                                          Disables caching.
+  --cache-location, <cacheLocation>                   Specify a location for cache.
+  --cache-strategy, [cacheStrategy]                   Specify a strategy to use for detecting changed files
+                                                      in the cache. (default: "metadata")
+  --error-on-unmatched-pattern                        Reports errors when any file patterns are unmatched.
+  -h, --help                                          Displays this message.
+```
+
+다른 디렉토리를 린트하고 싶은 경우, `--dir` 플래그를 사용하여 지정할 수 있습니다:
+
+```bash filename="Terminal"
+next lint --dir utils
+```
+
+다른 옵션에 대한 자세한 내용은 [ESLint 구성 문서](/docs/app/building-your-application/configuring/eslint)를 참조하세요.
+
+## Telemetry
+
+Next.js는 일반적인 사용에 대한 **완전히 익명**인 텔레메트리 데이터를 수집합니다.
+이 익명 프로그램에 참여하는 것은 선택 사항이며, 정보를 공유하고 싶지 않은 경우 옵트 아웃할 수 있습니다.
+
+프로젝트 디렉토리에서 `next telemetry`의 사용 가능한 옵션 목록을 확인하려면 다음 명령어를 실행하세요:
+
+```bash filename="Terminal"
+next telemetry -h
+```
+
+출력 결과는 다음과 같아야 합니다:
+
+```bash filename="Terminal"
+Usage: next telemetry [options]
+
+Allows you to enable or disable Next.js' completely anonymous telemetry collection.
+
+Options:
+  --enable    Enables Next.js' telemetry collection.
+  --disable   Disables Next.js' telemetry collection.
+  -h, --help  Displays this message.
+
+Learn more: https://nextjs.org/telemetry
+```
+
+[텔레메트리](/telemetry/)에 대해 자세히 알아보세요.

@@ -1,0 +1,129 @@
+---
+title: headers
+description: headers 함수에 대한 API 참조.
+---
+
+# headers
+
+`headers` 함수는 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)에서 HTTP 수신 요청 헤더를 읽을 수 있게 해줍니다.
+
+## `headers()`
+
+이 API는 [Web Headers API](https://developer.mozilla.org/docs/Web/API/Headers)를 확장합니다. **읽기 전용**이므로, 송신 요청 헤더를 `set` / `delete`할 수 없습니다.
+
+```tsx filename="app/page.tsx" switcher
+import { headers } from "next/headers";
+
+export default function Page() {
+  const headersList = headers();
+  const referer = headersList.get("referer");
+
+  return <div>Referer: {referer}</div>;
+}
+```
+
+```jsx filename="app/page.js" switcher
+import { headers } from "next/headers";
+
+export default function Page() {
+  const headersList = headers();
+  const referer = headersList.get("referer");
+
+  return <div>Referer: {referer}</div>;
+}
+```
+
+> **알아두면 좋은 사항**:
+>
+> - `headers()`는 반환값이 미리 알려질 수 없는 **[동적 함수](/docs/app/building-your-application/rendering/server-components#server-rendering-strategies#dynamic-functions)**입니다. 레이아웃이나 페이지에서 사용하면 해당 경로는 요청 시 **[동적 렌더링](/docs/app/building-your-application/rendering/server-components#dynamic-rendering)**을 사용하게 됩니다.
+
+### API Reference
+
+```tsx
+const headersList = headers();
+```
+
+#### Parameters
+
+`headers`는 매개변수를 받지 않습니다.
+
+#### Returns
+
+`headers`는 **읽기 전용** [Web Headers](https://developer.mozilla.org/docs/Web/API/Headers) 객체를 반환합니다.
+
+- [`Headers.entries()`](https://developer.mozilla.org/docs/Web/API/Headers/entries): 이 객체에 포함된 모든 키/값 쌍을 순회할 수 있는 [`iterator`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Iteration_protocols)를 반환합니다.
+- [`Headers.forEach()`](https://developer.mozilla.org/docs/Web/API/Headers/forEach): 이 `Headers` 객체의 각 키/값 쌍에 대해 제공된 함수를 한 번씩 실행합니다.
+- [`Headers.get()`](https://developer.mozilla.org/docs/Web/API/Headers/get): 주어진 이름을 가진 헤더의 모든 값을 문자열 시퀀스로 반환합니다.
+- [`Headers.has()`](https://developer.mozilla.org/docs/Web/API/Headers/has): `Headers` 객체에 특정 헤더가 포함되어 있는지 여부를 나타내는 boolean 값을 반환합니다.
+- [`Headers.keys()`](https://developer.mozilla.org/docs/Web/API/Headers/keys): 이 객체에 포함된 모든 키를 순회할 수 있는 [`iterator`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Iteration_protocols)를 반환합니다.
+- [`Headers.values()`](https://developer.mozilla.org/docs/Web/API/Headers/values): 이 객체에 포함된 모든 값을 순회할 수 있는 [`iterator`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Iteration_protocols)를 반환합니다.
+
+### Examples
+
+#### 데이터 페칭과 함께 사용하기
+
+`headers()`는 [Suspense for Data Fetching](/docs/app/building-your-application/data-fetching/caching-and-revalidating)과 함께 사용할 수 있습니다.
+
+```jsx filename="app/page.js"
+import { Suspense } from "react";
+import { headers } from "next/headers";
+
+async function User() {
+  const authorization = headers().get("authorization");
+  const res = await fetch("...", {
+    headers: { authorization }, // 인증 헤더 전달
+  });
+  const user = await res.json();
+
+  return <h1>{user.name}</h1>;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <User />
+    </Suspense>
+  );
+}
+```
+
+#### IP 주소
+
+`headers()`를 사용하여 클라이언트의 IP 주소를 가져올 수 있습니다.
+
+```jsx filename="app/page.js"
+import { Suspense } from "react";
+import { headers } from "next/headers";
+
+function IP() {
+  const FALLBACK_IP_ADDRESS = "0.0.0.0";
+  const forwardedFor = headers().get("x-forwarded-for");
+
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS;
+  }
+
+  return headers().get("x-real-ip") ?? FALLBACK_IP_ADDRESS;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <IP />
+    </Suspense>
+  );
+}
+```
+
+`x-forwarded-for` 외에도, `headers()`는 다음을 읽을 수 있습니다:
+
+- `x-real-ip`
+- `x-forwarded-host`
+- `x-forwarded-port`
+- `x-forwarded-proto`
+
+## Version History
+
+| Version   | Changes         |
+| --------- | --------------- |
+| `v13.0.0` | `headers` 도입. |

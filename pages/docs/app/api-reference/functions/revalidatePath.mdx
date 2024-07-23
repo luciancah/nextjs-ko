@@ -1,0 +1,125 @@
+---
+title: revalidatePath
+description: API Reference for the revalidatePath function.
+---
+
+# revalidatePath
+
+`revalidatePath` 함수는 특정 경로에 대해 [캐시된 데이터](/docs/app/building-your-application/caching)를 필요에 따라 무효화할 수 있게 해줍니다.
+
+> **참고 사항**:
+>
+> - `revalidatePath`는 [Node.js와 Edge 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) 모두에서 사용할 수 있습니다.
+> - `revalidatePath`는 포함된 경로가 다음에 방문될 때 캐시를 무효화합니다. 즉, 동적 경로 세그먼트를 가진 경로로 `revalidatePath`를 호출해도 즉시 많은 재검증이 발생하지 않습니다. 무효화는 경로가 다음에 방문될 때 발생합니다.
+> - 현재 `revalidatePath`는 [클라이언트 측 라우터 캐시](/docs/app/building-your-application/caching#client-side-router-cache)의 모든 경로를 무효화합니다. 이 동작은 임시적이며, 특정 경로에만 적용되도록 업데이트될 예정입니다.
+> - `revalidatePath`를 사용하면 [서버 측 라우트 캐시](/docs/app/building-your-application/caching#full-route-cache)에서 **특정 경로**만 무효화됩니다.
+
+## Parameters
+
+```tsx
+revalidatePath(path: string, type?: 'page' | 'layout'): void;
+```
+
+- `path`: 무효화하려는 데이터와 관련된 파일 시스템 경로(예: `/product/[slug]/page`) 또는 실제 경로 세그먼트(예: `/product/123`)를 나타내는 문자열입니다. 1024자 미만이어야 하며, 대소문자를 구분합니다.
+- `type`: (선택 사항) 무효화할 경로의 유형을 변경하기 위한 `'page'` 또는 `'layout'` 문자열입니다. `path`에 동적 세그먼트가 포함된 경우(예: `/product/[slug]/page`), 이 매개변수가 필요합니다. 경로가 실제 경로 세그먼트를 참조하는 경우, 예: 동적 페이지(예: `/product/[slug]/page`)의 경우 `/product/1`을 사용하면 `type`을 제공할 필요가 없습니다.
+
+## Returns
+
+`revalidatePath`는 값을 반환하지 않습니다.
+
+## Examples
+
+### 특정 URL 재검증
+
+```ts
+import { revalidatePath } from "next/cache";
+revalidatePath("/blog/post-1");
+```
+
+이는 다음 페이지 방문 시 특정 URL을 재검증합니다.
+
+### 페이지 경로 재검증
+
+```ts
+import { revalidatePath } from "next/cache";
+revalidatePath("/blog/[slug]", "page");
+// 또는 경로 그룹과 함께 사용
+revalidatePath("/(main)/post/[slug]", "page");
+```
+
+이는 다음 페이지 방문 시 제공된 `page` 파일과 일치하는 모든 URL을 재검증합니다. 특정 페이지 이하의 페이지는 무효화되지 않습니다. 예를 들어, `/blog/[slug]`는 `/blog/[slug]/[author]`를 무효화하지 않습니다.
+
+### 레이아웃 경로 재검증
+
+```ts
+import { revalidatePath } from "next/cache";
+revalidatePath("/blog/[slug]", "layout");
+// 또는 경로 그룹과 함께 사용
+revalidatePath("/(main)/post/[slug]", "layout");
+```
+
+이는 다음 페이지 방문 시 제공된 `layout` 파일과 일치하는 모든 URL을 재검증합니다. 이는 동일한 레이아웃을 가진 페이지들이 다음 방문 시 재검증되도록 합니다. 예를 들어, 위의 경우에서 `/blog/[slug]/[another]`도 다음 방문 시 재검증됩니다.
+
+### 모든 데이터 재검증
+
+```ts
+import { revalidatePath } from "next/cache";
+
+revalidatePath("/", "layout");
+```
+
+이는 클라이언트 측 라우터 캐시를 제거하고, 다음 페이지 방문 시 데이터 캐시를 재검증합니다.
+
+### 서버 액션
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+import { revalidatePath } from "next/cache";
+
+export default async function submit() {
+  await submitForm();
+  revalidatePath("/");
+}
+```
+
+### 라우트 핸들러
+
+```ts filename="app/api/revalidate/route.ts" switcher
+import { revalidatePath } from "next/cache";
+import type { NextRequest } from "next/server";
+
+export async function GET(request: NextRequest) {
+  const path = request.nextUrl.searchParams.get("path");
+
+  if (path) {
+    revalidatePath(path);
+    return Response.json({ revalidated: true, now: Date.now() });
+  }
+
+  return Response.json({
+    revalidated: false,
+    now: Date.now(),
+    message: "Missing path to revalidate",
+  });
+}
+```
+
+```js filename="app/api/revalidate/route.js" switcher
+import { revalidatePath } from "next/cache";
+
+export async function GET(request) {
+  const path = request.nextUrl.searchParams.get("path");
+
+  if (path) {
+    revalidatePath(path);
+    return Response.json({ revalidated: true, now: Date.now() });
+  }
+
+  return Response.json({
+    revalidated: false,
+    now: Date.now(),
+    message: "Missing path to revalidate",
+  });
+}
+```

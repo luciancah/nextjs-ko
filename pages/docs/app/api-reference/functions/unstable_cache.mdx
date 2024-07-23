@@ -1,0 +1,92 @@
+---
+title: unstable_cache (experimental)
+description: API Reference for the unstable_cache function.
+---
+
+# unstable_cache (experimental)
+
+`unstable_cache`는 데이터베이스 쿼리와 같은 비용이 많이 드는 작업의 결과를 캐시하고 여러 요청에서 재사용할 수 있게 해줍니다.
+
+```jsx
+import { getUser } from './data';
+import { unstable_cache } from 'next/cache';
+
+const getCachedUser = unstable_cache(
+  async (id) => getUser(id),
+  ['my-app-user']
+);
+
+export default async function Component({ userID }) {
+  const user = await getCachedUser(userID);
+  ...
+}
+```
+
+> **참고 사항**:
+>
+> - 캐시 범위 내에서 `headers`나 `cookies`와 같은 동적 데이터 소스에 접근하는 것은 지원되지 않습니다. 캐시된 함수 내부에서 이러한 데이터가 필요하다면 캐시된 함수 외부에서 `headers`를 사용하고 필요한 동적 데이터를 인수로 전달하세요.
+> - 이 API는 Next.js의 내장 [Data Cache](/docs/app/building-your-application/caching#data-cache)를 사용하여 요청과 배포 간에 결과를 지속합니다.
+
+> **경고**: 이 API는 불안정하며 향후 변경될 수 있습니다. 이 API가 안정화되면 필요한 경우 마이그레이션 문서와 코드 변환 도구를 제공할 것입니다.
+
+## Parameters
+
+```jsx
+const data = unstable_cache(fetchData, keyParts, options)();
+```
+
+- `fetchData`: 캐시할 데이터를 가져오는 비동기 함수입니다. `Promise`를 반환하는 함수여야 합니다.
+- `keyParts`: 캐시에 추가 식별을 더하는 키 배열입니다. 기본적으로 `unstable_cache`는 인수와 함수의 문자열 버전을 캐시 키로 사용합니다. 대부분의 경우 선택 사항이며, 외부 변수를 인수로 전달하지 않고 사용할 때만 필요합니다. 그러나 함수 내에서 사용하는 클로저를 인수로 전달하지 않으면 추가하는 것이 중요합니다.
+- `options`: 캐시 동작을 제어하는 객체입니다. 다음 속성을 포함할 수 있습니다:
+  - `tags`: 캐시 무효화를 제어하는 데 사용할 수 있는 태그 배열입니다. Next.js는 이를 고유하게 식별하는 데 사용하지 않습니다.
+  - `revalidate`: 캐시를 재검증해야 하는 초 단위 시간입니다. 생략하거나 `false`를 전달하면 캐시가 무기한 유지되거나 일치하는 `revalidateTag()` 또는 `revalidatePath()` 메서드가 호출될 때까지 유지됩니다.
+
+## Returns
+
+`unstable_cache`는 호출 시 캐시된 데이터로 해결되는 `Promise`를 반환하는 함수를 반환합니다. 데이터가 캐시에 없으면 제공된 함수가 호출되고 그 결과가 캐시에 저장되어 반환됩니다.
+
+## Example
+
+```tsx filename="app/page.tsx" switcher
+import { unstable_cache } from 'next/cache';
+
+export default async function Page({ params }: { params: { userID: string } }) {
+ const getCachedUser = unstable_cache(
+  async () => {
+
+  return { id: params.userID };
+    },
+    [params.userID], // 여기서 userID를 keyParts에 추가하여 Next.js가 서로 다른 userID에 대해 별도의 캐시를 만들 수 있도록 합니다.
+    {
+      tags: ["cached-user-tag"],
+      revalidate: 60,
+    }
+);
+  ...
+}
+```
+
+```jsx filename="app/page.jsx" switcher
+import { unstable_cache } from 'next/cache';
+
+export default async function Page({ params }) {
+ const getCachedUser = unstable_cache(
+  async () => {
+
+  return { id: params.userID };
+    },
+    [params.userID], // 여기서 userID를 keyParts에 추가하여 Next.js가 서로 다른 userID에 대해 별도의 캐시를 만들 수 있도록 합니다.
+    {
+      tags: ["cached-user-tag"],
+      revalidate: 60,
+    }
+);
+  ...
+}
+```
+
+## Version History
+
+| Version   | Changes                      |
+| --------- | ---------------------------- |
+| `v14.0.0` | `unstable_cache` introduced. |

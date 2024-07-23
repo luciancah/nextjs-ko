@@ -1,0 +1,14 @@
+{
+  "font": {
+    "title": "Font"
+  },
+  "image": {
+    "title": "Image"
+  },
+  "link": {
+    "title": "Link"
+  },
+  "script": {
+    "title": "Script"
+  }
+}

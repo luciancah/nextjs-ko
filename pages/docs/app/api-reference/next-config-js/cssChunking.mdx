@@ -1,0 +1,42 @@
+---
+title: cssChunking (Experimental)
+description: Use the `cssChunking` option to control how CSS files are chunked in your Next.js application.
+---
+
+# cssChunking (Experimental)
+
+CSS Chunking은 웹 애플리케이션의 성능을 향상시키기 위해 CSS 파일을 청크로 분할하고 재배열하는 전략입니다. 이를 통해 애플리케이션의 모든 CSS를 한 번에 로드하는 대신 특정 라우트에 필요한 CSS만 로드할 수 있습니다.
+
+`next.config.js` 파일에서 `experimental.cssChunking` 옵션을 사용하여 CSS 파일이 청크되는 방식을 제어할 수 있습니다:
+
+```tsx filename="next.config.ts" switcher
+import type { NextConfig } from "next";
+
+const nextConfig = {
+  experimental: {
+    cssChunking: "loose", // default
+  },
+} satisfies NextConfig;
+
+export default nextConfig;
+```
+
+```js filename="next.config.js" switcher
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    cssChunking: "loose", // default
+  },
+};
+
+module.exports = nextConfig;
+```
+
+## Options
+
+- **`'loose'` (default)**: Next.js는 가능할 때마다 CSS 파일을 병합하려고 시도합니다. 이를 통해 파일 간의 명시적 및 암시적 의존성을 가져와 청크의 수와 요청 수를 줄입니다.
+- **`'strict'`**: Next.js는 CSS 파일을 파일에 가져온 순서대로 정확히 로드합니다. 이는 더 많은 청크와 요청으로 이어질 수 있습니다.
+
+예상치 못한 CSS 동작이 발생하는 경우 `'strict'`를 사용하는 것이 좋습니다. 예를 들어, 다른 파일에서 다른 `import` 순서(`a`가 `b`보다 먼저 또는 `b`가 `a`보다 먼저)로 `a.css`와 `b.css`를 가져오는 경우, `'loose'`는 파일을 임의의 순서로 병합하고 그들 간에 의존성이 없다고 가정합니다. 그러나 `b.css`가 `a.css`에 의존하는 경우, 파일이 병합되지 않고 가져온 순서대로 로드되도록 `'strict'`를 사용해야 합니다. 이는 더 많은 청크와 요청으로 이어질 수 있습니다.
+
+대부분의 애플리케이션에서는 `'loose'`를 사용하는 것이 요청 수를 줄이고 성능을 향상시키는 데 도움이 되므로 권장됩니다.

@@ -1,0 +1,15 @@
+---
+title: Metadata Files API Reference
+nav_title: Metadata Files
+description: API documentation for the metadata file conventions.
+---
+
+# Metadata Files API Reference
+
+이 문서 섹션에서는 **메타데이터 파일 규칙**에 대해 다룹니다. 파일 기반 메타데이터는 라우트 세그먼트에 특수한 메타데이터 파일을 추가하여 정의할 수 있습니다.
+
+각 파일 규칙은 정적 파일(예: `opengraph-image.jpg`)을 사용하거나 파일을 생성하는 코드를 사용하는 동적 변형(예: `opengraph-image.js`)으로 정의할 수 있습니다.
+
+파일이 정의되면, Next.js는 해당 파일을 자동으로 제공하고(캐싱을 위해 프로덕션에서는 해시 포함) 해당 자산의 URL, 파일 유형, 이미지 크기와 같은 올바른 메타데이터로 관련 헤드 요소를 업데이트합니다.
+
+> **알아두면 좋은 점**: [`sitemap.ts`](/docs/app/api-reference/file-conventions/metadata/sitemap), [`opengraph-image.tsx`](/docs/app/api-reference/file-conventions/metadata/opengraph-image), [`icon.tsx`](/docs/app/api-reference/file-conventions/metadata/app-icons)와 같은 특수 라우트 핸들러 및 기타 [메타데이터 파일](/docs/app/api-reference/file-conventions/metadata)은 기본적으로 캐시됩니다.

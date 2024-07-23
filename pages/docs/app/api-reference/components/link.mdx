@@ -1,0 +1,515 @@
+---
+title: <Link>
+description: Enable fast client-side navigation with the built-in `next/link` component.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# `<Link>`
+
+`<Link>`는 HTML `<a>` 요소를 확장하여 [사전 로딩](/docs/app/building-your-application/routing/linking-and-navigating#2-prefetching) 및 라우트 간의 클라이언트 사이드 내비게이션을 제공합니다. Next.js에서 라우트 간의 이동을 위한 주요 방법입니다.
+
+<PagesOnly>
+
+<details>
+  <summary>예제</summary>
+
+- [Hello World](https://github.com/vercel/next.js/tree/canary/examples/hello-world)
+- [Active className on Link](https://github.com/vercel/next.js/tree/canary/examples/active-class-name)
+
+</details>
+
+</PagesOnly>
+
+<AppOnly>
+
+```tsx filename="app/page.tsx" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return <Link href="/dashboard">Dashboard</Link>;
+}
+```
+
+```jsx filename="app/page.js" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return <Link href="/dashboard">Dashboard</Link>;
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+예를 들어, 다음 파일이 있는 `pages` 디렉토리를 고려해보세요:
+
+- `pages/index.js`
+- `pages/about.js`
+- `pages/blog/[slug].js`
+
+각 페이지로 이동하는 링크는 다음과 같습니다:
+
+```jsx
+import Link from "next/link";
+
+function Home() {
+  return (
+    <ul>
+      <li>
+        <Link href="/">Home</Link>
+      </li>
+      <li>
+        <Link href="/about">About Us</Link>
+      </li>
+      <li>
+        <Link href="/blog/hello-world">Blog Post</Link>
+      </li>
+    </ul>
+  );
+}
+
+export default Home;
+```
+
+</PagesOnly>
+
+## 속성
+
+다음은 Link 컴포넌트에 사용할 수 있는 속성의 요약입니다:
+
+<PagesOnly>
+
+| 속성                     | 예제                | 타입             | 필수 |
+| ------------------------ | ------------------- | ---------------- | ---- |
+| [`href`](#href-required) | `href="/dashboard"` | 문자열 또는 객체 | 예   |
+| [`replace`](#replace)    | `replace={false}`   | 불리언           | -    |
+| [`scroll`](#scroll)      | `scroll={false}`    | 불리언           | -    |
+| [`prefetch`](#prefetch)  | `prefetch={false}`  | 불리언           | -    |
+
+</PagesOnly>
+
+<AppOnly>
+
+| 속성                     | 예제                | 타입             | 필수 |
+| ------------------------ | ------------------- | ---------------- | ---- |
+| [`href`](#href-required) | `href="/dashboard"` | 문자열 또는 객체 | 예   |
+| [`replace`](#replace)    | `replace={false}`   | 불리언           | -    |
+| [`scroll`](#scroll)      | `scroll={false}`    | 불리언           | -    |
+| [`prefetch`](#prefetch)  | `prefetch={false}`  | 불리언 또는 null | -    |
+
+</AppOnly>
+
+> **참고**: `className` 또는 `target="_blank"`와 같은 `<a>` 태그 속성은 `<Link>`에 속성으로 추가할 수 있으며, 이는 기본 `<a>` 요소에 전달됩니다.
+
+### `href` (필수)
+
+이동할 경로 또는 URL입니다.
+
+```jsx
+<Link href="/dashboard">Dashboard</Link>
+```
+
+`href`는 객체를 받을 수도 있습니다. 예를 들어:
+
+```jsx
+// /about?name=test로 이동
+<Link
+  href={{
+    pathname: "/about",
+    query: { name: "test" },
+  }}
+>
+  About
+</Link>
+```
+
+### `replace`
+
+**기본값은 `false`입니다.** `true`일 때, `next/link`는 [브라우저의 히스토리](https://developer.mozilla.org/docs/Web/API/History_API) 스택에 새 URL을 추가하는 대신 현재 히스토리 상태를 대체합니다.
+
+```tsx filename="app/page.tsx" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" replace>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" replace>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+### `scroll`
+
+**기본값은 `true`입니다.** `<Link>`의 기본 동작은 **새 라우트로 이동할 때 페이지 맨 위로 스크롤하거나, 뒤로 및 앞으로 이동할 때 스크롤 위치를 유지하는 것입니다.** `false`일 때, `next/link`는 탐색 후 페이지 맨 위로 스크롤하지 않습니다.
+
+```tsx filename="app/page.tsx" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" scroll={false}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" scroll={false}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+> **참고**:
+>
+> - Next.js는 탐색 시 페이지가 뷰포트에 보이지 않으면 [페이지](/docs/app/building-your-application/routing/pages)로 스크롤합니다.
+
+### `prefetch`
+
+<AppOnly>
+
+사전 로딩은 `<Link />` 컴포넌트가 사용자의 뷰포트에 들어올 때(처음이거나 스크롤을 통해) 발생합니다. Next.js는 백그라운드에서 링크된 라우트(`href`로 표시됨)와 데이터를 사전 로딩하여 클라이언트 측 내비게이션 성능을 향상시킵니다. 사전 로딩은 프로덕션에서만 활성화됩니다.
+
+- **`null` (기본값)**: 사전 로딩 동작은 라우트가 정적 또는 동적인지 여부에 따라 다릅니다. 정적 라우트의 경우 전체 라우트가 사전 로딩됩니다(모든 데이터 포함). 동적 라우트의 경우 [`loading.js`](/docs/app/building-your-application/routing/loading-ui-and-streaming#instant-loading-states) 경계가 있는 가장 가까운 세그먼트까지 부분적으로 사전 로딩됩니다.
+- `true`: 정적 및 동적 라우트 모두에 대해 전체 라우트가 사전 로딩됩니다.
+- `false`: 사전 로딩이 뷰포트에 들어올 때 발생하지 않으며, 호버 시에도 발생하지 않습니다.
+
+```tsx filename="app/page.tsx" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" prefetch={false}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+```jsx filename="app/page.js" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" prefetch={false}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+사전 로딩은 `<Link />` 컴포넌트가 사용자의 뷰포트에 들어올 때(처음이거나 스크롤을 통해) 발생합니다. Next.js는 백그라운드에서 링크된 라우트(`href`로 표시됨)와 데이터를 사전 로딩하여 클라이언트 측 내비게이션 성능을 향상시킵니다. 사전 로딩은 프로덕션에서만 활성화됩니다.
+
+- **`true` (기본값)**: 전체 라우트와 그 데이터가 사전 로딩됩니다.
+- `false`: 뷰포트에 들어올 때 사전 로딩되지 않지만 호버 시에 사전 로딩됩니다. 호버 시에도 사전 로딩을 완전히 제거하려면 `<a>` 태그를 사용하거나 [점진적으로 App Router 채택](/docs/app/building-your-application/upgrading/app-router-migration)을 고려하세요. 이는 호버 시 사전 로딩을 비활성화할 수 있게 합니다.
+
+```tsx filename="pages/index.tsx" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" prefetch={false}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+```jsx filename="pages/index.js" switcher
+import Link from "next/link";
+
+export default function Page() {
+  return (
+    <Link href="/dashboard" prefetch={false}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+## 기타 속성
+
+### `legacyBehavior`
+
+`<Link>`의 자식 요소로 `<a>` 요소를 더 이상 필요로 하지 않습니다. `legacyBehavior` 속성을 추가하여 기존 동작을 사용하거나 `<a>` 요소를 제거하여 업그레이드하세요. [자동 업그레이드 코드 수정 도구](/docs/app/building-your-application/upgrading/codemods#new-link)가 제공됩니다.
+
+> **참고**: `legacyBehavior`가 `true`로 설정되지 않으면, 모든 [`anchor`](https://developer.mozilla.org/docs/Web/HTML/Element/a) 태그 속성이 `next/link`에 전달될 수 있으며, `className`, `onClick` 등도 포함됩니다.
+
+### `passHref`
+
+`Link`가 자식에게 `href` 속성을 강제로 전달합니다. 기본값은 `false`입니다.
+
+### `scroll`
+
+탐색 후 페이지 맨 위로 스크롤합니다. 기본값은 `true`입니다.
+
+### `shallow`
+
+[`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props), [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props) 또는 [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props)를 다시 실행하지 않고 현재 페이지의 경로를 업데이트합니다. 기본값은 `false`입니다.
+
+### `locale`
+
+활성 로케일이 자동으로 접두사로 붙습니다. `locale`은 다른 로케일을 제공할 수 있도록 합니다. `false`일 때는 기본 동작이 비활성화되므로 `href`에 로케일을 포함해야 합니다.
+
+</PagesOnly>
+
+## 예제
+
+### 동적 라우트로 링크 연결
+
+동적 라우트를 위해 링크의 경로를 생성할 때 템플릿 리터럴을 사용하는 것이 편리할 수 있습니다.
+
+<PagesOnly>
+
+예를 들어, `pages/blog/[slug].js`의 동적 라우트로 링크 목록을 생성할 수 있습니다.
+
+```jsx filename="pages/blog/index.js"
+import Link from "next/link";
+
+function Posts({ posts }) {
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>
+          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default Posts;
+```
+
+</PagesOnly>
+
+<AppOnly>
+
+예를 들어, `app/blog/[slug]/page.js`의 동적 라우트로 링크 목록을 생성할 수 있습니다:
+
+```jsx filename="app/blog/page.js"
+import Link from "next/link";
+
+function Page({ posts }) {
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>
+          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+</AppOnly>
+
+### 자식이 `<a>` 태그를 감싸는 커스텀 컴포넌트인 경우
+
+<AppOnly>
+
+`Link`의 자식이 `<a>` 태그를 감싸는 커스텀 컴포넌트인 경우, `passHref`를 `Link`에 추가해야 합니다. 이는 [styled-components](https://styled-components.com/)와 같은 라이브러리를 사용하는 경우에 필요합니다. 그렇지 않으면 `<a>` 태그에 `href` 속성이 없게 되어 사이트 접근성이 떨어지고 SEO에 영향을 미칠 수 있습니다. [ESLint](/docs/app/building-your-application/configuring/eslint#eslint-plugin)를 사용하는 경우, `next/link-passhref`라는 내장 규칙이 올바른 `passHref` 사용을 보장합니다.
+
+</AppOnly>
+
+<PagesOnly>
+
+`Link`의 자식이 `<a>` 태그를 감싸는 커스텀 컴포넌트인 경우, `passHref`를 `Link`에 추가해야 합니다. 이는 [styled-components](https://styled-components.com/)와 같은 라이브러리를 사용하는 경우에 필요합니다. 그렇지 않으면 `<a>` 태그에 `href` 속성이 없게 되어 사이트 접근성이 떨어지고 SEO에 영향을 미칠 수 있습니다. [ESLint](/docs/pages/building-your-application/configuring/eslint#eslint-plugin)를 사용하는 경우, `next/link-passhref`라는 내장 규칙이 올바른 `passHref` 사용을 보장합니다.
+
+</PagesOnly>
+
+```jsx
+import Link from "next/link";
+import styled from "styled-components";
+
+// 이 컴포넌트는 <a> 태그를 감싸는 커스텀 컴포넌트를 생성합니다.
+const RedLink = styled.a`
+  color: red;
+`;
+
+function NavLink({ href, name }) {
+  return (
+    <Link href={href} passHref legacyBehavior>
+      <RedLink>{name}</RedLink>
+    </Link>
+  );
+}
+
+export default NavLink;
+```
+
+- [emotion](https://emotion.sh/)의 JSX 프래그마 기능(`@jsx jsx`)을 사용하는 경우, `<a>` 태그를 직접 사용하더라도 `passHref`를 사용해야 합니다.
+- 컴포넌트는 내비게이션을 올바르게 트리거하기 위해 `onClick` 속성을 지원해야 합니다.
+
+### 자식이 함수형 컴포넌트인 경우
+
+`Link`의 자식이 함수형 컴포넌트인 경우, `passHref` 및 `legacyBehavior`를 사용하는 것 외에도 컴포넌트를 [`React.forwardRef`](https://react.dev/reference/react/forwardRef)로 감싸야 합니다:
+
+```jsx
+import Link from "next/link";
+import React from "react";
+
+// `onClick`, `href`, 및 `ref`는 올바른 처리를 위해 DOM 요소에 전달되어야 합니다.
+const MyButton = React.forwardRef(({ onClick, href }, ref) => {
+  return (
+    <a href={href} onClick={onClick} ref={ref}>
+      Click Me
+    </a>
+  );
+});
+
+function Home() {
+  return (
+    <Link href="/about" passHref legacyBehavior>
+      <MyButton />
+    </Link>
+  );
+}
+
+export default Home;
+```
+
+<PagesOnly>
+
+### URL 객체 사용
+
+`Link`는 URL 객체를 받을 수 있으며, 이를 자동으로 포맷하여 URL 문자열을 생성합니다. 사용 방법은 다음과 같습니다:
+
+```jsx
+import Link from "next/link";
+
+function Home() {
+  return (
+    <ul>
+      <li>
+        <Link
+          href={{
+            pathname: "/about",
+            query: { name: "test" },
+          }}
+        >
+          About us
+        </Link>
+      </li>
+      <li>
+        <Link
+          href={{
+            pathname: "/blog/[slug]",
+            query: { slug: "my-post" },
+          }}
+        >
+          Blog Post
+        </Link>
+      </li>
+    </ul>
+  );
+}
+
+export default Home;
+```
+
+위 예제는 다음과 같은 링크를 가집니다:
+
+- 미리 정의된 경로: `/about?name=test`
+- [동적 경로](/docs/app/building-your-application/routing/dynamic-routes): `/blog/my-post`
+
+[Node.js URL 모듈 문서](https://nodejs.org/api/url.html#url_url_strings_and_url_objects)에서 정의된 모든 속성을 사용할 수 있습니다.
+
+</PagesOnly>
+
+### URL을 푸시 대신 교체
+
+`Link` 컴포넌트의 기본 동작은 `history` 스택에 새 URL을 `push`하는 것입니다. 다음 예제와 같이 `replace` 속성을 사용하여 새 항목을 추가하지 않도록 할 수 있습니다:
+
+```jsx
+<Link href="/about" replace>
+  About us
+</Link>
+```
+
+### 페이지 맨 위로 스크롤 비활성화
+
+`Link`의 기본 동작은 페이지 맨 위로 스크롤하는 것입니다. 해시가 정의된 경우 일반 `<a>` 태그처럼 특정 ID로 스크롤합니다. 맨 위로 스크롤하거나 해시로 스크롤하는 것을 방지하려면 `scroll={false}`를 `Link`에 추가할 수 있습니다:
+
+```jsx
+<Link href="/#hashid" scroll={false}>
+  Disables scrolling to the top
+</Link>
+```
+
+### 미들웨어
+
+[미들웨어](/docs/app/building-your-application/routing/middleware)를 사용하여 인증 또는 다른 목적으로 사용자를 다른 페이지로 리디렉션하는 경우가 많습니다. `<Link />` 컴포넌트가 미들웨어를 통한 리디렉션 링크를 올바르게 미리 가져오려면, Next.js에 표시할 URL과 미리 가져올 URL을 모두 알려야 합니다. 이는 올바른 경로를 미리 가져오기 위해 미들웨어에 불필요한 요청을 방지하기 위해 필요합니다.
+
+예를 들어, 인증된 사용자와 방문자 보기를 모두 제공하는 `/dashboard` 경로가 있다고 가정합니다. 다음과 같이 미들웨어에 사용자를 올바른 페이지로 리디렉션하는 코드를 추가할 수 있습니다:
+
+```js filename="middleware.js"
+export function middleware(req) {
+  const nextUrl = req.nextUrl;
+  if (nextUrl.pathname === "/dashboard") {
+    if (req.cookies.authToken) {
+      return NextResponse.rewrite(new URL("/auth/dashboard", req.url));
+    } else {
+      return NextResponse.rewrite(new URL("/public/dashboard", req.url));
+    }
+  }
+}
+```
+
+이 경우, `<Link />` 컴포넌트에서 다음 코드를 사용해야 합니다:
+
+```js
+import Link from "next/link";
+import useIsAuthed from "./hooks/useIsAuthed";
+
+export default function Page() {
+  const isAuthed = useIsAuthed();
+  const path = isAuthed ? "/auth/dashboard" : "/public/dashboard";
+  return (
+    <Link as="/dashboard" href={path}>
+      Dashboard
+    </Link>
+  );
+}
+```
+
+<PagesOnly>
+
+> **참고**: [동적 라우트](/docs/app/building-your-application/routing/dynamic-routes)를 사용하는 경우, `as`와 `href` 속성을 적절히 조정해야 합니다. 예를 들어, 미들웨어를 통해 다르게 표시하려는 `/dashboard/authed/[user]`와 같은 동적 라우트가 있다면 다음과 같이 작성할 수 있습니다: `<Link href={{ pathname: '/dashboard/authed/[user]', query: { user: username } }} as="/dashboard/[user]">Profile</Link>`.
+
+</PagesOnly>
+
+## 버전 기록
+
+| 버전      | 변경 사항                                                                                                                                                                                                 |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `v13.0.0` | 더 이상 자식 `<a>` 태그가 필요하지 않습니다. 자동으로 코드베이스를 업데이트하는 [코드 수정 도구](/docs/app/building-your-application/upgrading/codemods#remove-a-tags-from-link-components)가 제공됩니다. |
+| `v10.0.0` | 동적 라우트를 가리키는 `href` 속성이 자동으로 해결되며 더 이상 `as` 속성이 필요하지 않습니다.                                                                                                             |
+| `v8.0.0`  | 미리 가져오기 성능이 향상되었습니다.                                                                                                                                                                      |
+| `v1.0.0`  | `next/link` 도입.                                                                                                                                                                                         |

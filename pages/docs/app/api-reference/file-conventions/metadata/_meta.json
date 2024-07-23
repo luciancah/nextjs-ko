@@ -1,0 +1,17 @@
+{
+  "app-icons": {
+    "title": "App Icons"
+  },
+  "manifest": {
+    "title": "Manifest"
+  },
+  "opengraph-image": {
+    "title": "OpenGraph Image"
+  },
+  "robots": {
+    "title": "Robots"
+  },
+  "sitemap": {
+    "title": "Sitemap"
+  }
+}
