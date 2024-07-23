@@ -5,31 +5,33 @@ description: Next.js provides gzip compression to compress rendered content and 
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
 
-By default, Next.js uses `gzip` to compress rendered content and static files when using `next start` or a custom server. This is an optimization for applications that do not have compression configured. If compression is _already_ configured in your application via a custom server, Next.js will not add compression.
+# compress
+
+기본적으로 Next.js는 `next start` 또는 커스텀 서버를 사용할 때 렌더링된 콘텐츠와 정적 파일을 압축하기 위해 `gzip`을 사용합니다. 이는 압축이 구성되지 않은 애플리케이션에 대한 최적화입니다. 애플리케이션에서 커스텀 서버를 통해 압축이 _이미_ 구성된 경우, Next.js는 압축을 추가하지 않습니다.
 
 > **Good to know:**
 >
-> - When hosting your application on [Vercel](https://vercel.com/docs/edge-network/compression), compression uses `brotli` first, then `gzip`.
-> - You can check if compression is enabled and which algorithm is used by looking at the [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) (browser accepted options) and [`Content-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding) (currently used) headers in the response.
+> - 애플리케이션을 [Vercel](https://vercel.com/docs/edge-network/compression)에 호스팅하는 경우, 압축은 먼저 `brotli`를 사용하고, 그 다음에 `gzip`을 사용합니다.
+> - 응답의 [`Accept-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Encoding) (브라우저가 수락하는 옵션) 및 [`Content-Encoding`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding) (현재 사용 중인) 헤더를 확인하여 압축이 활성화되었는지와 어떤 알고리즘이 사용되고 있는지 확인할 수 있습니다.
 
-## Disabling compression
+## 압축 비활성화
 
-To disable **compression**, set the `compress` config option to `false`:
+**압축**을 비활성화하려면 `compress` 구성 옵션을 `false`로 설정합니다:
 
 ```js filename="next.config.js"
 module.exports = {
   compress: false,
-}
+};
 ```
 
-We do not recommend disabling compression unless you have compression configured on your server, as compression reduces bandwidth usage and improves the performance of your application.
+서버에서 압축이 구성되지 않은 경우, 압축을 비활성화하지 않는 것을 권장합니다. 압축은 대역폭 사용을 줄이고 애플리케이션의 성능을 향상시킵니다.
 
-## Changing the compression algorithm
+## 압축 알고리즘 변경
 
-To change your compression algorithm, you will need to configure your custom server and set the `compress` option to `false` in your `next.config.js` file.
+압축 알고리즘을 변경하려면 커스텀 서버를 구성하고 `next.config.js` 파일에서 `compress` 옵션을 `false`로 설정해야 합니다.
 
-For example, you're using [nginx](https://nginx.org/) and want to switch to `brotli`, set the `compress` option to `false` to allow nginx to handle compression.
+예를 들어, [nginx](https://nginx.org/)를 사용하고 `brotli`로 전환하려는 경우, `compress` 옵션을 `false`로 설정하여 nginx가 압축을 처리하도록 합니다.
 
 > **Good to know:**
 >
-> - For Next.js applications on Vercel, compression is handled by the Vercel's Edge Network and not Next.js. See the [Vercel documentation](https://vercel.com/docs/edge-network/compression) for more information.
+> - Vercel에 있는 Next.js 애플리케이션의 경우, 압축은 Next.js가 아닌 Vercel의 엣지 네트워크에 의해 처리됩니다. 자세한 내용은 [Vercel 문서](https://vercel.com/docs/edge-network/compression)를 참조하세요.

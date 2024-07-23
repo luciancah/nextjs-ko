@@ -41,7 +41,7 @@ const config: DocsThemeConfig = {
     content: null,
   },
   footer: {
-    text: "Nextra Docs Template",
+    text: "Using Nextra Docs Template",
   },
 };
 

@@ -9,11 +9,11 @@
   },
   "docs": {
     "type": "page",
-    "title": "Documentation"
+    "title": "Docs"
   },
-  "about": {
+  "contribution": {
     "type": "page",
-    "title": "About",
+    "title": "Contribution",
     "theme": {
       "typesetting": "article"
     }
