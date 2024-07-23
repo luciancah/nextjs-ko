@@ -30,8 +30,8 @@ Suspense 경계는 UI 컴포넌트를 수동으로 스트리밍할 수 있도록
 예제
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-import { Suspense } from "react";
-import { PostFeed, Weather } from "./Components";
+import { Suspense } from 'react'
+import { PostFeed, Weather } from './Components'
 
 export default function Posts() {
   return (
@@ -43,13 +43,13 @@ export default function Posts() {
         <Weather />
       </Suspense>
     </section>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-import { Suspense } from "react";
-import { PostFeed, Weather } from "./Components";
+import { Suspense } from 'react'
+import { PostFeed, Weather } from './Components'
 
 export default function Posts() {
   return (
@@ -61,7 +61,7 @@ export default function Posts() {
         <Weather />
       </Suspense>
     </section>
-  );
+  )
 }
 ```
 

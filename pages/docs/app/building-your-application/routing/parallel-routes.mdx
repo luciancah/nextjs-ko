@@ -40,9 +40,9 @@ export default function Layout({
   team,
   analytics,
 }: {
-  children: React.ReactNode;
-  analytics: React.ReactNode;
-  team: React.ReactNode;
+  children: React.ReactNode
+  analytics: React.ReactNode
+  team: React.ReactNode
 }) {
   return (
     <>
@@ -50,7 +50,7 @@ export default function Layout({
       {team}
       {analytics}
     </>
-  );
+  )
 }
 ```
 
@@ -62,7 +62,7 @@ export default function Layout({ children, team, analytics }) {
       {team}
       {analytics}
     </>
-  );
+  )
 }
 ```
 
@@ -108,23 +108,23 @@ export default function Layout({ children, team, analytics }) {
 [`useSelectedLayoutSegment`](/docs/app/api-reference/functions/use-selected-layout-segment) 및 [`useSelectedLayoutSegments`](/docs/app/api-reference/functions/use-selected-layout-segments)는 `parallelRoutesKey` 매개변수를 받아 slot 내의 활성 라우트 세그먼트를 읽을 수 있게 합니다.
 
 ```tsx filename="app/layout.tsx" switcher
-"use client";
+'use client'
 
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 export default function Layout({ auth }: { auth: React.ReactNode }) {
-  const loginSegment = useSelectedLayoutSegment("auth");
+  const loginSegment = useSelectedLayoutSegment('auth')
   // ...
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-"use client";
+'use client'
 
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 export default function Layout({ auth }) {
-  const loginSegment = useSelectedLayoutSegment("auth");
+  const loginSegment = useSelectedLayoutSegment('auth')
   // ...
 }
 ```
@@ -146,26 +146,26 @@ Parallel Routes를 사용하여 사용자 역할과 같은 특정 조건에 따�
 />
 
 ```tsx filename="app/dashboard/layout.tsx" switcher
-import { checkUserRole } from "@/lib/auth";
+import { checkUserRole } from '@/lib/auth'
 
 export default function Layout({
   user,
   admin,
 }: {
-  user: React.ReactNode;
-  admin: React.ReactNode;
+  user: React.ReactNode
+  admin: React.ReactNode
 }) {
-  const role = checkUserRole();
-  return <>{role === "admin" ? admin : user}</>;
+  const role = checkUserRole()
+  return <>{role === 'admin' ? admin : user}</>
 }
 ```
 
 ```jsx filename="app/dashboard/layout.js" switcher
-import { checkUserRole } from "@/lib/auth";
+import { checkUserRole } from '@/lib/auth'
 
 export default function Layout({ user, admin }) {
-  const role = checkUserRole();
-  return <>{role === "admin" ? admin : user}</>;
+  const role = checkUserRole()
+  return <>{role === 'admin' ? admin : user}</>
 }
 ```
 
@@ -186,7 +186,7 @@ export default function Layout({ user, admin }) {
 `@analytics` 내에 [`layout`](/docs/app/building-your-application/routing/layouts-and-templates) 파일을 생성하여 두 페이지 간에 탭을 공유하게 합니다:
 
 ```tsx filename="app/@analytics/layout.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -197,12 +197,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </nav>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/@analytics/layout.js" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Layout({ children }) {
   return (
@@ -213,7 +213,7 @@ export default function Layout({ children }) {
       </nav>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
@@ -250,18 +250,18 @@ Parallel Routes는 [Intercepting Routes](/docs/app/building-your-application/rou
 />
 
 ```tsx filename="app/login/page.tsx" switcher
-import { Login } from "@/app/ui/login";
+import { Login } from '@/app/ui/login'
 
 export default function Page() {
-  return <Login />;
+  return <Login />
 }
 ```
 
 ```jsx filename="app/login/page.js" switcher
-import { Login } from "@/app/ui/login";
+import { Login } from '@/app/ui/login'
 
 export default function Page() {
-  return <Login />;
+  return <Login />
 }
 ```
 
@@ -269,41 +269,41 @@ export default function Page() {
 
 ```tsx filename="app/@auth/default.tsx" switcher
 export default function Default() {
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/@auth/default.js" switcher
 export default function Default() {
-  return "...";
+  return '...'
 }
 ```
 
 `@auth` slot 내에서 `/(.)login` 폴더를 업데이트하여 `/login` 라우트를 가로챕니다. `/(.)login/page.tsx` 파일에 `<Modal>` 컴포넌트와 자식을 가져옵니다:
 
 ```tsx filename="app/@auth/(.)login/page.tsx" switcher
-import { Modal } from "@/app/ui/modal";
-import { Login } from "@/app/ui/login";
+import { Modal } from '@/app/ui/modal'
+import { Login } from '@/app/ui/login'
 
 export default function Page() {
   return (
     <Modal>
       <Login />
     </Modal>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/@auth/(.)login/page.js" switcher
-import { Modal } from "@/app/ui/modal";
-import { Login } from "@/app/ui/login";
+import { Modal } from '@/app/ui/modal'
+import { Login } from '@/app/ui/login'
 
 export default function Page() {
   return (
     <Modal>
       <Login />
     </Modal>
-  );
+  )
 }
 ```
 
@@ -319,14 +319,14 @@ export default function Page() {
 모달을 열려면, 부모 레이아웃에 `@auth` slot을 prop으로 전달하고 `children` prop과 함께 렌더링합니다.
 
 ```tsx filename="app/layout.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Layout({
   auth,
   children,
 }: {
-  auth: React.ReactNode;
-  children: React.ReactNode;
+  auth: React.ReactNode
+  children: React.ReactNode
 }) {
   return (
     <>
@@ -336,12 +336,12 @@ export default function Layout({
       <div>{auth}</div>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Layout({ auth, children }) {
   return (
@@ -352,7 +352,7 @@ export default function Layout({ auth, children }) {
       <div>{auth}</div>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
@@ -363,55 +363,55 @@ export default function Layout({ auth, children }) {
 모달을 닫으려면 `router.back()`을 호출하거나 `Link` 컴포넌트를 사용할 수 있습니다.
 
 ```tsx filename="app/ui/modal.tsx" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export function Modal({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
       <button
         onClick={() => {
-          router.back();
+          router.back()
         }}
       >
         Close modal
       </button>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/ui/modal.js" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export function Modal({ children }) {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
       <button
         onClick={() => {
-          router.back();
+          router.back()
         }}
       >
         Close modal
       </button>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
 `Link` 컴포넌트를 사용하여 더 이상 `@auth` slot을 렌더링하지 않아야 하는 페이지로 이동할 때는 평행 라우트가 `null`을 반환하는 컴포넌트와 일치하도록 해야 합니다. 예를 들어, 루트 페이지로 돌아갈 때 `@auth/page.tsx` 컴포넌트를 생성합니다:
 
 ```tsx filename="app/ui/modal.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export function Modal({ children }: { children: React.ReactNode }) {
   return (
@@ -419,12 +419,12 @@ export function Modal({ children }: { children: React.ReactNode }) {
       <Link href="/">Close modal</Link>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/ui/modal.js" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export function Modal({ children }) {
   return (
@@ -432,19 +432,19 @@ export function Modal({ children }) {
       <Link href="/">Close modal</Link>
       <div>{children}</div>
     </>
-  );
+  )
 }
 ```
 
 ```tsx filename="app/@auth/page.tsx" switcher
 export default function Page() {
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/@auth/page.js" switcher
 export default function Page() {
-  return "...";
+  return '...'
 }
 ```
 
@@ -452,13 +452,13 @@ export default function Page() {
 
 ```tsx filename="app/@auth/[...catchAll]/page.tsx" switcher
 export default function CatchAll() {
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/@auth/[...catchAll]/page.js" switcher
 export default function CatchAll() {
-  return "...";
+  return '...'
 }
 ```
 

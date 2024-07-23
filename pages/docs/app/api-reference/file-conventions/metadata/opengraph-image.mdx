@@ -93,23 +93,23 @@ About Acme
 이미지를 생성하는 가장 쉬운 방법은 `next/og`의 [ImageResponse](/docs/app/api-reference/functions/image-response) API를 사용하는 것입니다.
 
 ```tsx filename="app/about/opengraph-image.tsx" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
 // 이미지 메타데이터
-export const alt = "About Acme";
+export const alt = 'About Acme'
 export const size = {
   width: 1200,
   height: 630,
-};
+}
 
-export const contentType = "image/png";
+export const contentType = 'image/png'
 
 // 이미지 생성
 export default async function Image() {
   // 폰트
   const interSemiBold = fetch(
-    new URL("./Inter-SemiBold.ttf", import.meta.url)
-  ).then((res) => res.arrayBuffer());
+    new URL('./Inter-SemiBold.ttf', import.meta.url),
+  ).then((res) => res.arrayBuffer())
 
   return new ImageResponse(
     (
@@ -117,12 +117,12 @@ export default async function Image() {
       <div
         style={{
           fontSize: 128,
-          background: "white",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         About Acme
@@ -134,35 +134,35 @@ export default async function Image() {
       ...size,
       fonts: [
         {
-          name: "Inter",
+          name: 'Inter',
           data: await interSemiBold,
-          style: "normal",
+          style: 'normal',
           weight: 400,
         },
       ],
-    }
-  );
+    },
+  )
 }
 ```
 
 ```jsx filename="app/about/opengraph-image.js" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
 // 이미지 메타데이터
-export const alt = "About Acme";
+export const alt = 'About Acme'
 export const size = {
   width: 1200,
   height: 630,
-};
+}
 
-export const contentType = "image/png";
+export const contentType = 'image/png'
 
 // 이미지 생성
 export default async function Image() {
   // 폰트
   const interSemiBold = fetch(
-    new URL("./Inter-SemiBold.ttf", import.meta.url)
-  ).then((res) => res.arrayBuffer());
+    new URL('./Inter-SemiBold.ttf', import.meta.url),
+  ).then((res) => res.arrayBuffer())
 
   return new ImageResponse(
     (
@@ -170,12 +170,12 @@ export default async function Image() {
       <div
         style={{
           fontSize: 128,
-          background: "white",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         About Acme
@@ -187,14 +187,14 @@ export default async function Image() {
       ...size,
       fonts: [
         {
-          name: "Inter",
+          name: 'Inter',
           data: await interSemiBold,
-          style: "normal",
+          style: 'normal',
           weight: 400,
         },
       ],
-    }
-  );
+    },
+  )
 }
 ```
 
@@ -252,13 +252,13 @@ export default function Image({ params }) {
 #### `alt`
 
 ```tsx filename="opengraph-image.tsx | twitter-image.tsx" switcher
-export const alt = "My images alt text";
+export const alt = 'My images alt text'
 
 export default function Image() {}
 ```
 
 ```jsx filename="opengraph-image.js | twitter-image.js" switcher
-export const alt = "My images alt text";
+export const alt = 'My images alt text'
 
 export default function Image() {}
 ```
@@ -270,13 +270,13 @@ export default function Image() {}
 #### `size`
 
 ```tsx filename="opengraph-image.tsx | twitter-image.tsx" switcher
-export const size = { width: 1200, height: 630 };
+export const size = { width: 1200, height: 630 }
 
 export default function Image() {}
 ```
 
 ```jsx filename="opengraph-image.js | twitter-image.js" switcher
-export const size = { width: 1200, height: 630 };
+export const size = { width: 1200, height: 630 }
 
 export default function Image() {}
 ```
@@ -289,13 +289,13 @@ export default function Image() {}
 #### `contentType`
 
 ```tsx filename="opengraph-image.tsx | twitter-image.tsx" switcher
-export const contentType = "image/png";
+export const contentType = 'image/png'
 
 export default function Image() {}
 ```
 
 ```jsx filename="opengraph-image.js | twitter-image.js" switcher
-export const contentType = "image/png";
+export const contentType = 'image/png'
 
 export default function Image() {}
 ```
@@ -318,31 +318,31 @@ export default function Image() {}
 > 기본적으로 이 생성된 이미지는 [정적으로 최적화](/docs/app/building-your-application/rendering/server-components#static-rendering-default)됩니다. 이 동작을 변경하려면 개별 `fetch` [`options`](/docs/app/api-reference/functions/fetch) 또는 라우트 세그먼트 [options](/docs/app/api-reference/file-conventions/route-segment-config#revalidate)를 구성할 수 있습니다.
 
 ```tsx filename="app/posts/[slug]/opengraph-image.tsx" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
-export const alt = "About Acme";
+export const alt = 'About Acme'
 export const size = {
   width: 1200,
   height: 630,
-};
-export const contentType = "image/png";
+}
+export const contentType = 'image/png'
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const post = await fetch(`https://.../posts/${params.slug}`).then((res) =>
-    res.json()
-  );
+    res.json(),
+  )
 
   return new ImageResponse(
     (
       <div
         style={{
           fontSize: 48,
-          background: "white",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {post.title}
@@ -350,37 +350,37 @@ export default async function Image({ params }: { params: { slug: string } }) {
     ),
     {
       ...size,
-    }
-  );
+    },
+  )
 }
 ```
 
 ```jsx filename="app/posts/[slug]/opengraph-image.js" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
-export const alt = "About Acme";
+export const alt = 'About Acme'
 export const size = {
   width: 1200,
   height: 630,
-};
-export const contentType = "image/png";
+}
+export const contentType = 'image/png'
 
 export default async function Image({ params }) {
   const post = await fetch(`https://.../posts/${params.slug}`).then((res) =>
-    res.json()
-  );
+    res.json(),
+  )
 
   return new ImageResponse(
     (
       <div
         style={{
           fontSize: 48,
-          background: "white",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          background: 'white',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         {post.title}
@@ -388,8 +388,8 @@ export default async function Image({ params }) {
     ),
     {
       ...size,
-    }
-  );
+    },
+  )
 }
 ```
 
@@ -398,29 +398,29 @@ export default async function Image({ params }) {
 이 예제는 Edge 런타임을 사용하여 파일 시스템의 로컬 이미지를 가져오고 이를 `<img>` 요소의 `src` 속성에 `ArrayBuffer`로 전달합니다. 로컬 자산은 예제 소스 파일 위치에 상대적으로 배치해야 합니다.
 
 ```jsx filename="app/opengraph-image.js" switcher
-import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
+import { ImageResponse } from 'next/og'
+import { readFile } from 'node:fs/promises'
 
-export const runtime = "edge";
+export const runtime = 'edge'
 
 export async function GET() {
-  const logoSrc = await fetch(new URL("./logo.png", import.meta.url)).then(
-    (res) => res.arrayBuffer()
-  );
+  const logoSrc = await fetch(new URL('./logo.png', import.meta.url)).then(
+    (res) => res.arrayBuffer(),
+  )
 
   return new ImageResponse(
     (
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <img src={logoSrc} height="100" />
       </div>
-    )
-  );
+    ),
+  )
 }
 ```
 
@@ -429,27 +429,27 @@ export async function GET() {
 이 예제는 Node.js 런타임을 사용하여 파일 시스템의 로컬 이미지를 가져오고 이를 `<img>` 요소의 `src` 속성에 `ArrayBuffer`로 전달합니다. 로컬 자산은 프로젝트의 루트에 상대적으로 배치해야 합니다.
 
 ```jsx filename="app/opengraph-image.js" switcher
-import { ImageResponse } from "next/og";
-import { join } from "node:path";
-import { readFile } from "node:fs/promises";
+import { ImageResponse } from 'next/og'
+import { join } from 'node:path'
+import { readFile } from 'node:fs/promises'
 
 export async function GET() {
-  const logoData = await readFile(join(process.cwd(), "logo.png"));
-  const logoSrc = Uint8Array.from(logoData).buffer;
+  const logoData = await readFile(join(process.cwd(), 'logo.png'))
+  const logoSrc = Uint8Array.from(logoData).buffer
 
   return new ImageResponse(
     (
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <img src={logoSrc} height="100" />
       </div>
-    )
-  );
+    ),
+  )
 }
 ```
 

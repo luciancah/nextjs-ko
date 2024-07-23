@@ -27,7 +27,7 @@ description: Next.js에서 첫 번째 공유 레이아웃을 만드세요.
 export default function DashboardLayout({
   children, // 페이지 또는 중첩 레이아웃이 될 것임
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <section>
@@ -36,7 +36,7 @@ export default function DashboardLayout({
 
       {children}
     </section>
-  );
+  )
 }
 ```
 
@@ -51,7 +51,7 @@ export default function DashboardLayout({
 
       {children}
     </section>
-  );
+  )
 }
 ```
 
@@ -63,7 +63,7 @@ export default function DashboardLayout({
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -72,7 +72,7 @@ export default function RootLayout({
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -107,15 +107,15 @@ export default function RootLayout({ children }) {
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return <section>{children}</section>;
+  return <section>{children}</section>
 }
 ```
 
 ```jsx filename="app/dashboard/layout.js" switcher
 export default function DashboardLayout({ children }) {
-  return <section>{children}</section>;
+  return <section>{children}</section>
 }
 ```
 
@@ -166,13 +166,13 @@ export default function DashboardLayout({ children }) {
 
 ```tsx filename="app/template.tsx" switcher
 export default function Template({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+  return <div>{children}</div>
 }
 ```
 
 ```jsx filename="app/template.js" switcher
 export default function Template({ children }) {
-  return <div>{children}</div>;
+  return <div>{children}</div>
 }
 ```
 
@@ -194,24 +194,24 @@ export default function Template({ children }) {
 메타데이터는 [`metadata` 객체](/docs/app/api-reference/functions/generate-metadata#the-metadata-object) 또는 [`generateMetadata` 함수](/docs/app/api-reference/functions/generate-metadata#generatemetadata-function)를 [`layout.js`](/docs/app/api-reference/file-conventions/layout) 또는 [`page.js`](/docs/app/api-reference/file-conventions/page) 파일에서 내보내기 하여 정의할 수 있습니다.
 
 ```tsx filename="app/page.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Next.js",
-};
+  title: 'Next.js',
+}
 
 export default function Page() {
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 export const metadata = {
-  title: "Next.js",
-};
+  title: 'Next.js',
+}
 
 export default function Page() {
-  return "...";
+  return '...'
 }
 ```
 
@@ -226,59 +226,59 @@ export default function Page() {
 `usePathname()`은 클라이언트 훅이기 때문에 탐색 링크를 클라이언트 컴포넌트로 추출한 다음 레이아웃 또는 템플릿에 임포트해야 합니다:
 
 ```tsx filename="app/ui/nav-links.tsx" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 export function NavLinks() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav>
-      <Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+      <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
         Home
       </Link>
 
       <Link
-        className={`link ${pathname === "/about" ? "active" : ""}`}
+        className={`link ${pathname === '/about' ? 'active' : ''}`}
         href="/about"
       >
         About
       </Link>
     </nav>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/ui/nav-links.js" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 export function Links() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav>
-      <Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+      <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
         Home
       </Link>
 
       <Link
-        className={`link ${pathname === "/about" ? "active" : ""}`}
+        className={`link ${pathname === '/about' ? 'active' : ''}`}
         href="/about"
       >
         About
       </Link>
     </nav>
-  );
+  )
 }
 ```
 
 ```tsx filename="app/layout.tsx" switcher
-import { NavLinks } from "@/app/ui/nav-links";
+import { NavLinks } from '@/app/ui/nav-links'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -288,12 +288,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import { NavLinks } from "@/app/ui/nav-links";
+import { NavLinks } from '@/app/ui/nav-links'
 
 export default function Layout({ children }) {
   return (
@@ -303,6 +303,6 @@ export default function Layout({ children }) {
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }
 ```

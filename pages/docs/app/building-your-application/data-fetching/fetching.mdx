@@ -34,21 +34,21 @@ Next.js는 서버에서 각 fetch 요청의 [캐싱](/docs/app/building-your-app
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
-  const data = await fetch("https://api.example.com/...").then((res) =>
-    res.json()
-  );
+  const data = await fetch('https://api.example.com/...').then((res) =>
+    res.json(),
+  )
 
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
-  const data = await fetch("https://api.example.com/...").then((res) =>
-    res.json()
-  );
+  const data = await fetch('https://api.example.com/...').then((res) =>
+    res.json(),
+  )
 
-  return "...";
+  return '...'
 }
 ```
 
@@ -57,7 +57,7 @@ export default async function Page() {
 `fetch` 요청을 캐시하려면 `cache` 옵션을 `force-cache`로 설정합니다. 이렇게 하면 데이터가 캐시되며, 해당 구성 요소가 [정적으로 렌더링](/docs/app/building-your-application/rendering/server-components#static-rendering-default)됩니다:
 
 ```js
-fetch("https://...", { cache: "force-cache" });
+fetch('https://...', { cache: 'force-cache' })
 ```
 
 또한, [PPR](/docs/app/building-your-application/rendering/partial-prerendering)를 사용하는 경우, `fetch` 요청을 사용하는 구성 요소를 Suspense 경계로 감싸는 것을 권장합니다. 이렇게 하면 전체 페이지 대신 `fetch`를 사용하는 구성 요소만 동적으로 렌더링되고 스트리밍됩니다:
@@ -102,63 +102,63 @@ export default function Navigation() {
 [React `cache`](https://react.dev/reference/react/cache)를 사용하여 React 렌더링 패스 동안 데이터 요청을 메모이제이션할 수 있습니다. 예를 들어, `getItem` 함수가 레이아웃과 페이지에서 호출되더라도 데이터베이스에 대한 쿼리는 한 번만 수행됩니다:
 
 ```ts filename="app/utils.ts" switcher
-import { cache } from "react";
+import { cache } from 'react'
 
 export const getItem = cache(async (id: string) => {
-  const item = await db.item.findUnique({ id });
-  return item;
-});
+  const item = await db.item.findUnique({ id })
+  return item
+})
 ```
 
 ```js filename="app/utils.js" switcher
-import { cache } from "react";
+import { cache } from 'react'
 
 export const getItem = cache(async (id) => {
-  const item = await db.item.findUnique({ id });
-  return item;
-});
+  const item = await db.item.findUnique({ id })
+  return item
+})
 ```
 
 ```tsx filename="app/item/[id]/layout.tsx" switcher
-import { getItem } from "@/utils/get-item";
+import { getItem } from '@/utils/get-item'
 
 export default async function Layout({
   params: { id },
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
-  const item = await getItem(id);
+  const item = await getItem(id)
   // ...
 }
 ```
 
 ```jsx filename="app/item/[id]/layout.js" switcher
-import { getItem } from "@/utils/get-item";
+import { getItem } from '@/utils/get-item'
 
 export default async function Layout({ params: { id } }) {
-  const item = await getItem(id);
+  const item = await getItem(id)
   // ...
 }
 ```
 
 ```tsx filename="app/item/[id]/page.tsx" switcher
-import { getItem } from "@/utils/get-item";
+import { getItem } from '@/utils/get-item'
 
 export default async function Page({
   params: { id },
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
-  const item = await getItem(id);
+  const item = await getItem(id)
   // ...
 }
 ```
 
 ```jsx filename="app/item/[id]/page.js" switcher
-import { getItem } from "@/utils/get-item";
+import { getItem } from '@/utils/get-item'
 
 export default async function Page({ params: { id } }) {
-  const item = await getItem(id);
+  const item = await getItem(id)
   // ...
 }
 ```
@@ -208,54 +208,54 @@ API 엔드포인트를 만들어야 하는 경우, Next.js는 [Route Handlers](/
 예를 들어, Route Handler를 호출하기 위해 SWR을 사용하는 방법은 다음과 같습니다:
 
 ```tsx filename="app/ui/message.tsx" switcher
-"use client";
+'use client'
 
-import useSWR from "swr";
-import fetcher from "@/utils/fetcher";
+import useSWR from 'swr'
+import fetcher from '@/utils/fetcher'
 
 export default function Message() {
-  const { data } = useSWR("/api/messages", fetcher);
+  const { data } = useSWR('/api/messages', fetcher)
 
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/ui/message.js" switcher
-"use client";
+'use client'
 
-import useSWR from "swr";
-import fetcher from "@/utils/fetcher";
+import useSWR from 'swr'
+import fetcher from '@/utils/fetcher'
 
 export default function Message() {
-  const { data } = useSWR("/api/messages", fetcher);
+  const { data } = useSWR('/api/messages', fetcher)
 
-  return "...";
+  return '...'
 }
 ```
 
 ```tsx filename="app/api/messages/route.ts" switcher
 export async function GET() {
-  const data = await fetch("https://...", {
+  const data = await fetch('https://...', {
     headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.DATA_API_KEY,
+      'Content-Type': 'application/json',
+      'API-Key': process.env.DATA_API_KEY,
     },
-  }).then((res) => res.json());
+  }).then((res) => res.json())
 
-  return Response.json({ data });
+  return Response.json({ data })
 }
 ```
 
 ```js filename="app/api/messages/route.js" switcher
 export async function GET() {
-  const data = await fetch("https://...", {
+  const data = await fetch('https://...', {
     headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.DATA_API_KEY,
+      'Content-Type': 'application/json',
+      'API-Key': process.env.DATA_API_KEY,
     },
-  }).then((res) => res.json());
+  }).then((res) => res.json())
 
-  return Response.json({ data });
+  return Response.json({ data })
 }
 ```
 
@@ -290,10 +290,10 @@ export async function GET() {
 export default async function Page({
   params: { username },
 }: {
-  params: { username: string };
+  params: { username: string }
 }) {
   // 아티스트 정보를 가져옵니다.
-  const artist = await getArtist(username);
+  const artist = await getArtist(username)
 
   return (
     <>
@@ -304,12 +304,12 @@ export default async function Page({
         <Playlists artistID={artist.id} />
       </Suspense>
     </>
-  );
+  )
 }
 
 async function Playlists({ artistID }: { artistID: string }) {
   // 아티스트 ID를 사용하여 플레이리스트를 가져옵니다.
-  const playlists = await getArtistPlaylists(artistID);
+  const playlists = await getArtistPlaylists(artistID)
 
   return (
     <ul>
@@ -317,14 +317,14 @@ async function Playlists({ artistID }: { artistID: string }) {
         <li key={playlist.id}>{playlist.name}</li>
       ))}
     </ul>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/artist/[username]/page.js" switcher
 export default async function Page({ params: { username } }) {
   // 아티스트 정보를 가져옵니다.
-  const artist = await getArtist(username);
+  const artist = await getArtist(username)
 
   return (
     <>
@@ -335,12 +335,12 @@ export default async function Page({ params: { username } }) {
         <Playlists artistID={artist.id} />
       </Suspense>
     </>
-  );
+  )
 }
 
 async function Playlists({ artistID }) {
   // 아티스트 ID를 사용하여 플레이리스트를 가져옵니다.
-  const playlists = await getArtistPlaylists(artistID);
+  const playlists = await getArtistPlaylists(artistID)
 
   return (
     <ul>
@@ -348,7 +348,7 @@ async function Playlists({ artistID }) {
         <li key={playlist.id}>{playlist.name}</li>
       ))}
     </ul>
-  );
+  )
 }
 ```
 
@@ -367,64 +367,64 @@ async function Playlists({ artistID }) {
 아래 예제에서는 `getArtist` 및 `getAlbums` 함수가 `Page` 구성 요소 외부에서 정의되고 `Promise.all`을 사용하여 구성 요소 내부에서 시작됩니다:
 
 ```tsx filename="app/artist/[username]/page.tsx" switcher
-import Albums from "./albums";
+import Albums from './albums'
 
 async function getArtist(username: string) {
-  const res = await fetch(`https://api.example.com/artist/${username}`);
-  return res.json();
+  const res = await fetch(`https://api.example.com/artist/${username}`)
+  return res.json()
 }
 
 async function getAlbums(username: string) {
-  const res = await fetch(`https://api.example.com/artist/${username}/albums`);
-  return res.json();
+  const res = await fetch(`https://api.example.com/artist/${username}/albums`)
+  return res.json()
 }
 
 export default async function Page({
   params: { username },
 }: {
-  params: { username: string };
+  params: { username: string }
 }) {
-  const artistData = getArtist(username);
-  const albumsData = getAlbums(username);
+  const artistData = getArtist(username)
+  const albumsData = getAlbums(username)
 
   // 두 요청을 병렬로 시작합니다.
-  const [artist, albums] = await Promise.all([artistData, albumsData]);
+  const [artist, albums] = await Promise.all([artistData, albumsData])
 
   return (
     <>
       <h1>{artist.name}</h1>
       <Albums list={albums} />
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/artist/[username]/page.js" switcher
-import Albums from "./albums";
+import Albums from './albums'
 
 async function getArtist(username) {
-  const res = await fetch(`https://api.example.com/artist/${username}`);
-  return res.json();
+  const res = await fetch(`https://api.example.com/artist/${username}`)
+  return res.json()
 }
 
 async function getAlbums(username) {
-  const res = await fetch(`https://api.example.com/artist/${username}/albums`);
-  return res.json();
+  const res = await fetch(`https://api.example.com/artist/${username}/albums`)
+  return res.json()
 }
 
 export default async function Page({ params: { username } }) {
-  const artistData = getArtist(username);
-  const albumsData = getAlbums(username);
+  const artistData = getArtist(username)
+  const albumsData = getAlbums(username)
 
   // 두 요청을 병렬로 시작합니다.
-  const [artist, albums] = await Promise.all([artistData, albumsData]);
+  const [artist, albums] = await Promise.all([artistData, albumsData])
 
   return (
     <>
       <h1>{artist.name}</h1>
       <Albums list={albums} />
     </>
-  );
+  )
 }
 ```
 
@@ -439,60 +439,60 @@ export default async function Page({ params: { username } }) {
 참고로 `preload` 함수는 `checkIsAvailable()`의 실행을 차단하지 않습니다.
 
 ```tsx filename="components/Item.tsx" switcher
-import { getItem } from "@/utils/get-item";
+import { getItem } from '@/utils/get-item'
 
 export const preload = (id: string) => {
   // void는 주어진 표현식을 평가하고 undefined를 반환합니다.
   // https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/void
-  void getItem(id);
-};
+  void getItem(id)
+}
 export default async function Item({ id }: { id: string }) {
-  const result = await getItem(id);
+  const result = await getItem(id)
   // ...
 }
 ```
 
 ```jsx filename="components/Item.js" switcher
-import { getItem } from "@/utils/get-item";
+import { getItem } from '@/utils/get-item'
 
 export const preload = (id) => {
   // void는 주어진 표현식을 평가하고 undefined를 반환합니다.
   // https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/void
-  void getItem(id);
-};
+  void getItem(id)
+}
 export default async function Item({ id }) {
-  const result = await getItem(id);
+  const result = await getItem(id)
   // ...
 }
 ```
 
 ```tsx filename="app/item/[id]/page.tsx" switcher
-import Item, { preload, checkIsAvailable } from "@/components/Item";
+import Item, { preload, checkIsAvailable } from '@/components/Item'
 
 export default async function Page({
   params: { id },
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
   // 아이템 데이터 로딩 시작
-  preload(id);
+  preload(id)
   // 다른 비동기 작업 수행
-  const isAvailable = await checkIsAvailable();
+  const isAvailable = await checkIsAvailable()
 
-  return isAvailable ? <Item id={id} /> : null;
+  return isAvailable ? <Item id={id} /> : null
 }
 ```
 
 ```jsx filename="app/item/[id]/page.js" switcher
-import Item, { preload, checkIsAvailable } from "@/components/Item";
+import Item, { preload, checkIsAvailable } from '@/components/Item'
 
 export default async function Page({ params: { id } }) {
   // 아이템 데이터 로딩 시작
-  preload(id);
+  preload(id)
   // 다른 비동기 작업 수행
-  const isAvailable = await checkIsAvailable();
+  const isAvailable = await checkIsAvailable()
 
-  return isAvailable ? <Item id={id} /> : null;
+  return isAvailable ? <Item id={id} /> : null
 }
 ```
 
@@ -503,29 +503,29 @@ export default async function Page({ params: { id } }) {
 `cache` 함수, `preload` 패턴 및 `server-only` 패키지를 결합하여 애플리케이션 전체에서 사용할 수 있는 데이터 가져오기 유틸리티를 만들 수 있습니다.
 
 ```ts filename="utils/get-item.ts" switcher
-import { cache } from "react";
-import "server-only";
+import { cache } from 'react'
+import 'server-only'
 
 export const preload = (id: string) => {
-  void getItem(id);
-};
+  void getItem(id)
+}
 
 export const getItem = cache(async (id: string) => {
   // ...
-});
+})
 ```
 
 ```js filename="utils/get-item.js" switcher
-import { cache } from "react";
-import "server-only";
+import { cache } from 'react'
+import 'server-only'
 
 export const preload = (id) => {
-  void getItem(id);
-};
+  void getItem(id)
+}
 
 export const getItem = cache(async (id) => {
   // ...
-});
+})
 ```
 
 이 접근 방식을 사용하면 데이터를 미리 가져오고 응답을 캐시하며, 이 데이터 가져오기가 [서버에서만 발생](/docs/app/building-your-application/rendering/composition-patterns#keeping-server-only-code-out-of-the-client-environment)한다는 보장을 할 수 있습니다.
@@ -547,79 +547,79 @@ module.exports = {
   experimental: {
     taint: true,
   },
-};
+}
 ```
 
 그런 다음 `experimental_taintObjectReference` 또는 `experimental_taintUniqueValue` 함수에 taint하려는 객체 또는 값을 전달합니다:
 
 ```ts filename="app/utils.ts" switcher
-import { queryDataFromDB } from "./api";
+import { queryDataFromDB } from './api'
 import {
   experimental_taintObjectReference,
   experimental_taintUniqueValue,
-} from "react";
+} from 'react'
 
 export async function getUserData() {
-  const data = await queryDataFromDB();
+  const data = await queryDataFromDB()
   experimental_taintObjectReference(
-    "전체 사용자 객체를 클라이언트에 전달하지 마십시오",
-    data
-  );
-  experimental_taintUniqueValue(
-    "사용자의 주소를 클라이언트에 전달하지 마십시오",
+    '전체 사용자 객체를 클라이언트에 전달하지 마십시오',
     data,
-    data.address
-  );
-  return data;
+  )
+  experimental_taintUniqueValue(
+    '사용자의 주소를 클라이언트에 전달하지 마십시오',
+    data,
+    data.address,
+  )
+  return data
 }
 ```
 
 ```js filename="app/utils.js" switcher
-import { queryDataFromDB } from "./api";
+import { queryDataFromDB } from './api'
 import {
   experimental_taintObjectReference,
   experimental_taintUniqueValue,
-} from "react";
+} from 'react'
 
 export async function getUserData() {
-  const data = await queryDataFromDB();
+  const data = await queryDataFromDB()
   experimental_taintObjectReference(
-    "전체 사용자 객체를 클라이언트에 전달하지 마십시오",
-    data
-  );
-  experimental_taintUniqueValue(
-    "사용자의 주소를 클라이언트에 전달하지 마십시오",
+    '전체 사용자 객체를 클라이언트에 전달하지 마십시오',
     data,
-    data.address
-  );
-  return data;
+  )
+  experimental_taintUniqueValue(
+    '사용자의 주소를 클라이언트에 전달하지 마십시오',
+    data,
+    data.address,
+  )
+  return data
 }
 ```
 
 ```tsx filename="app/page.tsx" switcher
-import { getUserData } from "./data";
+import { getUserData } from './data'
 
 export async function Page() {
-  const userData = getUserData();
+  const userData = getUserData()
   return (
     <ClientComponent
       user={userData} // taintObjectReference로 인해 오류가 발생합니다
       address={userData.address} // taintUniqueValue로 인해 오류가 발생합니다
     />
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { getUserData } from "./data";
+import { getUserData } from './data'
 
 export async function Page() {
-  const userData = await getUserData();
+  const userData = await getUserData()
   return (
     <ClientComponent
       user={userData} // taintObjectReference로 인해 오류가 발생합니다
       address={userData.address} // taintUniqueValue로 인해 오류가 발생합니다
     />
-  );
+  )
 }
 ```

@@ -27,18 +27,18 @@ Next.js에서 경로 간 이동하는 방법은 네 가지가 있습니다:
 다음과 같이 `next/link`에서 가져와 컴포넌트에 `href` prop을 전달하여 사용할 수 있습니다:
 
 ```tsx filename="app/page.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
-  return <Link href="/dashboard">Dashboard</Link>;
+  return <Link href="/dashboard">Dashboard</Link>
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
-  return <Link href="/dashboard">Dashboard</Link>;
+  return <Link href="/dashboard">Dashboard</Link>
 }
 ```
 
@@ -55,7 +55,7 @@ export default function Page() {
 [동적 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)에 링크할 때 [템플릿 리터럴과 인터폴레이션](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals)을 사용하여 링크 목록을 생성할 수 있습니다. 예를 들어, 블로그 게시물 목록을 생성하려면 다음과 같이 합니다:
 
 ```jsx filename="app/blog/PostList.js"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function PostList({ posts }) {
   return (
@@ -66,7 +66,7 @@ export default function PostList({ posts }) {
         </li>
       ))}
     </ul>
-  );
+  )
 }
 ```
 
@@ -77,54 +77,54 @@ export default function PostList({ posts }) {
 [`usePathname()`](/docs/app/api-reference/functions/use-pathname)를 사용하여 링크가 활성화되었는지 확인할 수 있습니다. 예를 들어, 현재 `pathname`이 링크의 `href`와 일치하는지 확인하여 활성 링크에 클래스를 추가할 수 있습니다:
 
 ```tsx filename="@/app/ui/nav-links.tsx" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 export function Links() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav>
-      <Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+      <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
         Home
       </Link>
 
       <Link
-        className={`link ${pathname === "/about" ? "active" : ""}`}
+        className={`link ${pathname === '/about' ? 'active' : ''}`}
         href="/about"
       >
         About
       </Link>
     </nav>
-  );
+  )
 }
 ```
 
 ```jsx filename="@/app/ui/nav-links.tsx" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 
 export function Links() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <nav>
-      <Link className={`link ${pathname === "/" ? "active" : ""}`} href="/">
+      <Link className={`link ${pathname === '/' ? 'active' : ''}`} href="/">
         Home
       </Link>
 
       <Link
-        className={`link ${pathname === "/about" ? "active" : ""}`}
+        className={`link ${pathname === '/about' ? 'active' : ''}`}
         href="/about"
       >
         About
       </Link>
     </nav>
-  );
+  )
 }
 ```
 
@@ -162,11 +162,11 @@ Next.js App Router의 기본 동작은 **새로운 경로로 이동할 때 맨 �
 
 ```jsx
 // useRouter
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
-const router = useRouter();
+const router = useRouter()
 
-router.push("/dashboard", { scroll: false });
+router.push('/dashboard', { scroll: false })
 ```
 
 ## `useRouter()` hook
@@ -176,18 +176,18 @@ router.push("/dashboard", { scroll: false });
 `useRouter` 훅을 사용하여 [클라이언트 컴포넌트](/docs/app/building-your-application/rendering/client-components)에서 프로그래밍 방식으로 경로를 변경할 수 있습니다.
 
 ```jsx filename="app/page.js"
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
@@ -202,18 +202,18 @@ export default function Page() {
 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)의 경우 `redirect` 함수를 사용하세요.
 
 ```tsx filename="app/team/[id]/page.tsx" switcher
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 async function fetchTeam(id: string) {
-  const res = await fetch("https://...");
-  if (!res.ok) return undefined;
-  return res.json();
+  const res = await fetch('https://...')
+  if (!res.ok) return undefined
+  return res.json()
 }
 
 export default async function Profile({ params }: { params: { id: string } }) {
-  const team = await fetchTeam(params.id);
+  const team = await fetchTeam(params.id)
   if (!team) {
-    redirect("/login");
+    redirect('/login')
   }
 
   // ...
@@ -221,18 +221,18 @@ export default async function Profile({ params }: { params: { id: string } }) {
 ```
 
 ```jsx filename="app/team/[id]/page.js" switcher
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 async function fetchTeam(id) {
-  const res = await fetch("https://...");
-  if (!res.ok) return undefined;
-  return res.json();
+  const res = await fetch('https://...')
+  if (!res.ok) return undefined
+  return res.json()
 }
 
 export default async function Profile({ params }) {
-  const team = await fetchTeam(params.id);
+  const team = await fetchTeam(params.id)
   if (!team) {
-    redirect("/login");
+    redirect('/login')
   }
 
   // ...
@@ -264,48 +264,48 @@ Next.js는 네이티브 [`window.history.pushState`](https://developer.mozilla.o
 브라우저의 히스토리 스택에 새 항목을 추가하는 데 사용됩니다. 사용자는 이전 상태로 돌아갈 수 있습니다. 예를 들어, 제품 목록을 정렬하려면 다음과 같이 합니다:
 
 ```tsx fileName="app/ui/sort-products.tsx" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SortProducts() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
   function updateSorting(sortOrder: string) {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", sortOrder);
-    window.history.pushState(null, "", `?${params.toString()}`);
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('sort', sortOrder)
+    window.history.pushState(null, '', `?${params.toString()}`)
   }
 
   return (
     <>
-      <button onClick={() => updateSorting("asc")}>Sort Ascending</button>
-      <button onClick={() => updateSorting("desc")}>Sort Descending</button>
+      <button onClick={() => updateSorting('asc')}>Sort Ascending</button>
+      <button onClick={() => updateSorting('desc')}>Sort Descending</button>
     </>
-  );
+  )
 }
 ```
 
 ```jsx fileName="app/ui/sort-products.js" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SortProducts() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
   function updateSorting(sortOrder) {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", sortOrder);
-    window.history.pushState(null, "", `?${params.toString()}`);
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('sort', sortOrder)
+    window.history.pushState(null, '', `?${params.toString()}`)
   }
 
   return (
     <>
-      <button onClick={() => updateSorting("asc")}>Sort Ascending</button>
-      <button onClick={() => updateSorting("desc")}>Sort Descending</button>
+      <button onClick={() => updateSorting('asc')}>Sort Ascending</button>
+      <button onClick={() => updateSorting('desc')}>Sort Descending</button>
     </>
-  );
+  )
 }
 ```
 
@@ -316,48 +316,48 @@ export default function SortProducts() {
 브라우저의 히스토리 스택에서 현재 항목을 대체하는 데 사용됩니다. 사용자는 이전 상태로 돌아갈 수 없습니다. 예를 들어, 애플리케이션의 로케일을 변경하려면 다음과 같이 합니다:
 
 ```tsx fileName="app/ui/locale-switcher.tsx" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation'
 
 export function LocaleSwitcher() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   function switchLocale(locale: string) {
     // 예: '/en/about' 또는 '/fr/contact'
-    const newPath = `/${locale}${pathname}`;
-    window.history.replaceState(null, "", newPath);
+    const newPath = `/${locale}${pathname}`
+    window.history.replaceState(null, '', newPath)
   }
 
   return (
     <>
-      <button onClick={() => switchLocale("en")}>English</button>
-      <button onClick={() => switchLocale("fr")}>French</button>
+      <button onClick={() => switchLocale('en')}>English</button>
+      <button onClick={() => switchLocale('fr')}>French</button>
     </>
-  );
+  )
 }
 ```
 
 ```jsx fileName="app/ui/locale-switcher.js" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation'
 
 export function LocaleSwitcher() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   function switchLocale(locale) {
     // 예: '/en/about' 또는 '/fr/contact'
-    const newPath = `/${locale}${pathname}`;
-    window.history.replaceState(null, "", newPath);
+    const newPath = `/${locale}${pathname}`
+    window.history.replaceState(null, '', newPath)
   }
 
   return (
     <>
-      <button onClick={() => switchLocale("en")}>English</button>
-      <button onClick={() => switchLocale("fr")}>French</button>
+      <button onClick={() => switchLocale('en')}>English</button>
+      <button onClick={() => switchLocale('fr')}>French</button>
     </>
-  );
+  )
 }
 ```
 

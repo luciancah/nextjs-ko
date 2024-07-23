@@ -1,17 +1,17 @@
-import Image from "next/image";
-import { useTheme } from "nextra-theme-docs";
+import Image from 'next/image'
+import { useTheme } from 'nextra-theme-docs'
 
 const ExternalImage = ({ srcLight, srcDark, alt, width, height }) => {
-  const { theme, systemTheme } = useTheme();
-  const baseUrl = "https://nextjs.org";
+  const { theme, systemTheme } = useTheme()
+  const baseUrl = 'https://nextjs.org'
   const src =
-    theme === "system"
-      ? systemTheme === "dark"
+    theme === 'system'
+      ? systemTheme === 'dark'
         ? srcDark
         : srcLight
-      : theme === "dark"
-      ? srcDark
-      : srcLight;
+      : theme === 'dark'
+        ? srcDark
+        : srcLight
 
   return (
     <Image
@@ -21,7 +21,7 @@ const ExternalImage = ({ srcLight, srcDark, alt, width, height }) => {
       height={height}
       unoptimized={true}
     />
-  );
-};
+  )
+}
 
-export default ExternalImage;
+export default ExternalImage

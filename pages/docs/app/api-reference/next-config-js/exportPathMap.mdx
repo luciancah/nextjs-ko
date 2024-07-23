@@ -29,17 +29,17 @@ description: Customize the pages that will be exported as HTML files when using 
 module.exports = {
   exportPathMap: async function (
     defaultPathMap,
-    { dev, dir, outDir, distDir, buildId }
+    { dev, dir, outDir, distDir, buildId },
   ) {
     return {
-      "/": { page: "/" },
-      "/about": { page: "/about" },
-      "/p/hello-nextjs": { page: "/post", query: { title: "hello-nextjs" } },
-      "/p/learn-nextjs": { page: "/post", query: { title: "learn-nextjs" } },
-      "/p/deploy-nextjs": { page: "/post", query: { title: "deploy-nextjs" } },
-    };
+      '/': { page: '/' },
+      '/about': { page: '/about' },
+      '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },
+      '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },
+      '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } },
+    }
   },
-};
+}
 ```
 
 > **참고**: `exportPathMap`의 `query` 필드는 [자동 정적 최적화된 페이지](/docs/pages/building-your-application/rendering/automatic-static-optimization) 또는 [`getStaticProps` 페이지](/docs/pages/building-your-application/data-fetching/get-static-props)에서는 사용할 수 없습니다. 이러한 페이지는 빌드 타임에 HTML 파일로 렌더링되며 추가적인 쿼리 정보는 `next export` 동안 제공할 수 없습니다.
@@ -70,7 +70,7 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   trailingSlash: true,
-};
+}
 ```
 
 ## 출력 디렉터리 사용자 지정

@@ -39,10 +39,10 @@ CSP는 악성 스크립트를 차단하도록 설계되었지만, 인라인 스�
 예시:
 
 ```ts filename="middleware.ts" switcher
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
@@ -54,38 +54,38 @@ export function middleware(request: NextRequest) {
     form-action 'self';
     frame-ancestors 'none';
     upgrade-insecure-requests;
-  `;
+  `
   // 줄 바꿈 및 공백 제거
   const contentSecurityPolicyHeaderValue = cspHeader
-    .replace(/\s{2,}/g, " ")
-    .trim();
+    .replace(/\s{2,}/g, ' ')
+    .trim()
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-nonce', nonce)
   requestHeaders.set(
-    "Content-Security-Policy",
-    contentSecurityPolicyHeaderValue
-  );
+    'Content-Security-Policy',
+    contentSecurityPolicyHeaderValue,
+  )
 
   const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
-  });
+  })
   response.headers.set(
-    "Content-Security-Policy",
-    contentSecurityPolicyHeaderValue
-  );
+    'Content-Security-Policy',
+    contentSecurityPolicyHeaderValue,
+  )
 
-  return response;
+  return response
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export function middleware(request) {
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic';
@@ -97,30 +97,30 @@ export function middleware(request) {
     form-action 'self';
     frame-ancestors 'none';
     upgrade-insecure-requests;
-  `;
+  `
   // 줄 바꿈 및 공백 제거
   const contentSecurityPolicyHeaderValue = cspHeader
-    .replace(/\s{2,}/g, " ")
-    .trim();
+    .replace(/\s{2,}/g, ' ')
+    .trim()
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-nonce', nonce)
   requestHeaders.set(
-    "Content-Security-Policy",
-    contentSecurityPolicyHeaderValue
-  );
+    'Content-Security-Policy',
+    contentSecurityPolicyHeaderValue,
+  )
 
   const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
-  });
+  })
   response.headers.set(
-    "Content-Security-Policy",
-    contentSecurityPolicyHeaderValue
-  );
+    'Content-Security-Policy',
+    contentSecurityPolicyHeaderValue,
+  )
 
-  return response;
+  return response
 }
 ```
 
@@ -139,14 +139,14 @@ export const config = {
      * - favicon.ico (파비콘 파일)
      */
     {
-      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' },
       ],
     },
   ],
-};
+}
 ```
 
 ```js filename="middleware.js" switcher
@@ -160,14 +160,14 @@ export const config = {
      * - favicon.ico (파비콘 파일)
      */
     {
-      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' },
       ],
     },
   ],
-};
+}
 ```
 
 ### Reading the nonce
@@ -175,11 +175,11 @@ export const config = {
 이제 [`headers`](/docs/app/api-reference/functions/headers)를 사용하여 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)에서 nonce를 읽을 수 있습니다:
 
 ```tsx filename="app/page.tsx" switcher
-import { headers } from "next/headers";
-import Script from "next/script";
+import { headers } from 'next/headers'
+import Script from 'next/script'
 
 export default function Page() {
-  const nonce = headers().get("x-nonce");
+  const nonce = headers().get('x-nonce')
 
   return (
     <Script
@@ -187,16 +187,16 @@ export default function Page() {
       strategy="afterInteractive"
       nonce={nonce}
     />
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.jsx" switcher
-import { headers } from "next/headers";
-import Script from "next/script";
+import { headers } from 'next/headers'
+import Script from 'next/script'
 
 export default function Page() {
-  const nonce = headers().get("x-nonce");
+  const nonce = headers().get('x-nonce')
 
   return (
     <Script
@@ -204,7 +204,7 @@ export default function Page() {
       strategy="afterInteractive"
       nonce={nonce}
     />
-  );
+  )
 }
 ```
 
@@ -224,23 +224,23 @@ const cspHeader = `
     form-action 'self';
     frame-ancestors 'none';
     upgrade-insecure-requests;
-`;
+`
 
 module.exports = {
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "Content-Security-Policy",
-            value: cspHeader.replace(/\n/g, ""),
+            key: 'Content-Security-Policy',
+            value: cspHeader.replace(/\n/g, ''),
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Version History

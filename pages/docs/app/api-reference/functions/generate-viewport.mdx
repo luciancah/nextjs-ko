@@ -24,19 +24,19 @@ related:
 뷰포트 옵션을 정의하려면 `layout.jsx` 또는 `page.jsx` 파일에서 `viewport` 객체를 내보냅니다.
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
-  themeColor: "black",
-};
+  themeColor: 'black',
+}
 
 export default function Page() {}
 ```
 
 ```jsx filename="layout.jsx | page.jsx" switcher
 export const viewport = {
-  themeColor: "black",
-};
+  themeColor: 'black',
+}
 
 export default function Page() {}
 ```
@@ -48,16 +48,16 @@ export default function Page() {}
 ```tsx filename="layout.tsx | page.tsx" switcher
 export function generateViewport({ params }) {
   return {
-    themeColor: "...",
-  };
+    themeColor: '...',
+  }
 }
 ```
 
 ```jsx filename="layout.js | page.js" switcher
 export function generateViewport({ params }) {
   return {
-    themeColor: "...",
-  };
+    themeColor: '...',
+  }
 }
 ```
 
@@ -74,17 +74,17 @@ export function generateViewport({ params }) {
 **간단한 테마 색상**
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
-  themeColor: "black",
-};
+  themeColor: 'black',
+}
 ```
 
 ```jsx filename="layout.jsx | page.jsx" switcher
 export const viewport = {
-  themeColor: "black",
-};
+  themeColor: 'black',
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -94,23 +94,23 @@ export const viewport = {
 **미디어 속성과 함께**
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "cyan" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'cyan' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
-};
+}
 ```
 
 ```jsx filename="layout.jsx | page.jsx" switcher
 export const viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "cyan" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: '(prefers-color-scheme: light)', color: 'cyan' },
+    { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -123,27 +123,27 @@ export const viewport = {
 > **알아두면 좋은 사항**: `viewport` 메타 태그는 자동으로 설정되며, 기본 설정이 충분하기 때문에 수동 구성은 일반적으로 필요하지 않습니다. 그러나 정보를 완전하게 제공하기 위해 여기에 설명합니다.
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
   // 덜 자주 사용되는 항목도 지원됩니다.
   // interactiveWidget: 'resizes-visual',
-};
+}
 ```
 
 ```jsx filename="layout.jsx | page.jsx" switcher
 export const viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
   // 덜 자주 사용되는 항목도 지원됩니다.
   // interactiveWidget: 'resizes-visual',
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -158,17 +158,17 @@ export const viewport = {
 [`color-scheme`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name#:~:text=color%2Dscheme%3A%20specifies,of%20the%20following%3A)에 대해 자세히 알아보세요.
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
-  colorScheme: "dark",
-};
+  colorScheme: 'dark',
+}
 ```
 
 ```jsx filename="layout.jsx | page.jsx" switcher
 export const viewport = {
-  colorScheme: "dark",
-};
+  colorScheme: 'dark',
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -182,11 +182,11 @@ export const viewport = {
 ### `viewport` object
 
 ```tsx
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export const viewport: Viewport = {
-  themeColor: "black",
-};
+  themeColor: 'black',
+}
 ```
 
 ### `generateViewport` function
@@ -194,29 +194,29 @@ export const viewport: Viewport = {
 #### 일반 함수
 
 ```tsx
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 export function generateViewport(): Viewport {
   return {
-    themeColor: "black",
-  };
+    themeColor: 'black',
+  }
 }
 ```
 
 #### 세그먼트 props와 함께
 
 ```tsx
-import type { Viewport } from "next";
+import type { Viewport } from 'next'
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
 export function generateViewport({ params, searchParams }: Props): Viewport {
   return {
-    themeColor: "black",
-  };
+    themeColor: 'black',
+  }
 }
 
 export default function Page({ params, searchParams }: Props) {}
@@ -229,8 +229,8 @@ JavaScript 프로젝트의 경우, JSDoc을 사용하여 타입 안전성을 추
 ```js
 /** @type {import("next").Viewport} */
 export const viewport = {
-  themeColor: "black",
-};
+  themeColor: 'black',
+}
 ```
 
 ## Version History

@@ -1,3 +1,138 @@
-# 기여 가이드
+# 기여 안내서
 
-Next.js 기여 가이드를 확인하시려면 [이곳](/docs/community/contribution-guide)을 확인해 주세요.
+해당 문서가 아닌 Next.js 프레임워크 기여 가이드를 확인하시려면 [이곳](/docs/community/contribution-guide)을 확인해 주세요.
+
+## 한국어 문서 번역 기여 안내서
+
+### 기여 가능 항목
+
+Next.js 한국어 번역 프로젝트에 참여해 주셔서 감사합니다. 다음은 기여 가능한 항목입니다.
+
+1. 새로운 문서 번역
+2. 기 번역된 문서의 오타, 컨벤션 수정 (아래 가이드에 따름)
+3. nextra 테마 개선 및 기능 추가
+
+   1. 테마 커스터마이징
+   2. App Router와 Page Router 간 전환 등 [Next.js 문서](https://nextjs.org/docs)에 유사하게 개선하는 모든 작업
+
+4. 코드 상의 버그 및 문제점 수정
+
+### 문서 번역 방법
+
+#### Prerequisites
+
+- git
+- Node.js
+- npm & pnpm
+
+#### 이슈 할당 방법
+
+1. 레포지토리의 [Issue](https://github.com/luciancah/nextjs-ko)에 작업할 파일명으로 이슈를 생성합니다.
+2. 이슈 템플릿을 따라 작업 예정 내용을 작성하고, 해당 이슈를 자신에게 할당합니다.
+
+#### 번역 방법
+
+1. [해당 레포지토리](https://github.com/luciancah/nextjs-ko)를 포크합니다.
+2. 포크한 레포지토리를 로컬에 클론합니다.
+3. `pnpm install` 명령어를 통해 의존성을 설치합니다.
+4. `npm run dev` 명령어를 통해 로컬에서 확인합니다.
+5. 문서에서 오류를 확인하셨다면 수정하고 커밋합니다.
+
+- 새롭게 번역이 필요한 문서는 [Issue](https://github.com/luciancah/nextjs-ko/issues)를 통해 등록됩니다.
+- 원본 영문 문서는 `/origin/canary/docs` 경로에 위치해 있습니다.
+- 이미 번역된 한국어 문서는 `/pages/docs` 경로에 위치해 있습니다.
+
+#### PR 제출 방법
+
+- 커밋 전 husky를 통해 prettier 포맷팅과 lint-staged를 실행합니다.
+- 커밋 메시지의 컨벤션은 다음과 같습니다:
+
+```bash
+[#IssueNo|no-issue] type: subject
+
+=> e.g. [#123] feat: layout 컴포넌트 추가, [no-issue] style: 스타일 변경
+
+'chore', // 빌드 테스트 업데이트, 패키지 매니저 설정, 설정 파일 변경
+'ci', // CI 설정 파일 수정
+'design', // UI 변경
+'docs', // 문서 내용 추가 및 변경
+'typo', // 문서 등 오타 수정
+'feat', // 새로운 기능 추가
+'fix', // 버그 수정
+'perf', // 성능 개선
+'refactor', // 코드 리팩토링, 파일&폴더명 수정하거나 옮기는 경우
+'remove', // 파일 삭제
+'revert', // 커밋한 내용 되돌리는 경우
+'style', // 코드 포맷 변경, 세미 콜론 수정
+'test', // 테스트 추가, 테스트 리팩토링
+```
+
+### 문서 작성 컨벤션
+
+#### 유의사항
+
+##### 1. 문서 제목과 정렬
+
+- 기존 next.js 문서의 `01-`등 폴더 순서를 맞추기 위한 prefix는 제거합니다. 문서의 순서는 각 폴더의 `_meta.json`을 통해 관리합니다.
+- `_meta.json`의 `title`은 해당 폴더의 제목을 의미합니다. 해당 제목은 각 mdx 파일의 `title`을 사용합니다.
+- 폴더의 대표 문서는 한 depth 위에 위치하며, 폴더명과 동일한 이름으로 작성합니다.
+
+```json filename="_meta.json"
+{
+  "start": {
+    "title": "Start"
+  },
+  "mid-end": {
+    "title": "Mid End"
+  }
+}
+```
+
+```mdx filename="installation.mdx"
+---
+title: Installation
+description: Create a new Next.js application with `create-next-app`. Set up TypeScript, styles, and configure your `next.config.js` file.
+---
+```
+
+##### 2. 문서 내부의 heading
+
+- 모든 문서의 heading`(h1 ~ h6, # ~ ######)`은 링크 해시를 유지하기 위해 영문으로 작성합니다. 현재 한글로 작성되어 있는 heading은 영문으로의 수정이 필요합니다.
+- 영문 heading은 링크 구조를 유지하기 위해 영문 원본 문서의 heading을 참고합니다.
+
+##### 3. 어조
+
+- 모든 문장은 `~합니다` 어조로 작성합니다.
+- bulletpoint (`-`), table 내부의 내용은 `~임`등 어조가 필요 없는 경우에 한하여 어조를 생략합니다.
+- 개발 용어 등 한국어로 번역하는 것이 어색한 경우에는 영문을 그대로 사용하거나, 한국어로 로마자 표기를 따라서 작성합니다.
+
+```mdx filename="example.mdx"
+- 라우팅시 `getServerSideProps` 함수를 사용하면 서버사이드 렌더링을 할 수 있습니다.
+- `App Component`는 페이지의 최상위 컴포넌트입니다.
+```
+
+##### 4. 코드 블록
+
+- 코드 블록 내부의 주석은 한글로 작성합니다.
+- 주석이 영문인 경우에는 한글로 수정이 필요합니다.
+
+```jsx filename="pages/index.js"
+export default function Home() {
+  return (
+    <div>
+      {/* 이 부분은 홈 페이지입니다. */}
+      <h1>안녕하세요!</h1>
+    </div>
+  )
+}
+```
+
+##### 5. 사용 가능한 컴포넌트
+
+다음 5개 컴포넌트는 문서에 미리 불러와져 있습니다.
+
+- `Check`: 초록색 Check 아이콘 <Check />
+- `Cross`: 회색 Cross 아이콘 <Cross />
+- `AppOnly`: App Router 문서 `/docs/app`에서만 보이는 컴포넌트
+- `PagesOnly`: Page Router 문서 `/docs/pages`에서만 보이는 컴포넌트
+- `Image`: next.js 이미지를 확장한 컴포넌트

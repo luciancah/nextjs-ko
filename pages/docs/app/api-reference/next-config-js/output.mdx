@@ -29,8 +29,8 @@ Next.js는 프로덕션 배포에 필요한 파일만 복사하는 `standalone` 
 
 ```js filename="next.config.js"
 module.exports = {
-  output: "standalone",
-};
+  output: 'standalone',
+}
 ```
 
 이렇게 하면 `.next/standalone` 폴더가 생성되며, 이는 `node_modules`를 설치하지 않고도 자체적으로 배포할 수 있습니다.
@@ -62,9 +62,9 @@ module.exports = {
 module.exports = {
   experimental: {
     // 모노레포 베이스에서 두 디렉토리 위의 파일을 포함합니다
-    outputFileTracingRoot: path.join(__dirname, "../../"),
+    outputFileTracingRoot: path.join(__dirname, '../../'),
   },
-};
+}
 ```
 
 - Next.js가 필요한 파일을 포함하지 못하거나 사용하지 않는 파일을 잘못 포함하는 경우가 있습니다. 이러한 경우, `next.config.js`에서 각각 `experimental.outputFileTracingExcludes` 및 `experimental.outputFileTracingIncludes`를 활용할 수 있습니다. 각 구성은 특정 페이지와 일치하는 키에 대한 [minimatch globs](https://www.npmjs.com/package/minimatch)를 사용하고, 프로젝트의 루트에 상대적인 glob 배열을 값으로 가질 수 있습니다.
@@ -73,13 +73,13 @@ module.exports = {
 module.exports = {
   experimental: {
     outputFileTracingExcludes: {
-      "/api/hello": ["./un-necessary-folder/**/*"],
+      '/api/hello': ['./un-necessary-folder/**/*'],
     },
     outputFileTracingIncludes: {
-      "/api/another": ["./necessary-folder/**/*"],
+      '/api/another': ['./necessary-folder/**/*'],
     },
   },
-};
+}
 ```
 
 - 현재 Next.js는 생성된 `.nft.json` 파일로 아무것도 하지 않습니다. 예를 들어 [Vercel](https://vercel.com)과 같은 배포 플랫폼이 최소 배포를 생성하기 위해 이 파일을 읽어야 합니다. 향후 릴리스에서는 이 `.nft.json` 파일을 활용하는 새로운 명령어가 계획되어 있습니다.

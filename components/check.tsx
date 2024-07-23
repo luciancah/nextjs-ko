@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react'
 
-const Check = ({ size = 24, className = "" }) => {
+const Check = ({ size = 24, className = '' }) => {
   const styles = {
     icon: {
-      color: "#10B981",
+      color: '#10B981',
     },
-  };
+  }
 
   return (
     <svg
@@ -24,9 +24,9 @@ const Check = ({ size = 24, className = "" }) => {
       <circle cx="12" cy="12" r="10" />
       <path d="M9 12l2 2 4-4" />
     </svg>
-  );
-};
+  )
+}
 
 export default function App() {
-  return <Check />;
+  return <Check />
 }

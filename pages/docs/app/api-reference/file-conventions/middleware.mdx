@@ -16,29 +16,29 @@ related:
 프로젝트의 루트, 예를 들어 `app` 또는 `pages`와 같은 레벨이나 `src` 내부에 `middleware.ts` (또는 .js) 파일을 사용하여 미들웨어를 정의하십시오.
 
 ```tsx filename="middleware.ts" switcher
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse, NextRequest } from 'next/server'
 
 // 이 함수는 내부에서 `await`를 사용하는 경우 `async`로 표시할 수 있습니다.
 export function middleware(request: NextRequest) {
-  return NextResponse.redirect(new URL("/home", request.url));
+  return NextResponse.redirect(new URL('/home', request.url))
 }
 
 export const config = {
-  matcher: "/about/:path*",
-};
+  matcher: '/about/:path*',
+}
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 // 이 함수는 내부에서 `await`를 사용하는 경우 `async`로 표시할 수 있습니다.
 export function middleware(request) {
-  return NextResponse.redirect(new URL("/home", request.url));
+  return NextResponse.redirect(new URL('/home', request.url))
 }
 
 export const config = {
-  matcher: "/about/:path*",
-};
+  matcher: '/about/:path*',
+}
 ```
 
 ## Exports
@@ -79,17 +79,17 @@ export default function middleware(request) {
 export const config = {
   matcher: [
     {
-      source: "/api/*",
-      regexp: "^/api/(.*)",
+      source: '/api/*',
+      regexp: '^/api/(.*)',
       locale: false,
       has: [
-        { type: "header", key: "Authorization", value: "Bearer Token" },
-        { type: "query", key: "userId", value: "123" },
+        { type: 'header', key: 'Authorization', value: 'Bearer Token' },
+        { type: 'query', key: 'userId', value: '123' },
       ],
-      missing: [{ type: "cookie", key: "session", value: "active" }],
+      missing: [{ type: 'cookie', key: 'session', value: 'active' }],
     },
   ],
-};
+}
 ```
 
 ## Params
@@ -99,7 +99,7 @@ export const config = {
 미들웨어를 정의할 때, 기본 내보내기 함수는 `request`라는 단일 매개변수를 받습니다. 이 매개변수는 들어오는 HTTP 요청을 나타내는 `NextRequest`의 인스턴스입니다.
 
 ```tsx filename="middleware.ts" switcher
-import type { NextRequest } from "next/server";
+import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   // 미들웨어 로직은 여기에 작성됩니다.

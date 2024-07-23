@@ -25,12 +25,12 @@ Route Segment 옵션을 사용하면 [Page](/docs/app/building-your-application/
 레이아웃이나 페이지에 대해 [Partial Prerendering (PPR)](/docs/app/building-your-application/rendering/partial-prerendering)을 활성화합니다.
 
 ```tsx filename="layout.tsx | page.tsx " switcher
-export const experimental_ppr = true;
+export const experimental_ppr = true
 // true | false
 ```
 
 ```jsx filename="layout.js | page.js " switcher
-export const experimental_ppr = true;
+export const experimental_ppr = true
 // true | false
 ```
 
@@ -39,12 +39,12 @@ export const experimental_ppr = true;
 레이아웃이나 페이지의 동적 동작을 완전한 정적 또는 완전한 동적으로 변경합니다.
 
 ```tsx filename="layout.tsx | page.tsx | route.ts" switcher
-export const dynamic = "auto";
+export const dynamic = 'auto'
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const dynamic = "auto";
+export const dynamic = 'auto'
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
 ```
 
@@ -73,11 +73,11 @@ export const dynamic = "auto";
 [generateStaticParams](/docs/app/api-reference/functions/generate-static-params)으로 생성되지 않은 동적 세그먼트가 방문될 때의 동작을 제어합니다.
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-export const dynamicParams = true; // true | false,
+export const dynamicParams = true // true | false,
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const dynamicParams = true; // true | false,
+export const dynamicParams = true // true | false,
 ```
 
 - **`true`** (기본값): `generateStaticParams`에 포함되지 않은 동적 세그먼트가 필요에 따라 생성됩니다.
@@ -95,12 +95,12 @@ export const dynamicParams = true; // true | false,
 레이아웃이나 페이지의 기본 재검증 시간을 설정합니다. 이 옵션은 개별 `fetch` 요청에서 설정된 `revalidate` 값을 덮어쓰지 않습니다.
 
 ```tsx filename="layout.tsx | page.tsx | route.ts" switcher
-export const revalidate = false;
+export const revalidate = false
 // false | 0 | number
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const revalidate = false;
+export const revalidate = false
 // false | 0 | number
 ```
 
@@ -130,13 +130,13 @@ export const revalidate = false;
 `fetchCache`를 사용하면 레이아웃이나 페이지의 모든 `fetch` 요청의 기본 `cache` 옵션을 재정의할 수 있습니다.
 
 ```tsx filename="layout.tsx | page.tsx | route.ts" switcher
-export const fetchCache = "auto";
+export const fetchCache = 'auto'
 // 'auto' | 'default-cache' | 'only-cache'
 // 'force-cache' | 'force-no-store' | 'default-no-store' | 'only-no-store'
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const fetchCache = "auto";
+export const fetchCache = 'auto'
 // 'auto' | 'default-cache' | 'only-cache'
 // 'force-cache' | 'force-no-store' | 'default-no-store' | 'only-no-store'
 ```
@@ -166,12 +166,12 @@ export const fetchCache = "auto";
 애플리케이션을 렌더링할 때 Node.js 런타임을 사용하는 것을 권장하며, 미들웨어에는 Edge 런타임을 사용하는 것이 유일한 지원 옵션입니다.
 
 ```tsx filename="layout.tsx | page.tsx | route.ts" switcher
-export const runtime = "nodejs";
+export const runtime = 'nodejs'
 // 'nodejs' | 'edge'
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const runtime = "nodejs";
+export const runtime = 'nodejs'
 // 'nodejs' | 'edge'
 ```
 
@@ -183,12 +183,12 @@ export const runtime = "nodejs";
 ### `preferredRegion`
 
 ```tsx filename="layout.tsx | page.tsx | route.ts" switcher
-export const preferredRegion = "auto";
+export const preferredRegion = 'auto'
 // 'auto' | 'global' | 'home' | ['iad1', 'sfo1']
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const preferredRegion = "auto";
+export const preferredRegion = 'auto'
 // 'auto' | 'global' | 'home' | ['iad1', 'sfo1']
 ```
 
@@ -208,11 +208,11 @@ export const preferredRegion = "auto";
 **참고**: 이 설정은 Next.js `13.4.10` 이상이 필요합니다.
 
 ```tsx filename="layout.tsx | page.tsx | route.ts" switcher
-export const maxDuration = 5;
+export const maxDuration = 5
 ```
 
 ```js filename="layout.js | page.js | route.js" switcher
-export const maxDuration = 5;
+export const maxDuration = 5
 ```
 
 > **알아두면 좋은 점**:

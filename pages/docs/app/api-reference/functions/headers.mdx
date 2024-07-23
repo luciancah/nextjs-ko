@@ -12,24 +12,24 @@ description: headers 함수에 대한 API 참조.
 이 API는 [Web Headers API](https://developer.mozilla.org/docs/Web/API/Headers)를 확장합니다. **읽기 전용**이므로, 송신 요청 헤더를 `set` / `delete`할 수 없습니다.
 
 ```tsx filename="app/page.tsx" switcher
-import { headers } from "next/headers";
+import { headers } from 'next/headers'
 
 export default function Page() {
-  const headersList = headers();
-  const referer = headersList.get("referer");
+  const headersList = headers()
+  const referer = headersList.get('referer')
 
-  return <div>Referer: {referer}</div>;
+  return <div>Referer: {referer}</div>
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { headers } from "next/headers";
+import { headers } from 'next/headers'
 
 export default function Page() {
-  const headersList = headers();
-  const referer = headersList.get("referer");
+  const headersList = headers()
+  const referer = headersList.get('referer')
 
-  return <div>Referer: {referer}</div>;
+  return <div>Referer: {referer}</div>
 }
 ```
 
@@ -40,7 +40,7 @@ export default function Page() {
 ### API Reference
 
 ```tsx
-const headersList = headers();
+const headersList = headers()
 ```
 
 #### Parameters
@@ -65,17 +65,17 @@ const headersList = headers();
 `headers()`는 [Suspense for Data Fetching](/docs/app/building-your-application/data-fetching/caching-and-revalidating)과 함께 사용할 수 있습니다.
 
 ```jsx filename="app/page.js"
-import { Suspense } from "react";
-import { headers } from "next/headers";
+import { Suspense } from 'react'
+import { headers } from 'next/headers'
 
 async function User() {
-  const authorization = headers().get("authorization");
-  const res = await fetch("...", {
+  const authorization = headers().get('authorization')
+  const res = await fetch('...', {
     headers: { authorization }, // 인증 헤더 전달
-  });
-  const user = await res.json();
+  })
+  const user = await res.json()
 
-  return <h1>{user.name}</h1>;
+  return <h1>{user.name}</h1>
 }
 
 export default function Page() {
@@ -83,7 +83,7 @@ export default function Page() {
     <Suspense fallback={null}>
       <User />
     </Suspense>
-  );
+  )
 }
 ```
 
@@ -92,18 +92,18 @@ export default function Page() {
 `headers()`를 사용하여 클라이언트의 IP 주소를 가져올 수 있습니다.
 
 ```jsx filename="app/page.js"
-import { Suspense } from "react";
-import { headers } from "next/headers";
+import { Suspense } from 'react'
+import { headers } from 'next/headers'
 
 function IP() {
-  const FALLBACK_IP_ADDRESS = "0.0.0.0";
-  const forwardedFor = headers().get("x-forwarded-for");
+  const FALLBACK_IP_ADDRESS = '0.0.0.0'
+  const forwardedFor = headers().get('x-forwarded-for')
 
   if (forwardedFor) {
-    return forwardedFor.split(",")[0] ?? FALLBACK_IP_ADDRESS;
+    return forwardedFor.split(',')[0] ?? FALLBACK_IP_ADDRESS
   }
 
-  return headers().get("x-real-ip") ?? FALLBACK_IP_ADDRESS;
+  return headers().get('x-real-ip') ?? FALLBACK_IP_ADDRESS
 }
 
 export default function Page() {
@@ -111,7 +111,7 @@ export default function Page() {
     <Suspense fallback={null}>
       <IP />
     </Suspense>
-  );
+  )
 }
 ```
 

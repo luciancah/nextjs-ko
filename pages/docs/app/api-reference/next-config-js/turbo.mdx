@@ -30,14 +30,14 @@ module.exports = {
   experimental: {
     turbo: {
       rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.js",
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
         },
       },
     },
   },
-};
+}
 ```
 
 > **알아두면 좋은 점**: Next.js 버전 13.4.4 이전에는 `experimental.turbo.rules`가 `experimental.turbo.loaders`로 불렸으며, `*.mdx` 대신 파일 확장자 `.mdx`만 허용했습니다.
@@ -65,12 +65,12 @@ module.exports = {
   experimental: {
     turbo: {
       resolveAlias: {
-        underscore: "lodash",
-        mocha: { browser: "mocha/browser-entry.js" },
+        underscore: 'lodash',
+        mocha: { browser: 'mocha/browser-entry.js' },
       },
     },
   },
-};
+}
 ```
 
 이렇게 하면 `underscore` 패키지의 가져오기가 `lodash` 패키지로 대체됩니다. 즉, `import underscore from 'underscore'`는 `underscore` 대신 `lodash` 모듈을 로드합니다.
@@ -88,17 +88,17 @@ module.exports = {
   experimental: {
     turbo: {
       resolveExtensions: [
-        ".mdx",
-        ".tsx",
-        ".ts",
-        ".jsx",
-        ".js",
-        ".mjs",
-        ".json",
+        '.mdx',
+        '.tsx',
+        '.ts',
+        '.jsx',
+        '.js',
+        '.mjs',
+        '.json',
       ],
     },
   },
-};
+}
 ```
 
 이는 제공된 목록으로 원래의 resolve extensions을 덮어씁니다. 기본 확장을 포함하도록 해야 합니다.

@@ -29,7 +29,7 @@ export function Video() {
       />
       Your browser does not support the video tag.
     </video>
-  );
+  )
 }
 ```
 
@@ -69,7 +69,7 @@ export default function Page() {
       frameborder="0"
       allowfullscreen
     />
-  );
+  )
 }
 ```
 
@@ -107,9 +107,9 @@ Next.js 애플리케이션에 비디오를 임베드하는 두 가지 방법이 
 
 ```jsx filename="app/ui/video-component.jsx"
 export default async function VideoComponent() {
-  const src = await getVideoSrc();
+  const src = await getVideoSrc()
 
-  return <iframe src={src} frameborder="0" allowfullscreen />;
+  return <iframe src={src} frameborder="0" allowfullscreen />
 }
 ```
 
@@ -118,8 +118,8 @@ export default async function VideoComponent() {
 비디오를 임베드하기 위해 Server Component를 생성한 후, 다음 단계는 [React Suspense](https://react.dev/reference/react/Suspense)를 사용하여 컴포넌트를 [스트림](https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming)하는 것입니다.
 
 ```jsx filename="app/page.jsx"
-import { Suspense } from "react";
-import VideoComponent from "../ui/VideoComponent.jsx";
+import { Suspense } from 'react'
+import VideoComponent from '../ui/VideoComponent.jsx'
 
 export default function Page() {
   return (
@@ -129,7 +129,7 @@ export default function Page() {
       </Suspense>
       {/* Other content of the page */}
     </section>
-  );
+  )
 }
 ```
 
@@ -143,9 +143,9 @@ export default function Page() {
 더욱 매력적이고 정보가 풍부한 로딩 경험을 위해, 로딩 스켈레톤을 폴백 UI로 사용하는 것을 고려해보세요. 간단한 로딩 메시지를 표시하는 대신, 비디오 플레이어와 유사한 스켈레톤을 표시할 수 있습니다.
 
 ```jsx filename="app/page.jsx"
-import { Suspense } from "react";
-import VideoComponent from "../ui/VideoComponent.jsx";
-import VideoSkeleton from "../ui/VideoSkeleton.jsx";
+import { Suspense } from 'react'
+import VideoComponent from '../ui/VideoComponent.jsx'
+import VideoSkeleton from '../ui/VideoSkeleton.jsx'
 
 export default function Page() {
   return (
@@ -155,7 +155,7 @@ export default function Page() {
       </Suspense>
       {/* Other content of the page */}
     </section>
-  );
+  )
 }
 ```
 
@@ -183,30 +183,30 @@ Vercel 대시보드에서 "Storage" 탭으로 이동하여 [Vercel Blob](https:/
 비디오가 업로드되어 저장된 후, 이를 Next.js 애플리케이션에서 표시할 수 있습니다. 다음은 `<video>` 태그와 React Suspense를 사용하여 이를 수행하는 예입니다:
 
 ```jsx filename="app/page.jsx"
-import { Suspense } from "react";
-import { list } from "@vercel/blob";
+import { Suspense } from 'react'
+import { list } from '@vercel/blob'
 
 export default function Page() {
   return (
     <Suspense fallback={<p>Loading video...</p>}>
       <VideoComponent fileName="my-video.mp4" />
     </Suspense>
-  );
+  )
 }
 
 async function VideoComponent({ fileName }) {
   const { blobs } = await list({
     prefix: fileName,
     limit: 1,
-  });
-  const { url } = blobs[0];
+  })
+  const { url } = blobs[0]
 
   return (
     <video controls preload="none" aria-label="Video player">
       <source src={url} type="video/mp4" />
       Your browser does not support the video tag.
     </video>
-  );
+  )
 }
 ```
 
@@ -221,9 +221,9 @@ async function VideoComponent({ fileName }) {
   const { blobs } = await list({
     prefix: fileName,
     limit: 2,
-  });
-  const { url } = blobs[0];
-  const { url: captionsUrl } = blobs[1];
+  })
+  const { url } = blobs[0]
+  const { url: captionsUrl } = blobs[1]
 
   return (
     <video controls preload="none" aria-label="Video player">
@@ -231,7 +231,7 @@ async function VideoComponent({ fileName }) {
       <track src={captionsUrl} kind="subtitles" srcLang="en" label="English" />
       Your browser does not support the video tag.
     </video>
-  );
+  )
 }
 ```
 

@@ -19,12 +19,12 @@ related:
 쿠키 이름을 받아 해당 이름과 값을 포함하는 객체를 반환합니다. 쿠키가 존재하지 않을 경우 `undefined`를 반환합니다. 여러 개의 쿠키가 일치할 경우, 첫 번째 쿠키만 반환됩니다.
 
 ```jsx filename="app/page.js"
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export default function Page() {
-  const cookieStore = cookies();
-  const theme = cookieStore.get("theme");
-  return "...";
+  const cookieStore = cookies()
+  const theme = cookieStore.get('theme')
+  return '...'
 }
 ```
 
@@ -33,16 +33,16 @@ export default function Page() {
 `get`와 유사하지만, 일치하는 모든 쿠키의 리스트를 반환합니다. `name`이 지정되지 않은 경우, 사용 가능한 모든 쿠키를 반환합니다.
 
 ```jsx filename="app/page.js"
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export default function Page() {
-  const cookieStore = cookies();
+  const cookieStore = cookies()
   return cookieStore.getAll().map((cookie) => (
     <div key={cookie.name}>
       <p>Name: {cookie.name}</p>
       <p>Value: {cookie.value}</p>
     </div>
-  ));
+  ))
 }
 ```
 
@@ -51,12 +51,12 @@ export default function Page() {
 쿠키 이름을 받아 해당 쿠키가 존재하는지 여부에 따라 `true` 또는 `false`를 반환합니다.
 
 ```jsx filename="app/page.js"
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export default function Page() {
-  const cookieStore = cookies();
-  const hasCookie = cookieStore.has("theme");
-  return "...";
+  const cookieStore = cookies()
+  const hasCookie = cookieStore.has('theme')
+  return '...'
 }
 ```
 
@@ -67,21 +67,21 @@ export default function Page() {
 > **참고**: HTTP는 스트리밍이 시작된 후에 쿠키를 설정할 수 없으므로, [서버 액션](/docs/app/building-your-application/data-fetching/server-actions-and-mutations) 또는 [라우트 핸들러](/docs/app/building-your-application/routing/route-handlers)에서 `.set()`을 사용해야 합니다.
 
 ```js filename="app/actions.js"
-"use server";
+'use server'
 
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 async function create(data) {
-  cookies().set("name", "lee");
+  cookies().set('name', 'lee')
   // 또는
-  cookies().set("name", "lee", { secure: true });
+  cookies().set('name', 'lee', { secure: true })
   // 또는
   cookies().set({
-    name: "name",
-    value: "lee",
+    name: 'name',
+    value: 'lee',
     httpOnly: true,
-    path: "/",
-  });
+    path: '/',
+  })
 }
 ```
 

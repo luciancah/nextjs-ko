@@ -46,10 +46,10 @@ Next.js에서 리디렉션을 처리하는 여러 가지 방법이 있습니다.
 `redirect`는 종종 변형이나 이벤트 후에 사용됩니다. 예를 들어, 게시물을 작성하는 경우:
 
 ```tsx filename="app/actions.tsx" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 export async function createPost(id: string) {
   try {
@@ -58,16 +58,16 @@ export async function createPost(id: string) {
     // Handle errors
   }
 
-  revalidatePath("/posts"); // Update cached posts
-  redirect(`/post/${id}`); // Navigate to the new post page
+  revalidatePath('/posts') // Update cached posts
+  redirect(`/post/${id}`) // Navigate to the new post page
 }
 ```
 
 ```jsx filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 export async function createPost(id) {
   try {
@@ -76,8 +76,8 @@ export async function createPost(id) {
     // Handle errors
   }
 
-  revalidatePath("/posts"); // Update cached posts
-  redirect(`/post/${id}`); // Navigate to the new post page
+  revalidatePath('/posts') // Update cached posts
+  redirect(`/post/${id}`) // Navigate to the new post page
 }
 ```
 
@@ -100,10 +100,10 @@ export async function createPost(id) {
 `permanentRedirect`는 종종 엔터티의 캐노니컬 URL이 변경된 후 사용됩니다. 예를 들어, 사용자가 사용자 이름을 변경한 후 프로필 URL을 업데이트하는 경우:
 
 ```tsx filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { permanentRedirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { permanentRedirect } from 'next/navigation'
+import { revalidateTag } from 'next/cache'
 
 export async function updateUsername(username: string, formData: FormData) {
   try {
@@ -112,16 +112,16 @@ export async function updateUsername(username: string, formData: FormData) {
     // Handle errors
   }
 
-  revalidateTag("username"); // Update all references to the username
-  permanentRedirect(`/profile/${username}`); // Navigate to the new user profile
+  revalidateTag('username') // Update all references to the username
+  permanentRedirect(`/profile/${username}`) // Navigate to the new user profile
 }
 ```
 
 ```jsx filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { permanentRedirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { permanentRedirect } from 'next/navigation'
+import { revalidateTag } from 'next/cache'
 
 export async function updateUsername(username, formData) {
   try {
@@ -130,8 +130,8 @@ export async function updateUsername(username, formData) {
     // Handle errors
   }
 
-  revalidateTag("username"); // Update all references to the username
-  permanentRedirect(`/profile/${username}`); // Navigate to the new user profile
+  revalidateTag('username') // Update all references to the username
+  permanentRedirect(`/profile/${username}`) // Navigate to the new user profile
 }
 ```
 
@@ -154,34 +154,34 @@ export async function updateUsername(username, formData) {
 클라이언트 컴포넌트의 이벤트 핸들러 내에서 리디렉션이 필요한 경우 `useRouter` 훅의 `push` 메서드를 사용할 수 있습니다. 예를 들어:
 
 ```tsx filename="app/page.tsx" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
@@ -192,30 +192,30 @@ export default function Page() {
 컴포넌트 내에서 리디렉션이 필요한 경우 `useRouter` 훅의 `push` 메서드를 사용할 수 있습니다. 예를 들어:
 
 ```tsx filename="app/page.tsx" switcher
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
@@ -253,19 +253,19 @@ module.exports = {
     return [
       // Basic redirect
       {
-        source: "/about",
-        destination: "/",
+        source: '/about',
+        destination: '/',
         permanent: true,
       },
       // Wildcard path matching
       {
-        source: "/blog/:slug",
-        destination: "/news/:slug",
+        source: '/blog/:slug',
+        destination: '/news/:slug',
         permanent: true,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 자세한 내용은 [`redirects` API 레퍼런스](/docs/app/api-reference/next-config-js/redirects)를 참조하세요.
@@ -285,45 +285,45 @@ Middleware는 요청이 완료되기 전에 코드를 실행할 수 있게 합�
 예를 들어, 사용자가 인증되지 않은 경우 `/login` 페이지로 리디렉션하려면 다음과 같이 합니다:
 
 ```tsx filename="middleware.ts" switcher
-import { NextResponse, NextRequest } from "next/server";
-import { authenticate } from "auth-provider";
+import { NextResponse, NextRequest } from 'next/server'
+import { authenticate } from 'auth-provider'
 
 export function middleware(request: NextRequest) {
-  const isAuthenticated = authenticate(request);
+  const isAuthenticated = authenticate(request)
 
   // If the user is authenticated, continue as normal
   if (isAuthenticated) {
-    return NextResponse.next();
+    return NextResponse.next()
   }
 
   // Redirect to login page if not authenticated
-  return NextResponse.redirect(new URL("/login", request.url));
+  return NextResponse.redirect(new URL('/login', request.url))
 }
 
 export const config = {
-  matcher: "/dashboard/:path*",
-};
+  matcher: '/dashboard/:path*',
+}
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
-import { authenticate } from "auth-provider";
+import { NextResponse } from 'next/server'
+import { authenticate } from 'auth-provider'
 
 export function middleware(request) {
-  const isAuthenticated = authenticate(request);
+  const isAuthenticated = authenticate(request)
 
   // If the user is authenticated, continue as normal
   if (isAuthenticated) {
-    return NextResponse.next();
+    return NextResponse.next()
   }
 
   // Redirect to login page if not authenticated
-  return NextResponse.redirect(new URL("/login", request.url));
+  return NextResponse.redirect(new URL('/login', request.url))
 }
 
 export const config = {
-  matcher: "/dashboard/:path*",
-};
+  matcher: '/dashboard/:path*',
+}
 ```
 
 > **Good to know**:
@@ -369,45 +369,45 @@ export const config = {
 [Middleware](/docs/app/building-your-application/routing/middleware)에서 Vercel의 [Edge Config](https://vercel.com/docs/storage/edge-config/get-started?utm_source=next-site&utm_medium=docs&utm_campaign=next-website) 또는 [Redis](https://vercel.com/docs/storage/vercel-kv?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)와 같은 데이터베이스에서 읽고, 들어오는 요청을 기반으로 사용자를 리디렉션할 수 있습니다:
 
 ```tsx filename="middleware.ts" switcher
-import { NextResponse, NextRequest } from "next/server";
-import { get } from "@vercel/edge-config";
+import { NextResponse, NextRequest } from 'next/server'
+import { get } from '@vercel/edge-config'
 
 type RedirectEntry = {
-  destination: string;
-  permanent: boolean;
-};
+  destination: string
+  permanent: boolean
+}
 
 export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-  const redirectData = await get(pathname);
+  const pathname = request.nextUrl.pathname
+  const redirectData = await get(pathname)
 
-  if (redirectData && typeof redirectData === "string") {
-    const redirectEntry: RedirectEntry = JSON.parse(redirectData);
-    const statusCode = redirectEntry.permanent ? 308 : 307;
-    return NextResponse.redirect(redirectEntry.destination, statusCode);
+  if (redirectData && typeof redirectData === 'string') {
+    const redirectEntry: RedirectEntry = JSON.parse(redirectData)
+    const statusCode = redirectEntry.permanent ? 308 : 307
+    return NextResponse.redirect(redirectEntry.destination, statusCode)
   }
 
   // No redirect found, continue without redirecting
-  return NextResponse.next();
+  return NextResponse.next()
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
-import { get } from "@vercel/edge-config";
+import { NextResponse } from 'next/server'
+import { get } from '@vercel/edge-config'
 
 export async function middleware(request) {
-  const pathname = request.nextUrl.pathname;
-  const redirectData = await get(pathname);
+  const pathname = request.nextUrl.pathname
+  const redirectData = await get(pathname)
 
   if (redirectData) {
-    const redirectEntry = JSON.parse(redirectData);
-    const statusCode = redirectEntry.permanent ? 308 : 307;
-    return NextResponse.redirect(redirectEntry.destination, statusCode);
+    const redirectEntry = JSON.parse(redirectData)
+    const statusCode = redirectEntry.permanent ? 308 : 307
+    return NextResponse.redirect(redirectEntry.destination, statusCode)
   }
 
   // No redirect found, continue without redirecting
-  return NextResponse.next();
+  return NextResponse.next()
 }
 ```
 
@@ -425,98 +425,98 @@ export async function middleware(request) {
 만약 그렇다면, 요청을 <AppOnly>[Route Handler](/docs/app/building-your-application/routing/route-handlers)</AppOnly> <PagesOnly>[API Routes](/docs/pages/building-your-application/routing/api-routes)</PagesOnly>로 전달하여 실제 파일을 확인하고 사용자를 적절한 URL로 리디렉션합니다. 이는 대규모 리디렉션 파일을 Middleware에 가져오는 것을 방지하여 들어오는 모든 요청을 느리게 만들 수 있습니다.
 
 ```tsx filename="middleware.ts" switcher
-import { NextResponse, NextRequest } from "next/server";
-import { ScalableBloomFilter } from "bloom-filters";
-import GeneratedBloomFilter from "./redirects/bloom-filter.json";
+import { NextResponse, NextRequest } from 'next/server'
+import { ScalableBloomFilter } from 'bloom-filters'
+import GeneratedBloomFilter from './redirects/bloom-filter.json'
 
 type RedirectEntry = {
-  destination: string;
-  permanent: boolean;
-};
+  destination: string
+  permanent: boolean
+}
 
 // Initialize bloom filter from a generated JSON file
-const bloomFilter = ScalableBloomFilter.fromJSON(GeneratedBloomFilter as any);
+const bloomFilter = ScalableBloomFilter.fromJSON(GeneratedBloomFilter as any)
 
 export async function middleware(request: NextRequest) {
   // Get the path for the incoming request
-  const pathname = request.nextUrl.pathname;
+  const pathname = request.nextUrl.pathname
 
   // Check if the path is in the bloom filter
   if (bloomFilter.has(pathname)) {
     // Forward the pathname to the Route Handler
     const api = new URL(
       `/api/redirects?pathname=${encodeURIComponent(request.nextUrl.pathname)}`,
-      request.nextUrl.origin
-    );
+      request.nextUrl.origin,
+    )
 
     try {
       // Fetch redirect data from the Route Handler
-      const redirectData = await fetch(api);
+      const redirectData = await fetch(api)
 
       if (redirectData.ok) {
         const redirectEntry: RedirectEntry | undefined =
-          await redirectData.json();
+          await redirectData.json()
 
         if (redirectEntry) {
           // Determine the status code
-          const statusCode = redirectEntry.permanent ? 308 : 307;
+          const statusCode = redirectEntry.permanent ? 308 : 307
 
           // Redirect to the destination
-          return NextResponse.redirect(redirectEntry.destination, statusCode);
+          return NextResponse.redirect(redirectEntry.destination, statusCode)
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
   // No redirect found, continue the request without redirecting
-  return NextResponse.next();
+  return NextResponse.next()
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
-import { ScalableBloomFilter } from "bloom-filters";
-import GeneratedBloomFilter from "./redirects/bloom-filter.json";
+import { NextResponse } from 'next/server'
+import { ScalableBloomFilter } from 'bloom-filters'
+import GeneratedBloomFilter from './redirects/bloom-filter.json'
 
 // Initialize bloom filter from a generated JSON file
-const bloomFilter = ScalableBloomFilter.fromJSON(GeneratedBloomFilter);
+const bloomFilter = ScalableBloomFilter.fromJSON(GeneratedBloomFilter)
 
 export async function middleware(request) {
   // Get the path for the incoming request
-  const pathname = request.nextUrl.pathname;
+  const pathname = request.nextUrl.pathname
 
   // Check if the path is in the bloom filter
   if (bloomFilter.has(pathname)) {
     // Forward the pathname to the Route Handler
     const api = new URL(
       `/api/redirects?pathname=${encodeURIComponent(request.nextUrl.pathname)}`,
-      request.nextUrl.origin
-    );
+      request.nextUrl.origin,
+    )
 
     try {
       // Fetch redirect data from the Route Handler
-      const redirectData = await fetch(api);
+      const redirectData = await fetch(api)
 
       if (redirectData.ok) {
-        const redirectEntry = await redirectData.json();
+        const redirectEntry = await redirectData.json()
 
         if (redirectEntry) {
           // Determine the status code
-          const statusCode = redirectEntry.permanent ? 308 : 307;
+          const statusCode = redirectEntry.permanent ? 308 : 307
 
           // Redirect to the destination
-          return NextResponse.redirect(redirectEntry.destination, statusCode);
+          return NextResponse.redirect(redirectEntry.destination, statusCode)
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
   // No redirect found, continue the request without redirecting
-  return NextResponse.next();
+  return NextResponse.next()
 }
 ```
 
@@ -525,53 +525,53 @@ export async function middleware(request) {
 Then, in the Route Handler:
 
 ```tsx filename="app/redirects/route.ts" switcher
-import { NextRequest, NextResponse } from "next/server";
-import redirects from "@/app/redirects/redirects.json";
+import { NextRequest, NextResponse } from 'next/server'
+import redirects from '@/app/redirects/redirects.json'
 
 type RedirectEntry = {
-  destination: string;
-  permanent: boolean;
-};
+  destination: string
+  permanent: boolean
+}
 
 export function GET(request: NextRequest) {
-  const pathname = request.nextUrl.searchParams.get("pathname");
+  const pathname = request.nextUrl.searchParams.get('pathname')
   if (!pathname) {
-    return new Response("Bad Request", { status: 400 });
+    return new Response('Bad Request', { status: 400 })
   }
 
   // Get the redirect entry from the redirects.json file
-  const redirect = (redirects as Record<string, RedirectEntry>)[pathname];
+  const redirect = (redirects as Record<string, RedirectEntry>)[pathname]
 
   // Account for bloom filter false positives
   if (!redirect) {
-    return new Response("No redirect", { status: 400 });
+    return new Response('No redirect', { status: 400 })
   }
 
   // Return the redirect entry
-  return NextResponse.json(redirect);
+  return NextResponse.json(redirect)
 }
 ```
 
 ```js filename="app/redirects/route.js" switcher
-import { NextResponse } from "next/server";
-import redirects from "@/app/redirects/redirects.json";
+import { NextResponse } from 'next/server'
+import redirects from '@/app/redirects/redirects.json'
 
 export function GET(request) {
-  const pathname = request.nextUrl.searchParams.get("pathname");
+  const pathname = request.nextUrl.searchParams.get('pathname')
   if (!pathname) {
-    return new Response("Bad Request", { status: 400 });
+    return new Response('Bad Request', { status: 400 })
   }
 
   // Get the redirect entry from the redirects.json file
-  const redirect = redirects[pathname];
+  const redirect = redirects[pathname]
 
   // Account for bloom filter false positives
   if (!redirect) {
-    return new Response("No redirect", { status: 400 });
+    return new Response('No redirect', { status: 400 })
   }
 
   // Return the redirect entry
-  return NextResponse.json(redirect);
+  return NextResponse.json(redirect)
 }
 ```
 
@@ -582,52 +582,52 @@ export function GET(request) {
 Then, in the API Route:
 
 ```tsx filename="pages/api/redirects.ts" switcher
-import type { NextApiRequest, NextApiResponse } from "next";
-import redirects from "@/app/redirects/redirects.json";
+import type { NextApiRequest, NextApiResponse } from 'next'
+import redirects from '@/app/redirects/redirects.json'
 
 type RedirectEntry = {
-  destination: string;
-  permanent: boolean;
-};
+  destination: string
+  permanent: boolean
+}
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const pathname = req.query.pathname;
+  const pathname = req.query.pathname
   if (!pathname) {
-    return res.status(400).json({ message: "Bad Request" });
+    return res.status(400).json({ message: 'Bad Request' })
   }
 
   // Get the redirect entry from the redirects.json file
-  const redirect = (redirects as Record<string, RedirectEntry>)[pathname];
+  const redirect = (redirects as Record<string, RedirectEntry>)[pathname]
 
   // Account for bloom filter false positives
   if (!redirect) {
-    return res.status(400).json({ message: "No redirect" });
+    return res.status(400).json({ message: 'No redirect' })
   }
 
   // Return the redirect entry
-  return res.json(redirect);
+  return res.json(redirect)
 }
 ```
 
 ```js filename="pages/api/redirects.js" switcher
-import redirects from "@/app/redirects/redirects.json";
+import redirects from '@/app/redirects/redirects.json'
 
 export default function handler(req, res) {
-  const pathname = req.query.pathname;
+  const pathname = req.query.pathname
   if (!pathname) {
-    return res.status(400).json({ message: "Bad Request" });
+    return res.status(400).json({ message: 'Bad Request' })
   }
 
   // Get the redirect entry from the redirects.json file
-  const redirect = redirects[pathname];
+  const redirect = redirects[pathname]
 
   // Account for bloom filter false positives
   if (!redirect) {
-    return res.status(400).json({ message: "No redirect" });
+    return res.status(400).json({ message: 'No redirect' })
   }
 
   // Return the redirect entry
-  return res.json(redirect);
+  return res.json(redirect)
 }
 ```
 

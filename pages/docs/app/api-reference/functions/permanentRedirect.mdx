@@ -21,7 +21,7 @@ related:
 `permanentRedirect` 함수는 두 개의 인수를 받습니다:
 
 ```js
-permanentRedirect(path, type);
+permanentRedirect(path, type)
 ```
 
 | Parameter | Type                                                    | Description                                             |
@@ -42,18 +42,18 @@ permanentRedirect(path, type);
 `permanentRedirect()` 함수를 호출하면 `NEXT_REDIRECT` 오류가 발생하며, 오류가 발생한 라우트 세그먼트의 렌더링이 중단됩니다.
 
 ```jsx filename="app/team/[id]/page.js"
-import { permanentRedirect } from "next/navigation";
+import { permanentRedirect } from 'next/navigation'
 
 async function fetchTeam(id) {
-  const res = await fetch("https://...");
-  if (!res.ok) return undefined;
-  return res.json();
+  const res = await fetch('https://...')
+  if (!res.ok) return undefined
+  return res.json()
 }
 
 export default async function Profile({ params }) {
-  const team = await fetchTeam(params.id);
+  const team = await fetchTeam(params.id)
   if (!team) {
-    permanentRedirect("/login");
+    permanentRedirect('/login')
   }
 
   // ...

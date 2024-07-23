@@ -30,12 +30,12 @@ CDN(콘텐츠 전송 네트워크)을 설정하려면 자산 프리픽스를 설
 `next.config.js`를 열고 `assetPrefix` 구성을 추가하세요:
 
 ```js filename="next.config.js"
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   // Use the CDN in production and localhost for development.
-  assetPrefix: isProd ? "https://cdn.mydomain.com" : undefined,
-};
+  assetPrefix: isProd ? 'https://cdn.mydomain.com' : undefined,
+}
 ```
 
 Next.js는 `/_next/` 경로(`.next/static/` 폴더)에서 로드되는 JavaScript 및 CSS 파일에 대해 자동으로 자산 프리픽스를 사용합니다. 예를 들어, 위의 구성으로 JS 청크에 대한 다음 요청은:

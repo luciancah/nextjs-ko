@@ -22,7 +22,7 @@ module.exports = {
   experimental: {
     instrumentationHook: true,
   },
-};
+}
 ```
 
 ## Exports
@@ -32,18 +32,18 @@ module.exports = {
 이 파일은 새로운 Next.js 서버 인스턴스가 시작될 때 **한 번** 호출되는 `register` 함수를 내보냅니다. `register`는 비동기 함수일 수 있습니다.
 
 ```ts filename="instrumentation.ts" switcher
-import { registerOTel } from "@vercel/otel";
+import { registerOTel } from '@vercel/otel'
 
 export function register() {
-  registerOTel("next-app");
+  registerOTel('next-app')
 }
 ```
 
 ```js filename="instrumentation.js" switcher
-import { registerOTel } from "@vercel/otel";
+import { registerOTel } from '@vercel/otel'
 
 export function register() {
-  registerOTel("next-app");
+  registerOTel('next-app')
 }
 ```
 

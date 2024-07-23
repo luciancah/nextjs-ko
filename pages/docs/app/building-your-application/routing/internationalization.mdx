@@ -21,15 +21,15 @@ Next.js는 여러 언어를 지원하도록 콘텐츠의 라우팅 및 렌더링
 예를 들어, 다음 라이브러리를 사용하여 들어오는 `Request`를 살펴보고 지원할 로케일과 기본 로케일에 따라 선택할 로케일을 결정할 수 있습니다.
 
 ```js filename="middleware.js"
-import { match } from "@formatjs/intl-localematcher";
-import Negotiator from "negotiator";
+import { match } from '@formatjs/intl-localematcher'
+import Negotiator from 'negotiator'
 
-let headers = { "accept-language": "en-US,en;q=0.5" };
-let languages = new Negotiator({ headers }).languages();
-let locales = ["en-US", "nl-NL", "nl"];
-let defaultLocale = "en-US";
+let headers = { 'accept-language': 'en-US,en;q=0.5' }
+let languages = new Negotiator({ headers }).languages()
+let locales = ['en-US', 'nl-NL', 'nl']
+let defaultLocale = 'en-US'
 
-match(languages, locales, defaultLocale); // -> 'en-US'
+match(languages, locales, defaultLocale) // -> 'en-US'
 ```
 
 라우팅은 서브 경로(`/fr/products`) 또는 도메인(`my-site.fr/products`)으로 국제화할 수 있습니다. 이 정보를 사용하여 [Middleware](/docs/app/building-your-application/routing/middleware) 내에서 로케일에 따라 사용자를 리디렉션할 수 있습니다.
@@ -106,24 +106,24 @@ export default async function Page({ params: { lang } }) {
 그런 다음 요청된 로케일에 대한 번역을 로드하는 `getDictionary` 함수를 만들 수 있습니다:
 
 ```jsx filename="app/[lang]/dictionaries.js"
-import "server-only";
+import 'server-only'
 
 const dictionaries = {
-  en: () => import("./dictionaries/en.json").then((module) => module.default),
-  nl: () => import("./dictionaries/nl.json").then((module) => module.default),
-};
+  en: () => import('./dictionaries/en.json').then((module) => module.default),
+  nl: () => import('./dictionaries/nl.json').then((module) => module.default),
+}
 
-export const getDictionary = async (locale) => dictionaries[locale]();
+export const getDictionary = async (locale) => dictionaries[locale]()
 ```
 
 현재 선택된 언어를 고려하여 레이아웃이나 페이지 내에서 사전을 가져올 수 있습니다.
 
 ```jsx filename="app/[lang]/page.js"
-import { getDictionary } from "./dictionaries";
+import { getDictionary } from './dictionaries'
 
 export default async function Page({ params: { lang } }) {
-  const dict = await getDictionary(lang); // en
-  return <button>{dict.products.cart}</button>; // Add to Cart
+  const dict = await getDictionary(lang) // en
+  return <button>{dict.products.cart}</button> // Add to Cart
 }
 ```
 
@@ -135,7 +135,7 @@ export default async function Page({ params: { lang } }) {
 
 ```jsx filename="app/[lang]/layout.js"
 export async function generateStaticParams() {
-  return [{ lang: "en-US" }, { lang: "de" }];
+  return [{ lang: 'en-US' }, { lang: 'de' }]
 }
 
 export default function Root({ children, params }) {
@@ -143,7 +143,7 @@ export default function Root({ children, params }) {
     <html lang={params.lang}>
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 

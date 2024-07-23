@@ -46,29 +46,29 @@ related:
 > **알아두면 좋은 점**: `sitemap.js`는 특수한 라우트 핸들러로, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions)나 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하지 않는 한 기본적으로 캐시됩니다.
 
 ```ts filename="app/sitemap.ts" switcher
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://acme.com",
+      url: 'https://acme.com',
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: 'yearly',
       priority: 1,
     },
     {
-      url: "https://acme.com/about",
+      url: 'https://acme.com/about',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: "https://acme.com/blog",
+      url: 'https://acme.com/blog',
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 0.5,
     },
-  ];
+  ]
 }
 ```
 
@@ -76,24 +76,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
 export default function sitemap() {
   return [
     {
-      url: "https://acme.com",
+      url: 'https://acme.com',
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: 'yearly',
       priority: 1,
     },
     {
-      url: "https://acme.com/about",
+      url: 'https://acme.com/about',
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: "https://acme.com/blog",
+      url: 'https://acme.com/blog',
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 0.5,
     },
-  ];
+  ]
 }
 ```
 
@@ -125,41 +125,41 @@ export default function sitemap() {
 ### Generate a localized Sitemap
 
 ```ts filename="app/sitemap.ts" switcher
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://acme.com",
+      url: 'https://acme.com',
       lastModified: new Date(),
       alternates: {
         languages: {
-          es: "https://acme.com/es",
-          de: "https://acme.com/de",
+          es: 'https://acme.com/es',
+          de: 'https://acme.com/de',
         },
       },
     },
     {
-      url: "https://acme.com/about",
+      url: 'https://acme.com/about',
       lastModified: new Date(),
       alternates: {
         languages: {
-          es: "https://acme.com/es/about",
-          de: "https://acme.com/de/about",
+          es: 'https://acme.com/es/about',
+          de: 'https://acme.com/de/about',
         },
       },
     },
     {
-      url: "https://acme.com/blog",
+      url: 'https://acme.com/blog',
       lastModified: new Date(),
       alternates: {
         languages: {
-          es: "https://acme.com/es/blog",
-          de: "https://acme.com/de/blog",
+          es: 'https://acme.com/es/blog',
+          de: 'https://acme.com/de/blog',
         },
       },
     },
-  ];
+  ]
 }
 ```
 
@@ -218,29 +218,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
 예를 들어, `generateSitemaps`를 사용하여 사이트맵을 분할하려면 사이트맵 `id`가 포함된 객체 배열을 반환합니다. 그런 다음, 고유한 사이트맵을 생성하기 위해 `id`를 사용합니다.
 
 ```ts filename="app/product/sitemap.ts" switcher
-import type { MetadataRoute } from "next";
-import { BASE_URL } from "@/app/lib/constants";
+import type { MetadataRoute } from 'next'
+import { BASE_URL } from '@/app/lib/constants'
 
 export async function generateSitemaps() {
   // 제품 총 수를 가져와서 필요한 사이트맵 수를 계산합니다.
-  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }]
 }
 
 export default async function sitemap({
   id,
 }: {
-  id: number;
+  id: number
 }): Promise<MetadataRoute.Sitemap> {
   // Google의 제한은 사이트맵당 50,000개의 URL입니다.
-  const start = id * 50000;
-  const end = start + 50000;
+  const start = id * 50000
+  const end = start + 50000
   const products = await getProducts(
-    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`
-  );
+    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`,
+  )
   return products.map((product) => ({
     url: `${BASE_URL}/product/${product.id}`,
     lastModified: product.date,
-  }));
+  }))
 }
 ```
 
@@ -278,21 +278,21 @@ export default async function sitemap({ id }) {
 
 ```tsx
 type Sitemap = Array<{
-  url: string;
-  lastModified?: string | Date;
+  url: string
+  lastModified?: string | Date
   changeFrequency?:
-    | "always"
-    | "hourly"
-    | "daily"
-    | "weekly"
-    | "monthly"
-    | "yearly"
-    | "never";
-  priority?: number;
+    | 'always'
+    | 'hourly'
+    | 'daily'
+    | 'weekly'
+    | 'monthly'
+    | 'yearly'
+    | 'never'
+  priority?: number
   alternates?: {
-    languages?: Languages<string>;
-  };
-}>;
+    languages?: Languages<string>
+  }
+}>
 ```
 
 ## Version History

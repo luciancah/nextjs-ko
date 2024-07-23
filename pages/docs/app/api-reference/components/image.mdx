@@ -23,7 +23,7 @@ description: Optimize Images in your Next.js Application using the built-in `nex
 이 API 참조는 Image 컴포넌트에서 사용 가능한 [props](#props) 및 [구성 옵션](#configuration-options)을 이해하는 데 도움이 됩니다. 기능 및 사용법에 대한 자세한 내용은 [Image 컴포넌트](/docs/app/building-your-application/optimizing/images) 페이지를 참조하십시오.
 
 ```jsx filename="app/page.js"
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page() {
   return (
@@ -33,7 +33,7 @@ export default function Page() {
       height={500}
       alt="Picture of the author"
     />
-  );
+  )
 }
 ```
 
@@ -68,7 +68,7 @@ export default function Page() {
 Image 컴포넌트는 다음 속성이 필요합니다: `src`, `alt`, `width`, `height` (또는 `fill`).
 
 ```jsx filename="app/page.js"
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page() {
   return (
@@ -80,7 +80,7 @@ export default function Page() {
         alt="Picture of the author"
       />
     </div>
-  );
+  )
 }
 ```
 
@@ -140,13 +140,13 @@ export default function Page() {
 <AppOnly>
 
 ```js
-"use client";
+'use client'
 
-import Image from "next/image";
+import Image from 'next/image'
 
 const imageLoader = ({ src, width, quality }) => {
-  return `https://example.com/${src}?w=${width}&q=${quality || 75}`;
-};
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+}
 
 export default function Page() {
   return (
@@ -157,7 +157,7 @@ export default function Page() {
       width={500}
       height={500}
     />
-  );
+  )
 }
 ```
 
@@ -168,11 +168,11 @@ export default function Page() {
 <PagesOnly>
 
 ```js
-import Image from "next/image";
+import Image from 'next/image'
 
 const imageLoader = ({ src, width, quality }) => {
-  return `https://example.com/${src}?w=${width}&q=${quality || 75}`;
-};
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+}
 
 export default function Page() {
   return (
@@ -183,7 +183,7 @@ export default function Page() {
       width={500}
       height={500}
     />
-  );
+  )
 }
 ```
 
@@ -227,7 +227,7 @@ fill={true} // {true} | {false}
 예를 들어, 스타일이 모바일 장치에서 전체 너비, 태블릿에서 2열 레이아웃, 데스크탑 디스플레이에서 3열 레이아웃이 되도록 하는 경우, 다음과 같은 `sizes` 속성을 포함해야 합니다:
 
 ```jsx
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page() {
   return (
@@ -238,7 +238,7 @@ export default function Page() {
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </div>
-  );
+  )
 }
 ```
 
@@ -272,7 +272,7 @@ true로 설정하면 이미지는 높은 우선순위로 간주되어 [preload](
 ### `placeholder`
 
 ```js
-placeholder = "empty"; // "empty" | "blur" | "data:image/..."
+placeholder = 'empty' // "empty" | "blur" | "data:image/..."
 ```
 
 이미지가 로드되는 동안 사용할 플레이스홀더입니다. 가능한 값은 `blur`, `empty`, `data:image/...`입니다. 기본값은 `empty`입니다.
@@ -301,12 +301,12 @@ placeholder = "empty"; // "empty" | "blur" | "data:image/..."
 
 ```jsx filename="components/ProfileImage.js"
 const imageStyle = {
-  borderRadius: "50%",
-  border: "1px solid #fff",
-};
+  borderRadius: '50%',
+  border: '1px solid #fff',
+}
 
 export default function ProfileImage() {
-  return <Image src="..." style={imageStyle} />;
+  return <Image src="..." style={imageStyle} />
 }
 ```
 
@@ -379,7 +379,7 @@ export default function ProfileImage() {
 > **권장 사항**: 이 속성은 고급 사용 사례에만 해당됩니다. 이미지를 `eager`로 로드하도록 전환하면 일반적으로 **성능이 저하**됩니다. 대신 이미지를 적극적으로 미리 로드하는 [`priority`](#priority) 속성을 사용하는 것이 좋습니다.
 
 ```js
-loading = "lazy"; // {lazy} | {eager}
+loading = 'lazy' // {lazy} | {eager}
 ```
 
 이미지의 로딩 동작을 나타냅니다. 기본값은 `lazy`입니다.
@@ -412,11 +412,11 @@ unoptimized = {false} // {false} | {true}
 true인 경우, 품질, 크기 또는 형식을 변경하지 않고 원본 이미지를 그대로 제공합니다. 기본값은 `false`입니다.
 
 ```js
-import Image from "next/image";
+import Image from 'next/image'
 
 const UnoptimizedImage = (props) => {
-  return <Image {...props} unoptimized />;
-};
+  return <Image {...props} unoptimized />
+}
 ```
 
 Next.js 12.3.0 이후로, 이 속성은 다음 구성을 사용하여 `next.config.js`를 업데이트하여 모든 이미지에 할당할 수 있습니다:
@@ -426,7 +426,7 @@ module.exports = {
   images: {
     unoptimized: true,
   },
-};
+}
 ```
 
 ### `overrideSrc`
@@ -485,14 +485,14 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "example.com",
-        port: "",
-        pathname: "/account123/**",
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/account123/**',
       },
     ],
   },
-};
+}
 ```
 
 > **참고**: 위 예제는 `next/image`의 `src` 속성이 `https://example.com/account123/`로 시작해야 함을 보장합니다. 다른 프로토콜, 호스트 이름, 포트 또는 일치하지 않는 경로는 400 Bad Request를 반환합니다.
@@ -504,13 +504,13 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "**.example.com",
-        port: "",
+        protocol: 'https',
+        hostname: '**.example.com',
+        port: '',
       },
     ],
   },
-};
+}
 ```
 
 > **참고**: 위 예제는 `next/image`의 `src` 속성이 `https://img1.example.com` 또는 `https://me.avatar.example.com` 또는 여러 하위 도메인 중 하나로 시작해야 함을 보장합니다. 다른 프로토콜, 포트 또는 일치하지 않는 호스트 이름은 400 Bad Request를 반환합니다.
@@ -537,9 +537,9 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   images: {
-    domains: ["assets.acme.com"],
+    domains: ['assets.acme.com'],
   },
-};
+}
 ```
 
 ### `loaderFile`
@@ -549,10 +549,10 @@ Next.js 내장 이미지 최적화 API 대신 클라우드 제공업체를 사�
 ```js filename="next.config.js"
 module.exports = {
   images: {
-    loader: "custom",
-    loaderFile: "./my/image/loader.js",
+    loader: 'custom',
+    loaderFile: './my/image/loader.js',
   },
-};
+}
 ```
 
 이 파일은 Next.js 애플리케이션의 루트 상대 경로를 가리켜야 합니다. 이 파일은 문자열을 반환하는 기본 함수를 내보내야 합니다. 예를 들어:
@@ -560,10 +560,10 @@ module.exports = {
 <AppOnly>
 
 ```js filename="my/image/loader.js"
-"use client";
+'use client'
 
 export default function myImageLoader({ src, width, quality }) {
-  return `https://example.com/${src}?w=${width}&q=${quality || 75}`;
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
 }
 ```
 
@@ -573,7 +573,7 @@ export default function myImageLoader({ src, width, quality }) {
 
 ```js filename="my/image/loader.js"
 export default function myImageLoader({ src, width, quality }) {
-  return `https://example.com/${src}?w=${width}&q=${quality || 75}`;
+  return `https://example.com/${src}?w=${width}&q=${quality || 75}`
 }
 ```
 
@@ -606,7 +606,7 @@ module.exports = {
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
-};
+}
 ```
 
 ### `imageSizes`
@@ -622,7 +622,7 @@ module.exports = {
   images: {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-};
+}
 ```
 
 ### `formats`
@@ -636,9 +636,9 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   images: {
-    formats: ["image/webp"],
+    formats: ['image/webp'],
   },
-};
+}
 ```
 
 다음 구성을 사용하여 AVIF 지원을 활성화할 수 있습니다.
@@ -646,9 +646,9 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ['image/avif', 'image/webp'],
   },
-};
+}
 ```
 
 > **참고**:
@@ -685,7 +685,7 @@ module.exports = {
   images: {
     minimumCacheTTL: 60,
   },
-};
+}
 ```
 
 최적화된 이미지의 만료(또는 Max Age)는 `minimumCacheTTL` 또는 상위 이미지 `Cache-Control` 헤더 중 더 큰 값으로 정의됩니다.
@@ -707,7 +707,7 @@ module.exports = {
   images: {
     disableStaticImages: true,
   },
-};
+}
 ```
 
 ### `dangerouslyAllowSVG`
@@ -722,10 +722,10 @@ module.exports = {
 module.exports = {
   images: {
     dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
+    contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-};
+}
 ```
 
 추가로, `contentDispositionType`을 설정하여 브라우저가 이미지를 다운로드하도록 강제하고, `contentSecurityPolicy`를 설정하여 이미지에 내장된 스크립트가 실행되지 않도록 하는 것이 강력히 권장됩니다.
@@ -741,9 +741,9 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   images: {
-    contentDispositionType: "inline",
+    contentDispositionType: 'inline',
   },
-};
+}
 ```
 
 ## 애니메이션 이미지
@@ -763,8 +763,8 @@ module.exports = {
 소스 이미지가 동적이지 않은 경우, 정적 임포트를 사용하여 반응형 이미지를 생성할 수 있습니다:
 
 ```jsx filename="components/author.js"
-import Image from "next/image";
-import me from "../photos/me.jpg";
+import Image from 'next/image'
+import me from '../photos/me.jpg'
 
 export default function Author() {
   return (
@@ -773,11 +773,11 @@ export default function Author() {
       alt="Picture of the author"
       sizes="100vw"
       style={{
-        width: "100%",
-        height: "auto",
+        width: '100%',
+        height: 'auto',
       }}
     />
-  );
+  )
 }
 ```
 
@@ -790,7 +790,7 @@ export default function Author() {
 소스 이미지가 동적이거나 원격 URL인 경우, 반응형 이미지의 올바른 종횡비를 설정하기 위해 `width`와 `height`를 제공해야 합니다:
 
 ```jsx filename="components/page.js"
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page({ photoUrl }) {
   return (
@@ -799,13 +799,13 @@ export default function Page({ photoUrl }) {
       alt="Picture of the author"
       sizes="100vw"
       style={{
-        width: "100%",
-        height: "auto",
+        width: '100%',
+        height: 'auto',
       }}
       width={500}
       height={300}
     />
-  );
+  )
 }
 ```
 
@@ -818,22 +818,22 @@ export default function Page({ photoUrl }) {
 종횡비를 모르는 경우, [`fill`](#fill) 속성을 설정하고 부모 요소에 `position: relative`를 설정해야 합니다. 원하는 스트레치 또는 자르기 동작에 따라 `object-fit` 스타일을 선택적으로 설정할 수 있습니다:
 
 ```jsx filename="app/page.js"
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page({ photoUrl }) {
   return (
-    <div style={{ position: "relative", width: "300px", height: "500px" }}>
+    <div style={{ position: 'relative', width: '300px', height: '500px' }}>
       <Image
         src={photoUrl}
         alt="Picture of the author"
         sizes="300px"
         fill
         style={{
-          objectFit: "contain",
+          objectFit: 'contain',
         }}
       />
     </div>
-  );
+  )
 }
 ```
 
@@ -861,40 +861,40 @@ export default function Page({ photoUrl }) {
 ```
 
 ```tsx filename="components/theme-image.tsx" switcher
-import styles from "./theme-image.module.css";
-import Image, { ImageProps } from "next/image";
+import styles from './theme-image.module.css'
+import Image, { ImageProps } from 'next/image'
 
-type Props = Omit<ImageProps, "src" | "priority" | "loading"> & {
-  srcLight: string;
-  srcDark: string;
-};
+type Props = Omit<ImageProps, 'src' | 'priority' | 'loading'> & {
+  srcLight: string
+  srcDark: string
+}
 
 const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
+  const { srcLight, srcDark, ...rest } = props
 
   return (
     <>
       <Image {...rest} src={srcLight} className={styles.imgLight} />
       <Image {...rest} src={srcDark} className={styles.imgDark} />
     </>
-  );
-};
+  )
+}
 ```
 
 ```jsx filename="components/theme-image.js" switcher
-import styles from "./theme-image.module.css";
-import Image from "next/image";
+import styles from './theme-image.module.css'
+import Image from 'next/image'
 
 const ThemeImage = (props) => {
-  const { srcLight, srcDark, ...rest } = props;
+  const { srcLight, srcDark, ...rest } = props
 
   return (
     <>
       <Image {...rest} src={srcLight} className={styles.imgLight} />
       <Image {...rest} src={srcDark} className={styles.imgDark} />
     </>
-  );
-};
+  )
+}
 ```
 
 > **참고**: 기본 `loading="lazy"` 동작은 올바른 이미지만 로드되도록 보장합니다. `priority` 또는 `loading="eager"`를 사용할 수 없습니다. 이는 두 이미지 모두 로드되기 때문입니다. 대신 [`fetchPriority="high"`](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/fetchPriority)를 사용할 수 있습니다.
@@ -914,16 +914,16 @@ const ThemeImage = (props) => {
 라이트 모드와 다크 모드에 대해 다른 이미지를 표시하려면, 사용자의 [선호 색상 체계](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)에 따라 다른 이미지를 표시하기 위해 [`<picture>`](https://developer.mozilla.org/docs/Web/HTML/Element/picture) 요소를 사용할 수 있습니다.
 
 ```jsx filename="app/page.js"
-import { getImageProps } from "next/image";
+import { getImageProps } from 'next/image'
 
 export default function Page() {
-  const common = { alt: "Theme Example", width: 800, height: 400 };
+  const common = { alt: 'Theme Example', width: 800, height: 400 }
   const {
     props: { srcSet: dark },
-  } = getImageProps({ ...common, src: "/dark.png" });
+  } = getImageProps({ ...common, src: '/dark.png' })
   const {
     props: { srcSet: light, ...rest },
-  } = getImageProps({ ...common, src: "/light.png" });
+  } = getImageProps({ ...common, src: '/light.png' })
 
   return (
     <picture>
@@ -931,7 +931,7 @@ export default function Page() {
       <source media="(prefers-color-scheme: light)" srcSet={light} />
       <img {...rest} />
     </picture>
-  );
+  )
 }
 ```
 
@@ -940,10 +940,10 @@ export default function Page() {
 모바일과 데스크탑에 대해 다른 이미지를 표시하려면, 종종 [아트 디렉션](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#art_direction)이라고 불리는 이 기능을 사용하여 `getImageProps()`에 다른 `src`, `width`, `height`, `quality` 속성을 제공할 수 있습니다.
 
 ```jsx filename="app/page.js"
-import { getImageProps } from "next/image";
+import { getImageProps } from 'next/image'
 
 export default function Home() {
-  const common = { alt: "Art Direction Example", sizes: "100vw" };
+  const common = { alt: 'Art Direction Example', sizes: '100vw' }
   const {
     props: { srcSet: desktop },
   } = getImageProps({
@@ -951,8 +951,8 @@ export default function Home() {
     width: 1440,
     height: 875,
     quality: 80,
-    src: "/desktop.jpg",
-  });
+    src: '/desktop.jpg',
+  })
   const {
     props: { srcSet: mobile, ...rest },
   } = getImageProps({
@@ -960,16 +960,16 @@ export default function Home() {
     width: 750,
     height: 1334,
     quality: 70,
-    src: "/mobile.jpg",
-  });
+    src: '/mobile.jpg',
+  })
 
   return (
     <picture>
       <source media="(min-width: 1000px)" srcSet={desktop} />
       <source media="(min-width: 500px)" srcSet={mobile} />
-      <img {...rest} style={{ width: "100%", height: "auto" }} />
+      <img {...rest} style={{ width: '100%', height: 'auto' }} />
     </picture>
-  );
+  )
 }
 ```
 
@@ -978,31 +978,31 @@ export default function Home() {
 `srcSet` 문자열을 [`image-set()`](https://developer.mozilla.org/en-US/docs/Web/CSS/image/image-set) CSS 함수로 변환하여 배경 이미지를 최적화할 수도 있습니다.
 
 ```jsx filename="app/page.js"
-import { getImageProps } from "next/image";
+import { getImageProps } from 'next/image'
 
-function getBackgroundImage(srcSet = "") {
+function getBackgroundImage(srcSet = '') {
   const imageSet = srcSet
-    .split(", ")
+    .split(', ')
     .map((str) => {
-      const [url, dpi] = str.split(" ");
-      return `url("${url}") ${dpi}`;
+      const [url, dpi] = str.split(' ')
+      return `url("${url}") ${dpi}`
     })
-    .join(", ");
-  return `image-set(${imageSet})`;
+    .join(', ')
+  return `image-set(${imageSet})`
 }
 
 export default function Home() {
   const {
     props: { srcSet },
-  } = getImageProps({ alt: "", width: 128, height: 128, src: "/img.png" });
-  const backgroundImage = getBackgroundImage(srcSet);
-  const style = { height: "100vh", width: "100vw", backgroundImage };
+  } = getImageProps({ alt: '', width: 128, height: 128, src: '/img.png' })
+  const backgroundImage = getBackgroundImage(srcSet)
+  const style = { height: '100vh', width: '100vw', backgroundImage }
 
   return (
     <main style={style}>
       <h1>Hello World</h1>
     </main>
-  );
+  )
 }
 ```
 

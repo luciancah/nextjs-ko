@@ -10,17 +10,17 @@ description: API Reference for the unstable_rethrow function.
 예를 들어, `notFound` 함수를 호출하면 내부 Next.js 오류가 발생하고 [`not-found.js`](/docs/app/api-reference/file-conventions/not-found) 컴포넌트가 렌더링됩니다. 그러나 `try/catch` 블록 내에서 사용되면 오류가 잡혀 `not-found.js`가 렌더링되지 않게 됩니다:
 
 ```tsx filename="@/app/ui/component.tsx"
-import { notFound } from "next/navigation";
+import { notFound } from 'next/navigation'
 
 export default async function Page() {
   try {
-    const post = await fetch("https://.../posts/1").then((res) => {
-      if (res.status === 404) notFound();
-      if (!res.ok) throw new Error(res.statusText);
-      return res.json();
-    });
+    const post = await fetch('https://.../posts/1').then((res) => {
+      if (res.status === 404) notFound()
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json()
+    })
   } catch (err) {
-    console.error(err);
+    console.error(err)
   }
 }
 ```
@@ -28,18 +28,18 @@ export default async function Page() {
 `unstable_rethrow` API를 사용하여 내부 오류를 다시 던지고 예상된 동작을 계속할 수 있습니다:
 
 ```tsx filename="@/app/ui/component.tsx"
-import { notFound, unstable_rethrow } from "next/navigation";
+import { notFound, unstable_rethrow } from 'next/navigation'
 
 export default async function Page() {
   try {
-    const post = await fetch("https://.../posts/1").then((res) => {
-      if (res.status === 404) notFound();
-      if (!res.ok) throw new Error(res.statusText);
-      return res.json();
-    });
+    const post = await fetch('https://.../posts/1').then((res) => {
+      if (res.status === 404) notFound()
+      if (!res.ok) throw new Error(res.statusText)
+      return res.json()
+    })
   } catch (err) {
-    unstable_rethrow(err);
-    console.error(err);
+    unstable_rethrow(err)
+    console.error(err)
   }
 }
 ```

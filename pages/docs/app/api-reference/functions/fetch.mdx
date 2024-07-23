@@ -16,19 +16,19 @@ export default async function Page() {
   // 이 요청은 수동으로 무효화될 때까지 캐시되어야 합니다.
   // `getStaticProps`와 유사합니다.
   // `force-cache`가 기본값이므로 생략할 수 있습니다.
-  const staticData = await fetch(`https://...`, { cache: "force-cache" });
+  const staticData = await fetch(`https://...`, { cache: 'force-cache' })
 
   // 이 요청은 매 요청마다 다시 가져와야 합니다.
   // `getServerSideProps`와 유사합니다.
-  const dynamicData = await fetch(`https://...`, { cache: "no-store" });
+  const dynamicData = await fetch(`https://...`, { cache: 'no-store' })
 
   // 이 요청은 10초 동안 캐시되어야 합니다.
   // `revalidate` 옵션이 있는 `getStaticProps`와 유사합니다.
   const revalidatedData = await fetch(`https://...`, {
     next: { revalidate: 10 },
-  });
+  })
 
-  return <div>...</div>;
+  return <div>...</div>
 }
 ```
 
@@ -37,19 +37,19 @@ export default async function Page() {
   // 이 요청은 수동으로 무효화될 때까지 캐시되어야 합니다.
   // `getStaticProps`와 유사합니다.
   // `force-cache`가 기본값이므로 생략할 수 있습니다.
-  const staticData = await fetch(`https://...`, { cache: "force-cache" });
+  const staticData = await fetch(`https://...`, { cache: 'force-cache' })
 
   // 이 요청은 매 요청마다 다시 가져와야 합니다.
   // `getServerSideProps`와 유사합니다.
-  const dynamicData = await fetch(`https://...`, { cache: "no-store" });
+  const dynamicData = await fetch(`https://...`, { cache: 'no-store' })
 
   // 이 요청은 10초 동안 캐시되어야 합니다.
   // `revalidate` 옵션이 있는 `getStaticProps`와 유사합니다.
   const revalidatedData = await fetch(`https://...`, {
     next: { revalidate: 10 },
-  });
+  })
 
-  return <div>...</div>;
+  return <div>...</div>
 }
 ```
 
@@ -62,7 +62,7 @@ Next.js는 [웹 `fetch()` API](https://developer.mozilla.org/docs/Web/API/Fetch_
 Next.js [데이터 캐시](/docs/app/building-your-application/caching#data-cache)와의 상호 작용 방식을 설정합니다.
 
 ```ts
-fetch(`https://...`, { cache: "force-cache" | "no-store" });
+fetch(`https://...`, { cache: 'force-cache' | 'no-store' })
 ```
 
 - **`no-store`** (기본값): Next.js는 캐시를 확인하지 않고 매 요청마다 원격 서버에서 리소스를 가져오며, 다운로드한 리소스로 캐시를 업데이트하지 않습니다.
@@ -75,7 +75,7 @@ fetch(`https://...`, { cache: "force-cache" | "no-store" });
 ### `options.next.revalidate`
 
 ```ts
-fetch(`https://...`, { next: { revalidate: false | 0 | number } });
+fetch(`https://...`, { next: { revalidate: false | 0 | number } })
 ```
 
 리소스의 캐시 수명을 설정합니다(초 단위).
@@ -94,7 +94,7 @@ fetch(`https://...`, { next: { revalidate: false | 0 | number } });
 ### `options.next.tags`
 
 ```ts
-fetch(`https://...`, { next: { tags: ["collection"] } });
+fetch(`https://...`, { next: { tags: ['collection'] } })
 ```
 
 리소스의 캐시 태그를 설정합니다. 데이터는 [`revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag)를 사용하여 온디맨드로 재검증할 수 있습니다. 사용자 지정 태그의 최대 길이는 256자이고 태그 항목의 최대 수는 64개입니다.

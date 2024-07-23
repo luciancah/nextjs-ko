@@ -19,11 +19,11 @@ NextResponse는 추가 편의 메서드와 함께 [Web Response API](https://dev
 
 ```ts
 // /home 요청이 주어졌을 때
-let response = NextResponse.next();
+let response = NextResponse.next()
 // 배너를 숨기기 위한 쿠키 설정
-response.cookies.set("show-banner", "false");
+response.cookies.set('show-banner', 'false')
 // 응답에는 `Set-Cookie:show-banner=false;path=/home` 헤더가 추가됩니다.
-return response;
+return response
 ```
 
 ### `get(name)`
@@ -32,9 +32,9 @@ return response;
 
 ```ts
 // /home 요청이 주어졌을 때
-let response = NextResponse.next();
+let response = NextResponse.next()
 // { name: 'show-banner', value: 'false', Path: '/home' }
-response.cookies.get("show-banner");
+response.cookies.get('show-banner')
 ```
 
 ### `getAll()`
@@ -43,14 +43,14 @@ response.cookies.get("show-banner");
 
 ```ts
 // /home 요청이 주어졌을 때
-let response = NextResponse.next();
+let response = NextResponse.next()
 // [
 //   { name: 'experiments', value: 'new-pricing-page', Path: '/home' },
 //   { name: 'experiments', value: 'winter-launch', Path: '/home' },
 // ]
-response.cookies.getAll("experiments");
+response.cookies.getAll('experiments')
 // 또는, 응답에 있는 모든 쿠키를 가져옵니다.
-response.cookies.getAll();
+response.cookies.getAll()
 ```
 
 ### `delete(name)`
@@ -59,9 +59,9 @@ response.cookies.getAll();
 
 ```ts
 // /home 요청이 주어졌을 때
-let response = NextResponse.next();
+let response = NextResponse.next()
 // 삭제된 경우 true를 반환하고, 그렇지 않으면 false를 반환합니다.
-response.cookies.delete("experiments");
+response.cookies.delete('experiments')
 ```
 
 ## `json()`
@@ -69,18 +69,18 @@ response.cookies.delete("experiments");
 주어진 JSON 본문을 사용하여 응답을 생성합니다.
 
 ```ts filename="app/api/route.ts" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-  return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
 }
 ```
 
 ```js filename="app/api/route.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export async function GET(request) {
-  return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
 }
 ```
 
@@ -89,22 +89,22 @@ export async function GET(request) {
 [URL](https://developer.mozilla.org/docs/Web/API/URL)로 리디렉션하는 응답을 생성합니다.
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-return NextResponse.redirect(new URL("/new", request.url));
+return NextResponse.redirect(new URL('/new', request.url))
 ```
 
 [URL](https://developer.mozilla.org/docs/Web/API/URL)은 `NextResponse.redirect()` 메서드에서 사용되기 전에 생성되고 수정될 수 있습니다. 예를 들어, `request.nextUrl` 속성을 사용하여 현재 URL을 가져온 다음, 다른 URL로 리디렉션하도록 수정할 수 있습니다.
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 // 주어진 요청에 대해...
-const loginUrl = new URL("/login", request.url);
+const loginUrl = new URL('/login', request.url)
 // /login URL에 ?from=/incoming-url 추가
-loginUrl.searchParams.set("from", request.nextUrl.pathname);
+loginUrl.searchParams.set('from', request.nextUrl.pathname)
 // 새 URL로 리디렉션
-return NextResponse.redirect(loginUrl);
+return NextResponse.redirect(loginUrl)
 ```
 
 ## `rewrite()`
@@ -112,11 +112,11 @@ return NextResponse.redirect(loginUrl);
 원래의 URL을 유지하면서 주어진 [URL](https://developer.mozilla.org/docs/Web/API/URL)을 재작성(프록시)하는 응답을 생성합니다.
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 // 들어오는 요청: /about, 브라우저는 /about 표시
 // 재작성된 요청: /proxy, 브라우저는 /about 표시
-return NextResponse.rewrite(new URL("/proxy", request.url));
+return NextResponse.rewrite(new URL('/proxy', request.url))
 ```
 
 ## `next()`
@@ -124,27 +124,27 @@ return NextResponse.rewrite(new URL("/proxy", request.url));
 `next()` 메서드는 라우팅을 계속하도록 허용하는 미들웨어에서 유용합니다.
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-return NextResponse.next();
+return NextResponse.next()
 ```
 
 응답을 생성할 때 `headers`를 전달할 수도 있습니다:
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 // 주어진 요청에 대해...
-const newHeaders = new Headers(request.headers);
+const newHeaders = new Headers(request.headers)
 // 새 헤더 추가
-newHeaders.set("x-version", "123");
+newHeaders.set('x-version', '123')
 // 새 헤더로 응답 생성
 return NextResponse.next({
   request: {
     // 새 요청 헤더
     headers: newHeaders,
   },
-});
+})
 ```
 
 ## `headers`
@@ -152,20 +152,20 @@ return NextResponse.next({
 응답의 헤더를 설정할 수 있습니다. 이는 HTTP 응답의 헤더를 설정하거나 조작할 때 유용합니다.
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-const response = NextResponse.next();
+const response = NextResponse.next()
 // 헤더 설정
-response.headers.set("x-custom-header", "my-value");
-return response;
+response.headers.set('x-custom-header', 'my-value')
+return response
 ```
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-const response = NextResponse.next();
+const response = NextResponse.next()
 // 헤더 가져오기
-const headerValue = response.headers.get("x-custom-header");
+const headerValue = response.headers.get('x-custom-header')
 ```
 
 > **참고:** NextResponse는 추가 메서드와 함께 기본 Web Response API를 확장하므로, 기본 Response API의 모든 메서드도 사용할 수 있습니다.
@@ -175,20 +175,20 @@ const headerValue = response.headers.get("x-custom-header");
 응답의 상태 코드를 설정할 수 있습니다. 이는 HTTP 상태 코드를 설정하거나 확인할 때 유용합니다.
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-const response = NextResponse.next();
+const response = NextResponse.next()
 // 상태 코드 설정
-response.status = 404;
-return response;
+response.status = 404
+return response
 ```
 
 ```ts
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-const response = NextResponse.next();
+const response = NextResponse.next()
 // 상태 코드 가져오기
-const statusCode = response.status;
+const statusCode = response.status
 ```
 
 ## Version History

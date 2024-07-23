@@ -38,32 +38,32 @@ Middleware가 최적의 접근 방식이 아닌 상황을 인식하는 것도 �
 ## Example
 
 ```ts filename="middleware.ts" switcher
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 // 이 함수는 내부에서 `await`를 사용하는 경우 `async`로 표시될 수 있습니다
 export function middleware(request: NextRequest) {
-  return NextResponse.redirect(new URL("/home", request.url));
+  return NextResponse.redirect(new URL('/home', request.url))
 }
 
 // 아래 "Matching Paths"를 참조하여 자세히 알아보세요
 export const config = {
-  matcher: "/about/:path*",
-};
+  matcher: '/about/:path*',
+}
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 // 이 함수는 내부에서 `await`를 사용하는 경우 `async`로 표시될 수 있습니다
 export function middleware(request) {
-  return NextResponse.redirect(new URL("/home", request.url));
+  return NextResponse.redirect(new URL('/home', request.url))
 }
 
 // 아래 "Matching Paths"를 참조하여 자세히 알아보세요
 export const config = {
-  matcher: "/about/:path*",
-};
+  matcher: '/about/:path*',
+}
 ```
 
 ## Matching Paths
@@ -90,16 +90,16 @@ Middleware가 실행될 경로를 정의하는 두 가지 방법이 있습니다
 
 ```js filename="middleware.js"
 export const config = {
-  matcher: "/about/:path*",
-};
+  matcher: '/about/:path*',
+}
 ```
 
 단일 경로나 여러 경로를 배열 구문으로 매칭할 수 있습니다:
 
 ```js filename="middleware.js"
 export const config = {
-  matcher: ["/about/:path*", "/dashboard/:path*"],
-};
+  matcher: ['/about/:path*', '/dashboard/:path*'],
+}
 ```
 
 `matcher` 구성은 전체 정규식을 허용하므로, 부정형 전방탐색이나 문자 매칭과 같은 정규식 매칭이 지원됩니다. 특정 경로를 제외하고 모든 경로를 매칭하는 부정형 전방탐색의 예는 다음과 같습니다:
@@ -114,9 +114,9 @@ export const config = {
      * - _next/image (이미지 최적화 파일)
      * - favicon.ico (파비콘 파일)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
-};
+}
 ```
 
 또한 `missing` 또는 `has` 배열 또는 두 가지 조합을 사용하여 특정 요청을 위해 Middleware를 우회할 수 있습니다:
@@ -132,28 +132,28 @@ export const config = {
      * - favicon.ico (파비콘 파일)
      */
     {
-      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' },
       ],
     },
 
     {
-      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
       has: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
+        { type: 'header', key: 'next-router-prefetch' },
+        { type: 'header', key: 'purpose', value: 'prefetch' },
       ],
     },
 
     {
-      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-      has: [{ type: "header", key: "x-present" }],
-      missing: [{ type: "header", key: "x-missing", value: "prefetch" }],
+      source: '/((?!api|_next/static|_next/image|favicon.ico).*)',
+      has: [{ type: 'header', key: 'x-present' }],
+      missing: [{ type: 'header', key: 'x-missing', value: 'prefetch' }],
     },
   ],
-};
+}
 ```
 
 > **알아두면 좋은 점**: `matcher` 값은 빌드 시 정적으로 분석될 수 있도록 상수여야 합니다. 변수와 같은 동적 값은 무시됩니다.
@@ -174,30 +174,30 @@ export const config = {
 ### Conditional Statements
 
 ```ts filename="middleware.ts" switcher
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/about")) {
-    return NextResponse.rewrite(new URL("/about-2", request.url));
+  if (request.nextUrl.pathname.startsWith('/about')) {
+    return NextResponse.rewrite(new URL('/about-2', request.url))
   }
 
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    return NextResponse.rewrite(new URL("/dashboard/user", request.url));
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.rewrite(new URL('/dashboard/user', request.url))
   }
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export function middleware(request) {
-  if (request.nextUrl.pathname.startsWith("/about")) {
-    return NextResponse.rewrite(new URL("/about-2", request.url));
+  if (request.nextUrl.pathname.startsWith('/about')) {
+    return NextResponse.rewrite(new URL('/about-2', request.url))
   }
 
-  if (request.nextUrl.pathname.startsWith("/dashboard")) {
-    return NextResponse.rewrite(new URL("/dashboard/user", request.url));
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.rewrite(new URL('/dashboard/user', request.url))
   }
 }
 ```
@@ -238,65 +238,65 @@ Middleware에서 응답을 생성하려면 다음을 수행할 수 있습니다:
 2. 나가는 응답의 경우, `cookies`는 다음 메서드를 제공합니다: `get`, `getAll`, `set`, 및 `delete`.
 
 ```ts filename="middleware.ts" switcher
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   // 들어오는 요청에 "Cookie:nextjs=fast" 헤더가 있다고 가정합니다
   // `RequestCookies` API를 사용하여 요청에서 쿠키를 가져옵니다
-  let cookie = request.cookies.get("nextjs");
-  console.log(cookie); // => { name: 'nextjs', value: 'fast', Path: '/' }
-  const allCookies = request.cookies.getAll();
-  console.log(allCookies); // => [{ name: 'nextjs', value: 'fast' }]
+  let cookie = request.cookies.get('nextjs')
+  console.log(cookie) // => { name: 'nextjs', value: 'fast', Path: '/' }
+  const allCookies = request.cookies.getAll()
+  console.log(allCookies) // => [{ name: 'nextjs', value: 'fast' }]
 
-  request.cookies.has("nextjs"); // => true
-  request.cookies.delete("nextjs");
-  request.cookies.has("nextjs"); // => false
+  request.cookies.has('nextjs') // => true
+  request.cookies.delete('nextjs')
+  request.cookies.has('nextjs') // => false
 
   // `ResponseCookies` API를 사용하여 응답에 쿠키를 설정합니다
-  const response = NextResponse.next();
-  response.cookies.set("vercel", "fast");
+  const response = NextResponse.next()
+  response.cookies.set('vercel', 'fast')
   response.cookies.set({
-    name: "vercel",
-    value: "fast",
-    path: "/",
-  });
-  cookie = response.cookies.get("vercel");
-  console.log(cookie); // => { name: 'vercel', value: 'fast', Path: '/' }
+    name: 'vercel',
+    value: 'fast',
+    path: '/',
+  })
+  cookie = response.cookies.get('vercel')
+  console.log(cookie) // => { name: 'vercel', value: 'fast', Path: '/' }
   // 나가는 응답에는 `Set-Cookie:vercel=fast;path=/` 헤더가 포함됩니다.
 
-  return response;
+  return response
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export function middleware(request) {
   // 들어오는 요청에 "Cookie:nextjs=fast" 헤더가 있다고 가정합니다
   // `RequestCookies` API를 사용하여 요청에서 쿠키를 가져옵니다
-  let cookie = request.cookies.get("nextjs");
-  console.log(cookie); // => { name: 'nextjs', value: 'fast', Path: '/' }
-  const allCookies = request.cookies.getAll();
-  console.log(allCookies); // => [{ name: 'nextjs', value: 'fast' }]
+  let cookie = request.cookies.get('nextjs')
+  console.log(cookie) // => { name: 'nextjs', value: 'fast', Path: '/' }
+  const allCookies = request.cookies.getAll()
+  console.log(allCookies) // => [{ name: 'nextjs', value: 'fast' }]
 
-  request.cookies.has("nextjs"); // => true
-  request.cookies.delete("nextjs");
-  request.cookies.has("nextjs"); // => false
+  request.cookies.has('nextjs') // => true
+  request.cookies.delete('nextjs')
+  request.cookies.has('nextjs') // => false
 
   // `ResponseCookies` API를 사용하여 응답에 쿠키를 설정합니다
-  const response = NextResponse.next();
-  response.cookies.set("vercel", "fast");
+  const response = NextResponse.next()
+  response.cookies.set('vercel', 'fast')
   response.cookies.set({
-    name: "vercel",
-    value: "fast",
-    path: "/",
-  });
-  cookie = response.cookies.get("vercel");
-  console.log(cookie); // => { name: 'vercel', value: 'fast', Path: '/' }
+    name: 'vercel',
+    value: 'fast',
+    path: '/',
+  })
+  cookie = response.cookies.get('vercel')
+  console.log(cookie) // => { name: 'vercel', value: 'fast', Path: '/' }
   // 나가는 응답에는 `Set-Cookie:vercel=fast;path=/test` 헤더가 포함됩니다.
 
-  return response;
+  return response
 }
 ```
 
@@ -305,13 +305,13 @@ export function middleware(request) {
 `NextResponse` API를 사용하여 요청 및 응답 헤더를 설정할 수 있습니다 (요청 _헤더 설정은_ Next.js v13.0.0부터 사용할 수 있습니다).
 
 ```ts filename="middleware.ts" switcher
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   // 요청 헤더를 복제하고 새로운 헤더 `x-hello-from-middleware1`을 설정합니다
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-hello-from-middleware1", "hello");
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-hello-from-middleware1', 'hello')
 
   // NextResponse.next에서 요청 헤더를 설정할 수도 있습니다
   const response = NextResponse.next({
@@ -319,21 +319,21 @@ export function middleware(request: NextRequest) {
       // 새로운 요청 헤더
       headers: requestHeaders,
     },
-  });
+  })
 
   // 새로운 응답 헤더 `x-hello-from-middleware2`를 설정합니다
-  response.headers.set("x-hello-from-middleware2", "hello");
-  return response;
+  response.headers.set('x-hello-from-middleware2', 'hello')
+  return response
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
 export function middleware(request) {
   // 요청 헤더를 복제하고 새로운 헤더 `x-hello-from-middleware1`을 설정합니다
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-hello-from-middleware1", "hello");
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-hello-from-middleware1', 'hello')
 
   // NextResponse.next에서 요청 헤더를 설정할 수도 있습니다
   const response = NextResponse.next({
@@ -341,11 +341,11 @@ export function middleware(request) {
       // 새로운 요청 헤더
       headers: requestHeaders,
     },
-  });
+  })
 
   // 새로운 응답 헤더 `x-hello-from-middleware2`를 설정합니다
-  response.headers.set("x-hello-from-middleware2", "hello");
-  return response;
+  response.headers.set('x-hello-from-middleware2', 'hello')
+  return response
 }
 ```
 
@@ -356,93 +356,93 @@ export function middleware(request) {
 Middleware에서 CORS 헤더를 설정하여 교차 출처 요청을 허용할 수 있으며, 여기에는 [단순 요청](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) 및 [사전 요청](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#preflighted_requests)이 포함됩니다.
 
 ```tsx filename="middleware.ts" switcher
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server'
 
-const allowedOrigins = ["https://acme.com", "https://my-app.org"];
+const allowedOrigins = ['https://acme.com', 'https://my-app.org']
 
 const corsOptions = {
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
 
 export function middleware(request: NextRequest) {
   // 요청의 origin을 확인합니다
-  const origin = request.headers.get("origin") ?? "";
-  const isAllowedOrigin = allowedOrigins.includes(origin);
+  const origin = request.headers.get('origin') ?? ''
+  const isAllowedOrigin = allowedOrigins.includes(origin)
 
   // 사전 요청을 처리합니다
-  const isPreflight = request.method === "OPTIONS";
+  const isPreflight = request.method === 'OPTIONS'
 
   if (isPreflight) {
     const preflightHeaders = {
-      ...(isAllowedOrigin && { "Access-Control-Allow-Origin": origin }),
+      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
       ...corsOptions,
-    };
-    return NextResponse.json({}, { headers: preflightHeaders });
+    }
+    return NextResponse.json({}, { headers: preflightHeaders })
   }
 
   // 단순 요청을 처리합니다
-  const response = NextResponse.next();
+  const response = NextResponse.next()
 
   if (isAllowedOrigin) {
-    response.headers.set("Access-Control-Allow-Origin", origin);
+    response.headers.set('Access-Control-Allow-Origin', origin)
   }
 
   Object.entries(corsOptions).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
+    response.headers.set(key, value)
+  })
 
-  return response;
+  return response
 }
 
 export const config = {
-  matcher: "/api/:path*",
-};
+  matcher: '/api/:path*',
+}
 ```
 
 ```jsx filename="middleware.js" switcher
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server'
 
-const allowedOrigins = ["https://acme.com", "https://my-app.org"];
+const allowedOrigins = ['https://acme.com', 'https://my-app.org']
 
 const corsOptions = {
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
-};
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
 
 export function middleware(request) {
   // 요청의 origin을 확인합니다
-  const origin = request.headers.get("origin") ?? "";
-  const isAllowedOrigin = allowedOrigins.includes(origin);
+  const origin = request.headers.get('origin') ?? ''
+  const isAllowedOrigin = allowedOrigins.includes(origin)
 
   // 사전 요청을 처리합니다
-  const isPreflight = request.method === "OPTIONS";
+  const isPreflight = request.method === 'OPTIONS'
 
   if (isPreflight) {
     const preflightHeaders = {
-      ...(isAllowedOrigin && { "Access-Control-Allow-Origin": origin }),
+      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
       ...corsOptions,
-    };
-    return NextResponse.json({}, { headers: preflightHeaders });
+    }
+    return NextResponse.json({}, { headers: preflightHeaders })
   }
 
   // 단순 요청을 처리합니다
-  const response = NextResponse.next();
+  const response = NextResponse.next()
 
   if (isAllowedOrigin) {
-    response.headers.set("Access-Control-Allow-Origin", origin);
+    response.headers.set('Access-Control-Allow-Origin', origin)
   }
 
   Object.entries(corsOptions).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
+    response.headers.set(key, value)
+  })
 
-  return response;
+  return response
 }
 
 export const config = {
-  matcher: "/api/:path*",
-};
+  matcher: '/api/:path*',
+}
 ```
 
 <AppOnly>
@@ -456,42 +456,42 @@ export const config = {
 Middleware에서 `Response` 또는 `NextResponse` 인스턴스를 반환하여 직접 응답할 수 있습니다. (이는 [Next.js v13.1.0](https://nextjs.org/blog/next-13-1#nextjs-advanced-middleware)부터 사용 가능합니다)
 
 ```ts filename="middleware.ts" switcher
-import type { NextRequest } from "next/server";
-import { isAuthenticated } from "@lib/auth";
+import type { NextRequest } from 'next/server'
+import { isAuthenticated } from '@lib/auth'
 
 // Middleware를 `/api/`로 시작하는 경로로 제한합니다
 export const config = {
-  matcher: "/api/:function*",
-};
+  matcher: '/api/:function*',
+}
 
 export function middleware(request: NextRequest) {
   // 요청을 확인하기 위해 인증 함수를 호출합니다
   if (!isAuthenticated(request)) {
     // 오류 메시지를 나타내는 JSON으로 응답합니다
     return Response.json(
-      { success: false, message: "authentication failed" },
-      { status: 401 }
-    );
+      { success: false, message: 'authentication failed' },
+      { status: 401 },
+    )
   }
 }
 ```
 
 ```js filename="middleware.js" switcher
-import { isAuthenticated } from "@lib/auth";
+import { isAuthenticated } from '@lib/auth'
 
 // Middleware를 `/api/`로 시작하는 경로로 제한합니다
 export const config = {
-  matcher: "/api/:function*",
-};
+  matcher: '/api/:function*',
+}
 
 export function middleware(request) {
   // 요청을 확인하기 위해 인증 함수를 호출합니다
   if (!isAuthenticated(request)) {
     // 오류 메시지를 나타내는 JSON으로 응답합니다
     return Response.json(
-      { success: false, message: "authentication failed" },
-      { status: 401 }
-    );
+      { success: false, message: 'authentication failed' },
+      { status: 401 },
+    )
   }
 }
 ```
@@ -503,18 +503,18 @@ export function middleware(request) {
 `waitUntil()` 메서드는 프라미스를 인수로 받아서 프라미스가 해결될 때까지 Middleware의 수명을 연장합니다. 이는 백그라운드에서 작업을 수행하는 데 유용합니다.
 
 ```ts filename="middleware.ts"
-import { NextResponse } from "next/server";
-import type { NextFetchEvent, NextRequest } from "next/server";
+import { NextResponse } from 'next/server'
+import type { NextFetchEvent, NextRequest } from 'next/server'
 
 export function middleware(req: NextRequest, event: NextFetchEvent) {
   event.waitUntil(
-    fetch("https://my-analytics-platform.com", {
-      method: "POST",
+    fetch('https://my-analytics-platform.com', {
+      method: 'POST',
       body: JSON.stringify({ pathname: req.nextUrl.pathname }),
-    })
-  );
+    }),
+  )
 
-  return NextResponse.next();
+  return NextResponse.next()
 }
 ```
 
@@ -527,27 +527,27 @@ Next.js v13.1에서 두 가지 추가 플래그, `skipMiddlewareUrlNormalize` �
 ```js filename="next.config.js"
 module.exports = {
   skipTrailingSlashRedirect: true,
-};
+}
 ```
 
 ```js filename="middleware.js"
-const legacyPrefixes = ["/docs", "/blog"];
+const legacyPrefixes = ['/docs', '/blog']
 
 export default async function middleware(req) {
-  const { pathname } = req.nextUrl;
+  const { pathname } = req.nextUrl
 
   if (legacyPrefixes.some((prefix) => pathname.startsWith(prefix))) {
-    return NextResponse.next();
+    return NextResponse.next()
   }
 
   // 후행 슬래시 처리 적용
   if (
-    !pathname.endsWith("/") &&
+    !pathname.endsWith('/') &&
     !pathname.match(/((?!\.well-known(?:\/.*)?)(?:[^/]+\/)*[^/]+\.\w+)/)
   ) {
     return NextResponse.redirect(
-      new URL(`${req.nextUrl.pathname}/`, req.nextUrl)
-    );
+      new URL(`${req.nextUrl.pathname}/`, req.nextUrl),
+    )
   }
 }
 ```
@@ -557,16 +557,16 @@ export default async function middleware(req) {
 ```js filename="next.config.js"
 module.exports = {
   skipMiddlewareUrlNormalize: true,
-};
+}
 ```
 
 ```js filename="middleware.js"
 export default async function middleware(req) {
-  const { pathname } = req.nextUrl;
+  const { pathname } = req.nextUrl
 
   // GET /_next/data/build-id/hello.json
 
-  console.log(pathname);
+  console.log(pathname)
   // 플래그 사용 시 /_next/data/build-id/hello.json
   // 플래그 사용 안 할 경우 /hello로 정규화됩니다
 }

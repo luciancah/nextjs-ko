@@ -13,7 +13,7 @@ Next.js는 `next build` 중에 ID를 생성하여 애플리케이션이 제공�
 module.exports = {
   generateBuildId: async () => {
     // 이 값은 무엇이든 될 수 있으며, 최신 git 해시를 사용합니다.
-    return process.env.GIT_HASH;
+    return process.env.GIT_HASH
   },
-};
+}
 ```

@@ -47,45 +47,45 @@ pnpm create jest@latest
 구성 파일을 업데이트하여 `next/jest`를 사용하세요. 이 트랜스포머는 Jest가 Next.js와 함께 작동하기 위해 필요한 모든 구성 옵션을 가지고 있습니다:
 
 ```ts filename="jest.config.ts" switcher
-import type { Config } from "jest";
-import nextJest from "next/jest.js";
+import type { Config } from 'jest'
+import nextJest from 'next/jest.js'
 
 const createJestConfig = nextJest({
   // next.config.js 및 .env 파일을 테스트 환경에 로드하기 위해 Next.js 앱 경로를 제공합니다.
-  dir: "./",
-});
+  dir: './',
+})
 
 // Jest에 전달할 사용자 정의 구성을 추가합니다.
 const config: Config = {
-  coverageProvider: "v8",
-  testEnvironment: "jsdom",
+  coverageProvider: 'v8',
+  testEnvironment: 'jsdom',
   // 각 테스트가 실행되기 전에 추가 설정 옵션을 추가합니다.
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-};
+}
 
 // next/jest가 Next.js 구성을 로드할 수 있도록 createJestConfig가 이 방식으로 내보내집니다.
-export default createJestConfig(config);
+export default createJestConfig(config)
 ```
 
 ```js filename="jest.config.js" switcher
-const nextJest = require("next/jest");
+const nextJest = require('next/jest')
 
 /** @type {import('jest').Config} */
 const createJestConfig = nextJest({
   // next.config.js 및 .env 파일을 테스트 환경에 로드하기 위해 Next.js 앱 경로를 제공합니다.
-  dir: "./",
-});
+  dir: './',
+})
 
 // Jest에 전달할 사용자 정의 구성을 추가합니다.
 const config = {
-  coverageProvider: "v8",
-  testEnvironment: "jsdom",
+  coverageProvider: 'v8',
+  testEnvironment: 'jsdom',
   // 각 테스트가 실행되기 전에 추가 설정 옵션을 추가합니다.
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-};
+}
 
 // next/jest가 Next.js 구성을 로드할 수 있도록 createJestConfig가 이 방식으로 내보내집니다.
-module.exports = createJestConfig(config);
+module.exports = createJestConfig(config)
 ```
 
 `next/jest`는 내부적으로 다음 작업을 자동으로 구성합니다:
@@ -111,52 +111,52 @@ module.exports = createJestConfig(config);
 module.exports = {
   collectCoverage: true,
   // Node 14.x에서는 v8이 좋은 속도와 비교적 좋은 보고서를 제공합니다.
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
   collectCoverageFrom: [
-    "**/*.{js,jsx,ts,tsx}",
-    "!**/*.d.ts",
-    "!**/node_modules/**",
-    "!<rootDir>/out/**",
-    "!<rootDir>/.next/**",
-    "!<rootDir>/*.config.js",
-    "!<rootDir>/coverage/**",
+    '**/*.{js,jsx,ts,tsx}',
+    '!**/*.d.ts',
+    '!**/node_modules/**',
+    '!<rootDir>/out/**',
+    '!<rootDir>/.next/**',
+    '!<rootDir>/*.config.js',
+    '!<rootDir>/coverage/**',
   ],
   moduleNameMapper: {
     // CSS 모듈 가져오기 처리
     // https://jestjs.io/docs/webpack#mocking-css-modules
-    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
 
     // CSS 가져오기 처리 (CSS 모듈 없음)
-    "^.+\\.(css|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+    '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
 
     // 이미지 가져오기 처리
     // https://jestjs.io/docs/webpack#handling-static-assets
-    "^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i": `<rootDir>/__mocks__/fileMock.js`,
+    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i': `<rootDir>/__mocks__/fileMock.js`,
 
     // 모듈 별칭 처리
-    "^@/components/(.*)$": "<rootDir>/components/$1",
+    '^@/components/(.*)$': '<rootDir>/components/$1',
 
     // @next/font 처리
-    "@next/font/(.*)": `<rootDir>/__mocks__/nextFontMock.js`,
+    '@next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
     // next/font 처리
-    "next/font/(.*)": `<rootDir>/__mocks__/nextFontMock.js`,
+    'next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
     // server-only 비활성화
-    "server-only": `<rootDir>/__mocks__/empty.js`,
+    'server-only': `<rootDir>/__mocks__/empty.js`,
   },
   // 각 테스트가 실행되기 전에 추가 설정 옵션을 추가합니다.
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
-  testEnvironment: "jsdom",
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+  testEnvironment: 'jsdom',
   transform: {
     // babel-jest를 사용하여 next/babel 프리셋으로 테스트 변환
     // https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
-    "^.+\\.(js|jsx|ts|tsx)$": ["babel-jest", { presets: ["next/babel"] }],
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: [
-    "/node_modules/",
-    "^.+\\.module\\.(css|sass|scss)$",
+    '/node_modules/',
+    '^.+\\.module\\.(css|sass|scss)$',
   ],
-};
+}
 ```
 
 각 구성 옵션에 대한 자세한 내용은 [Jest docs](https://jestjs.io/docs/configuration)에서 확인할 수 있습니다. 또한 Next.js가 Jest를 구성하는 방법에 대해 [`next/jest` 구성](https://github.com/vercel/next.js/blob/e02fe314dcd0ae614c65b505c6daafbdeebb920e/packages/next/src/build/jest/jest.ts)을 검토하는 것도 좋습니다.
@@ -168,11 +168,11 @@ module.exports = {
 구성에서 참조된 모킹 파일 `fileMock.js`와 `styleMock.js`를 `__mocks__` 디렉토리에 생성하세요:
 
 ```js filename="__mocks__/fileMock.js"
-module.exports = "test-file-stub";
+module.exports = 'test-file-stub'
 ```
 
 ```js filename="__mocks__/styleMock.js"
-module.exports = {};
+module.exports = {}
 ```
 
 정적 자산 처리에 대한 자세한 내용은 [Jest Docs](https://jestjs.io/docs/webpack#handling-static-assets)를 참조하세요.
@@ -187,14 +187,14 @@ module.exports = new Proxy(
   {
     get: function getter() {
       return () => ({
-        className: "className",
-        variable: "variable",
+        className: 'className',
+        variable: 'variable',
 
-        style: { fontFamily: "fontFamily" },
-      });
+        style: { fontFamily: 'fontFamily' },
+      })
     },
-  }
-);
+  },
+)
 ```
 
 </PagesOnly>
@@ -228,21 +228,21 @@ moduleNameMapper: {
 `@testing-library/jest-dom`은 `.toBeInTheDocument()`와 같은 편리한 [커스텀 매처](https://github.com/testing-library/jest-dom#custom-matchers)를 포함하여 테스트 작성을 더 쉽게 만듭니다. 다음 옵션을 Jest 구성 파일에 추가하여 모든 테스트에서 커스텀 매처를 가져올 수 있습니다:
 
 ```ts filename="jest.config.ts" switcher
-setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"];
+setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
 ```
 
 ```js filename="jest.config.js" switcher
-setupFilesAfterEnv: ["<rootDir>/jest.setup.js"];
+setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 ```
 
 그런 다음 `jest.setup.ts` 파일에 다음 import를 추가하세요:
 
 ```ts filename="jest.setup.ts" switcher
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom'
 ```
 
 ```js filename="jest.setup.js" switcher
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom'
 ```
 
 > **유용한 정보**: [`extend-expect`는 v6.0에서 제거되었습니다](https://github.com/testing-library/jest-dom/releases/tag/v6.0.0), 따라서 버전 6 이전의 `@testing-library/jest-dom`을 사용하는 경우 `@testing-library/jest-dom/extend-expect`를 대신 가져와야 합니다.
@@ -277,24 +277,24 @@ import "@testing-library/jest-dom";
 
 ```jsx filename="pages/index.js
 export default function Home() {
-  return <h1>Home</h1>;
+  return <h1>Home</h1>
 }
 ```
 
 ```jsx filename="__tests__/index.test.js"
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import Home from "../pages/index";
+import '@testing-library/jest-dom'
+import { render, screen } from '@testing-library/react'
+import Home from '../pages/index'
 
-describe("Home", () => {
-  it("renders a heading", () => {
-    render(<Home />);
+describe('Home', () => {
+  it('renders a heading', () => {
+    render(<Home />)
 
-    const heading = screen.getByRole("heading", { level: 1 });
+    const heading = screen.getByRole('heading', { level: 1 })
 
-    expect(heading).toBeInTheDocument();
-  });
-});
+    expect(heading).toBeInTheDocument()
+  })
+})
 ```
 
 </PagesOnly>
@@ -304,7 +304,7 @@ describe("Home", () => {
 예를 들어, `<Page />` 컴포넌트가 헤딩을 성공적으로 렌더링하는지 확인하는 테스트를 추가할 수 있습니다:
 
 ```jsx filename="app/page.js
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -312,24 +312,24 @@ export default function Home() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="__tests__/page.test.jsx"
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import Page from "../app/page";
+import '@testing-library/jest-dom'
+import { render, screen } from '@testing-library/react'
+import Page from '../app/page'
 
-describe("Page", () => {
-  it("renders a heading", () => {
-    render(<Page />);
+describe('Page', () => {
+  it('renders a heading', () => {
+    render(<Page />)
 
-    const heading = screen.getByRole("heading", { level: 1 });
+    const heading = screen.getByRole('heading', { level: 1 })
 
-    expect(heading).toBeInTheDocument();
-  });
-});
+    expect(heading).toBeInTheDocument()
+  })
+})
 ```
 
 </AppOnly>
@@ -339,13 +339,13 @@ describe("Page", () => {
 <PagesOnly>
 
 ```jsx filename="__tests__/snapshot.js"
-import { render } from "@testing-library/react";
-import Home from "../pages/index";
+import { render } from '@testing-library/react'
+import Home from '../pages/index'
 
-it("renders homepage unchanged", () => {
-  const { container } = render(<Home />);
-  expect(container).toMatchSnapshot();
-});
+it('renders homepage unchanged', () => {
+  const { container } = render(<Home />)
+  expect(container).toMatchSnapshot()
+})
 ```
 
 > **유용한 정보**: 테스트 파일은 Pages Router 내에 포함되지 않아야 합니다. Pages Router 내의 모든 파일은 라우트로 간주되기 때문입니다.
@@ -355,13 +355,13 @@ it("renders homepage unchanged", () => {
 <AppOnly>
 
 ```jsx filename="__tests__/snapshot.js"
-import { render } from "@testing-library/react";
-import Page from "../app/page";
+import { render } from '@testing-library/react'
+import Page from '../app/page'
 
-it("renders homepage unchanged", () => {
-  const { container } = render(<Page />);
-  expect(container).toMatchSnapshot();
-});
+it('renders homepage unchanged', () => {
+  const { container } = render(<Page />)
+  expect(container).toMatchSnapshot()
+})
 ```
 
 </AppOnly>

@@ -43,21 +43,21 @@ npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
 프로젝트 루트에 있는 `next.config.mjs` 파일을 업데이트하여 MDX를 사용하도록 구성합니다:
 
 ```js filename="next.config.mjs"
-import createMDX from "@next/mdx";
+import createMDX from '@next/mdx'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // 마크다운 및 MDX 파일을 포함하도록 `pageExtensions`를 구성합니다
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   // 선택적으로 다른 Next.js 구성 추가 가능
-};
+}
 
 const withMDX = createMDX({
   // 원한다면 여기에서 마크다운 플러그인을 추가하세요
-});
+})
 
 // MDX 구성과 Next.js 구성을 병합합니다
-export default withMDX(nextConfig);
+export default withMDX(nextConfig)
 ```
 
 이렇게 하면 `.md` 및 `.mdx` 파일이 애플리케이션 내에서 페이지, 라우트 또는 가져오기(import)로 작동할 수 있습니다.
@@ -67,12 +67,12 @@ export default withMDX(nextConfig);
 글로벌 MDX 컴포넌트를 정의하기 위해 프로젝트 루트에 `mdx-components.tsx` (또는 `.js`) 파일을 생성합니다. 예를 들어, `pages` 또는 `app`과 같은 수준에 생성하거나, 해당되는 경우 `src` 폴더 안에 생성합니다.
 
 ```tsx filename="mdx-components.tsx" switcher
-import type { MDXComponents } from "mdx/types";
+import type { MDXComponents } from 'mdx/types'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     ...components,
-  };
+  }
 }
 ```
 
@@ -80,7 +80,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 export function useMDXComponents(components) {
   return {
     ...components,
-  };
+  }
 }
 ```
 
@@ -132,7 +132,7 @@ App Router 앱에서는 [메타데이터](/docs/app/building-your-application/op
 이 파일들에서 MDX를 사용할 수 있으며, MDX 페이지 내에서 React 컴포넌트를 직접 가져올 수 있습니다:
 
 ```mdx
-import { MyComponent } from "my-component";
+import { MyComponent } from 'my-component'
 
 # Welcome to my MDX page!
 
@@ -189,7 +189,7 @@ Checkout my React component:
 이 파일들에서 MDX를 사용할 수 있으며, MDX 페이지 내에서 React 컴포넌트를 직접 가져올 수 있습니다:
 
 ```mdx filename="markdown/welcome.mdx" switcher
-import { MyComponent } from "my-component";
+import { MyComponent } from 'my-component'
 
 # Welcome to my MDX page!
 
@@ -211,18 +211,18 @@ Checkout my React component:
 <AppOnly>
 
 ```tsx filename="app/mdx-page/page.tsx" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 export default function Page() {
-  return <Welcome />;
+  return <Welcome />
 }
 ```
 
 ```jsx filename="app/mdx-page/page.js" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 export default function Page() {
-  return <Welcome />;
+  return <Welcome />
 }
 ```
 
@@ -231,18 +231,18 @@ export default function Page() {
 <PagesOnly>
 
 ```tsx filename="pages/mdx-page.tsx" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 export default function Page() {
-  return <Welcome />;
+  return <Welcome />
 }
 ```
 
 ```jsx filename="pages/mdx-page.js" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 export default function Page() {
-  return <Welcome />;
+  return <Welcome />
 }
 ```
 
@@ -287,8 +287,8 @@ This is a list in markdown:
 `mdx-components.tsx`에 스타일과 컴포넌트를 추가하면 애플리케이션의 _모든_ MDX 파일에 영향을 미칩니다.
 
 ```tsx filename="mdx-components.tsx" switcher
-import type { MDXComponents } from "mdx/types";
-import Image, { ImageProps } from "next/image";
+import type { MDXComponents } from 'mdx/types'
+import Image, { ImageProps } from 'next/image'
 
 // 이 파일을 사용하여 MDX 파일에서 사용할 사용자 정의 React 컴포넌트를 제공할 수 있습니다.
 // 원하는 모든 React 컴포넌트를 가져와 사용할 수 있으며, 인라인 스타일, 다른 라이브러리의 컴포넌트 등을 포함할 수 있습니다.
@@ -297,22 +297,22 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     // 스타일을 추가하기 위해 내장된 컴포넌트를 사용자 정의할 수 있습니다.
     h1: ({ children }) => (
-      <h1 style={{ color: "red", fontSize: "48px" }}>{children}</h1>
+      <h1 style={{ color: 'red', fontSize: '48px' }}>{children}</h1>
     ),
     img: (props) => (
       <Image
         sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
+        style={{ width: '100%', height: 'auto' }}
         {...(props as ImageProps)}
       />
     ),
     ...components,
-  };
+  }
 }
 ```
 
 ```js filename="mdx-components.js" switcher
-import Image from "next/image";
+import Image from 'next/image'
 
 // 이 파일을 사용하여 MDX 파일에서 사용할 사용자 정의 React 컴포넌트를 제공할 수 있습니다.
 // 원하는 모든 React 컴포넌트를 가져와 사용할 수 있으며, 인라인 스타일, 다른 라이브러리의 컴포넌트 등을 포함할 수 있습니다.
@@ -321,17 +321,17 @@ export function useMDXComponents(components) {
   return {
     // 스타일을 추가하기 위해 내장된 컴포넌트를 사용자 정의할 수 있습니다.
     h1: ({ children }) => (
-      <h1 style={{ color: "red", fontSize: "48px" }}>{children}</h1>
+      <h1 style={{ color: 'red', fontSize: '48px' }}>{children}</h1>
     ),
     img: (props) => (
       <Image
         sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
+        style={{ width: '100%', height: 'auto' }}
         {...props}
       />
     ),
     ...components,
-  };
+  }
 }
 ```
 
@@ -342,34 +342,34 @@ export function useMDXComponents(components) {
 <AppOnly>
 
 ```tsx filename="app/mdx-page/page.tsx" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 function CustomH1({ children }) {
-  return <h1 style={{ color: "blue", fontSize: "100px" }}>{children}</h1>;
+  return <h1 style={{ color: 'blue', fontSize: '100px' }}>{children}</h1>
 }
 
 const overrideComponents = {
   h1: CustomH1,
-};
+}
 
 export default function Page() {
-  return <Welcome components={overrideComponents} />;
+  return <Welcome components={overrideComponents} />
 }
 ```
 
 ```jsx filename="app/mdx-page/page.js" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 function CustomH1({ children }) {
-  return <h1 style={{ color: "blue", fontSize: "100px" }}>{children}</h1>;
+  return <h1 style={{ color: 'blue', fontSize: '100px' }}>{children}</h1>
 }
 
 const overrideComponents = {
   h1: CustomH1,
-};
+}
 
 export default function Page() {
-  return <Welcome components={overrideComponents} />;
+  return <Welcome components={overrideComponents} />
 }
 ```
 
@@ -378,34 +378,34 @@ export default function Page() {
 <PagesOnly>
 
 ```tsx filename="pages/mdx-page.tsx" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 function CustomH1({ children }) {
-  return <h1 style={{ color: "blue", fontSize: "100px" }}>{children}</h1>;
+  return <h1 style={{ color: 'blue', fontSize: '100px' }}>{children}</h1>
 }
 
 const overrideComponents = {
   h1: CustomH1,
-};
+}
 
 export default function Page() {
-  return <Welcome components={overrideComponents} />;
+  return <Welcome components={overrideComponents} />
 }
 ```
 
 ```jsx filename="pages/mdx-page.js" switcher
-import Welcome from "@/markdown/welcome.mdx";
+import Welcome from '@/markdown/welcome.mdx'
 
 function CustomH1({ children }) {
-  return <h1 style={{ color: "blue", fontSize: "100px" }}>{children}</h1>;
+  return <h1 style={{ color: 'blue', fontSize: '100px' }}>{children}</h1>
 }
 
 const overrideComponents = {
   h1: CustomH1,
-};
+}
 
 export default function Page() {
-  return <Welcome components={overrideComponents} />;
+  return <Welcome components={overrideComponents} />
 }
 ```
 
@@ -420,14 +420,14 @@ MDX 페이지 간에 레이아웃을 공유하려면 App Router와 함께 [내�
 ```tsx filename="app/mdx-page/layout.tsx" switcher
 export default function MdxLayout({ children }: { children: React.ReactNode }) {
   // 여기에서 모든 공유 레이아웃 또는 스타일을 생성하세요
-  return <div style={{ color: "blue" }}>{children}</div>;
+  return <div style={{ color: 'blue' }}>{children}</div>
 }
 ```
 
 ```jsx filename="app/mdx-page/layout.js" switcher
 export default function MdxLayout({ children }) {
   // 여기에서 모든 공유 레이아웃 또는 스타일을 생성하세요
-  return <div style={{ color: "blue" }}>{children}</div>;
+  return <div style={{ color: 'blue' }}>{children}</div>
 }
 ```
 
@@ -440,21 +440,21 @@ MDX 페이지 주변에 레이아웃을 공유하려면 레이아웃 컴포넌�
 ```tsx filename="components/mdx-layout.tsx" switcher
 export default function MdxLayout({ children }: { children: React.ReactNode }) {
   // 여기에서 모든 공유 레이아웃 또는 스타일을 생성하세요
-  return <div style={{ color: "blue" }}>{children}</div>;
+  return <div style={{ color: 'blue' }}>{children}</div>
 }
 ```
 
 ```jsx filename="components/mdx-layout.js" switcher
 export default function MdxLayout({ children }) {
   // 여기에서 모든 공유 레이아웃 또는 스타일을 생성하세요
-  return <div style={{ color: "blue" }}>{children}</div>;
+  return <div style={{ color: 'blue' }}>{children}</div>
 }
 ```
 
 그런 다음, 레이아웃 컴포넌트를 MDX 페이지로 가져와 MDX 콘텐츠를 레이아웃으로 감싸고 내보냅니다:
 
 ```mdx
-import MdxLayout from "../components/mdx-layout";
+import MdxLayout from '../components/mdx-layout'
 
 # Welcome to my MDX page!
 
@@ -483,7 +483,7 @@ export default function MdxLayout({ children }: { children: React.ReactNode }) {
     <div className="prose prose-headings:mt-8 prose-headings:font-semibold prose-headings:text-black prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg dark:prose-headings:text-white">
       {children}
     </div>
-  );
+  )
 }
 ```
 
@@ -494,7 +494,7 @@ export default function MdxLayout({ children }) {
     <div className="prose prose-headings:mt-8 prose-headings:font-semibold prose-headings:text-black prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg dark:prose-headings:text-white">
       {children}
     </div>
-  );
+  )
 }
 ```
 
@@ -511,7 +511,7 @@ export default function MdxLayout({ children }: { children: React.ReactNode }) {
     <div className="prose prose-headings:mt-8 prose-headings:font-semibold prose-headings:text-black prose-h1:text-5xl prose-h2:text-4xl prose-h3:text-3xl prose-h4:text-2xl prose-h5:text-xl prose-h6:text-lg dark:prose-headings:text-white">
       {children}
     </div>
-  );
+  )
 }
 ```
 
@@ -526,14 +526,14 @@ export default function MdxLayout({ children }) {
     >
       {children}
     </div>
-  );
+  )
 }
 ```
 
 그런 다음, 레이아웃 컴포넌트를 MDX 페이지로 가져와 MDX 콘텐츠를 레이아웃으로 감싸고 내보냅니다:
 
 ```mdx
-import MdxLayout from "../components/mdx-layout";
+import MdxLayout from '../components/mdx-layout'
 
 # Welcome to my MDX page!
 
@@ -557,8 +557,8 @@ Frontmatter는 페이지에 대한 데이터를 저장하는 데 사용되는 YA
 
 ```mdx filename="content/blog-post.mdx" switcher
 export const metadata = {
-  author: "John Doe",
-};
+  author: 'John Doe',
+}
 
 # Blog post
 ```
@@ -629,15 +629,15 @@ export default function Page() {
 `remark` 및 `rehype` 생태계는 ESM 전용이므로 구성 파일로 `next.config.mjs`를 사용해야 합니다.
 
 ```js filename="next.config.mjs"
-import remarkGfm from "remark-gfm";
-import createMDX from "@next/mdx";
+import remarkGfm from 'remark-gfm'
+import createMDX from '@next/mdx'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // MDX 파일을 포함하도록 `pageExtensions`를 구성합니다
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   // 선택적으로 다른 Next.js 구성 추가 가능
-};
+}
 
 const withMDX = createMDX({
   // 원한다면 여기에서 마크다운 플러그인을 추가하세요
@@ -645,10 +645,10 @@ const withMDX = createMDX({
     remarkPlugins: [remarkGfm],
     rehypePlugins: [],
   },
-});
+})
 
 // MDX 구성과 Next.js 구성을 병합합니다
-export default withMDX(nextConfig);
+export default withMDX(nextConfig)
 ```
 
 ## Remote MDX
@@ -662,24 +662,24 @@ MDX 파일이나 콘텐츠가 *다른 곳*에 있는 경우, 서버에서 동적
 <AppOnly>
 
 ```tsx filename="app/mdx-page-remote/page.tsx" switcher
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export default async function RemoteMdxPage() {
   // MDX 텍스트 - 로컬 파일, 데이터베이스, CMS, fetch 등에서 가져올 수 있습니다...
-  const res = await fetch("https://...");
-  const markdown = await res.text();
-  return <MDXRemote source={markdown} />;
+  const res = await fetch('https://...')
+  const markdown = await res.text()
+  return <MDXRemote source={markdown} />
 }
 ```
 
 ```jsx filename="app/mdx-page-remote/page.js" switcher
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export default async function RemoteMdxPage() {
   // MDX 텍스트 - 로컬 파일, 데이터베이스, CMS, fetch 등에서 가져올 수 있습니다...
-  const res = await fetch("https://...");
-  const markdown = await res.text();
-  return <MDXRemote source={markdown} />;
+  const res = await fetch('https://...')
+  const markdown = await res.text()
+  return <MDXRemote source={markdown} />
 }
 ```
 
@@ -688,40 +688,40 @@ export default async function RemoteMdxPage() {
 <PagesOnly>
 
 ```tsx filename="pages/mdx-page-remote.tsx" switcher
-import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 
 interface Props {
-  mdxSource: MDXRemoteSerializeResult;
+  mdxSource: MDXRemoteSerializeResult
 }
 
 export default function RemoteMdxPage({ mdxSource }: Props) {
-  return <MDXRemote {...mdxSource} />;
+  return <MDXRemote {...mdxSource} />
 }
 
 export async function getStaticProps() {
   // MDX 텍스트 - 로컬 파일, 데이터베이스, CMS, fetch 등에서 가져올 수 있습니다...
-  const res = await fetch("https:...");
-  const mdxText = await res.text();
-  const mdxSource = await serialize(mdxText);
-  return { props: { mdxSource } };
+  const res = await fetch('https:...')
+  const mdxText = await res.text()
+  const mdxSource = await serialize(mdxText)
+  return { props: { mdxSource } }
 }
 ```
 
 ```jsx filename="pages/mdx-page-remote.js" switcher
-import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote } from "next-mdx-remote";
+import { serialize } from 'next-mdx-remote/serialize'
+import { MDXRemote } from 'next-mdx-remote'
 
 export default function RemoteMdxPage({ mdxSource }) {
-  return <MDXRemote {...mdxSource} />;
+  return <MDXRemote {...mdxSource} />
 }
 
 export async function getStaticProps() {
   // MDX 텍스트 - 로컬 파일, 데이터베이스, CMS, fetch 등에서 가져올 수 있습니다...
-  const res = await fetch("https:...");
-  const mdxText = await res.text();
-  const mdxSource = await serialize(mdxText);
-  return { props: { mdxSource } };
+  const res = await fetch('https:...')
+  const mdxText = await res.text()
+  const mdxSource = await serialize(mdxText)
+  return { props: { mdxSource } }
 }
 ```
 
@@ -736,13 +736,13 @@ React는 본래 마크다운을 이해하지 못합니다. 마크다운 평문�
 `remark`는 마크다운을 중심으로 한 도구 생태계입니다. `rehype`는 HTML을 중심으로 한 생태계입니다. 예를 들어, 다음 코드 스니펫은 마크다운을 HTML로 변환합니다:
 
 ```js
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypeSanitize from "rehype-sanitize";
-import rehypeStringify from "rehype-stringify";
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import rehypeSanitize from 'rehype-sanitize'
+import rehypeStringify from 'rehype-stringify'
 
-main();
+main()
 
 async function main() {
   const file = await unified()
@@ -750,9 +750,9 @@ async function main() {
     .use(remarkRehype) // HTML AST로 변환
     .use(rehypeSanitize) // HTML 입력을 소독
     .use(rehypeStringify) // AST를 직렬화된 HTML로 변환
-    .process("Hello, Next.js!");
+    .process('Hello, Next.js!')
 
-  console.log(String(file)); // <p>Hello, Next.js!</p>
+  console.log(String(file)) // <p>Hello, Next.js!</p>
 }
 ```
 
@@ -769,7 +769,7 @@ module.exports = withMDX({
   experimental: {
     mdxRs: true,
   },
-});
+})
 ```
 
 `mdxRs`는 mdx 파일을 변환하는 방법을 구성하기 위해 객체도 허용합니다.

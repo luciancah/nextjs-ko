@@ -18,13 +18,13 @@ Caching은 서버에 요청하는 횟수를 줄이기 위해 데이터를 저장
 
 ```js
 // 'force-cache'는 기본값이며, 생략할 수 있습니다
-fetch("https://...", { cache: "force-cache" });
+fetch('https://...', { cache: 'force-cache' })
 ```
 
 개별 `fetch` 요청에 대한 캐싱을 사용하지 않으려면, `cache: 'no-store'` 옵션을 사용할 수 있습니다:
 
 ```js filename="layout.js | page.js"
-fetch("https://...", { cache: "no-store" });
+fetch('https://...', { cache: 'no-store' })
 ```
 
 > **Advanced**: 레이아웃이나 페이지 세그먼트에 여러 개의 `fetch` 요청이 있는 경우, `const dynamic = 'force-dynamic'` 또는 `const fetchCache = 'force-no-store'` [Segment Config Options](/docs/app/api-reference/file-conventions/route-segment-config)를 사용하여 세그먼트 내의 모든 데이터 요청에 대한 캐싱 동작을 구성할 수 있습니다.
@@ -36,10 +36,10 @@ fetch("https://...", { cache: "no-store" });
 특정 요청을 캐시하려면, [`unstable_cache`](/docs/app/api-reference/functions/unstable_cache) API를 사용할 수 있습니다:
 
 ```tsx filename="@/app/lib/data.ts switcher highlight={6}
-import { unstable_cache as cache } from "next/cache";
+import { unstable_cache as cache } from 'next/cache'
 
 export async function getPosts() {
-  cache();
+  cache()
 
   try {
     // 데이터 페치
@@ -48,10 +48,10 @@ export async function getPosts() {
 ```
 
 ```jsx filename="@/app/lib/data.js switcher highlight={6}
-import { unstable_cache as cache } from "next/cache";
+import { unstable_cache as cache } from 'next/cache'
 
 export async function getPosts() {
-  cache();
+  cache()
   try {
     // 데이터 페치
   } catch (error) {}
@@ -61,12 +61,12 @@ export async function getPosts() {
 특정 요청을 캐시에서 제외하려면, [`unstable_noStore`](/docs/app/api-reference/functions/unstable_noStore) API를 사용할 수 있습니다:
 
 ```tsx filename="@/app/lib/data.ts switcher highlight={6}
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore } from 'next/cache'
 
 export async function getTransactions() {
   // 응답을 캐시하지 않도록 설정합니다.
   // 이는 fetch(..., {cache: 'no-store'})와 동일합니다.
-  noStore();
+  noStore()
 
   try {
     // 데이터 페치
@@ -75,12 +75,12 @@ export async function getTransactions() {
 ```
 
 ```jsx filename="@/app/lib/data.js switcher highlight={6}
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore } from 'next/cache'
 
 export async function getTransactions() {
   // 응답을 캐시하지 않도록 설정합니다.
   // 이는 fetch(..., {cache: 'no-store'})와 동일합니다.
-  noStore();
+  noStore()
 
   try {
     // 데이터 페치
@@ -102,13 +102,13 @@ Revalidation은 데이터 캐시를 비우고 최신 데이터를 다시 가져�
 정해진 시간 간격으로 데이터를 revalidate 하려면, `fetch`의 `next.revalidate` 옵션을 사용하여 리소스의 캐시 수명을 설정할 수 있습니다(초 단위).
 
 ```js
-fetch("https://...", { next: { revalidate: 3600 } }); // 최대 1시간마다 revalidate
+fetch('https://...', { next: { revalidate: 3600 } }) // 최대 1시간마다 revalidate
 ```
 
 또는, 라우트 세그먼트의 모든 요청을 revalidate 하기 위해 [Segment Config Options](/docs/app/api-reference/file-conventions/route-segment-config)를 사용할 수 있습니다.
 
 ```jsx filename="layout.js | page.js"
-export const revalidate = 3600; // 최대 1시간마다 revalidate
+export const revalidate = 3600 // 최대 1시간마다 revalidate
 ```
 
 [시간 기반 revalidation 작동 방식](/docs/app/building-your-application/caching#revalidating-1)에 대해 알아보세요.
@@ -158,16 +158,16 @@ export default async createPost() {
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
-  const res = await fetch("https://...", { next: { tags: ["collection"] } });
-  const data = await res.json();
+  const res = await fetch('https://...', { next: { tags: ['collection'] } })
+  const data = await res.json()
   // ...
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
-  const res = await fetch("https://...", { next: { tags: ["collection"] } });
-  const data = await res.json();
+  const res = await fetch('https://...', { next: { tags: ['collection'] } })
+  const data = await res.json()
   // ...
 }
 ```
@@ -175,22 +175,22 @@ export default async function Page() {
 그런 다음, `revalidateTag`를 호출하여 `collection`으로 태그된 이 `fetch` 요청을 revalidate 할 수 있습니다:
 
 ```ts filename="@/app/actions.ts" switcher
-"use server";
+'use server'
 
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache'
 
 export default async function action() {
-  revalidateTag("collection");
+  revalidateTag('collection')
 }
 ```
 
 ```js filename="@/app/actions.js" switcher
-"use server";
+'use server'
 
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache'
 
 export default async function action() {
-  revalidateTag("collection");
+  revalidateTag('collection')
 }
 ```
 

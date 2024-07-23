@@ -39,8 +39,8 @@ bun add next@rc react@rc react-dom@rc eslint-config-next@rc
 
 ```js filename="app/layout.js"
 export default async function RootLayout() {
-  const a = await fetch("https://..."); // 캐시되지 않음
-  const b = await fetch("https://...", { cache: "force-cache" }); // 캐시됨
+  const a = await fetch('https://...') // 캐시되지 않음
+  const b = await fetch('https://...', { cache: 'force-cache' }) // 캐시됨
 
   // ...
 }
@@ -50,11 +50,11 @@ export default async function RootLayout() {
 
 ```js filename="app/layout.js"
 // 이것이 루트 레이아웃이므로, 앱 내의 모든 fetch 요청은 자체 캐시 옵션을 설정하지 않는 한 캐시됩니다.
-export const fetchCache = "default-cache";
+export const fetchCache = 'default-cache'
 
 export default async function RootLayout() {
-  const a = await fetch("https://..."); // 캐시됨
-  const b = await fetch("https://...", { cache: "no-store" }); // 캐시되지 않음
+  const a = await fetch('https://...') // 캐시됨
+  const b = await fetch('https://...', { cache: 'no-store' }) // 캐시되지 않음
 
   // ...
 }
@@ -65,7 +65,7 @@ export default async function RootLayout() {
 [Route Handlers](/docs/app/api-reference/file-conventions/route)에서 `GET` 함수는 기본적으로 더 이상 캐시되지 않습니다. `GET` 메서드를 캐시에 포함시키려면, Route Handler 파일에 [route 설정 옵션](/docs/app/api-reference/file-conventions/route-segment-config)인 `export const dynamic = 'force-static'`을 사용할 수 있습니다.
 
 ```js filename="app/api/route.js"
-export const dynamic = "force-static";
+export const dynamic = 'force-static'
 
 export async function GET() {}
 ```
@@ -85,9 +85,9 @@ const nextConfig = {
       static: 180,
     },
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 [레이아웃](/docs/app/api-reference/file-conventions/layout) 및 [로딩 상태](/docs/app/api-reference/file-conventions/loading)는 여전히 탐색 시 캐시되고 재사용됩니다.
@@ -98,10 +98,10 @@ module.exports = nextConfig;
 
 ```js filename="app/layout.js"
 // 변경 전
-import { Inter } from "@next/font/google";
+import { Inter } from '@next/font/google'
 
 // 변경 후
-import { Inter } from "next/font/google";
+import { Inter } from 'next/font/google'
 ```
 
 ## bundlePagesRouterDependencies
@@ -118,9 +118,9 @@ const nextConfig = {
 
   // 변경 후
   bundlePagesRouterDependencies: true,
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ## serverExternalPackages
@@ -132,14 +132,14 @@ module.exports = nextConfig;
 const nextConfig = {
   // 변경 전
   experimental: {
-    serverComponentsExternalPackages: ["package-name"],
+    serverComponentsExternalPackages: ['package-name'],
   },
 
   // 변경 후
-  serverExternalPackages: ["package-name"],
-};
+  serverExternalPackages: ['package-name'],
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ## Speed Insights

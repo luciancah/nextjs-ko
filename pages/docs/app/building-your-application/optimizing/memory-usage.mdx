@@ -76,20 +76,20 @@ Webpack 빌드 워커는 별도의 Node.js 워커에서 Webpack 컴파일을 실
 const nextConfig = {
   webpack: (
     config,
-    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }
+    { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack },
   ) => {
     if (config.cache && !dev) {
       config.cache = Object.freeze({
-        type: "memory",
-      });
-      config.cache.maxMemoryGenerations = 0;
+        type: 'memory',
+      })
+      config.cache.maxMemoryGenerations = 0
     }
     // 중요: 수정된 구성을 반환해야 합니다.
-    return config;
+    return config
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 ## 소스 맵 비활성화

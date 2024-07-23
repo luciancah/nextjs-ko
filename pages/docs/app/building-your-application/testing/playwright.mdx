@@ -37,7 +37,7 @@ pnpm create playwright
 <AppOnly>
 
 ```tsx filename="app/page.tsx"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -45,12 +45,12 @@ export default function Page() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```tsx filename="app/about/page.tsx"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -58,7 +58,7 @@ export default function Page() {
       <h1>About</h1>
       <Link href="/">Home</Link>
     </div>
-  );
+  )
 }
 ```
 
@@ -67,7 +67,7 @@ export default function Page() {
 <PagesOnly>
 
 ```tsx filename="pages/index.ts"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -75,12 +75,12 @@ export default function Home() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```tsx filename="pages/about.ts"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function About() {
   return (
@@ -88,7 +88,7 @@ export default function About() {
       <h1>About</h1>
       <Link href="/">Home</Link>
     </div>
-  );
+  )
 }
 ```
 
@@ -97,18 +97,18 @@ export default function About() {
 그런 다음 탐색이 올바르게 작동하는지 확인하기 위한 테스트를 추가하세요:
 
 ```ts filename="tests/example.spec.ts"
-import { test, expect } from "@playwright/test";
+import { test, expect } from '@playwright/test'
 
-test("should navigate to the about page", async ({ page }) => {
+test('should navigate to the about page', async ({ page }) => {
   // index 페이지에서 시작 (baseURL은 playwright.config.ts의 webServer를 통해 설정됨)
-  await page.goto("http://localhost:3000/");
+  await page.goto('http://localhost:3000/')
   // 'About' 텍스트가 있는 요소를 찾아 클릭
-  await page.click("text=About");
+  await page.click('text=About')
   // 새로운 URL은 "/about"이어야 함 (baseURL이 사용됨)
-  await expect(page).toHaveURL("http://localhost:3000/about");
+  await expect(page).toHaveURL('http://localhost:3000/about')
   // 새로운 페이지에는 "About"라는 h1 요소가 있어야 함
-  await expect(page.locator("h1")).toContainText("About");
-});
+  await expect(page.locator('h1')).toContainText('About')
+})
 ```
 
 > **참고**:

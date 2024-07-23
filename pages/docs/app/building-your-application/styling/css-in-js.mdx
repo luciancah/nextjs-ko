@@ -50,62 +50,62 @@ CSS-in-JS를 구성하는 것은 세 단계의 옵트인 과정으로 이루어�
 Client Components에서 `styled-jsx`를 사용하려면 `v5.1.0`을 사용해야 합니다. 먼저, 새로운 레지스트리를 생성합니다:
 
 ```tsx filename="app/registry.tsx" switcher
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import { useServerInsertedHTML } from "next/navigation";
-import { StyleRegistry, createStyleRegistry } from "styled-jsx";
+import React, { useState } from 'react'
+import { useServerInsertedHTML } from 'next/navigation'
+import { StyleRegistry, createStyleRegistry } from 'styled-jsx'
 
 export default function StyledJsxRegistry({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   // 초기 상태로 스타일 시트를 한 번만 생성합니다
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
-  const [jsxStyleRegistry] = useState(() => createStyleRegistry());
+  const [jsxStyleRegistry] = useState(() => createStyleRegistry())
 
   useServerInsertedHTML(() => {
-    const styles = jsxStyleRegistry.styles();
-    jsxStyleRegistry.flush();
-    return <>{styles}</>;
-  });
+    const styles = jsxStyleRegistry.styles()
+    jsxStyleRegistry.flush()
+    return <>{styles}</>
+  })
 
-  return <StyleRegistry registry={jsxStyleRegistry}>{children}</StyleRegistry>;
+  return <StyleRegistry registry={jsxStyleRegistry}>{children}</StyleRegistry>
 }
 ```
 
 ```jsx filename="app/registry.js" switcher
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import { useServerInsertedHTML } from "next/navigation";
-import { StyleRegistry, createStyleRegistry } from "styled-jsx";
+import React, { useState } from 'react'
+import { useServerInsertedHTML } from 'next/navigation'
+import { StyleRegistry, createStyleRegistry } from 'styled-jsx'
 
 export default function StyledJsxRegistry({ children }) {
   // 초기 상태로 스타일 시트를 한 번만 생성합니다
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
-  const [jsxStyleRegistry] = useState(() => createStyleRegistry());
+  const [jsxStyleRegistry] = useState(() => createStyleRegistry())
 
   useServerInsertedHTML(() => {
-    const styles = jsxStyleRegistry.styles();
-    jsxStyleRegistry.flush();
-    return <>{styles}</>;
-  });
+    const styles = jsxStyleRegistry.styles()
+    jsxStyleRegistry.flush()
+    return <>{styles}</>
+  })
 
-  return <StyleRegistry registry={jsxStyleRegistry}>{children}</StyleRegistry>;
+  return <StyleRegistry registry={jsxStyleRegistry}>{children}</StyleRegistry>
 }
 ```
 
 그런 다음, 레지스트리로 [루트 레이아웃](/docs/app/building-your-application/routing/layouts-and-templates#root-layout-required)을 감쌉니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import StyledJsxRegistry from "./registry";
+import StyledJsxRegistry from './registry'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html>
@@ -113,12 +113,12 @@ export default function RootLayout({
         <StyledJsxRegistry>{children}</StyledJsxRegistry>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import StyledJsxRegistry from "./registry";
+import StyledJsxRegistry from './registry'
 
 export default function RootLayout({ children }) {
   return (
@@ -127,7 +127,7 @@ export default function RootLayout({ children }) {
         <StyledJsxRegistry>{children}</StyledJsxRegistry>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -144,80 +144,80 @@ module.exports = {
   compiler: {
     styledComponents: true,
   },
-};
+}
 ```
 
 그런 다음, `styled-components` API를 사용하여 렌더링 중에 생성된 모든 CSS 스타일 규칙을 수집하는 전역 레지스트리 컴포넌트와 해당 규칙을 반환하는 함수를 생성합니다. 그런 다음 `useServerInsertedHTML` 훅을 사용하여 루트 레이아웃의 `<head>` HTML 태그에 수집된 스타일을 주입합니다.
 
 ```tsx filename="lib/registry.tsx" switcher
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import { useServerInsertedHTML } from "next/navigation";
-import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import React, { useState } from 'react'
+import { useServerInsertedHTML } from 'next/navigation'
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
 export default function StyledComponentsRegistry({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   // 초기 상태로 스타일 시트를 한 번만 생성합니다
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
-  const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
+  const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
 
   useServerInsertedHTML(() => {
-    const styles = styledComponentsStyleSheet.getStyleElement();
-    styledComponentsStyleSheet.instance.clearTag();
-    return <>{styles}</>;
-  });
+    const styles = styledComponentsStyleSheet.getStyleElement()
+    styledComponentsStyleSheet.instance.clearTag()
+    return <>{styles}</>
+  })
 
-  if (typeof window !== "undefined") return <>{children}</>;
+  if (typeof window !== 'undefined') return <>{children}</>
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
       {children}
     </StyleSheetManager>
-  );
+  )
 }
 ```
 
 ```jsx filename="lib/registry.js" switcher
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import { useServerInsertedHTML } from "next/navigation";
-import { ServerStyleSheet, StyleSheetManager } from "styled-components";
+import React, { useState } from 'react'
+import { useServerInsertedHTML } from 'next/navigation'
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
 export default function StyledComponentsRegistry({ children }) {
   // 초기 상태로 스타일 시트를 한 번만 생성합니다
   // x-ref: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
-  const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet());
+  const [styledComponentsStyleSheet] = useState(() => new ServerStyleSheet())
 
   useServerInsertedHTML(() => {
-    const styles = styledComponentsStyleSheet.getStyleElement();
-    styledComponentsStyleSheet.instance.clearTag();
-    return <>{styles}</>;
-  });
+    const styles = styledComponentsStyleSheet.getStyleElement()
+    styledComponentsStyleSheet.instance.clearTag()
+    return <>{styles}</>
+  })
 
-  if (typeof window !== "undefined") return <>{children}</>;
+  if (typeof window !== 'undefined') return <>{children}</>
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
       {children}
     </StyleSheetManager>
-  );
+  )
 }
 ```
 
 루트 레이아웃의 `children`을 스타일 레지스트리 컴포넌트로 감쌉니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import StyledComponentsRegistry from "./lib/registry";
+import StyledComponentsRegistry from './lib/registry'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html>
@@ -225,12 +225,12 @@ export default function RootLayout({
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import StyledComponentsRegistry from "./lib/registry";
+import StyledComponentsRegistry from './lib/registry'
 
 export default function RootLayout({ children }) {
   return (
@@ -239,7 +239,7 @@ export default function RootLayout({ children }) {
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -274,10 +274,10 @@ export default function RootLayout({ children }) {
 
 ```jsx
 function HiThere() {
-  return <p style={{ color: "red" }}>hi there</p>;
+  return <p style={{ color: 'red' }}>hi there</p>
 }
 
-export default HiThere;
+export default HiThere
 ```
 
 우리는 격리된 스코프 CSS 지원을 제공하기 위해 [styled-jsx](https://github.com/vercel/styled-jsx)를 번들로 제공합니다.
@@ -312,10 +312,10 @@ function HelloWorld() {
         }
       `}</style>
     </div>
-  );
+  )
 }
 
-export default HelloWorld;
+export default HelloWorld
 ```
 
 더 많은 예제는 [styled-jsx 문서](https://github.com/vercel/styled-jsx)를 참조하세요.

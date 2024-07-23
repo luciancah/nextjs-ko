@@ -21,7 +21,7 @@ NextRequest는 추가 편의 메서드와 함께 [Web Request API](https://devel
 // /home 요청이 주어졌을 때
 // 배너를 숨기기 위한 쿠키 설정
 // 요청에는 `Set-Cookie:show-banner=false;path=/home` 헤더가 추가됩니다.
-request.cookies.set("show-banner", "false");
+request.cookies.set('show-banner', 'false')
 ```
 
 ### `get(name)`
@@ -31,7 +31,7 @@ request.cookies.set("show-banner", "false");
 ```ts
 // /home 요청이 주어졌을 때
 // { name: 'show-banner', value: 'false', Path: '/home' }
-request.cookies.get("show-banner");
+request.cookies.get('show-banner')
 ```
 
 ### `getAll()`
@@ -44,9 +44,9 @@ request.cookies.get("show-banner");
 //   { name: 'experiments', value: 'new-pricing-page', Path: '/home' },
 //   { name: 'experiments', value: 'winter-launch', Path: '/home' },
 // ]
-request.cookies.getAll("experiments");
+request.cookies.getAll('experiments')
 // 또는, 요청에 있는 모든 쿠키를 가져옵니다.
-request.cookies.getAll();
+request.cookies.getAll()
 ```
 
 ### `delete(name)`
@@ -55,7 +55,7 @@ request.cookies.getAll();
 
 ```ts
 // 삭제된 경우 true를 반환하고, 그렇지 않으면 false를 반환합니다.
-request.cookies.delete("experiments");
+request.cookies.delete('experiments')
 ```
 
 ### `has(name)`
@@ -64,7 +64,7 @@ request.cookies.delete("experiments");
 
 ```ts
 // 쿠키가 존재하면 true, 그렇지 않으면 false를 반환합니다.
-request.cookies.has("experiments");
+request.cookies.has('experiments')
 ```
 
 ### `clear()`
@@ -72,7 +72,7 @@ request.cookies.has("experiments");
 요청에서 `Set-Cookie` 헤더를 제거합니다.
 
 ```ts
-request.cookies.clear();
+request.cookies.clear()
 ```
 
 ## `nextUrl`
@@ -81,9 +81,9 @@ request.cookies.clear();
 
 ```ts
 // /home 요청이 주어졌을 때, pathname은 /home입니다.
-request.nextUrl.pathname;
+request.nextUrl.pathname
 // /home?name=lee 요청이 주어졌을 때, searchParams는 { 'name': 'lee' }입니다.
-request.nextUrl.searchParams;
+request.nextUrl.searchParams
 ```
 
 사용할 수 있는 옵션은 다음과 같습니다:
@@ -126,9 +126,9 @@ request.nextUrl.searchParams;
 
 ```ts
 // Vercel에서 제공
-request.ip;
+request.ip
 // 자체 호스팅
-request.headers.get("X-Forwarded-For");
+request.headers.get('X-Forwarded-For')
 ```
 
 ## `geo`
@@ -139,15 +139,15 @@ request.headers.get("X-Forwarded-For");
 
 ```ts
 // Vercel에서 제공
-request.geo.city;
-request.geo.country;
-request.geo.region;
-request.geo.latitude;
-request.geo.longitude;
+request.geo.city
+request.geo.country
+request.geo.region
+request.geo.latitude
+request.geo.longitude
 
 // 자체 호스팅
 function getGeo(request) {
-  let ip = request.headers.get("X-Forwarded-For");
+  let ip = request.headers.get('X-Forwarded-For')
   // 타사 서비스를 사용하여 지리적 정보를 조회합니다.
 }
 ```

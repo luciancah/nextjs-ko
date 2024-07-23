@@ -23,9 +23,9 @@ const nextConfig = {
   experimental: {
     reactCompiler: true,
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 선택적으로, 컴파일러를 "옵트인" 모드로 실행하도록 구성할 수 있습니다:
@@ -34,12 +34,12 @@ module.exports = nextConfig;
 const nextConfig = {
   experimental: {
     reactCompiler: {
-      compilationMode: "annotation",
+      compilationMode: 'annotation',
     },
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 > **참고:** 현재 React Compiler는 Babel 플러그인을 통해서만 Next.js에서 사용할 수 있습니다. 이는 Next.js의 기본 [Rust 기반 컴파일러](/docs/architecture/nextjs-compiler)를 제외시켜 빌드 시간이 느려질 수 있습니다. 우리는 React Compiler를 기본 컴파일러로 지원하기 위해 작업 중입니다.

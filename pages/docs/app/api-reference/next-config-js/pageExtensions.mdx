@@ -12,14 +12,14 @@ description: Extend the default page extensions used by Next.js when resolving p
 기본적으로 Next.js는 `.tsx`, `.ts`, `.jsx`, `.js` 확장자를 가진 파일을 허용합니다. 이를 수정하여 마크다운(`.md`, `.mdx`)과 같은 다른 확장자를 허용할 수 있습니다.
 
 ```js filename="next.config.js"
-const withMDX = require("@next/mdx")();
+const withMDX = require('@next/mdx')()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-};
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+}
 
-module.exports = withMDX(nextConfig);
+module.exports = withMDX(nextConfig)
 ```
 
 </AppOnly>
@@ -30,8 +30,8 @@ Next.js에서 사용하는 기본 페이지 확장자(`.tsx`, `.ts`, `.jsx`, `.j
 
 ```js filename="next.config.js"
 module.exports = {
-  pageExtensions: ["mdx", "md", "jsx", "js", "tsx", "ts"],
-};
+  pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'],
+}
 ```
 
 이 값을 변경하면 다음을 포함한 _모든_ Next.js 페이지에 영향을 미칩니다:
@@ -50,8 +50,8 @@ module.exports = {
 
 ```js filename="next.config.js"
 module.exports = {
-  pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
-};
+  pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+}
 ```
 
 그런 다음, 페이지 파일의 확장자를 `.page`를 포함하도록 이름을 변경하세요(예: `MyPage.tsx`를 `MyPage.page.tsx`로 이름 변경). 위에서 언급한 파일들을 포함하여 _모든_ Next.js 페이지의 이름을 변경하세요.

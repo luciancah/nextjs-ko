@@ -17,21 +17,21 @@ Next.js는 이 문제를 해결하는 **Draft Mode**라는 기능을 제공합�
 
 ```ts filename="app/api/draft/route.ts" switcher
 // Draft 모드를 활성화하는 라우트 핸들러
-import { draftMode } from "next/headers";
+import { draftMode } from 'next/headers'
 
 export async function GET(request: Request) {
-  draftMode().enable();
-  return new Response("Draft mode is enabled");
+  draftMode().enable()
+  return new Response('Draft mode is enabled')
 }
 ```
 
 ```js filename="app/api/draft/route.js" switcher
 // Draft 모드를 활성화하는 라우트 핸들러
-import { draftMode } from "next/headers";
+import { draftMode } from 'next/headers'
 
 export async function GET(request) {
-  draftMode().enable();
-  return new Response("Draft mode is enabled");
+  draftMode().enable()
+  return new Response('Draft mode is enabled')
 }
 ```
 
@@ -67,71 +67,71 @@ https://<your-site>/api/draft?secret=<token>&slug=<path>
 
 ```ts filename="app/api/draft/route.ts" switcher
 // 시크릿과 slug를 사용하는 라우트 핸들러
-import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { draftMode } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function GET(request: Request) {
   // 쿼리 문자열 매개변수 파싱
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-  const slug = searchParams.get("slug");
+  const { searchParams } = new URL(request.url)
+  const secret = searchParams.get('secret')
+  const slug = searchParams.get('slug')
 
   // 시크릿과 다음 매개변수 확인
   // 이 시크릿은 이 라우트 핸들러와 CMS만 알고 있어야 합니다
-  if (secret !== "MY_SECRET_TOKEN" || !slug) {
-    return new Response("Invalid token", { status: 401 });
+  if (secret !== 'MY_SECRET_TOKEN' || !slug) {
+    return new Response('Invalid token', { status: 401 })
   }
 
   // 제공된 `slug`가 존재하는지 확인하기 위해 헤드리스 CMS를 가져옵니다
   // getPostBySlug는 헤드리스 CMS에 필요한 가져오기 로직을 구현합니다
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug)
 
   // `slug`가 존재하지 않으면 Draft 모드가 활성화되지 않도록 합니다
   if (!post) {
-    return new Response("Invalid slug", { status: 401 });
+    return new Response('Invalid slug', { status: 401 })
   }
 
   // Draft Mode를 활성화하여 쿠키 설정
-  draftMode().enable();
+  draftMode().enable()
 
   // 가져온 게시물의 경로로 리디렉션
   // 검색 매개변수 slug로 리디렉션하지 않습니다. 이는 열린 리디렉션 취약성으로 이어질 수 있습니다
-  redirect(post.slug);
+  redirect(post.slug)
 }
 ```
 
 ```js filename="app/api/draft/route.js" switcher
 // 시크릿과 slug를 사용하는 라우트 핸들러
-import { draftMode } from "next/headers";
-import { redirect } from "next/navigation";
+import { draftMode } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function GET(request) {
   // 쿼리 문자열 매개변수 파싱
-  const { searchParams } = new URL(request.url);
-  const secret = searchParams.get("secret");
-  const slug = searchParams.get("slug");
+  const { searchParams } = new URL(request.url)
+  const secret = searchParams.get('secret')
+  const slug = searchParams.get('slug')
 
   // 시크릿과 다음 매개변수 확인
   // 이 시크릿은 이 라우트 핸들러와 CMS만 알고 있어야 합니다
-  if (secret !== "MY_SECRET_TOKEN" || !slug) {
-    return new Response("Invalid token", { status: 401 });
+  if (secret !== 'MY_SECRET_TOKEN' || !slug) {
+    return new Response('Invalid token', { status: 401 })
   }
 
   // 제공된 `slug`가 존재하는지 확인하기 위해 헤드리스 CMS를 가져옵니다
   // getPostBySlug는 헤드리스 CMS에 필요한 가져오기 로직을 구현합니다
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug)
 
   // `slug`가 존재하지 않으면 Draft 모드가 활성화되지 않도록 합니다
   if (!post) {
-    return new Response("Invalid slug", { status: 401 });
+    return new Response('Invalid slug', { status: 401 })
   }
 
   // Draft Mode를 활성화하여 쿠키 설정
-  draftMode().enable();
+  draftMode().enable()
 
   // 가져온 게시물의 경로로 리디렉션
   // 검색 매개변수 slug로 리디렉션하지 않습니다. 이는 열린 리디렉션 취약성으로 이어질 수 있습니다
-  redirect(post.slug);
+  redirect(post.slug)
 }
 ```
 
@@ -147,57 +147,57 @@ export async function GET(request) {
 
 ```tsx filename="app/page.tsx" switcher
 // 데이터를 가져오는 페이지
-import { draftMode } from "next/headers";
+import { draftMode } from 'next/headers'
 
 async function getData() {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = draftMode()
 
   const url = isEnabled
-    ? "https://draft.example.com"
-    : "https://production.example.com";
+    ? 'https://draft.example.com'
+    : 'https://production.example.com'
 
-  const res = await fetch(url);
+  const res = await fetch(url)
 
-  return res.json();
+  return res.json()
 }
 
 export default async function Page() {
-  const { title, desc } = await getData();
+  const { title, desc } = await getData()
 
   return (
     <main>
       <h1>{title}</h1>
       <p>{desc}</p>
     </main>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 // 데이터를 가져오는 페이지
-import { draftMode } from "next/headers";
+import { draftMode } from 'next/headers'
 
 async function getData() {
-  const { isEnabled } = draftMode();
+  const { isEnabled } = draftMode()
 
   const url = isEnabled
-    ? "https://draft.example.com"
-    : "https://production.example.com";
+    ? 'https://draft.example.com'
+    : 'https://production.example.com'
 
-  const res = await fetch(url);
+  const res = await fetch(url)
 
-  return res.json();
+  return res.json()
 }
 
 export default async function Page() {
-  const { title, desc } = await getData();
+  const { title, desc } = await getData()
 
   return (
     <main>
       <h1>{title}</h1>
       <p>{desc}</p>
     </main>
-  );
+  )
 }
 ```
 
@@ -220,20 +220,20 @@ https://<your-site>/api/draft?secret=<token>&slug=<path>
 Draft Mode 쿠키를 수동으로 지우려면 `draftMode().disable()`을 호출하는 라우트 핸들러를 생성합니다:
 
 ```ts filename="app/api/disable-draft/route.ts" switcher
-import { draftMode } from "next/headers";
+import { draftMode } from 'next/headers'
 
 export async function GET(request: Request) {
-  draftMode().disable();
-  return new Response("Draft mode is disabled");
+  draftMode().disable()
+  return new Response('Draft mode is disabled')
 }
 ```
 
 ```js filename="app/api/disable-draft/route.js" switcher
-import { draftMode } from "next/headers";
+import { draftMode } from 'next/headers'
 
 export async function GET(request) {
-  draftMode().disable();
-  return new Response("Draft mode is disabled");
+  draftMode().disable()
+  return new Response('Draft mode is disabled')
 }
 ```
 

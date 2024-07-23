@@ -10,34 +10,34 @@ description: API reference for the useRouter hook.
 > **추천:** `useRouter`를 사용해야 하는 특정 요구 사항이 없는 한, 탐색에는 [`<Link>` 컴포넌트](/docs/app/building-your-application/routing/linking-and-navigating#link-component)를 사용하는 것이 좋습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/example-client-component.js" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
-    <button type="button" onClick={() => router.push("/dashboard")}>
+    <button type="button" onClick={() => router.push('/dashboard')}>
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
@@ -71,31 +71,31 @@ export default function Page() {
 `usePathname` 및 `useSearchParams`와 같은 다른 Client Component 훅을 구성하여 페이지 변경 사항을 청취할 수 있습니다.
 
 ```jsx filename="app/components/navigation-events.js"
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 export function NavigationEvents() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
-    const url = `${pathname}?${searchParams}`;
-    console.log(url);
+    const url = `${pathname}?${searchParams}`
+    console.log(url)
     // 이제 현재 URL을 사용할 수 있습니다.
     // ...
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams])
 
-  return "...";
+  return '...'
 }
 ```
 
 레이아웃에 가져올 수 있습니다.
 
 ```jsx filename="app/layout.js" highlight={2,10-12}
-import { Suspense } from "react";
-import { NavigationEvents } from "./components/navigation-events";
+import { Suspense } from 'react'
+import { NavigationEvents } from './components/navigation-events'
 
 export default function Layout({ children }) {
   return (
@@ -108,7 +108,7 @@ export default function Layout({ children }) {
         </Suspense>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -119,40 +119,40 @@ export default function Layout({ children }) {
 기본적으로, Next.js는 새로운 라우트로 이동할 때 페이지 상단으로 스크롤합니다. `router.push()` 또는 `router.replace()`에 `scroll: false`를 전달하여 이 동작을 비활성화할 수 있습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <button
       type="button"
-      onClick={() => router.push("/dashboard", { scroll: false })}
+      onClick={() => router.push('/dashboard', { scroll: false })}
     >
       Dashboard
     </button>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/example-client-component.jsx" switcher
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <button
       type="button"
-      onClick={() => router.push("/dashboard", { scroll: false })}
+      onClick={() => router.push('/dashboard', { scroll: false })}
     >
       Dashboard
     </button>
-  );
+  )
 }
 ```
 

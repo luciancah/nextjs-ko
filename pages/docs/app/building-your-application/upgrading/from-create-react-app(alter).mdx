@@ -65,11 +65,11 @@ Create a `next.config.mjs` at the root of your project. This file will hold your
 ```js filename="next.config.mjs"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // Outputs a Single-Page Application (SPA).
-  distDir: "./build", // Changes the build output directory to `./build/`.
-};
+  output: 'export', // Outputs a Single-Page Application (SPA).
+  distDir: './build', // Changes the build output directory to `./build/`.
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 ### Step 3: Update TypeScript configuration
@@ -129,15 +129,15 @@ In this step, you'll convert your `index.html` file into a root layout file:
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
 export default function RootLayout({ children }) {
-  return "...";
+  return '...'
 }
 ```
 
@@ -149,7 +149,7 @@ Copy the content of your `index.html` file into the previously created `<RootLay
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -164,7 +164,7 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -183,7 +183,7 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -197,7 +197,7 @@ Next.js includes by default the [meta charset](https://developer.mozilla.org/doc
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -210,7 +210,7 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -227,7 +227,7 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -237,7 +237,7 @@ Any [metadata files](/docs/app/building-your-application/optimizing/metadata#fil
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -249,7 +249,7 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -265,24 +265,24 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 Finally, Next.js can manage your last `<head>` tags with the [Metadata API](/docs/app/building-your-application/optimizing/metadata). Move your final metadata info into an exported [`metadata` object](/docs/app/api-reference/functions/generate-metadata#metadata-object):
 
 ```tsx filename="app/layout.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "React App",
-  description: "Web site created with Next.js.",
-};
+  title: 'React App',
+  description: 'Web site created with Next.js.',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -290,15 +290,15 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
 export const metadata = {
-  title: "React App",
-  description: "Web site created with Next.js.",
-};
+  title: 'React App',
+  description: 'Web site created with Next.js.',
+}
 
 export default function RootLayout({ children }) {
   return (
@@ -307,7 +307,7 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -320,7 +320,7 @@ Like Create React App, Next.js has built-in support for [CSS Modules](/docs/app/
 If you're using a global CSS file, import it into your `app/layout.tsx` file:
 
 ```tsx filename="app/layout.tsx" switcher
-import "../index.css";
+import '../index.css'
 
 // ...
 ```
@@ -339,24 +339,24 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
-};
+}
 ```
 
 Create a `` file at the root of your project:
 
 ```ts filename="tailwind.config.ts"
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {},
   plugins: [],
-};
-export default config;
+}
+export default config
 ```
 
 Create an `app/globals.css` and import Tailwind globals:
@@ -370,7 +370,7 @@ Create an `app/globals.css` and import Tailwind globals:
 Lastly, import the `globals.css` file in your `app/layout.tsx` file:
 
 ```tsx filename="app/layout.tsx" switcher
-import "./globals.css";
+import './globals.css'
 
 // ...
 ```
@@ -388,26 +388,26 @@ This directory is what is called an [optional catch-all route segment](/docs/app
 **Create a new `page.tsx` file inside the `app/[[...slug]]` directory with the following content:**
 
 ```tsx filename="app/[[...slug]]/page.tsx" switcher
-import "../../index.css";
+import '../../index.css'
 
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return "..."; // We'll update this
+  return '...' // We'll update this
 }
 ```
 
 ```jsx filename="app/[[...slug]]/page.js" switcher
-import "../../index.css";
+import '../../index.css'
 
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return "..."; // We'll update this
+  return '...' // We'll update this
 }
 ```
 
@@ -418,28 +418,28 @@ This file imports our global CSS and tells [`generateStaticParams`](/docs/app/ap
 Now, let's move the rest of our CRA application which will run client-only.
 
 ```tsx filename="app/[[...slug]]/client.tsx" switcher
-"use client";
+'use client'
 
-import React from "react";
-import dynamic from "next/dynamic";
+import React from 'react'
+import dynamic from 'next/dynamic'
 
-const App = dynamic(() => import("../../App"), { ssr: false });
+const App = dynamic(() => import('../../App'), { ssr: false })
 
 export function ClientOnly() {
-  return <App />;
+  return <App />
 }
 ```
 
 ```jsx filename="app/[[...slug]]/client.js" switcher
-"use client";
+'use client'
 
-import React from "react";
-import dynamic from "next/dynamic";
+import React from 'react'
+import dynamic from 'next/dynamic'
 
-const App = dynamic(() => import("../../App"), { ssr: false });
+const App = dynamic(() => import('../../App'), { ssr: false })
 
 export function ClientOnly() {
-  return <App />;
+  return <App />
 }
 ```
 
@@ -448,34 +448,34 @@ This file is a [Client Component](/docs/app/building-your-application/rendering/
 Since we want a client-only application to start, we can configure Next.js to disable prerendering from the `App` component down.
 
 ```tsx
-const App = dynamic(() => import("../../App"), { ssr: false });
+const App = dynamic(() => import('../../App'), { ssr: false })
 ```
 
 Now, update your entrypoint page to use the new component:
 
 ```tsx filename="app/[[...slug]]/page.tsx" switcher
-import "../../index.css";
-import { ClientOnly } from "./client";
+import '../../index.css'
+import { ClientOnly } from './client'
 
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return <ClientOnly />;
+  return <ClientOnly />
 }
 ```
 
 ```jsx filename="app/[[...slug]]/page.js" switcher
-import "../../index.css";
-import { ClientOnly } from "./client";
+import '../../index.css'
+import { ClientOnly } from './client'
 
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return <ClientOnly />;
+  return <ClientOnly />
 }
 ```
 
@@ -484,10 +484,10 @@ export default function Page() {
 Next.js handles static image imports slightly different from CRA. With CRA, importing an image file will return its public URL as a string:
 
 ```tsx filename="App.tsx"
-import image from "./img.png";
+import image from './img.png'
 
 export default function App() {
-  return <img src={image} />;
+  return <img src={image} />
 }
 ```
 
@@ -501,10 +501,10 @@ Keeping the `<img>` tag will reduce the amount of changes in your application an
 
 ```tsx
 // Before
-import logo from "/logo.png";
+import logo from '/logo.png'
 
 // After
-import logo from "../public/logo.png";
+import logo from '../public/logo.png'
 ```
 
 **Pass the image `src` property instead of the whole image object to your `<img>` tag:**

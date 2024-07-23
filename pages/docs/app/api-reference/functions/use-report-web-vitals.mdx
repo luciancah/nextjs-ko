@@ -12,14 +12,14 @@ description: API Reference for the useReportWebVitals function.
 <PagesOnly>
 
 ```jsx filename="pages/_app.js"
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 function MyApp({ Component, pageProps }) {
   useReportWebVitals((metric) => {
-    console.log(metric);
-  });
+    console.log(metric)
+  })
 
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
@@ -28,19 +28,19 @@ function MyApp({ Component, pageProps }) {
 <AppOnly>
 
 ```jsx filename="app/_components/web-vitals.js"
-"use client";
+'use client'
 
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 export function WebVitals() {
   useReportWebVitals((metric) => {
-    console.log(metric);
-  });
+    console.log(metric)
+  })
 }
 ```
 
 ```jsx filename="app/layout.js"
-import { WebVitals } from "./_components/web-vitals";
+import { WebVitals } from './_components/web-vitals'
 
 export default function Layout({ children }) {
   return (
@@ -50,7 +50,7 @@ export default function Layout({ children }) {
         {children}
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -86,22 +86,22 @@ export default function Layout({ children }) {
 <PagesOnly>
 
 ```jsx filename="pages/_app.js"
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 function MyApp({ Component, pageProps }) {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "FCP": {
+      case 'FCP': {
         // FCP 결과 처리
       }
-      case "LCP": {
+      case 'LCP': {
         // LCP 결과 처리
       }
       // ...
     }
-  });
+  })
 
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
@@ -110,42 +110,42 @@ function MyApp({ Component, pageProps }) {
 <AppOnly>
 
 ```tsx filename="app/components/web-vitals.tsx" switcher
-"use client";
+'use client'
 
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 export function WebVitals() {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "FCP": {
+      case 'FCP': {
         // FCP 결과 처리
       }
-      case "LCP": {
+      case 'LCP': {
         // LCP 결과 처리
       }
       // ...
     }
-  });
+  })
 }
 ```
 
 ```jsx filename="app/components/web-vitals.js" switcher
-"use client";
+'use client'
 
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 export function WebVitals() {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "FCP": {
+      case 'FCP': {
         // FCP 결과 처리
       }
-      case "LCP": {
+      case 'LCP': {
         // LCP 결과 처리
       }
       // ...
     }
-  });
+  })
 }
 ```
 
@@ -164,26 +164,26 @@ export function WebVitals() {
 이 메트릭들의 결과는 개별적으로 처리할 수 있습니다:
 
 ```jsx filename="pages/_app.js"
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 function MyApp({ Component, pageProps }) {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "Next.js-hydration":
+      case 'Next.js-hydration':
         // 하이드레이션 결과 처리
-        break;
-      case "Next.js-route-change-to-render":
+        break
+      case 'Next.js-route-change-to-render':
         // 경로 변경에서 렌더까지의 결과 처리
-        break;
-      case "Next.js-render":
+        break
+      case 'Next.js-render':
         // 렌더 결과 처리
-        break;
+        break
       default:
-        break;
+        break
     }
-  });
+  })
 
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
@@ -201,16 +201,16 @@ function MyApp({ Component, pageProps }) {
 
 ```js
 useReportWebVitals((metric) => {
-  const body = JSON.stringify(metric);
-  const url = "https://example.com/analytics";
+  const body = JSON.stringify(metric)
+  const url = 'https://example.com/analytics'
 
   // 가능하면 `navigator.sendBeacon()`을 사용하고, 그렇지 않으면 `fetch()`를 사용합니다.
   if (navigator.sendBeacon) {
-    navigator.sendBeacon(url, body);
+    navigator.sendBeacon(url, body)
   } else {
-    fetch(url, { body, method: "POST", keepalive: true });
+    fetch(url, { body, method: 'POST', keepalive: true })
   }
-});
+})
 ```
 
 > **알아두면 좋은 점**: [Google Analytics](https://analytics.google.com/analytics/web/)를 사용하는 경우, `id` 값을 사용하여 메트릭 분포를 수동으로 구성할 수 있습니다(백분위수 계산 등).

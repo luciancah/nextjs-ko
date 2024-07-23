@@ -15,32 +15,32 @@ related:
 이 페이지는 `generateMetadata` 및 정적 메타데이터 객체를 사용한 **구성 기반 메타데이터** 옵션을 모두 다룹니다.
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 // 정적 메타데이터
 export const metadata: Metadata = {
-  title: "...",
-};
+  title: '...',
+}
 
 // 동적 메타데이터
 export async function generateMetadata({ params }) {
   return {
-    title: "...",
-  };
+    title: '...',
+  }
 }
 ```
 
 ```jsx filename="layout.js | page.js" switcher
 // 정적 메타데이터
 export const metadata = {
-  title: "...",
-};
+  title: '...',
+}
 
 // 동적 메타데이터
 export async function generateMetadata({ params }) {
   return {
-    title: "...",
-  };
+    title: '...',
+  }
 }
 ```
 
@@ -54,21 +54,21 @@ export async function generateMetadata({ params }) {
 정적 메타데이터를 정의하려면 `layout.js` 또는 `page.js` 파일에서 [`Metadata` 객체](#metadata-fields)를 내보내세요.
 
 ```tsx filename="layout.tsx | page.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "...",
-  description: "...",
-};
+  title: '...',
+  description: '...',
+}
 
 export default function Page() {}
 ```
 
 ```jsx filename="layout.js | page.js" switcher
 export const metadata = {
-  title: "...",
-  description: "...",
-};
+  title: '...',
+  description: '...',
+}
 
 export default function Page() {}
 ```
@@ -80,32 +80,32 @@ export default function Page() {}
 동적 정보(예: 현재 경로 매개변수, 외부 데이터 또는 상위 세그먼트의 `metadata`)에 의존하는 동적 메타데이터는 `generateMetadata` 함수를 내보내어 설정할 수 있으며, 이 함수는 [`Metadata` 객체](#metadata-fields)를 반환합니다.
 
 ```tsx filename="app/products/[id]/page.tsx" switcher
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata, ResolvingMetadata } from 'next'
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
 export async function generateMetadata(
   { params, searchParams }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   // 경로 매개변수 읽기
-  const id = params.id;
+  const id = params.id
 
   // 데이터 가져오기
-  const product = await fetch(`https://.../${id}`).then((res) => res.json());
+  const product = await fetch(`https://.../${id}`).then((res) => res.json())
 
   // 선택적으로 상위 메타데이터를 접근하고 확장(대체하지 않음)
-  const previousImages = (await parent).openGraph?.images || [];
+  const previousImages = (await parent).openGraph?.images || []
 
   return {
     title: product.title,
     openGraph: {
-      images: ["/some-specific-page-image.jpg", ...previousImages],
+      images: ['/some-specific-page-image.jpg', ...previousImages],
     },
-  };
+  }
 }
 
 export default function Page({ params, searchParams }: Props) {}
@@ -114,20 +114,20 @@ export default function Page({ params, searchParams }: Props) {}
 ```jsx filename="app/products/[id]/page.js" switcher
 export async function generateMetadata({ params, searchParams }, parent) {
   // 경로 매개변수 읽기
-  const id = params.id;
+  const id = params.id
 
   // 데이터 가져오기
-  const product = await fetch(`https://.../${id}`).then((res) => res.json());
+  const product = await fetch(`https://.../${id}`).then((res) => res.json())
 
   // 선택적으로 상위 메타데이터를 접근하고 확장(대체하지 않음)
-  const previousImages = (await parent).openGraph?.images || [];
+  const previousImages = (await parent).openGraph?.images || []
 
   return {
     title: product.title,
     openGraph: {
-      images: ["/some-specific-page-image.jpg", ...previousImages],
+      images: ['/some-specific-page-image.jpg', ...previousImages],
     },
-  };
+  }
 }
 
 export default function Page({ params, searchParams }) {}
@@ -178,8 +178,8 @@ export default function Page({ params, searchParams }) {}
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  title: "Next.js",
-};
+  title: 'Next.js',
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -189,25 +189,25 @@ export const metadata = {
 #### 템플릿 객체
 
 ```tsx filename="app/layout.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    template: "...",
-    default: "...",
-    absolute: "...",
+    template: '...',
+    default: '...',
+    absolute: '...',
   },
-};
+}
 ```
 
 ```jsx filename="app/layout.js" switcher
 export const metadata = {
   title: {
-    default: "...",
-    template: "...",
-    absolute: "...",
+    default: '...',
+    template: '...',
+    absolute: '...',
   },
-};
+}
 ```
 
 ##### 기본값
@@ -215,19 +215,19 @@ export const metadata = {
 `title.default`는 `title`을 정의하지 않은 하위 경로 세그먼트에 **대체 제목**을 제공하는 데 사용할 수 있습니다.
 
 ```tsx filename="app/layout.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    default: "Acme",
+    default: 'Acme',
   },
-};
+}
 ```
 
 ```tsx filename="app/about/page.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
-export const metadata: Metadata = {};
+export const metadata: Metadata = {}
 
 // 출력: <title>Acme</title>
 ```
@@ -237,14 +237,14 @@ export const metadata: Metadata = {};
 `title.template`는 **하위** 경로 세그먼트에서 정의된 `title`에 접두사 또는 접미사를 추가하는 데 사용할 수 있습니다.
 
 ```tsx filename="app/layout.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Acme",
-    default: "Acme", // 템플릿을 생성할 때 기본값이 필요합니다
+    template: '%s | Acme',
+    default: 'Acme', // 템플릿을 생성할 때 기본값이 필요합니다
   },
-};
+}
 ```
 
 ```jsx filename="app/layout.js" switcher
@@ -259,19 +259,19 @@ Acme', // 템플릿을 생성할 때 기본값이 필요합니다
 ```
 
 ```tsx filename="app/about/page.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "About",
-};
+  title: 'About',
+}
 
 // 출력: <title>About | Acme</title>
 ```
 
 ```jsx filename="app/about/page.js" switcher
 export const metadata = {
-  title: "About",
-};
+  title: 'About',
+}
 
 // 출력: <title>About | Acme</title>
 ```
@@ -291,31 +291,31 @@ export const metadata = {
 `title.absolute`는 상위 세그먼트에 설정된 `title.template`을 **무시하는** 제목을 제공하는 데 사용할 수 있습니다.
 
 ```tsx filename="app/layout.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Acme",
+    template: '%s | Acme',
   },
-};
+}
 ```
 
 ```jsx filename="app/layout.js" switcher
 export const metadata = {
   title: {
-    template: "%s | Acme",
+    template: '%s | Acme',
   },
-};
+}
 ```
 
 ```tsx filename="app/about/page.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    absolute: "About",
+    absolute: 'About',
   },
-};
+}
 
 // 출력: <title>About</title>
 ```
@@ -323,9 +323,9 @@ export const metadata: Metadata = {
 ```jsx filename="app/about/page.js" switcher
 export const metadata = {
   title: {
-    absolute: "About",
+    absolute: 'About',
   },
-};
+}
 
 // 출력: <title>About</title>
 ```
@@ -348,8 +348,8 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  description: "The React Framework for the Web",
-};
+  description: 'The React Framework for the Web',
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -360,19 +360,19 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  generator: "Next.js",
-  applicationName: "Next.js",
-  referrer: "origin-when-cross-origin",
-  keywords: ["Next.js", "React", "JavaScript"],
-  authors: [{ name: "Seb" }, { name: "Josh", url: "https://nextjs.org" }],
-  creator: "Jiachi Liu",
-  publisher: "Sebastian Markbåge",
+  generator: 'Next.js',
+  applicationName: 'Next.js',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['Next.js', 'React', 'JavaScript'],
+  authors: [{ name: 'Seb' }, { name: 'Josh', url: 'https://nextjs.org' }],
+  creator: 'Jiachi Liu',
+  publisher: 'Sebastian Markbåge',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -399,18 +399,18 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  metadataBase: new URL("https://acme.com"),
+  metadataBase: new URL('https://acme.com'),
   alternates: {
-    canonical: "/",
+    canonical: '/',
     languages: {
-      "en-US": "/en-US",
-      "de-DE": "/de-DE",
+      'en-US': '/en-US',
+      'de-DE': '/de-DE',
     },
   },
   openGraph: {
-    images: "/og-image.png",
+    images: '/og-image.png',
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -463,8 +463,8 @@ export const metadata: Metadata = {
 
 ```jsx filename="app/layout.js" switcher
 export const metadata = {
-  metadataBase: new URL("https://acme.com"),
-};
+  metadataBase: new URL('https://acme.com'),
+}
 ```
 
 다음과 같이 자신의 값을 설정한 `metadata` 필드는 다음과 같이 해결됩니다:
@@ -484,34 +484,34 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   openGraph: {
-    title: "Next.js",
-    description: "The React Framework for the Web",
-    url: "https://nextjs.org",
-    siteName: "Next.js",
+    title: 'Next.js',
+    description: 'The React Framework for the Web',
+    url: 'https://nextjs.org',
+    siteName: 'Next.js',
     images: [
       {
-        url: "https://nextjs.org/og.png", // 반드시 절대 URL이어야 함
+        url: 'https://nextjs.org/og.png', // 반드시 절대 URL이어야 함
         width: 800,
         height: 600,
       },
       {
-        url: "https://nextjs.org/og-alt.png", // 반드시 절대 URL이어야 함
+        url: 'https://nextjs.org/og-alt.png', // 반드시 절대 URL이어야 함
         width: 1800,
         height: 1600,
-        alt: "My custom alt",
+        alt: 'My custom alt',
       },
     ],
     videos: [
       {
-        url: "https://nextjs.org/video.mp4", // 반드시 절대 URL이어야 함
+        url: 'https://nextjs.org/video.mp4', // 반드시 절대 URL이어야 함
         width: 800,
         height: 600,
       },
     ],
-    locale: "en_US",
-    type: "website",
+    locale: 'en_US',
+    type: 'website',
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -533,13 +533,13 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   openGraph: {
-    title: "Next.js",
-    description: "The React Framework for the Web",
-    type: "article",
-    publishedTime: "2023-01-01T00:00:00.000Z",
-    authors: ["Seb", "Josh"],
+    title: 'Next.js',
+    description: 'The React Framework for the Web',
+    type: 'article',
+    publishedTime: '2023-01-01T00:00:00.000Z',
+    authors: ['Seb', 'Josh'],
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -558,7 +558,7 @@ export const metadata = {
 ### `robots`
 
 ```tsx filename="layout.tsx | page.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   robots: {
@@ -569,12 +569,12 @@ export const metadata: Metadata = {
       index: true,
       follow: false,
       noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -592,15 +592,15 @@ export const metadata: Metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   icons: {
-    icon: "/icon.png",
-    shortcut: "/shortcut-icon.png",
-    apple: "/apple-icon.png",
+    icon: '/icon.png',
+    shortcut: '/shortcut-icon.png',
+    apple: '/apple-icon.png',
     other: {
-      rel: "apple-touch-icon-precomposed",
-      url: "/apple-touch-icon-precomposed.png",
+      rel: 'apple-touch-icon-precomposed',
+      url: '/apple-touch-icon-precomposed.png',
     },
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -617,23 +617,23 @@ export const metadata = {
 export const metadata = {
   icons: {
     icon: [
-      { url: "/icon.png" },
-      new URL("/icon.png", "https://example.com"),
-      { url: "/icon-dark.png", media: "(prefers-color-scheme: dark)" },
+      { url: '/icon.png' },
+      new URL('/icon.png', 'https://example.com'),
+      { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
     ],
-    shortcut: ["/shortcut-icon.png"],
+    shortcut: ['/shortcut-icon.png'],
     apple: [
-      { url: "/apple-icon.png" },
-      { url: "/apple-icon-x3.png", sizes: "180x180", type: "image/png" },
+      { url: '/apple-icon.png' },
+      { url: '/apple-icon-x3.png', sizes: '180x180', type: 'image/png' },
     ],
     other: [
       {
-        rel: "apple-touch-icon-precomposed",
-        url: "/apple-touch-icon-precomposed.png",
+        rel: 'apple-touch-icon-precomposed',
+        url: '/apple-touch-icon-precomposed.png',
       },
     ],
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -666,8 +666,8 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  manifest: "https://nextjs.org/manifest.json",
-};
+  manifest: 'https://nextjs.org/manifest.json',
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -683,15 +683,15 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   twitter: {
-    card: "summary_large_image",
-    title: "Next.js",
-    description: "The React Framework for the Web",
-    siteId: "1467726470533754880",
-    creator: "@nextjs",
-    creatorId: "1467726470533754880",
-    images: ["https://nextjs.org/og.png"], // 반드시 절대 URL이어야 함
+    card: 'summary_large_image',
+    title: 'Next.js',
+    description: 'The React Framework for the Web',
+    siteId: '1467726470533754880',
+    creator: '@nextjs',
+    creatorId: '1467726470533754880',
+    images: ['https://nextjs.org/og.png'], // 반드시 절대 URL이어야 함
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -712,30 +712,30 @@ js"
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   twitter: {
-    card: "app",
-    title: "Next.js",
-    description: "The React Framework for the Web",
-    siteId: "1467726470533754880",
-    creator: "@nextjs",
-    creatorId: "1467726470533754880",
+    card: 'app',
+    title: 'Next.js',
+    description: 'The React Framework for the Web',
+    siteId: '1467726470533754880',
+    creator: '@nextjs',
+    creatorId: '1467726470533754880',
     images: {
-      url: "https://nextjs.org/og.png",
-      alt: "Next.js Logo",
+      url: 'https://nextjs.org/og.png',
+      alt: 'Next.js Logo',
     },
     app: {
-      name: "twitter_app",
+      name: 'twitter_app',
       id: {
-        iphone: "twitter_app://iphone",
-        ipad: "twitter_app://ipad",
-        googleplay: "twitter_app://googleplay",
+        iphone: 'twitter_app://iphone',
+        ipad: 'twitter_app://ipad',
+        googleplay: 'twitter_app://googleplay',
       },
       url: {
-        iphone: "https://iphone_url",
-        ipad: "https://ipad_url",
+        iphone: 'https://iphone_url',
+        ipad: 'https://ipad_url',
       },
     },
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -766,14 +766,14 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   verification: {
-    google: "google",
-    yandex: "yandex",
-    yahoo: "yahoo",
+    google: 'google',
+    yandex: 'yandex',
+    yahoo: 'yahoo',
     other: {
-      me: ["my-email", "my-link"],
+      me: ['my-email', 'my-link'],
     },
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -789,21 +789,21 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   itunes: {
-    appId: "myAppStoreID",
-    appArgument: "myAppArgument",
+    appId: 'myAppStoreID',
+    appArgument: 'myAppArgument',
   },
   appleWebApp: {
-    title: "Apple Web App",
-    statusBarStyle: "black-translucent",
+    title: 'Apple Web App',
+    statusBarStyle: 'black-translucent',
     startupImage: [
-      "/assets/startup/apple-touch-startup-image-768x1004.png",
+      '/assets/startup/apple-touch-startup-image-768x1004.png',
       {
-        url: "/assets/startup/apple-touch-startup-image-1536x2008.png",
-        media: "(device-width: 768px) and (device-height: 1024px)",
+        url: '/assets/startup/apple-touch-startup-image-1536x2008.png',
+        media: '(device-width: 768px) and (device-height: 1024px)',
       },
     ],
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -833,19 +833,19 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   alternates: {
-    canonical: "https://nextjs.org",
+    canonical: 'https://nextjs.org',
     languages: {
-      "en-US": "https://nextjs.org/en-US",
-      "de-DE": "https://nextjs.org/de-DE",
+      'en-US': 'https://nextjs.org/en-US',
+      'de-DE': 'https://nextjs.org/de-DE',
     },
     media: {
-      "only screen and (max-width: 600px)": "https://nextjs.org/mobile",
+      'only screen and (max-width: 600px)': 'https://nextjs.org/mobile',
     },
     types: {
-      "application/rss+xml": "https://nextjs.org/rss",
+      'application/rss+xml': 'https://nextjs.org/rss',
     },
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -870,19 +870,19 @@ export const metadata = {
 export const metadata = {
   appLinks: {
     ios: {
-      url: "https://nextjs.org/ios",
-      app_store_id: "app_store_id",
+      url: 'https://nextjs.org/ios',
+      app_store_id: 'app_store_id',
     },
     android: {
-      package: "com.example.android/package",
-      app_name: "app_name_android",
+      package: 'com.example.android/package',
+      app_name: 'app_name_android',
     },
     web: {
-      url: "https://nextjs.org/web",
+      url: 'https://nextjs.org/web',
       should_fallback: true,
     },
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -900,8 +900,8 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  archives: ["https://nextjs.org/13"],
-};
+  archives: ['https://nextjs.org/13'],
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -912,8 +912,8 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  assets: ["https://nextjs.org/assets"],
-};
+  assets: ['https://nextjs.org/assets'],
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -924,8 +924,8 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  bookmarks: ["https://nextjs.org/13"],
-};
+  bookmarks: ['https://nextjs.org/13'],
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -936,8 +936,8 @@ export const metadata = {
 
 ```jsx filename="layout.js | page.js"
 export const metadata = {
-  category: "technology",
-};
+  category: 'technology',
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -953,9 +953,9 @@ Facebook 소셜 플러그인에 특정 Facebook 앱 또는 계정을 연결할 �
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   facebook: {
-    appId: "12345678",
+    appId: '12345678',
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -965,9 +965,9 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   facebook: {
-    admins: "12345678",
+    admins: '12345678',
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -998,9 +998,9 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   other: {
-    custom: "meta",
+    custom: 'meta',
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -1012,9 +1012,9 @@ export const metadata = {
 ```jsx filename="layout.js | page.js"
 export const metadata = {
   other: {
-    custom: ["meta1", "meta2"],
+    custom: ['meta1', 'meta2'],
   },
-};
+}
 ```
 
 ```html filename="<head> output" hideLineNumbers
@@ -1044,30 +1044,30 @@ export const metadata = {
 메타데이터 API는 이러한 힌트를 직접 지원하지 않지만, 새로운 [`ReactDOM` 메서드](https://github.com/facebook/react/pull/26237)를 사용하여 문서의 `<head>`에 안전하게 삽입할 수 있습니다.
 
 ```tsx filename="app/preload-resources.tsx" switcher
-"use client";
+'use client'
 
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom'
 
 export function PreloadResources() {
-  ReactDOM.preload("...", { as: "..." });
-  ReactDOM.preconnect("...", { crossOrigin: "..." });
-  ReactDOM.prefetchDNS("...");
+  ReactDOM.preload('...', { as: '...' })
+  ReactDOM.preconnect('...', { crossOrigin: '...' })
+  ReactDOM.prefetchDNS('...')
 
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/preload-resources.js" switcher
-"use client";
+'use client'
 
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom'
 
 export function PreloadResources() {
-  ReactDOM.preload("...", { as: "..." });
-  ReactDOM.preconnect("...", { crossOrigin: "..." });
-  ReactDOM.prefetchDNS("...");
+  ReactDOM.preload('...', { as: '...' })
+  ReactDOM.preconnect('...', { crossOrigin: '...' })
+  ReactDOM.prefetchDNS('...')
 
-  return "...";
+  return '...'
 }
 ```
 
@@ -1119,11 +1119,11 @@ ReactDOM.prefetchDNS(href: string)
 ### `metadata` 객체
 
 ```tsx filename="layout.tsx | page.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Next.js",
-};
+  title: 'Next.js',
+}
 ```
 
 ### `generateMetadata` 함수
@@ -1131,41 +1131,41 @@ export const metadata: Metadata = {
 #### 일반 함수
 
 ```tsx filename="layout.tsx | page.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export function generateMetadata(): Metadata {
   return {
-    title: "Next.js",
-  };
+    title: 'Next.js',
+  }
 }
 ```
 
 #### 비동기 함수
 
 ```tsx filename="layout.tsx | page.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Next.js",
-  };
+    title: 'Next.js',
+  }
 }
 ```
 
 #### 세그먼트 props와 함께
 
 ```tsx filename="layout.tsx | page.tsx"
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
 
 export function generateMetadata({ params, searchParams }: Props): Metadata {
   return {
-    title: "Next.js",
-  };
+    title: 'Next.js',
+  }
 }
 
 export default function Page({ params, searchParams }: Props) {}
@@ -1174,15 +1174,15 @@ export default function Page({ params, searchParams }: Props) {}
 #### 상위 메타데이터와 함께
 
 ```tsx filename="layout.tsx | page.tsx"
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata, ResolvingMetadata } from 'next'
 
 export async function generateMetadata(
   { params, searchParams }: Props,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   return {
-    title: "Next.js",
-  };
+    title: 'Next.js',
+  }
 }
 ```
 
@@ -1193,8 +1193,8 @@ JavaScript 프로젝트에서는 JSDoc을 사용하여 타입 안전성을 추�
 ```js filename="layout.js | page.js"
 /** @type {import("next").Metadata} */
 export const metadata = {
-  title: "Next.js",
-};
+  title: 'Next.js',
+}
 ```
 
 ## 버전 기록

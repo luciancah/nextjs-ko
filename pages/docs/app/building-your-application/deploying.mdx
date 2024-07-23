@@ -150,24 +150,24 @@ Next.js는 응답, 생성된 정적 페이지, 빌드 출력 및 이미지, 글�
 
 ```jsx filename="next.config.js"
 module.exports = {
-  cacheHandler: require.resolve("./cache-handler.js"),
+  cacheHandler: require.resolve('./cache-handler.js'),
   cacheMaxMemorySize: 0, // 기본 메모리 캐싱 비활성화
-};
+}
 ```
 
 그런 다음 프로젝트 루트에 `cache-handler.js`를 생성합니다. 예를 들어:
 
 ```jsx filename="cache-handler.js"
-const cache = new Map();
+const cache = new Map()
 
 module.exports = class CacheHandler {
   constructor(options) {
-    this.options = options;
+    this.options = options
   }
 
   async get(key) {
     // 이는 어디에나 저장될 수 있습니다. 예: 내구성 있는 스토리지
-    return cache.get(key);
+    return cache.get(key)
   }
 
   async set(key, data, ctx) {
@@ -176,7 +176,7 @@ module.exports = class CacheHandler {
       value: data,
       lastModified: Date.now(),
       tags: ctx.tags,
-    });
+    })
   }
 
   async revalidateTag(tag) {
@@ -184,11 +184,11 @@ module.exports = class CacheHandler {
     for (let [key, value] of cache) {
       // 값의 태그에 지정된 태그가 포함된 경우 이 항목을 삭제합니다
       if (value.tags.includes(tag)) {
-        cache.delete(key);
+        cache.delete(key)
       }
     }
   }
-};
+}
 ```
 
 사용자 정의 캐시 핸들러를 사용하면 Next.js 애플리케이션을 호스팅하는 모든 포드 간의 일관성을 보장할 수 있습니다. 예를 들어, [Redis](https://github.com/vercel/next.js/tree/canary/examples/cache-handler-redis) 또는 AWS S3에 캐시된 값을 저장할 수 있습니다.
@@ -207,9 +207,9 @@ Next.js는 `next build` 중에 애플리케이션의 버전을 식별하기 위�
 module.exports = {
   generateBuildId: async () => {
     // 이는 어떤 것이든 될 수 있습니다. 최신 git 해시를 사용하는 경우
-    return process.env.GIT_HASH;
+    return process.env.GIT_HASH
   },
-};
+}
 ```
 
 ### Version Skew
@@ -242,13 +242,13 @@ Vercel은 새로운 버전이 배포된 후에도 이전 버전의 자산과 기
 
 ```js filename="pages/_document.js"
 if (process.env.NEXT_MANUAL_SIG_HANDLE) {
-  process.on("SIGTERM", () => {
-    console.log("Received SIGTERM: cleaning up");
-    process.exit(0);
-  });
-  process.on("SIGINT", () => {
-    console.log("Received SIGINT: cleaning up");
-    process.exit(0);
-  });
+  process.on('SIGTERM', () => {
+    console.log('Received SIGTERM: cleaning up')
+    process.exit(0)
+  })
+  process.on('SIGINT', () => {
+    console.log('Received SIGINT: cleaning up')
+    process.exit(0)
+  })
 }
 ```

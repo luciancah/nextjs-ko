@@ -32,13 +32,13 @@ pnpm add @next/bundle-analyzer
 
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {}
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withBundleAnalyzer(nextConfig)
 ```
 
 ### Generating a report
@@ -65,11 +65,11 @@ ANALYZE=true pnpm build
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    optimizePackageImports: ["icon-library"],
+    optimizePackageImports: ['icon-library'],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 Next.js는 일부 라이브러리를 자동으로 최적화하므로 `optimizePackageImports` 목록에 포함할 필요가 없습니다. 전체 목록은 [여기](https://nextjs.org/docs/app/api-reference/next-config-js/optimizePackageImports)에서 확인할 수 있습니다.
@@ -83,10 +83,10 @@ Next.js는 일부 라이브러리를 자동으로 최적화하므로 `optimizePa
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["package-name"],
-};
+  transpilePackages: ['package-name'],
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ## Bundling all packages
@@ -97,9 +97,9 @@ module.exports = nextConfig;
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   bundlePagesRouterDependencies: true,
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ## Opting specific packages out of bundling
@@ -112,10 +112,10 @@ const nextConfig = {
   // Pages Router에서 외부 패키지를 자동으로 번들링:
   bundlePagesRouterDependencies: true,
   // App 및 Pages Router에서 특정 패키지를 번들링에서 제외:
-  serverExternalPackages: ["package-name"],
-};
+  serverExternalPackages: ['package-name'],
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 </PagesOnly>
@@ -129,10 +129,10 @@ Server Components 및 Route Handlers 내부에서 가져온 패키지는 Next.js
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ["package-name"],
-};
+  serverExternalPackages: ['package-name'],
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 Next.js에는 현재 호환성을 위해 작업 중인 인기 패키지 목록이 포함되어 있으며, 자동으로 제외됩니다. 전체 목록은 [여기](/docs/app/api-reference/next-config-js/serverExternalPackages)에서 확인할 수 있습니다.

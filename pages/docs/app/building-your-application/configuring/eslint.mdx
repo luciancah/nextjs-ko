@@ -149,9 +149,9 @@ Next.js가 루트 디렉토리에 설치되지 않은 프로젝트(예: 모노�
 ```js filename="next.config.js"
 module.exports = {
   eslint: {
-    dirs: ["pages", "utils"], // 프로덕션 빌드 중에 'pages' 및 'utils' 디렉토리에 대해서만 ESLint 실행 (next build)
+    dirs: ['pages', 'utils'], // 프로덕션 빌드 중에 'pages' 및 'utils' 디렉토리에 대해서만 ESLint 실행 (next build)
   },
-};
+}
 ```
 
 유사하게, `next lint`에 대해 `--dir` 및 `--file` 플래그를 사용하여 특정 디렉토리 및 파일에 대해 린트를 실행할 수 있습니다:
@@ -249,16 +249,16 @@ bun add --dev eslint-config-prettier
 [lint-staged](https://github.com/okonet/lint-staged)와 함께 `next lint`를 사용하여 스테이지된 git 파일에 대해 린터를 실행하려면, `.lintstagedrc.js` 파일을 프로젝트 루트에 추가하고 `--file` 플래그의 사용을 지정해야 합니다.
 
 ```js filename=".lintstagedrc.js"
-const path = require("path");
+const path = require('path')
 
 const buildEslintCommand = (filenames) =>
   `next lint --fix --file ${filenames
     .map((f) => path.relative(process.cwd(), f))
-    .join(" --file ")}`;
+    .join(' --file ')}`
 
 module.exports = {
-  "*.{js,jsx,ts,tsx}": [buildEslintCommand],
-};
+  '*.{js,jsx,ts,tsx}': [buildEslintCommand],
+}
 ```
 
 ## Migrating Existing Config
@@ -281,9 +281,9 @@ module.exports = {
 module.exports = {
   extends: [
     //...
-    "plugin:@next/next/recommended",
+    'plugin:@next/next/recommended',
   ],
-};
+}
 ```
 
 플러그인은 `next lint`를 실행하지 않고도 프로젝트에 정상적으로 설치할 수 있습니다:

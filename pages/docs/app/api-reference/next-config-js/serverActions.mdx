@@ -17,10 +17,10 @@ Server Actions를 호출할 수 있는 추가 안전 출처 도메인의 목록�
 module.exports = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["my-proxy.com", "*.my-proxy.com"],
+      allowedOrigins: ['my-proxy.com', '*.my-proxy.com'],
     },
   },
-};
+}
 ```
 
 ## `bodySizeLimit`
@@ -35,10 +35,10 @@ module.exports = {
 module.exports = {
   experimental: {
     serverActions: {
-      bodySizeLimit: "2mb",
+      bodySizeLimit: '2mb',
     },
   },
-};
+}
 ```
 
 ## Server Actions 활성화 (v13)
@@ -51,7 +51,7 @@ const config = {
   experimental: {
     serverActions: true,
   },
-};
+}
 
-module.exports = config;
+module.exports = config
 ```

@@ -97,13 +97,13 @@ Next.js는 파일 시스템 라우팅을 사용하므로 애플리케이션의 �
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 
@@ -113,7 +113,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 
@@ -121,13 +121,13 @@ export default function RootLayout({ children }) {
 
 ```tsx filename="app/page.tsx" switcher
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+  return <h1>Hello, Next.js!</h1>
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+  return <h1>Hello, Next.js!</h1>
 }
 ```
 
@@ -143,30 +143,30 @@ App Router 대신 Pages Router를 사용하려면 프로젝트 루트에 `pages/
 
 ```tsx filename="pages/index.tsx" switcher
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+  return <h1>Hello, Next.js!</h1>
 }
 ```
 
 다음으로, `pages/` 안에 `_app.tsx` 파일을 추가하여 글로벌 레이아웃을 정의하세요. [커스텀 App 파일](/docs/pages/building-your-application/routing/custom-app)에 대해 더 알아보세요.
 
 ```tsx filename="pages/_app.tsx" switcher
-import type { AppProps } from "next/app";
+import type { AppProps } from 'next/app'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
 ```jsx filename="pages/_app.js" switcher
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
 마지막으로, 서버에서 초기 응답을 제어하기 위해 `pages/` 안에 `_document.tsx` 파일을 추가하세요. [커스텀 Document 파일](/docs/pages/building-your-application/routing/custom-document)에 대해 더 알아보세요.
 
 ```tsx filename="pages/_document.tsx" switcher
-import { Html, Head, Main, NextScript } from "next/document";
+import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
@@ -177,7 +177,7 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  );
+  )
 }
 ```
 

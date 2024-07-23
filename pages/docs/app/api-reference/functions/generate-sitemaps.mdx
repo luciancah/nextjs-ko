@@ -28,49 +28,49 @@ related:
 예를 들어, `generateSitemaps`를 사용하여 사이트맵을 분할하려면 사이트맵 `id`가 포함된 객체 배열을 반환합니다. 그런 다음, `id`를 사용하여 고유한 사이트맵을 생성합니다.
 
 ```ts filename="app/product/sitemap.ts" switcher
-import { BASE_URL } from "@/app/lib/constants";
+import { BASE_URL } from '@/app/lib/constants'
 
 export async function generateSitemaps() {
   // 총 제품 수를 가져와 필요한 사이트맵 수를 계산합니다.
-  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }]
 }
 
 export default async function sitemap({
   id,
 }: {
-  id: number;
+  id: number
 }): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const start = id * 50000;
-  const end = start + 50000;
+  const start = id * 50000
+  const end = start + 50000
   const products = await getProducts(
-    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`
-  );
+    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`,
+  )
   return products.map((product) => ({
     url: `${BASE_URL}/product/${product.id}`,
     lastModified: product.date,
-  }));
+  }))
 }
 ```
 
 ```js filename="app/product/sitemap.js" switcher
-import { BASE_URL } from "@/app/lib/constants";
+import { BASE_URL } from '@/app/lib/constants'
 
 export async function generateSitemaps() {
   // 총 제품 수를 가져와 필요한 사이트맵 수를 계산합니다.
-  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }]
 }
 
 export default async function sitemap({ id }) {
   // Google's limit is 50,000 URLs per sitemap
-  const start = id * 50000;
-  const end = start + 50000;
+  const start = id * 50000
+  const end = start + 50000
   const products = await getProducts(
-    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`
-  );
+    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`,
+  )
   return products.map((product) => ({
     url: `${BASE_URL}/product/${id}`,
     lastModified: product.date,
-  }));
+  }))
 }
 ```

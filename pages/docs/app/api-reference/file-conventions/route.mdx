@@ -57,11 +57,11 @@ export async function OPTIONS(request) {}
 
 ```ts filename="app/dashboard/[team]/route.ts" switcher
 type Params = {
-  team: string;
-};
+  team: string
+}
 
 export async function GET(request: Request, context: { params: Params }) {
-  const team = context.params.team; // '1'
+  const team = context.params.team // '1'
 }
 
 // Define params type according to your route parameters (see table below)
@@ -69,7 +69,7 @@ export async function GET(request: Request, context: { params: Params }) {
 
 ```js filename="app/dashboard/[team]/route.js" switcher
 export async function GET(request, context) {
-  const team = context.params.team; // '1'
+  const team = context.params.team // '1'
 }
 ```
 
