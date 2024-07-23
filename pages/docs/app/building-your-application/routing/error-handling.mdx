@@ -22,53 +22,53 @@ related:
 `useActionState` 훅(이전에는 `useFormState`)을 사용하여 서버 액션의 상태를 관리하고 에러를 처리합니다. 이 접근 방식은 예상된 에러를 위한 `try`/`catch` 블록을 피하고, 에러를 throw하는 대신 반환 값으로 모델링해야 합니다.
 
 ```tsx filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function createUser(prevState: any, formData: FormData) {
-  const res = await fetch("https://...");
-  const json = await res.json();
+  const res = await fetch('https://...')
+  const json = await res.json()
 
   if (!res.ok) {
-    return { message: "Please enter a valid email" };
+    return { message: 'Please enter a valid email' }
   }
 
-  redirect("/dashboard");
+  redirect('/dashboard')
 }
 ```
 
 ```jsx filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function createUser(prevState, formData) {
-  const res = await fetch("https://...");
-  const json = await res.json();
+  const res = await fetch('https://...')
+  const json = await res.json()
 
   if (!res.ok) {
-    return { message: "Please enter a valid email" };
+    return { message: 'Please enter a valid email' }
   }
 
-  redirect("/dashboard");
+  redirect('/dashboard')
 }
 ```
 
 그런 다음, `useActionState` 훅에 액션을 전달하고 반환된 `state`를 사용하여 에러 메시지를 표시할 수 있습니다.
 
 ```tsx filename="app/ui/signup.tsx" highlight={11,18-20} switcher
-"use client";
+'use client'
 
-import { useActionState } from "react";
-import { createUser } from "@/app/actions";
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
 
 const initialState = {
-  message: "",
-};
+  message: '',
+}
 
 export function Signup() {
-  const [state, formAction] = useActionState(createUser, initialState);
+  const [state, formAction] = useActionState(createUser, initialState)
 
   return (
     <form action={formAction}>
@@ -78,22 +78,22 @@ export function Signup() {
       <p aria-live="polite">{state?.message}</p>
       <button>Sign up</button>
     </form>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/ui/signup.js" highlight={11,18-20} switcher
-"use client";
+'use client'
 
-import { useActionState } from "react";
-import { createUser } from "@/app/actions";
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
 
 const initialState = {
-  message: "",
-};
+  message: '',
+}
 
 export function Signup() {
-  const [state, formAction] = useActionState(createUser, initialState);
+  const [state, formAction] = useActionState(createUser, initialState)
 
   return (
     <form action={formAction}>
@@ -103,7 +103,7 @@ export function Signup() {
       <p aria-live="polite">{state?.message}</p>
       <button>Sign up</button>
     </form>
-  );
+  )
 }
 ```
 
@@ -115,27 +115,27 @@ export function Signup() {
 
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
-  const res = await fetch(`https://...`);
-  const data = await res.json();
+  const res = await fetch(`https://...`)
+  const data = await res.json()
 
   if (!res.ok) {
-    return "There was an error.";
+    return 'There was an error.'
   }
 
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/page.js" switcher
 export default async function Page() {
-  const res = await fetch(`https://...`);
-  const data = await res.json();
+  const res = await fetch(`https://...`)
+  const data = await res.json()
 
   if (!res.ok) {
-    return "There was an error.";
+    return 'There was an error.'
   }
 
-  return "...";
+  return '...'
 }
 ```
 
@@ -154,21 +154,21 @@ Next.js는 예상치 못한 예외를 처리하기 위해 에러 경계를 사�
 경로 세그먼트 내에 `error.tsx` 파일을 추가하고 React 컴포넌트를 내보내어 에러 경계를 생성합니다:
 
 ```tsx filename="app/dashboard/error.tsx" switcher
-"use client"; // Error boundaries must be Client Components
+'use client' // Error boundaries must be Client Components
 
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
+    console.error(error)
+  }, [error])
 
   return (
     <div>
@@ -182,20 +182,20 @@ export default function Error({
         Try again
       </button>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/dashboard/error.js" switcher
-"use client"; // Error boundaries must be Client Components
+'use client' // Error boundaries must be Client Components
 
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
 export default function Error({ error, reset }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
+    console.error(error)
+  }, [error])
 
   return (
     <div>
@@ -209,7 +209,7 @@ export default function Error({ error, reset }) {
         Try again
       </button>
     </div>
-  );
+  )
 }
 ```
 
@@ -230,14 +230,14 @@ export default function Error({ error, reset }) {
 드물게 루트 레이아웃에서 에러를 처리해야 할 때는, `app/global-error.js`를 사용합니다. 이 파일은 루트 앱 디렉토리에 위치하며, [국제화](/docs/app/building-your-application/routing/internationalization)를 활용할 때도 작동합니다. 전역 에러 UI는 활성화될 때 루트 레이아웃이나 템플릿을 대체하므로 자체 `<html>` 및 `<body>` 태그를 정의해야 합니다.
 
 ```tsx filename="app/global-error.tsx" switcher
-"use client"; // Error boundaries must be Client Components
+'use client' // Error boundaries must be Client Components
 
 export default function GlobalError({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
-  reset: () => void;
+  error: Error & { digest?: string }
+  reset: () => void
 }) {
   return (
     // global-error must include html and body tags
@@ -247,12 +247,12 @@ export default function GlobalError({
         <button onClick={() => reset()}>Try again</button>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/global-error.js" switcher
-"use client"; // Error boundaries must be Client Components
+'use client' // Error boundaries must be Client Components
 
 export default function GlobalError({ error, reset }) {
   return (
@@ -263,6 +263,6 @@ export default function GlobalError({ error, reset }) {
         <button onClick={() => reset()}>Try again</button>
       </body>
     </html>
-  );
+  )
 }
 ```

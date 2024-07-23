@@ -8,43 +8,43 @@ description: API Reference for the useParams hook.
 `useParams`는 현재 URL에 의해 채워진 경로의 [동적 파라미터](/docs/app/building-your-application/routing/dynamic-routes)를 읽을 수 있게 해주는 **클라이언트 컴포넌트** 훅입니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
-"use client";
+'use client'
 
-import { useParams } from "next/navigation";
+import { useParams } from 'next/navigation'
 
 export default function ExampleClientComponent() {
-  const params = useParams<{ tag: string; item: string }>();
+  const params = useParams<{ tag: string; item: string }>()
 
   // Route -> /shop/[tag]/[item]
   // URL -> /shop/shoes/nike-air-max-97
   // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-  console.log(params);
+  console.log(params)
 
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/example-client-component.js" switcher
-"use client";
+'use client'
 
-import { useParams } from "next/navigation";
+import { useParams } from 'next/navigation'
 
 export default function ExampleClientComponent() {
-  const params = useParams();
+  const params = useParams()
 
   // Route -> /shop/[tag]/[item]
   // URL -> /shop/shoes/nike-air-max-97
   // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
-  console.log(params);
+  console.log(params)
 
-  return "...";
+  return '...'
 }
 ```
 
 ## Parameters
 
 ```tsx
-const params = useParams();
+const params = useParams()
 ```
 
 `useParams`는 파라미터를 받지 않습니다.

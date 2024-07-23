@@ -86,9 +86,9 @@ TypeScript 플러그인은 다음과 같은 기능을 제공합니다:
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ### Type checking next.config.ts
@@ -96,13 +96,13 @@ module.exports = nextConfig;
 `next.config.ts` 파일을 사용하여 Next.js 구성에서 TypeScript와 타입을 가져올 수 있습니다.
 
 ```ts filename="next.config.ts"
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   /* config options here */
-};
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 > **참고**: 추가 구성 없이 `next.config.ts`에서 Native ESM 모듈을 가져올 수 있습니다. `.cjs`, `.cts`, `.mjs`, `.mts`와 같은 확장자를 가져오는 것을 지원합니다.
@@ -116,15 +116,15 @@ Next.js는 `next/link`를 사용할 때 타이포 및 기타 오류를 방지하
 이 기능을 사용하려면 `experimental.typedRoutes`를 활성화하고 프로젝트가 TypeScript를 사용해야 합니다.
 
 ```ts filename="next.config.ts"
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   experimental: {
     typedRoutes: true,
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 Next.js는 애플리케이션의 모든 기존 경로에 대한 정보를 포함하는 링크 정의를 `.next/types`에 생성하며, TypeScript는 이를 사용하여 잘못된 링크에 대한 피드백을 에디터에 제공합니다.
@@ -148,15 +148,15 @@ import Link from 'next/link'
 `next/link`를 래핑하는 사용자 정의 컴포넌트에서 `href`를 허용하려면 제네릭을 사용하세요:
 
 ```tsx
-import type { Route } from "next";
-import Link from "next/link";
+import type { Route } from 'next'
+import Link from 'next/link'
 
 function Card<T extends string>({ href }: { href: Route<T> | URL }) {
   return (
     <Link href={href}>
       <div>My Card</div>
     </Link>
-  );
+  )
 }
 ```
 
@@ -177,16 +177,16 @@ Next.js App Router는 **강화된 타입 안전성**을 제공합니다. 여기�
 
 ```tsx filename="app/page.tsx"
 async function getData() {
-  const res = await fetch("https://api.example.com/...");
+  const res = await fetch('https://api.example.com/...')
   // 반환 값은 직렬화되지 않습니다
   // Date, Map, Set 등을 반환할 수 있습니다
-  return res.json();
+  return res.json()
 }
 
 export default async function Page() {
-  const name = await getData();
+  const name = await getData()
 
-  return "...";
+  return '...'
 }
 ```
 
@@ -215,19 +215,19 @@ Server 및 Client Component 간에 props를 통해 데이터를 전달할 때, �
 [`getStaticProps`](/docs/pages/api-reference/functions/get-static-props), [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths) 및 [`getServerSideProps`](/docs/pages/api-reference/functions/get-server-side-props)에 대해 각각 `GetStaticProps`, `GetStaticPaths`, `GetServerSideProps` 타입을 사용할 수 있습니다:
 
 ```tsx filename="pages/blog/[slug].tsx"
-import type { GetStaticProps, GetStaticPaths, GetServerSideProps } from "next";
+import type { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 export const getStaticProps = (async (context) => {
   // ...
-}) satisfies GetStaticProps;
+}) satisfies GetStaticProps
 
 export const getStaticPaths = (async () => {
   // ...
-}) satisfies GetStaticPaths;
+}) satisfies GetStaticPaths
 
 export const getServerSideProps = (async (context) => {
   // ...
-}) satisfies GetServerSideProps;
+}) satisfies GetServerSideProps
 ```
 
 > **참고**: `satisfies`는 TypeScript [4.9](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html)에 추가되었습니다. 최신 버전의 TypeScript로 업그레이드하는 것을 권장합니다.
@@ -237,27 +237,27 @@ export const getServerSideProps = (async (context) => {
 다음은 API 라우트에 내장된 타입을 사용하는 예입니다:
 
 ```ts
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json({ name: "John Doe" });
+  res.status(200).json({ name: 'John Doe' })
 }
 ```
 
 응답 데이터를 타입 지정할 수도 있습니다:
 
 ```ts
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
-  name: string;
-};
+  name: string
+}
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data>,
 ) {
-  res.status(200).json({ name: "John Doe" });
+  res.status(200).json({ name: 'John Doe' })
 }
 ```
 
@@ -313,7 +313,7 @@ export default {
     // !! 경고 !!
     ignoreBuildErrors: true,
   },
-};
+}
 ```
 
 ## Custom Type Declarations

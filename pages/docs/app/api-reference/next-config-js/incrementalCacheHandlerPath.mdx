@@ -10,9 +10,9 @@ Next.js에서 Pages와 App Router의 [기본 캐시 핸들러](/docs/app/buildin
 
 ```js filename="next.config.js"
 module.exports = {
-  cacheHandler: require.resolve("./cache-handler.js"),
+  cacheHandler: require.resolve('./cache-handler.js'),
   cacheMaxMemorySize: 0, // 기본 메모리 내 캐싱 비활성화
-};
+}
 ```
 
 [사용자 정의 캐시 핸들러](/docs/app/building-your-application/deploying#configuring-caching) 예제를 확인하고 구현에 대해 더 알아보세요.

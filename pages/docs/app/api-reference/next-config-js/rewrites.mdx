@@ -28,12 +28,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/about",
-        destination: "/",
+        source: '/about',
+        destination: '/',
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 Rewrites는 클라이언트 측 라우팅에 적용되며, 위 예제에서 `<Link href="/about">`는 rewrite가 적용됩니다.
@@ -58,30 +58,30 @@ module.exports = {
         // _next/public 파일을 포함한 모든 파일 전에 확인되어
         // 페이지 파일을 덮어쓸 수 있습니다
         {
-          source: "/some-page",
-          destination: "/somewhere-else",
-          has: [{ type: "query", key: "overrideMe" }],
+          source: '/some-page',
+          destination: '/somewhere-else',
+          has: [{ type: 'query', key: 'overrideMe' }],
         },
       ],
       afterFiles: [
         // 이 rewrites는 페이지/공용 파일을 확인한 후에 확인되며
         // 동적 경로 전에 확인됩니다
         {
-          source: "/non-existent",
-          destination: "/somewhere-else",
+          source: '/non-existent',
+          destination: '/somewhere-else',
         },
       ],
       fallback: [
         // 이 rewrites는 페이지/공용 파일과
         // 동적 경로를 확인한 후에 확인됩니다
         {
-          source: "/:path*",
+          source: '/:path*',
           destination: `https://my-old-site.com/:path*`,
         },
       ],
-    };
+    }
   },
-};
+}
 ```
 
 > **참고:** `beforeFiles`에 있는 rewrites는 소스와 일치한 후 파일 시스템/동적 경로를 즉시 확인하지 않고, 모든 `beforeFiles`가 확인될 때까지 계속됩니다.
@@ -119,12 +119,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/old-about/:path*",
-        destination: "/about", // :path 매개변수가 여기에서 사용되지 않으므로 쿼리에 자동으로 전달됩니다
+        source: '/old-about/:path*',
+        destination: '/about', // :path 매개변수가 여기에서 사용되지 않으므로 쿼리에 자동으로 전달됩니다
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 매개변수가 destination에서 사용되면 매개변수가 쿼리에 자동으로 전달되지 않습니다.
@@ -134,12 +134,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/docs/:path*",
-        destination: "/:path*", // :path 매개변수가 여기에서 사용되므로 쿼리에 자동으로 전달되지 않습니다
+        source: '/docs/:path*',
+        destination: '/:path*', // :path 매개변수가 여기에서 사용되므로 쿼리에 자동으로 전달되지 않습니다
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 destination에서 이미 하나의 매개변수가 사용되는 경우, 쿼리에 매개변수를 수동으로 전달할 수 있습니다.
@@ -149,14 +149,14 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/:first/:second",
-        destination: "/:first?second=:second",
+        source: '/:first/:second',
+        destination: '/:first?second=:second',
         // :first 매개변수가 destination에서 사용되므로 :second 매개변수가
         // 쿼리에 자동으로 추가되지 않습니다. 그러나 위와 같이 수동으로 추가할 수 있습니다
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 > **참고:** [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization) 또는 [사전 렌더링](/docs/pages/building-your-application/data-fetching/get-static-props)에서 rewrites의 매개변수는 클라이언트가 하이드레이션 후 쿼리에서 파싱됩니다.
@@ -170,12 +170,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/blog/:slug",
-        destination: "/news/:slug", // 매칭된 매개변수는 목적지에서 사용할 수 있습니다
+        source: '/blog/:slug',
+        destination: '/news/:slug', // 매칭된 매개변수는 목적지에서 사용할 수 있습니다
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Wildcard Path Matching
@@ -206,12 +206,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/old-blog/:post(\\d{1,})",
-        destination: "/blog/:post", // 매칭된 매개변수는 목적지에서 사용할 수 있습니다
+        source: '/old-blog/:post(\\d{1,})',
+        destination: '/blog/:post', // 매칭된 매개변수는 목적지에서 사용할 수 있습니다
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 다음 문자는 정규식 경로 매칭에 사용되므로, `source`에서 비특수 값으로 사용될 때는 앞에 `\\`를 추가하여 이스케이프해야 합니다: `(`, `)`, `{`, `}`, `[`, `]`, `|`, `\`, `^`, `.`, `:`, `*`, `+`, `-`, `?`, `$`
@@ -222,12 +222,12 @@ module.exports = {
     return [
       {
         // `/english(default)/something`이 요청될 때 일치합니다
-        source: "/english\\(default\\)/:slug",
-        destination: "/en-us/:slug",
+        source: '/english\\(default\\)/:slug',
+        destination: '/en-us/:slug',
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Header, Cookie, and Query Matching
@@ -247,76 +247,76 @@ module.exports = {
       // 헤더 `x-rewrite-me`가 있는 경우,
       // 이 rewrite가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         has: [
           {
-            type: "header",
-            key: "x-rewrite-me",
+            type: 'header',
+            key: 'x-rewrite-me',
           },
         ],
-        destination: "/another-page",
+        destination: '/another-page',
       },
       // 헤더 `x-rewrite-me`가 없는 경우,
       // 이 rewrite가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         missing: [
           {
-            type: "header",
-            key: "x-rewrite-me",
+            type: 'header',
+            key: 'x-rewrite-me',
           },
         ],
-        destination: "/another-page",
+        destination: '/another-page',
       },
       // 소스, 쿼리 및 쿠키가 일치하는 경우,
       // 이 rewrite가 적용됩니다
       {
-        source: "/specific/:path*",
+        source: '/specific/:path*',
         has: [
           {
-            type: "query",
-            key: "page",
+            type: 'query',
+            key: 'page',
             // 페이지 값은 제공된 값이 있고
             // 명명된 캡처 그룹을 사용하지 않으므로
             // 목적지에서 사용할 수 없습니다. 예: (?<page>home)
-            value: "home",
+            value: 'home',
           },
           {
-            type: "cookie",
-            key: "authorized",
-            value: "true",
+            type: 'cookie',
+            key: 'authorized',
+            value: 'true',
           },
         ],
-        destination: "/:path*/home",
+        destination: '/:path*/home',
       },
       // 헤더 `x-authorized`가 존재하고
       // 일치하는 값을 포함하는 경우, 이 rewrite가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         has: [
           {
-            type: "header",
-            key: "x-authorized",
-            value: "(?<authorized>yes|true)",
+            type: 'header',
+            key: 'x-authorized',
+            value: '(?<authorized>yes|true)',
           },
         ],
-        destination: "/home?authorized=:authorized",
+        destination: '/home?authorized=:authorized',
       },
       // 호스트가 `example.com`인 경우,
       // 이 rewrite가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         has: [
           {
-            type: "host",
-            value: "example.com",
+            type: 'host',
+            value: 'example.com',
           },
         ],
-        destination: "/another-page",
+        destination: '/another-page',
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Rewriting to an external URL
@@ -336,16 +336,16 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/blog",
-        destination: "https://example.com/blog",
+        source: '/blog',
+        destination: 'https://example.com/blog',
       },
       {
-        source: "/blog/:slug",
-        destination: "https://example.com/blog/:slug", // 매칭된 매개변수는 목적지에서 사용할 수 있습니다
+        source: '/blog/:slug',
+        destination: 'https://example.com/blog/:slug', // 매칭된 매개변수는 목적지에서 사용할 수 있습니다
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 `trailingSlash: true`를 사용하는 경우, `source` 매개변수에 후행 슬래시를 추가해야 합니다. 대상 서버가 후행 슬래시를 기대하는 경우 `destination` 매개변수에도 포함되어야 합니다.
@@ -356,16 +356,16 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/blog/",
-        destination: "https://example.com/blog/",
+        source: '/blog/',
+        destination: 'https://example.com/blog/',
       },
       {
-        source: "/blog/:path*/",
-        destination: "https://example.com/blog/:path*/",
+        source: '/blog/:path*/',
+        destination: 'https://example.com/blog/:path*/',
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Incremental adoption of Next.js
@@ -380,13 +380,13 @@ module.exports = {
     return {
       fallback: [
         {
-          source: "/:path*",
+          source: '/:path*',
           destination: `https://custom-routes-proxying-endpoint.vercel.app/:path*`,
         },
       ],
-    };
+    }
   },
-};
+}
 ```
 
 ### Rewrites with basePath support
@@ -395,24 +395,24 @@ module.exports = {
 
 ```js filename="next.config.js"
 module.exports = {
-  basePath: "/docs",
+  basePath: '/docs',
 
   async rewrites() {
     return [
       {
-        source: "/with-basePath", // 자동으로 /docs/with-basePath가 됩니다
-        destination: "/another", // 자동으로 /docs/another가 됩니다
+        source: '/with-basePath', // 자동으로 /docs/with-basePath가 됩니다
+        destination: '/another', // 자동으로 /docs/another가 됩니다
       },
       {
         // basePath: false가 설정되어 있으므로 /docs가 추가되지 않습니다
         // 참고: 이는 내부 rewrites에 사용할 수 없습니다. 예: `destination: '/another'`
-        source: "/without-basePath",
-        destination: "https://example.com",
+        source: '/without-basePath',
+        destination: 'https://example.com',
         basePath: false,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Rewrites with i18n support

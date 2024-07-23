@@ -10,26 +10,26 @@ description: Optimize third-party scripts in your Next.js application using the 
 이 API 참조는 Script 컴포넌트에 사용할 수 있는 [props](#props)를 이해하는 데 도움이 됩니다. 기능과 사용법에 대해서는 [Optimizing Scripts](/docs/app/building-your-application/optimizing/scripts) 페이지를 참조하세요.
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function Dashboard() {
   return (
     <>
       <Script src="https://example.com/script.js" />
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function Dashboard() {
   return (
     <>
       <Script src="https://example.com/script.js" />
     </>
-  );
+  )
 }
 ```
 
@@ -89,12 +89,12 @@ export default function Dashboard() {
 <AppOnly>
 
 ```tsx filename="app/layout.tsx" switcher
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -106,12 +106,12 @@ export default function RootLayout({
         />
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function RootLayout({ children }) {
   return (
@@ -124,7 +124,7 @@ export default function RootLayout({ children }) {
         />
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -133,8 +133,8 @@ export default function RootLayout({ children }) {
 <PagesOnly>
 
 ```jsx filename="pages/_document.js"
-import { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
+import { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 export default function Document() {
   return (
@@ -149,7 +149,7 @@ export default function Document() {
         />
       </body>
     </Html>
-  );
+  )
 }
 ```
 
@@ -169,14 +169,14 @@ export default function Document() {
 `afterInteractive` 스크립트는 모든 페이지 또는 레이아웃 내부에 배치할 수 있으며, 브라우저에서 해당 페이지 (또는 페이지 그룹)가 열릴 때만 로드되고 실행됩니다.
 
 ```jsx filename="app/page.js"
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function Page() {
   return (
     <>
       <Script src="https://example.com/script.js" strategy="afterInteractive" />
     </>
-  );
+  )
 }
 ```
 
@@ -192,14 +192,14 @@ export default function Page() {
 `lazyOnload` 스크립트는 모든 페이지 또는 레이아웃 내부에 배치할 수 있으며, 브라우저에서 해당 페이지 (또는 페이지 그룹)가 열릴 때만 로드되고 실행됩니다.
 
 ```jsx filename="app/page.js"
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function Page() {
   return (
     <>
       <Script src="https://example.com/script.js" strategy="lazyOnload" />
     </>
-  );
+  )
 }
 ```
 
@@ -221,31 +221,31 @@ module.exports = {
   experimental: {
     nextScriptWorkers: true,
   },
-};
+}
 ```
 
 `worker` 스크립트는 **현재 `pages/` 디렉토리에서만 사용할 수 있습니다**:
 
 ```tsx filename="pages/home.tsx" switcher
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function Home() {
   return (
     <>
       <Script src="https://example.com/script.js" strategy="worker" />
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="pages/home.js" switcher
-import Script from "next/script";
+import Script from 'next/script'
 
 export default function Home() {
   return (
     <>
       <Script src="https://example.com/script.js" strategy="worker" />
     </>
-  );
+  )
 }
 ```

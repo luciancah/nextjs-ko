@@ -46,25 +46,25 @@ JavaScript 모듈은 Server 및 Client Components 모듈 간에 공유될 수 �
 
 ```ts filename="lib/data.ts" switcher
 export async function getData() {
-  const res = await fetch("https://external-service.com/data", {
+  const res = await fetch('https://external-service.com/data', {
     headers: {
       authorization: process.env.API_KEY,
     },
-  });
+  })
 
-  return res.json();
+  return res.json()
 }
 ```
 
 ```js filename="lib/data.js" switcher
 export async function getData() {
-  const res = await fetch("https://external-service.com/data", {
+  const res = await fetch('https://external-service.com/data', {
     headers: {
       authorization: process.env.API_KEY,
     },
-  });
+  })
 
-  return res.json();
+  return res.json()
 }
 ```
 
@@ -85,16 +85,16 @@ npm install server-only
 그런 다음 서버 전용 코드를 포함하는 모든 모듈에 패키지를 import하세요:
 
 ```js filename="lib/data.js"
-import "server-only";
+import 'server-only'
 
 export async function getData() {
-  const res = await fetch("https://external-service.com/data", {
+  const res = await fetch('https://external-service.com/data', {
     headers: {
       authorization: process.env.API_KEY,
     },
-  });
+  })
 
-  return res.json();
+  return res.json()
 }
 ```
 
@@ -113,13 +113,13 @@ Server Components는 새로운 React 기능이므로, 생태계의 서드 파티
 Client Component 내에서 `<Carousel />`을 사용하면 예상대로 작동합니다:
 
 ```tsx filename="app/gallery.tsx" switcher
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Carousel } from "acme-carousel";
+import { useState } from 'react'
+import { Carousel } from 'acme-carousel'
 
 export default function Gallery() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div>
@@ -128,18 +128,18 @@ export default function Gallery() {
       {/* Works, since Carousel is used within a Client Component */}
       {isOpen && <Carousel />}
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/gallery.js" switcher
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Carousel } from "acme-carousel";
+import { useState } from 'react'
+import { Carousel } from 'acme-carousel'
 
 export default function Gallery() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div>
@@ -148,14 +148,14 @@ export default function Gallery() {
       {/* Works, since Carousel is used within a Client Component */}
       {isOpen && <Carousel />}
     </div>
-  );
+  )
 }
 ```
 
 그러나 Server Component 내에서 직접 사용하려고 하면 오류가 발생합니다:
 
 ```tsx filename="app/page.tsx" switcher
-import { Carousel } from "acme-carousel";
+import { Carousel } from 'acme-carousel'
 
 export default function Page() {
   return (
@@ -165,12 +165,12 @@ export default function Page() {
       {/* Error: `useState` can not be used within Server Components */}
       <Carousel />
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { Carousel } from "acme-carousel";
+import { Carousel } from 'acme-carousel'
 
 export default function Page() {
   return (
@@ -180,7 +180,7 @@ export default function Page() {
       {/* Error: `useState` can not be used within Server Components */}
       <Carousel />
     </div>
-  );
+  )
 }
 ```
 
@@ -189,25 +189,25 @@ export default function Page() {
 이 문제를 해결하려면 클라이언트 전용 기능에 의존하는 서드 파티 컴포넌트를 자체 Client Components로 래핑할 수 있습니다:
 
 ```tsx filename="app/carousel.tsx" switcher
-"use client";
+'use client'
 
-import { Carousel } from "acme-carousel";
+import { Carousel } from 'acme-carousel'
 
-export default Carousel;
+export default Carousel
 ```
 
 ```jsx filename="app/carousel.js" switcher
-"use client";
+'use client'
 
-import { Carousel } from "acme-carousel";
+import { Carousel } from 'acme-carousel'
 
-export default Carousel;
+export default Carousel
 ```
 
 이제, Server Component 내에서 `<Carousel />`을 직접 사용할 수 있습니다:
 
 ```tsx filename="app/page.tsx" switcher
-import Carousel from "./carousel";
+import Carousel from './carousel'
 
 export default function Page() {
   return (
@@ -217,12 +217,12 @@ export default function Page() {
       {/* Works, since Carousel is a Client Component */}
       <Carousel />
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Carousel from "./carousel";
+import Carousel from './carousel'
 
 export default function Page() {
   return (
@@ -232,7 +232,7 @@ export default function Page() {
       {/* Works, since Carousel is a Client Component */}
       <Carousel />
     </div>
-  );
+  )
 }
 ```
 
@@ -243,10 +243,10 @@ export default function Page() {
 컨텍스트 제공자는 일반적으로 애플리케이션의 루트 근처에서 렌더링되어 현재 테마와 같은 전역 문제를 공유합니다. [React 컨텍스트](https://react.dev/learn/passing-data-deeply-with-context)는 Server Components에서 지원되지 않으므로, 애플리케이션의 루트에서 컨텍스트를 생성하려고 하면 오류가 발생합니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import { createContext } from "react";
+import { createContext } from 'react'
 
 // createContext is not supported in Server Components
-export const ThemeContext = createContext({});
+export const ThemeContext = createContext({})
 
 export default function RootLayout({ children }) {
   return (
@@ -255,15 +255,15 @@ export default function RootLayout({ children }) {
         <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import { createContext } from "react";
+import { createContext } from 'react'
 
 // createContext is not supported in Server Components
-export const ThemeContext = createContext({});
+export const ThemeContext = createContext({})
 
 export default function RootLayout({ children }) {
   return (
@@ -272,49 +272,49 @@ export default function RootLayout({ children }) {
         <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 이 문제를 해결하려면 컨텍스트를 생성하고 클라이언트 컴포넌트 내부에 제공자를 렌더링합니다:
 
 ```tsx filename="app/theme-provider.tsx" switcher
-"use client";
+'use client'
 
-import { createContext } from "react";
+import { createContext } from 'react'
 
-export const ThemeContext = createContext({});
+export const ThemeContext = createContext({})
 
 export default function ThemeProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
 }
 ```
 
 ```jsx filename="app/theme-provider.js" switcher
-"use client";
+'use client'
 
-import { createContext } from "react";
+import { createContext } from 'react'
 
-export const ThemeContext = createContext({});
+export const ThemeContext = createContext({})
 
 export default function ThemeProvider({ children }) {
-  return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>;
+  return <ThemeContext.Provider value="dark">{children}</ThemeContext.Provider>
 }
 ```
 
 이제 Server Component가 클라이언트 컴포넌트로 표시되었기 때문에 직접 제공자를 렌더링할 수 있습니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import ThemeProvider from "./theme-provider";
+import ThemeProvider from './theme-provider'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html>
@@ -322,12 +322,12 @@ export default function RootLayout({
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import ThemeProvider from "./theme-provider";
+import ThemeProvider from './theme-provider'
 
 export default function RootLayout({ children }) {
   return (
@@ -336,7 +336,7 @@ export default function RootLayout({ children }) {
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -364,9 +364,9 @@ export default function RootLayout({ children }) {
 
 ```tsx filename="app/layout.tsx" switcher
 // SearchBar is a Client Component
-import SearchBar from "./searchbar";
+import SearchBar from './searchbar'
 // Logo is a Server Component
-import Logo from "./logo";
+import Logo from './logo'
 
 // Layout is a Server Component by default
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -378,15 +378,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </nav>
       <main>{children}</main>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
 // SearchBar is a Client Component
-import SearchBar from "./searchbar";
+import SearchBar from './searchbar'
 // Logo is a Server Component
-import Logo from "./logo";
+import Logo from './logo'
 
 // Layout is a Server Component by default
 export default function Layout({ children }) {
@@ -398,7 +398,7 @@ export default function Layout({ children }) {
       </nav>
       <main>{children}</main>
     </>
-  );
+  )
 }
 ```
 
@@ -430,17 +430,17 @@ Client와 Server Components를 혼합할 때, UI를 컴포넌트 트리로 시�
 다음 패턴은 지원되지 않습니다. Client Component에 Server Component를 import할 수 없습니다:
 
 ```tsx filename="app/client-component.tsx" switcher highlight={4,17}
-"use client";
+'use client'
 
 // You cannot import a Server Component into a Client Component.
-import ServerComponent from "./Server-Component";
+import ServerComponent from './Server-Component'
 
 export default function ClientComponent({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -448,18 +448,18 @@ export default function ClientComponent({
 
       <ServerComponent />
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/client-component.js" switcher highlight={3,13}
-"use client";
+'use client'
 
 // You cannot import a Server Component into a Client Component.
-import ServerComponent from "./Server-Component";
+import ServerComponent from './Server-Component'
 
 export default function ClientComponent({ children }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -467,7 +467,7 @@ export default function ClientComponent({ children }) {
 
       <ServerComponent />
     </>
-  );
+  )
 }
 ```
 
@@ -480,33 +480,33 @@ export default function ClientComponent({ children }) {
 아래 예제에서 `<ClientComponent>`는 `children` prop을 받습니다:
 
 ```tsx filename="app/client-component.tsx" switcher highlight={6,15}
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react'
 
 export default function ClientComponent({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <>
       <button onClick={() => setCount(count + 1)}>{count}</button>
       {children}
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/client-component.js" switcher highlight={5,12}
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react'
 
 export default function ClientComponent({ children }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -514,7 +514,7 @@ export default function ClientComponent({ children }) {
 
       {children}
     </>
-  );
+  )
 }
 ```
 
@@ -526,8 +526,8 @@ export default function ClientComponent({ children }) {
 // This pattern works:
 // You can pass a Server Component as a child or prop of a
 // Client Component.
-import ClientComponent from "./client-component";
-import ServerComponent from "./server-component";
+import ClientComponent from './client-component'
+import ServerComponent from './server-component'
 
 // Pages in Next.js are Server Components by default
 export default function Page() {
@@ -535,7 +535,7 @@ export default function Page() {
     <ClientComponent>
       <ServerComponent />
     </ClientComponent>
-  );
+  )
 }
 ```
 
@@ -543,8 +543,8 @@ export default function Page() {
 // This pattern works:
 // You can pass a Server Component as a child or prop of a
 // Client Component.
-import ClientComponent from "./client-component";
-import ServerComponent from "./server-component";
+import ClientComponent from './client-component'
+import ServerComponent from './server-component'
 
 // Pages in Next.js are Server Components by default
 export default function Page() {
@@ -552,7 +552,7 @@ export default function Page() {
     <ClientComponent>
       <ServerComponent />
     </ClientComponent>
-  );
+  )
 }
 ```
 

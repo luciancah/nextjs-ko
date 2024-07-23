@@ -51,34 +51,34 @@ Next.js는 기본 [Request](https://developer.mozilla.org/docs/Web/API/Request) 
 Route Handlers는 기본적으로 캐시되지 않습니다. 그러나 `GET` 메서드에 대해 캐시를 선택할 수 있습니다. 이를 위해 Route Handler 파일에 `export const dynamic = 'force-static'`과 같은 [route config option](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 사용합니다.
 
 ```ts filename="app/items/route.ts" switcher
-export const dynamic = "force-static";
+export const dynamic = 'force-static'
 
 export async function GET() {
-  const res = await fetch("https://data.mongodb-api.com/...", {
+  const res = await fetch('https://data.mongodb-api.com/...', {
     headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.DATA_API_KEY,
+      'Content-Type': 'application/json',
+      'API-Key': process.env.DATA_API_KEY,
     },
-  });
-  const data = await res.json();
+  })
+  const data = await res.json()
 
-  return Response.json({ data });
+  return Response.json({ data })
 }
 ```
 
 ```js filename="app/items/route.js" switcher
-export const dynamic = "force-static";
+export const dynamic = 'force-static'
 
 export async function GET() {
-  const res = await fetch("https://data.mongodb-api.com/...", {
+  const res = await fetch('https://data.mongodb-api.com/...', {
     headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.DATA_API_KEY,
+      'Content-Type': 'application/json',
+      'API-Key': process.env.DATA_API_KEY,
     },
-  });
-  const data = await res.json();
+  })
+  const data = await res.json()
 
-  return Response.json({ data });
+  return Response.json({ data })
 }
 ```
 
@@ -103,7 +103,7 @@ export async function GET() {
 
 ```jsx filename="app/page.js"
 export default function Page() {
-  return <h1>Hello, Next.js!</h1>;
+  return <h1>Hello, Next.js!</h1>
 }
 
 // ❌ Conflict
@@ -121,30 +121,30 @@ export async function POST(request) {}
 
 ```ts filename="app/items/route.ts" switcher
 export async function GET() {
-  const res = await fetch("https://data.mongodb-api.com/...", {
+  const res = await fetch('https://data.mongodb-api.com/...', {
     next: { revalidate: 60 }, // 60초마다 재검증
-  });
-  const data = await res.json();
+  })
+  const data = await res.json()
 
-  return Response.json(data);
+  return Response.json(data)
 }
 ```
 
 ```js filename="app/items/route.js" switcher
 export async function GET() {
-  const res = await fetch("https://data.mongodb-api.com/...", {
+  const res = await fetch('https://data.mongodb-api.com/...', {
     next: { revalidate: 60 }, // 60초마다 재검증
-  });
-  const data = await res.json();
+  })
+  const data = await res.json()
 
-  return Response.json(data);
+  return Response.json(data)
 }
 ```
 
 또는 [`revalidate` 세그먼트 구성 옵션](/docs/app/api-reference/file-conventions/route-segment-config#revalidate)을 사용할 수 있습니다:
 
 ```ts
-export const revalidate = 60;
+export const revalidate = 60
 ```
 
 ### Dynamic Functions
@@ -158,46 +158,46 @@ Route Handlers는 Next.js의 [`cookies`](/docs/app/api-reference/functions/cooki
 또는 [`Set-Cookie`](https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie) 헤더를 사용하여 새 `Response`를 반환할 수 있습니다.
 
 ```ts filename="app/api/route.ts" switcher
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export async function GET(request: Request) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token");
+  const cookieStore = cookies()
+  const token = cookieStore.get('token')
 
-  return new Response("Hello, Next.js!", {
+  return new Response('Hello, Next.js!', {
     status: 200,
-    headers: { "Set-Cookie": `token=${token.value}` },
-  });
+    headers: { 'Set-Cookie': `token=${token.value}` },
+  })
 }
 ```
 
 ```js filename="app/api/route.js" switcher
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export async function GET(request) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token");
+  const cookieStore = cookies()
+  const token = cookieStore.get('token')
 
-  return new Response("Hello, Next.js!", {
+  return new Response('Hello, Next.js!', {
     status: 200,
-    headers: { "Set-Cookie": `token=${token}` },
-  });
+    headers: { 'Set-Cookie': `token=${token}` },
+  })
 }
 ```
 
 기본 웹 API를 사용하여 요청에서 쿠키를 읽을 수도 있습니다 ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
 
 ```ts filename="app/api/route.ts" switcher
-import { type NextRequest } from "next/server";
+import { type NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const token = request.cookies.get("token");
+  const token = request.cookies.get('token')
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function GET(request) {
-  const token = request.cookies.get("token");
+  const token = request.cookies.get('token')
 }
 ```
 
@@ -224,50 +224,50 @@ er')
 ```
 
 ```js filename="app/api/route.js" switcher
-import { headers } from "next/headers";
+import { headers } from 'next/headers'
 
 export async function GET(request) {
-  const headersList = headers();
-  const referer = headersList.get("referer");
+  const headersList = headers()
+  const referer = headersList.get('referer')
 
-  return new Response("Hello, Next.js!", {
+  return new Response('Hello, Next.js!', {
     status: 200,
     headers: { referer: referer },
-  });
+  })
 }
 ```
 
 기본 웹 API를 사용하여 요청에서 헤더를 읽을 수도 있습니다 ([`NextRequest`](/docs/app/api-reference/functions/next-request)):
 
 ```ts filename="app/api/route.ts" switcher
-import { type NextRequest } from "next/server";
+import { type NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const requestHeaders = new Headers(request.headers);
+  const requestHeaders = new Headers(request.headers)
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function GET(request) {
-  const requestHeaders = new Headers(request.headers);
+  const requestHeaders = new Headers(request.headers)
 }
 ```
 
 ### Redirects
 
 ```ts filename="app/api/route.ts" switcher
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function GET(request: Request) {
-  redirect("https://nextjs.org/");
+  redirect('https://nextjs.org/')
 }
 ```
 
 ```js filename="app/api/route.js" switcher
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function GET(request) {
-  redirect("https://nextjs.org/");
+  redirect('https://nextjs.org/')
 }
 ```
 
@@ -280,15 +280,15 @@ Route Handlers는 [Dynamic Segments](/docs/app/building-your-application/routing
 ```ts filename="app/items/[slug]/route.ts" switcher
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: { slug: string } },
 ) {
-  const slug = params.slug; // 'a', 'b', 또는 'c'
+  const slug = params.slug // 'a', 'b', 또는 'c'
 }
 ```
 
 ```js filename="app/items/[slug]/route.js" switcher
 export async function GET(request, { params }) {
-  const slug = params.slug; // 'a', 'b', 또는 'c'
+  const slug = params.slug // 'a', 'b', 또는 'c'
 }
 ```
 
@@ -303,19 +303,19 @@ export async function GET(request, { params }) {
 Route Handler에 전달되는 요청 객체는 `NextRequest` 인스턴스로, 쿼리 매개변수를 보다 쉽게 처리할 수 있는 [편리한 추가 메서드](/docs/app/api-reference/functions/next-request#nexturl)를 제공합니다.
 
 ```ts filename="app/api/search/route.ts" switcher
-import { type NextRequest } from "next/server";
+import { type NextRequest } from 'next/server'
 
 export function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get("query");
+  const searchParams = request.nextUrl.searchParams
+  const query = searchParams.get('query')
   // query는 /api/search?query=hello일 때 "hello"입니다.
 }
 ```
 
 ```js filename="app/api/search/route.js" switcher
 export function GET(request) {
-  const searchParams = request.nextUrl.searchParams;
-  const query = searchParams.get("query");
+  const searchParams = request.nextUrl.searchParams
+  const query = searchParams.get('query')
   // query는 /api/search?query=hello일 때 "hello"입니다.
 }
 ```
@@ -325,17 +325,17 @@ export function GET(request) {
 스트리밍은 OpenAI와 같은 대형 언어 모델(LLM)과 함께 AI 생성 콘텐츠를 위해 일반적으로 사용됩니다. [AI SDK](https://sdk.vercel.ai/docs/introduction)에서 자세히 알아보세요.
 
 ```ts filename="app/api/chat/route.ts" switcher
-import { openai } from "@ai-sdk/openai";
-import { StreamingTextResponse, streamText } from "ai";
+import { openai } from '@ai-sdk/openai'
+import { StreamingTextResponse, streamText } from 'ai'
 
 export async function POST(req) {
-  const { messages } = await req.json();
+  const { messages } = await req.json()
   const result = await streamText({
-    model: openai("gpt-4-turbo"),
+    model: openai('gpt-4-turbo'),
     messages,
-  });
+  })
 
-  return new StreamingTextResponse(result.toAIStream());
+  return new StreamingTextResponse(result.toAIStream())
 }
 ```
 
@@ -361,38 +361,38 @@ export async function POST(req: Request) {
 function iteratorToStream(iterator: any) {
   return new ReadableStream({
     async pull(controller) {
-      const { value, done } = await iterator.next();
+      const { value, done } = await iterator.next()
 
       if (done) {
-        controller.close();
+        controller.close()
       } else {
-        controller.enqueue(value);
+        controller.enqueue(value)
       }
     },
-  });
+  })
 }
 
 function sleep(time: number) {
   return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
+    setTimeout(resolve, time)
+  })
 }
 
-const encoder = new TextEncoder();
+const encoder = new TextEncoder()
 
 async function* makeIterator() {
-  yield encoder.encode("<p>One</p>");
-  await sleep(200);
-  yield encoder.encode("<p>Two</p>");
-  await sleep(200);
-  yield encoder.encode("<p>Three</p>");
+  yield encoder.encode('<p>One</p>')
+  await sleep(200)
+  yield encoder.encode('<p>Two</p>')
+  await sleep(200)
+  yield encoder.encode('<p>Three</p>')
 }
 
 export async function GET() {
-  const iterator = makeIterator();
-  const stream = iteratorToStream(iterator);
+  const iterator = makeIterator()
+  const stream = iteratorToStream(iterator)
 
-  return new Response(stream);
+  return new Response(stream)
 }
 ```
 
@@ -401,38 +401,38 @@ export async function GET() {
 function iteratorToStream(iterator) {
   return new ReadableStream({
     async pull(controller) {
-      const { value, done } = await iterator.next();
+      const { value, done } = await iterator.next()
 
       if (done) {
-        controller.close();
+        controller.close()
       } else {
-        controller.enqueue(value);
+        controller.enqueue(value)
       }
     },
-  });
+  })
 }
 
 function sleep(time) {
   return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
+    setTimeout(resolve, time)
+  })
 }
 
-const encoder = new TextEncoder();
+const encoder = new TextEncoder()
 
 async function* makeIterator() {
-  yield encoder.encode("<p>One</p>");
-  await sleep(200);
-  yield encoder.encode("<p>Two</p>");
-  await sleep(200);
-  yield encoder.encode("<p>Three</p>");
+  yield encoder.encode('<p>One</p>')
+  await sleep(200)
+  yield encoder.encode('<p>Two</p>')
+  await sleep(200)
+  yield encoder.encode('<p>Three</p>')
 }
 
 export async function GET() {
-  const iterator = makeIterator();
-  const stream = iteratorToStream(iterator);
+  const iterator = makeIterator()
+  const stream = iteratorToStream(iterator)
 
-  return new Response(stream);
+  return new Response(stream)
 }
 ```
 
@@ -442,15 +442,15 @@ export async function GET() {
 
 ```ts filename="app/items/route.ts" switcher
 export async function POST(request: Request) {
-  const res = await request.json();
-  return Response.json({ res });
+  const res = await request.json()
+  return Response.json({ res })
 }
 ```
 
 ```js filename="app/items/route.js" switcher
 export async function POST(request) {
-  const res = await request.json();
-  return Response.json({ res });
+  const res = await request.json()
+  return Response.json({ res })
 }
 ```
 
@@ -460,19 +460,19 @@ export async function POST(request) {
 
 ```ts filename="app/items/route.ts" switcher
 export async function POST(request: Request) {
-  const formData = await request.formData();
-  const name = formData.get("name");
-  const email = formData.get("email");
-  return Response.json({ name, email });
+  const formData = await request.formData()
+  const name = formData.get('name')
+  const email = formData.get('email')
+  return Response.json({ name, email })
 }
 ```
 
 ```js filename="app/items/route.js" switcher
 export async function POST(request) {
-  const formData = await request.formData();
-  const name = formData.get("name");
-  const email = formData.get("email");
-  return Response.json({ name, email });
+  const formData = await request.formData()
+  const name = formData.get('name')
+  const email = formData.get('email')
+  return Response.json({ name, email })
 }
 ```
 
@@ -484,27 +484,27 @@ export async function POST(request) {
 
 ```ts filename="app/api/route.ts" switcher
 export async function GET(request: Request) {
-  return new Response("Hello, Next.js!", {
+  return new Response('Hello, Next.js!', {
     status: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
-  });
+  })
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function GET(request) {
-  return new Response("Hello, Next.js!", {
+  return new Response('Hello, Next.js!', {
     status: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
-  });
+  })
 }
 ```
 
@@ -523,34 +523,34 @@ Route Handler를 사용하여 타사 서비스의 웹훅을 수신할 수 있습
 ```ts filename="app/api/route.ts" switcher
 export async function POST(request: Request) {
   try {
-    const text = await request.text();
+    const text = await request.text()
     // 웹훅 페이로드 처리
   } catch (error) {
     return new Response(`Webhook error: ${error.message}`, {
       status: 400,
-    });
+    })
   }
 
-  return new Response("Success!", {
+  return new Response('Success!', {
     status: 200,
-  });
+  })
 }
 ```
 
 ```js filename="app/api/route.js" switcher
 export async function POST(request) {
   try {
-    const text = await request.text();
+    const text = await request.text()
     // 웹훅 페이로드 처리
   } catch (error) {
     return new Response(`Webhook error: ${error.message}`, {
       status: 400,
-    });
+    })
   }
 
-  return new Response("Success!", {
+  return new Response('Success!', {
     status: 200,
-  });
+  })
 }
 ```
 
@@ -575,10 +575,10 @@ export async function GET() {
 </rss>`,
     {
       headers: {
-        "Content-Type": "text/xml",
+        'Content-Type': 'text/xml',
       },
-    }
-  );
+    },
+  )
 }
 ```
 
@@ -593,7 +593,7 @@ export async function GET() {
   <description>The React Framework for the Web</description>
 </channel>
 
-</rss>`);
+</rss>`)
 }
 ```
 
@@ -602,21 +602,21 @@ export async function GET() {
 Route Handlers는 페이지 및 레이아웃과 동일한 [route segment configuration](/docs/app/api-reference/file-conventions/route-segment-config)을 사용합니다.
 
 ```ts filename="app/items/route.ts" switcher
-export const dynamic = "auto";
-export const dynamicParams = true;
-export const revalidate = false;
-export const fetchCache = "auto";
-export const runtime = "nodejs";
-export const preferredRegion = "auto";
+export const dynamic = 'auto'
+export const dynamicParams = true
+export const revalidate = false
+export const fetchCache = 'auto'
+export const runtime = 'nodejs'
+export const preferredRegion = 'auto'
 ```
 
 ```js filename="app/items/route.js" switcher
-export const dynamic = "auto";
-export const dynamicParams = true;
-export const revalidate = false;
-export const fetchCache = "auto";
-export const runtime = "nodejs";
-export const preferredRegion = "auto";
+export const dynamic = 'auto'
+export const dynamicParams = true
+export const revalidate = false
+export const fetchCache = 'auto'
+export const runtime = 'nodejs'
+export const preferredRegion = 'auto'
 ```
 
 자세한 내용은 [API 참조](/docs/app/api-reference/file-conventions/route-segment-config)를 참조하세요.

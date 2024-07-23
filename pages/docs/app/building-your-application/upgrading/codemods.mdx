@@ -41,13 +41,13 @@ npx @next/codemod@latest next-og-import .
 예:
 
 ```js
-import { ImageResponse } from "next/server";
+import { ImageResponse } from 'next/server'
 ```
 
 변환 후:
 
 ```js
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 ```
 
 #### `viewport` export 사용
@@ -64,25 +64,25 @@ npx @next/codemod@latest metadata-to-viewport-export .
 
 ```js
 export const metadata = {
-  title: "My App",
-  themeColor: "dark",
+  title: 'My App',
+  themeColor: 'dark',
   viewport: {
     width: 1,
   },
-};
+}
 ```
 
 변환 후:
 
 ```js
 export const metadata = {
-  title: "My App",
-};
+  title: 'My App',
+}
 
 export const viewport = {
   width: 1,
-  themeColor: "dark",
-};
+  themeColor: 'dark',
+}
 ```
 
 ### 13.2
@@ -100,13 +100,13 @@ npx @next/codemod@latest built-in-next-font .
 예:
 
 ```js
-import { Inter } from "@next/font/google";
+import { Inter } from '@next/font/google'
 ```
 
 변환 후:
 
 ```js
-import { Inter } from "next/font/google";
+import { Inter } from 'next/font/google'
 ```
 
 ### 13.0
@@ -124,8 +124,8 @@ Next.js 10, 11 또는 12 애플리케이션의 `next/image` 가져오기를 Next
 예:
 
 ```jsx filename="pages/index.js"
-import Image1 from "next/image";
-import Image2 from "next/future/image";
+import Image1 from 'next/image'
+import Image2 from 'next/future/image'
 
 export default function Home() {
   return (
@@ -133,7 +133,7 @@ export default function Home() {
       <Image1 src="/test.jpg" width="200" height="300" />
       <Image2 src="/test.png" width="500" height="400" />
     </div>
-  );
+  )
 }
 ```
 
@@ -141,9 +141,9 @@ export default function Home() {
 
 ```jsx filename="pages/index.js"
 // 'next/image'가 'next/legacy/image'로 변경됩니다
-import Image1 from "next/legacy/image";
+import Image1 from 'next/legacy/image'
 // 'next/future/image'가 'next/image'로 변경됩니다
-import Image2 from "next/image";
+import Image2 from 'next/image'
 
 export default function Home() {
   return (
@@ -151,7 +151,7 @@ export default function Home() {
       <Image1 src="/test.jpg" width="200" height="300" />
       <Image2 src="/test.png" width="500" height="400" />
     </div>
-  );
+  )
 }
 ```
 
@@ -256,7 +256,7 @@ npx @next/codemod add-missing-react-import
 ```jsx filename="my-component.js"
 export default class Home extends React.Component {
   render() {
-    return <div>Hello World</div>;
+    return <div>Hello World</div>
   }
 }
 ```
@@ -264,10 +264,10 @@ export default class Home extends React.Component {
 변환 후:
 
 ```jsx filename="my-component.js"
-import React from "react";
+import React from 'react'
 export default class Home extends React.Component {
   render() {
-    return <div>Hello World</div>;
+    return <div>Hello World</div>
   }
 }
 ```
@@ -290,7 +290,7 @@ npx @next/codemod name-default-component
 
 ```jsx filename="my-component.js"
 export default function () {
-  return <div>Hello World</div>;
+  return <div>Hello World</div>
 }
 ```
 
@@ -298,7 +298,7 @@ export default function () {
 
 ```jsx filename="my-component.js"
 export default function MyComponent() {
-  return <div>Hello World</div>;
+  return <div>Hello World</div>
 }
 ```
 
@@ -320,24 +320,24 @@ npx @next/codemod withamp-to-config
 
 ```js
 // Before
-import { withAmp } from "next/amp";
+import { withAmp } from 'next/amp'
 
 function Home() {
-  return <h1>My AMP Page</h1>;
+  return <h1>My AMP Page</h1>
 }
 
-export default withAmp(Home);
+export default withAmp(Home)
 ```
 
 ```js
 // After
 export default function Home() {
-  return <h1>My AMP Page</h1>;
+  return <h1>My AMP Page</h1>
 }
 
 export const config = {
   amp: true,
-};
+}
 ```
 
 ### 6
@@ -355,26 +355,26 @@ npx @next/codemod url-to-withrouter
 예:
 
 ```js filename="From"
-import React from "react";
+import React from 'react'
 export default class extends React.Component {
   render() {
-    const { pathname } = this.props.url;
-    return <div>Current pathname: {pathname}</div>;
+    const { pathname } = this.props.url
+    return <div>Current pathname: {pathname}</div>
   }
 }
 ```
 
 ```js filename="To"
-import React from "react";
-import { withRouter } from "next/router";
+import React from 'react'
+import { withRouter } from 'next/router'
 export default withRouter(
   class extends React.Component {
     render() {
-      const { pathname } = this.props.router;
-      return <div>Current pathname: {pathname}</div>;
+      const { pathname } = this.props.router
+      return <div>Current pathname: {pathname}</div>
     }
-  }
-);
+  },
+)
 ```
 
 이는 한 가지 사례입니다. 변환되고 테스트된 모든 사례는 [`__testfixtures__` 디렉터리](https://github.com/vercel/next.js/tree/canary/packages/next-codemod/transforms/__testfixtures__/url-to-withrouter)에서 찾을 수 있습니다.

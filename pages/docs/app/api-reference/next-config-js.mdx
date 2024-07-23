@@ -15,9 +15,9 @@ Next.js는 프로젝트 디렉터리의 루트(`package.json` 옆)에 있는 `ne
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ## ECMAScript Modules
@@ -34,9 +34,9 @@ module.exports = nextConfig;
  */
 const nextConfig = {
   /* config options here */
-};
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 ## 함수로서의 구성
@@ -52,9 +52,9 @@ export default (phase, { defaultConfig }) => {
    */
   const nextConfig = {
     /* config options here */
-  };
-  return nextConfig;
-};
+  }
+  return nextConfig
+}
 ```
 
 ### 비동기 구성
@@ -70,9 +70,9 @@ module.exports = async (phase, { defaultConfig }) => {
    */
   const nextConfig = {
     /* config options here */
-  };
-  return nextConfig;
-};
+  }
+  return nextConfig
+}
 ```
 
 ### Phase
@@ -82,19 +82,19 @@ module.exports = async (phase, { defaultConfig }) => {
 ```js filename="next.config.js"
 // @ts-check
 
-const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
 
 module.exports = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
     return {
       /* development only config options here */
-    };
+    }
   }
 
   return {
     /* config options for all phases except development here */
-  };
-};
+  }
+}
 ```
 
 ## TypeScript
@@ -102,13 +102,13 @@ module.exports = (phase, { defaultConfig }) => {
 프로젝트에서 TypeScript를 사용하는 경우, [`next.config.ts`](/docs/app/building-your-application/configuring/typescript#type-checking-nextconfigts)를 사용하여 구성에서 TypeScript를 사용할 수 있습니다:
 
 ```ts filename="next.config.ts"
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   /* config options here */
-};
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 주석 처리된 부분에 `next.config.js`에서 허용되는 설정을 넣을 수 있으며, 이 설정은 [여기](https://github.com/vercel/next.js/blob/canary/packages/next/src/server/config-shared.ts) 정의되어 있습니다.

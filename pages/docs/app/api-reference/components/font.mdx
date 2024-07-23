@@ -209,21 +209,21 @@ description: Optimizing loading web fonts with the built-in `next/font` loaders.
 글꼴을 가져오는 것 외에도 CSS 변수가 정의된 CSS 파일을 가져오고 글꼴 로더 객체의 변수 옵션을 다음과 같이 설정합니다:
 
 ```tsx filename="app/page.tsx" switcher
-import { Inter } from "next/font/google";
-import styles from "../styles/component.module.css";
+import { Inter } from 'next/font/google'
+import styles from '../styles/component.module.css'
 
 const inter = Inter({
-  variable: "--font-inter",
-});
+  variable: '--font-inter',
+})
 ```
 
 ```jsx filename="app/page.js" switcher
-import { Inter } from "next/font/google";
-import styles from "../styles/component.module.css";
+import { Inter } from 'next/font/google'
+import styles from '../styles/component.module.css'
 
 const inter = Inter({
-  variable: "--font-inter",
-});
+  variable: '--font-inter',
+})
 ```
 
 글꼴을 사용하려면 텍스트를 스타일링할 부모 컨테이너의 `className`을 글꼴 로더의 `variable` 값으로 설정하고 텍스트의 `className`을 외부 CSS 파일의 `styles` 속성으로 설정합니다.
@@ -261,41 +261,41 @@ const inter = Inter({
 그런 다음 글꼴 정의를 다음과 같이 지정합니다:
 
 ```ts filename="styles/fonts.ts" switcher
-import { Inter, Lora, Source_Sans_3 } from "next/font/google";
-import localFont from "next/font/local";
+import { Inter, Lora, Source_Sans_3 } from 'next/font/google'
+import localFont from 'next/font/local'
 
 // 가변 글꼴 정의
-const inter = Inter();
-const lora = Lora();
+const inter = Inter()
+const lora = Lora()
 // 가변 글꼴이 아닌 글꼴의 두 가지 무게 정의
-const sourceCodePro400 = Source_Sans_3({ weight: "400" });
-const sourceCodePro700 = Source_Sans_3({ weight: "700" });
+const sourceCodePro400 = Source_Sans_3({ weight: '400' })
+const sourceCodePro700 = Source_Sans_3({ weight: '700' })
 // 사용자 정의 로컬 글꼴 정의
-const greatVibes = localFont({ src: "./GreatVibes-Regular.ttf" });
+const greatVibes = localFont({ src: './GreatVibes-Regular.ttf' })
 
-export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes };
+export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes }
 ```
 
 ```js filename="styles/fonts.js" switcher
-import { Inter, Lora, Source_Sans_3 } from "next/font/google";
-import localFont from "next/font/local";
+import { Inter, Lora, Source_Sans_3 } from 'next/font/google'
+import localFont from 'next/font/local'
 
 // 가변 글꼴 정의
-const inter = Inter();
-const lora = Lora();
+const inter = Inter()
+const lora = Lora()
 // 가변 글꼴이 아닌 글꼴의 두 가지 무게 정의
-const sourceCodePro400 = Source_Sans_3({ weight: "400" });
-const sourceCodePro700 = Source_Sans_3({ weight: "700" });
+const sourceCodePro400 = Source_Sans_3({ weight: '400' })
+const sourceCodePro700 = Source_Sans_3({ weight: '700' })
 // 사용자 정의 로컬 글꼴 정의
-const greatVibes = localFont({ src: "./GreatVibes-Regular.ttf" });
+const greatVibes = localFont({ src: './GreatVibes-Regular.ttf' })
 
-export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes };
+export { inter, lora, sourceCodePro400, sourceCodePro700, greatVibes }
 ```
 
 이제 이러한 정의를 코드에서 다음과 같이 사용할 수 있습니다:
 
 ```tsx filename="app/page.tsx" switcher
-import { inter, lora, sourceCodePro700, greatVibes } from "../styles/fonts";
+import { inter, lora, sourceCodePro700, greatVibes } from '../styles/fonts'
 
 export default function Page() {
   return (
@@ -307,12 +307,12 @@ export default function Page() {
       </p>
       <p className={greatVibes.className}>My title in Great Vibes font</p>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { inter, lora, sourceCodePro700, greatVibes } from "../styles/fonts";
+import { inter, lora, sourceCodePro700, greatVibes } from '../styles/fonts'
 
 export default function Page() {
   return (
@@ -324,7 +324,7 @@ export default function Page() {
       </p>
       <p className={greatVibes.className}>My title in Great Vibes font</p>
     </div>
-  );
+  )
 }
 ```
 
@@ -343,11 +343,11 @@ export default function Page() {
 이제 다음과 같이 글꼴 정의를 가져올 수 있습니다:
 
 ```tsx filename="app/about/page.tsx" switcher
-import { greatVibes, sourceCodePro400 } from "@/fonts";
+import { greatVibes, sourceCodePro400 } from '@/fonts'
 ```
 
 ```jsx filename="app/about/page.js" switcher
-import { greatVibes, sourceCodePro400 } from "@/fonts";
+import { greatVibes, sourceCodePro400 } from '@/fonts'
 ```
 
 ## 버전 변경사항

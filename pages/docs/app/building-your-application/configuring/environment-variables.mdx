@@ -41,7 +41,7 @@ export async function getStaticProps() {
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-  });
+  })
   // ...
 }
 ```
@@ -76,7 +76,7 @@ export async function GET() {
     host: process.env.DB_HOST,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-  });
+  })
   // ...
 }
 ```
@@ -96,39 +96,39 @@ npm install @next/env
 ```
 
 ```tsx filename="envConfig.ts" switcher
-import { loadEnvConfig } from "@next/env";
+import { loadEnvConfig } from '@next/env'
 
-const projectDir = process.cwd();
-loadEnvConfig(projectDir);
+const projectDir = process.cwd()
+loadEnvConfig(projectDir)
 ```
 
 ```jsx filename="envConfig.js" switcher
-import { loadEnvConfig } from "@next/env";
+import { loadEnvConfig } from '@next/env'
 
-const projectDir = process.cwd();
-loadEnvConfig(projectDir);
+const projectDir = process.cwd()
+loadEnvConfig(projectDir)
 ```
 
 그런 다음 필요한 곳에 구성을 가져올 수 있습니다. 예를 들어:
 
 ```tsx filename="orm.config.ts" switcher
-import "./envConfig.ts";
+import './envConfig.ts'
 
 export default defineConfig({
   dbCredentials: {
     connectionString: process.env.DATABASE_URL!,
   },
-});
+})
 ```
 
 ```jsx filename="orm.config.js" switcher
-import "./envConfig.js";
+import './envConfig.js'
 
 export default defineConfig({
   dbCredentials: {
     connectionString: process.env.DATABASE_URL,
   },
-});
+})
 ```
 
 ### Referencing Other Variables
@@ -159,29 +159,29 @@ NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
 > **참고**: 빌드된 후에는 이러한 환경 변수의 변경 사항에 응답하지 않습니다. 예를 들어, Heroku 파이프라인을 사용하여 한 환경에서 빌드된 슬러그를 다른 환경으로 프로모션하거나, 단일 Docker 이미지를 여러 환경에 배포하는 경우, 모든 `NEXT_PUBLIC_` 변수는 빌드 시점의 값으로 고정됩니다. 런타임 환경 값을 액세스하려면 클라이언트에 값을 제공하기 위해 자체 API를 설정해야 합니다(요청 시 또는 초기화 시).
 
 ```js filename="pages/index.js"
-import setupAnalyticsService from "../lib/my-analytics-service";
+import setupAnalyticsService from '../lib/my-analytics-service'
 
 // 'NEXT_PUBLIC_ANALYTICS_ID'는 'NEXT_PUBLIC_'로 접두사 되어 있으므로 여기에서 사용할 수 있습니다.
 // 빌드 시점에 `setupAnalyticsService('abcdefghijk')`로 변환됩니다.
-setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID);
+setupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)
 
 function HomePage() {
-  return <h1>Hello World</h1>;
+  return <h1>Hello World</h1>
 }
 
-export default HomePage;
+export default HomePage
 ```
 
 동적 조회는 인라인되지 않습니다. 예를 들어:
 
 ```js
 // 변수를 사용하기 때문에 인라인되지 않습니다.
-const varName = "NEXT_PUBLIC_ANALYTICS_ID";
-setupAnalyticsService(process.env[varName]);
+const varName = 'NEXT_PUBLIC_ANALYTICS_ID'
+setupAnalyticsService(process.env[varName])
 
 // 변수를 사용하기 때문에 인라인되지 않습니다.
-const env = process.env;
-setupAnalyticsService(env.NEXT_PUBLIC_ANALYTICS_ID);
+const env = process.env
+setupAnalyticsService(env.NEXT_PUBLIC_ANALYTICS_ID)
 ```
 
 ### Runtime Environment Variables
@@ -193,13 +193,13 @@ Next.js는 빌드 시점과 런타임 환경 변수를 모두 지원할 수 있�
 런타임 환경 변수를 읽으려면 `getServerSideProps`를 사용하거나 [App Router를 점진적으로 도입](/docs/app/building-your-application/upgrading/app-router-migration)하는 것을 권장합니다. App Router를 사용하면 동적 렌더링 중에 서버에서 환경 변수를 안전하게 읽을 수 있습니다. 이를 통해 여러 환경에서 다른 값으로 승격할 수 있는 단일 Docker 이미지를 사용할 수 있습니다.
 
 ```jsx
-import { unstable_noStore as noStore } from "next/cache";
+import { unstable_noStore as noStore } from 'next/cache'
 
 export default function Component() {
-  noStore();
+  noStore()
   // cookies(), headers() 및 기타 동적 함수도
   // 동적 렌더링을 선택하므로 이 환경 변수는 런타임에 평가됩니다.
-  const value = process.env.MY_VALUE;
+  const value = process.env.MY_VALUE
   // ...
 }
 ```
@@ -247,12 +247,12 @@ vercel env pull
 
 ```js
 // 아래 코드는 Jest 글로벌 설정 파일 또는 유사한 테스트 설정에서 사용할 수 있습니다.
-import { loadEnvConfig } from "@next/env";
+import { loadEnvConfig } from '@next/env'
 
 export default async () => {
-  const projectDir = process.cwd();
-  loadEnvConfig(projectDir);
-};
+  const projectDir = process.cwd()
+  loadEnvConfig(projectDir)
+}
 ```
 
 ## Environment Variable Load Order

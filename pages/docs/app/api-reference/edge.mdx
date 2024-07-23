@@ -152,11 +152,11 @@ Edge Runtime에는 몇 가지 제한 사항이 있습니다:
 export const config = {
   unstable_allowDynamic: [
     // 단일 파일 허용
-    "/lib/utilities.js",
+    '/lib/utilities.js',
     // function-bind 서드 파티 모듈 내의 모든 것을 허용하는 글롭 사용
-    "/node_modules/function-bind/**",
+    '/node_modules/function-bind/**',
   ],
-};
+}
 ```
 
 `unstable_allowDynamic`는 특정 파일에 대한 동적 코드 평가를 무시하는 [글롭](https://github.com/micromatch/micromatch#matching-features) 또는 글롭 배열입니다. 글롭은 애플리케이션 루트 폴더를 기준으로 상대적입니다.

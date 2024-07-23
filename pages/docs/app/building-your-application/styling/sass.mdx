@@ -28,13 +28,13 @@ npm install --save-dev sass
 Sass 컴파일러를 구성하려면 `next.config.js`에서 `sassOptions`를 사용하세요.
 
 ```js filename="next.config.js"
-const path = require("path");
+const path = require('path')
 
 module.exports = {
   sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
+    includePaths: [path.join(__dirname, 'styles')],
   },
-};
+}
 ```
 
 ### Sass Variables
@@ -56,10 +56,10 @@ $primary-color: #64ff00;
 ```jsx filename="app/page.js"
 // 루트 `/` URL에 매핑됩니다
 
-import variables from "./variables.module.scss";
+import variables from './variables.module.scss'
 
 export default function Page() {
-  return <h1 style={{ color: variables.primaryColor }}>Hello, Next.js!</h1>;
+  return <h1 style={{ color: variables.primaryColor }}>Hello, Next.js!</h1>
 }
 ```
 
@@ -68,14 +68,14 @@ export default function Page() {
 <PagesOnly>
 
 ```jsx filename="pages/_app.js"
-import variables from "../styles/variables.module.scss";
+import variables from '../styles/variables.module.scss'
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <Layout color={variables.primaryColor}>
       <Component {...pageProps} />
     </Layout>
-  );
+  )
 }
 ```
 

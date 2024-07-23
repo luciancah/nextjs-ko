@@ -10,26 +10,26 @@ CSS Chunking은 웹 애플리케이션의 성능을 향상시키기 위해 CSS �
 `next.config.js` 파일에서 `experimental.cssChunking` 옵션을 사용하여 CSS 파일이 청크되는 방식을 제어할 수 있습니다:
 
 ```tsx filename="next.config.ts" switcher
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig = {
   experimental: {
-    cssChunking: "loose", // default
+    cssChunking: 'loose', // default
   },
-} satisfies NextConfig;
+} satisfies NextConfig
 
-export default nextConfig;
+export default nextConfig
 ```
 
 ```js filename="next.config.js" switcher
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    cssChunking: "loose", // default
+    cssChunking: 'loose', // default
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ## Options

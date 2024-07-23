@@ -20,10 +20,10 @@ Next.js는 `tsconfig.json` 및 `jsconfig.json` 파일의 `"paths"` 및 `"baseUrl
 
 ```tsx
 // before
-import { Button } from "../../../components/button";
+import { Button } from '../../../components/button'
 
 // after
-import { Button } from "@/components/button";
+import { Button } from '@/components/button'
 ```
 
 > **참고**: `create-next-app`을 사용하면 이 옵션을 자동으로 구성할지 묻는 프롬프트가 표시됩니다.
@@ -44,18 +44,18 @@ import { Button } from "@/components/button";
 
 ```tsx filename="components/button.tsx" switcher
 export default function Button() {
-  return <button>Click me</button>;
+  return <button>Click me</button>
 }
 ```
 
 ```jsx filename="components/button.js" switcher
 export default function Button() {
-  return <button>Click me</button>;
+  return <button>Click me</button>
 }
 ```
 
 ```tsx filename="app/page.tsx" switcher
-import Button from "components/button";
+import Button from 'components/button'
 
 export default function HomePage() {
   return (
@@ -63,12 +63,12 @@ export default function HomePage() {
       <h1>Hello World</h1>
       <Button />
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Button from "components/button";
+import Button from 'components/button'
 
 export default function HomePage() {
   return (
@@ -76,7 +76,7 @@ export default function HomePage() {
       <h1>Hello World</h1>
       <Button />
     </>
-  );
+  )
 }
 ```
 
@@ -99,18 +99,18 @@ export default function HomePage() {
 
 ```tsx filename="components/button.tsx" switcher
 export default function Button() {
-  return <button>Click me</button>;
+  return <button>Click me</button>
 }
 ```
 
 ```jsx filename="components/button.js" switcher
 export default function Button() {
-  return <button>Click me</button>;
+  return <button>Click me</button>
 }
 ```
 
 ```tsx filename="app/page.tsx" switcher
-import Button from "@/components/button";
+import Button from '@/components/button'
 
 export default function HomePage() {
   return (
@@ -118,12 +118,12 @@ export default function HomePage() {
       <h1>Hello World</h1>
       <Button />
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Button from "@/components/button";
+import Button from '@/components/button'
 
 export default function HomePage() {
   return (
@@ -131,7 +131,7 @@ export default function HomePage() {
       <h1>Hello World</h1>
       <Button />
     </>
-  );
+  )
 }
 ```
 
@@ -150,9 +150,9 @@ export default function HomePage() {
 ```
 
 ```tsx filename="app/page.tsx" switcher
-import Button from "@/components/button";
-import "@/styles/styles.css";
-import Helper from "utils/helper";
+import Button from '@/components/button'
+import '@/styles/styles.css'
+import Helper from 'utils/helper'
 
 export default function HomePage() {
   return (
@@ -160,14 +160,14 @@ export default function HomePage() {
       <h1>Hello World</h1>
       <Button />
     </Helper>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Button from "@/components/button";
-import "@/styles/styles.css";
-import Helper from "utils/helper";
+import Button from '@/components/button'
+import '@/styles/styles.css'
+import Helper from 'utils/helper'
 
 export default function HomePage() {
   return (
@@ -175,6 +175,6 @@ export default function HomePage() {
       <h1>Hello World</h1>
       <Button />
     </Helper>
-  );
+  )
 }
 ```

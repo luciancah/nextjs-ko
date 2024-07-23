@@ -16,21 +16,21 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/about",
+        source: '/about',
         headers: [
           {
-            key: "x-custom-header",
-            value: "my custom header value",
+            key: 'x-custom-header',
+            value: 'my custom header value',
           },
           {
-            key: "x-another-custom-header",
-            value: "my other custom header value",
+            key: 'x-another-custom-header',
+            value: 'my other custom header value',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 `headers`는 `source`와 `headers` 속성을 가진 객체를 보유하는 배열을 반환하는 비동기 함수입니다:
@@ -53,26 +53,26 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/:path*",
+        source: '/:path*',
         headers: [
           {
-            key: "x-hello",
-            value: "there",
+            key: 'x-hello',
+            value: 'there',
           },
         ],
       },
       {
-        source: "/hello",
+        source: '/hello',
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Path Matching
@@ -84,21 +84,21 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/blog/:slug",
+        source: '/blog/:slug',
         headers: [
           {
-            key: "x-slug",
-            value: ":slug", // 매칭된 매개변수는 값에서 사용할 수 있습니다
+            key: 'x-slug',
+            value: ':slug', // 매칭된 매개변수는 값에서 사용할 수 있습니다
           },
           {
-            key: "x-slug-:slug", // 매칭된 매개변수는 키에서도 사용할 수 있습니다
-            value: "my other custom header value",
+            key: 'x-slug-:slug', // 매칭된 매개변수는 키에서도 사용할 수 있습니다
+            value: 'my other custom header value',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Wildcard Path Matching
@@ -110,21 +110,21 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/blog/:slug*",
+        source: '/blog/:slug*',
         headers: [
           {
-            key: "x-slug",
-            value: ":slug*", // 매칭된 매개변수는 값에서 사용할 수 있습니다
+            key: 'x-slug',
+            value: ':slug*', // 매칭된 매개변수는 값에서 사용할 수 있습니다
           },
           {
-            key: "x-slug-:slug*", // 매칭된 매개변수는 키에서도 사용할 수 있습니다
-            value: "my other custom header value",
+            key: 'x-slug-:slug*', // 매칭된 매개변수는 키에서도 사용할 수 있습니다
+            value: 'my other custom header value',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Regex Path Matching
@@ -136,17 +136,17 @@ module.exports = {
   async headers() {
     return [
       {
-        source: "/blog/:post(\\d{1,})",
+        source: '/blog/:post(\\d{1,})',
         headers: [
           {
-            key: "x-post",
-            value: ":post",
+            key: 'x-post',
+            value: ':post',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 다음 문자는 정규식 경로 매칭에 사용되므로, `source`에서 비특수 값으로 사용될 때는 앞에 `\\`를 추가하여 이스케이프해야 합니다: `(`, `)`, `{`, `}`, `:`, `*`, `+`, `?`
@@ -157,17 +157,17 @@ module.exports = {
     return [
       {
         // `/english(default)/something`이 요청될 때 일치합니다
-        source: "/english\\(default\\)/:slug",
+        source: '/english\\(default\\)/:slug',
         headers: [
           {
-            key: "x-header",
-            value: "value",
+            key: 'x-header',
+            value: 'value',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Header, Cookie, and Query Matching
@@ -187,101 +187,101 @@ module.exports = {
       // 헤더 `x-add-header`가 있는 경우,
       // `x-another-header` 헤더가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         has: [
           {
-            type: "header",
-            key: "x-add-header",
+            type: 'header',
+            key: 'x-add-header',
           },
         ],
         headers: [
           {
-            key: "x-another-header",
-            value: "hello",
+            key: 'x-another-header',
+            value: 'hello',
           },
         ],
       },
       // 헤더 `x-no-header`가 없는 경우,
       // `x-another-header` 헤더가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         missing: [
           {
-            type: "header",
-            key: "x-no-header",
+            type: 'header',
+            key: 'x-no-header',
           },
         ],
         headers: [
           {
-            key: "x-another-header",
-            value: "hello",
+            key: 'x-another-header',
+            value: 'hello',
           },
         ],
       },
       // 소스, 쿼리 및 쿠키가 일치하는 경우,
       // `x-authorized` 헤더가 적용됩니다
       {
-        source: "/specific/:path*",
+        source: '/specific/:path*',
         has: [
           {
-            type: "query",
-            key: "page",
+            type: 'query',
+            key: 'page',
             // 페이지 값은 제공된 값이 있고
             // 명명된 캡처 그룹을 사용하지 않으므로
             // 헤더 키/값에서 사용할 수 없습니다. 예: (?<page>home)
-            value: "home",
+            value: 'home',
           },
           {
-            type: "cookie",
-            key: "authorized",
-            value: "true",
+            type: 'cookie',
+            key: 'authorized',
+            value: 'true',
           },
         ],
         headers: [
           {
-            key: "x-authorized",
-            value: ":authorized",
+            key: 'x-authorized',
+            value: ':authorized',
           },
         ],
       },
       // 헤더 `x-authorized`가 존재하고
       // 일치하는 값을 포함하는 경우, `x-another-header`가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         has: [
           {
-            type: "header",
-            key: "x-authorized",
-            value: "(?<authorized>yes|true)",
+            type: 'header',
+            key: 'x-authorized',
+            value: '(?<authorized>yes|true)',
           },
         ],
         headers: [
           {
-            key: "x-another-header",
-            value: ":authorized",
+            key: 'x-another-header',
+            value: ':authorized',
           },
         ],
       },
       // 호스트가 `example.com`인 경우,
       // 이 헤더가 적용됩니다
       {
-        source: "/:path*",
+        source: '/:path*',
         has: [
           {
-            type: "host",
-            value: "example.com",
+            type: 'host',
+            value: 'example.com',
           },
         ],
         headers: [
           {
-            key: "x-another-header",
-            value: ":authorized",
+            key: 'x-another-header',
+            value: ':authorized',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Headers with basePath support
@@ -290,32 +290,32 @@ module.exports = {
 
 ```js filename="next.config.js"
 module.exports = {
-  basePath: "/docs",
+  basePath: '/docs',
 
   async headers() {
     return [
       {
-        source: "/with-basePath", // /docs/with-basePath가 됩니다
+        source: '/with-basePath', // /docs/with-basePath가 됩니다
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
       },
       {
-        source: "/without-basePath", // basePath: false가 설정되어 있으므로 수정되지 않습니다
+        source: '/without-basePath', // basePath: false가 설정되어 있으므로 수정되지 않습니다
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
         basePath: false,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Headers with i18n support
@@ -335,57 +335,57 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   i18n: {
-    locales: ["en", "fr", "de"],
-    defaultLocale: "en",
+    locales: ['en', 'fr', 'de'],
+    defaultLocale: 'en',
   },
 
   async headers() {
     return [
       {
-        source: "/with-locale", // 모든 로케일을 자동으로 처리합니다
+        source: '/with-locale', // 모든 로케일을 자동으로 처리합니다
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
       },
       {
         // locale: false가 설정되어 있으므로 로케일을 자동으로 처리하지 않습니다
-        source: "/nl/with-locale-manual",
+        source: '/nl/with-locale-manual',
         locale: false,
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
       },
       {
         // `en`이 defaultLocale이므로 '/'와 일치합니다
-        source: "/en",
+        source: '/en',
         locale: false,
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
       },
       {
         // 이것은 /(en|fr|de)/(.*)로 변환되므로 최상위 수준의
         // `/` 또는 `/fr` 경로와 일치하지 않습니다
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
-            key: "x-hello",
-            value: "world",
+            key: 'x-hello',
+            value: 'world',
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Cache-Control
@@ -405,25 +405,25 @@ App Router로 [캐싱](/docs/app/building-your-application/caching)에 대해 �
 [API Routes](/docs/pages/building-your-application/routing/api-routes)에서 `res.setHeader` 메서드를 사용하여 `Cache-Control` 헤더를 설정할 수 있습니다:
 
 ```ts filename="pages/api/hello.ts" switcher
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 type ResponseData = {
-  message: string;
-};
+  message: string
+}
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<ResponseData>,
 ) {
-  res.setHeader("Cache-Control", "s-maxage=86400");
-  res.status(200).json({ message: "Hello from Next.js!" });
+  res.setHeader('Cache-Control', 's-maxage=86400')
+  res.status(200).json({ message: 'Hello from Next.js!' })
 }
 ```
 
 ```js filename="pages/api/hello.js" switcher
 export default function handler(req, res) {
-  res.setHeader("Cache-Control", "s-maxage=86400");
-  res.status(200).json({ message: "Hello from Next.js!" });
+  res.setHeader('Cache-Control', 's-maxage=86400')
+  res.status(200).json({ message: 'Hello from Next.js!' })
 }
 ```
 

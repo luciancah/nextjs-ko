@@ -10,16 +10,16 @@ description: generateStaticParams 함수에 대한 API 참조.
 ```jsx filename="app/blog/[slug]/page.js"
 // [slug] 동적 세그먼트를 채우기 위한 `params` 목록을 반환합니다.
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   return posts.map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 여러 버전이 정적으로 생성됩니다.
 export default function Page({ params }) {
-  const { slug } = params;
+  const { slug } = params
   // ...
 }
 ```
@@ -58,7 +58,7 @@ export default function Page({ params }) {
 
 ```tsx filename="app/product/[id]/page.tsx" switcher
 export function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+  return [{ id: '1' }, { id: '2' }, { id: '3' }]
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
@@ -66,14 +66,14 @@ export function generateStaticParams() {
 // - /product/2
 // - /product/3
 export default function Page({ params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = params
   // ...
 }
 ```
 
 ```jsx filename="app/product/[id]/page.js" switcher
 export function generateStaticParams() {
-  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+  return [{ id: '1' }, { id: '2' }, { id: '3' }]
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
@@ -81,7 +81,7 @@ export function generateStaticParams() {
 // - /product/2
 // - /product/3
 export default function Page({ params }) {
-  const { id } = params;
+  const { id } = params
   // ...
 }
 ```
@@ -91,10 +91,10 @@ export default function Page({ params }) {
 ```tsx filename="app/products/[category]/[product]/page.tsx" switcher
 export function generateStaticParams() {
   return [
-    { category: "a", product: "1" },
-    { category: "b", product: "2" },
-    { category: "c", product: "3" },
-  ];
+    { category: 'a', product: '1' },
+    { category: 'b', product: '2' },
+    { category: 'c', product: '3' },
+  ]
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
@@ -104,9 +104,9 @@ export function generateStaticParams() {
 export default function Page({
   params,
 }: {
-  params: { category: string; product: string };
+  params: { category: string; product: string }
 }) {
-  const { category, product } = params;
+  const { category, product } = params
   // ...
 }
 ```
@@ -114,10 +114,10 @@ export default function Page({
 ```jsx filename="app/products/[category]/[product]/page.js" switcher
 export function generateStaticParams() {
   return [
-    { category: "a", product: "1" },
-    { category: "b", product: "2" },
-    { category: "c", product: "3" },
-  ];
+    { category: 'a', product: '1' },
+    { category: 'b', product: '2' },
+    { category: 'c', product: '3' },
+  ]
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
@@ -125,7 +125,7 @@ export function generateStaticParams() {
 // - /products/b/2
 // - /products/c/3
 export default function Page({ params }) {
-  const { category, product } = params;
+  const { category, product } = params
   // ...
 }
 ```
@@ -134,7 +134,7 @@ export default function Page({ params }) {
 
 ```tsx filename="app/product/[...slug]/page.tsx" switcher
 export function generateStaticParams() {
-  return [{ slug: ["a", "1"] }, { slug: ["b", "2"] }, { slug: ["c", "3"] }];
+  return [{ slug: ['a', '1'] }, { slug: ['b', '2'] }, { slug: ['c', '3'] }]
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
@@ -142,14 +142,14 @@ export function generateStaticParams() {
 // - /product/b/2
 // - /product/c/3
 export default function Page({ params }: { params: { slug: string[] } }) {
-  const { slug } = params;
+  const { slug } = params
   // ...
 }
 ```
 
 ```jsx filename="app/product/[...slug]/page.js" switcher
 export function generateStaticParams() {
-  return [{ slug: ["a", "1"] }, { slug: ["b", "2"] }, { slug: ["c", "3"] }];
+  return [{ slug: ['a', '1'] }, { slug: ['b', '2'] }, { slug: ['c', '3'] }]
 }
 
 // `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
@@ -157,7 +157,7 @@ export function generateStaticParams() {
 // - /product/b/2
 // - /product/c/3
 export default function Page({ params }) {
-  const { slug } = params;
+  const { slug } = params
   // ...
 }
 ```
@@ -172,11 +172,11 @@ export default function Page({ params }) {
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   return posts.map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -186,12 +186,12 @@ export async function generateStaticParams() {
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   // 빌드 시 첫 10개의 포스트를 렌더링합니다.
   return posts.slice(0, 10).map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -199,15 +199,15 @@ export async function generateStaticParams() {
 
 ```jsx filename="app/blog/[slug]/page.js"
 // 상위 10개 포스트 외의 모든 포스트는 404가 됩니다.
-export const dynamicParams = false;
+export const dynamicParams = false
 
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
-  const topPosts = posts.slice(0, 10);
+  const posts = await fetch('https://.../posts').then((res) => res.json())
+  const topPosts = posts.slice(0, 10)
 
   return topPosts.map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -219,14 +219,14 @@ export async function generateStaticParams() {
 
 ```jsx filename="app/blog/[slug]/page.js"
 export async function generateStaticParams() {
-  return [];
+  return []
 }
 ```
 
 > **알아두면 좋은 사항:** 항상 `generateStaticParams`에서 배열을 반환해야 하며, 빈 배열이어도 괜찮습니다. 그렇지 않으면 경로가 동적으로 렌더링됩니다.
 
 ```jsx filename="app/changelog/[slug]/page.js"
-export const dynamic = "force-static";
+export const dynamic = 'force-static'
 ```
 
 ### 지정되지 않은 경로에 대한 렌더링 비활성화
@@ -249,20 +249,18 @@ export const dynamic = "force-static";
 ```tsx filename="app/products/[category]/[product]/page.tsx" switcher
 // [category]와 [product] 모두에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams() {
-  const products = await fetch("https://.../products").then((res) =>
-    res.json()
-  );
+  const products = await fetch('https://.../products').then((res) => res.json())
 
   return products.map((product) => ({
     category: product.category.slug,
     product: product.id,
-  }));
+  }))
 }
 
 export default function Page({
   params,
 }: {
-  params: { category: string; product: string };
+  params: { category: string; product: string }
 }) {
   // ...
 }
@@ -271,14 +269,12 @@ export default function Page({
 ```jsx filename="app/products/[category]/[product]/page.js" switcher
 // [category]와 [product] 모두에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams() {
-  const products = await fetch("https://.../products").then((res) =>
-    res.json()
-  );
+  const products = await fetch('https://.../products').then((res) => res.json())
 
   return products.map((product) => ({
     category: product.category.slug,
     product: product.id,
-  }));
+  }))
 }
 
 export default function Page({ params }) {
@@ -293,13 +289,11 @@ export default function Page({ params }) {
 ```tsx filename="app/products/[category]/layout.tsx" switcher
 // [category]에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams() {
-  const products = await fetch("https://.../products").then((res) =>
-    res.json()
-  );
+  const products = await fetch('https://.../products').then((res) => res.json())
 
   return products.map((product) => ({
     category: product.category.slug,
-  }));
+  }))
 }
 
 export default function Layout({ params }: { params: { category: string } }) {
@@ -310,13 +304,11 @@ export default function Layout({ params }: { params: { category: string } }) {
 ```jsx filename="app/products/[category]/layout.js" switcher
 // [category]에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams() {
-  const products = await fetch("https://.../products").then((res) =>
-    res.json()
-  );
+  const products = await fetch('https://.../products').then((res) => res.json())
 
   return products.map((product) => ({
     category: product.category.slug,
-  }));
+  }))
 }
 
 export default function Layout({ params }) {
@@ -333,21 +325,21 @@ export default function Layout({ params }) {
 export async function generateStaticParams({
   params: { category },
 }: {
-  params: { category: string };
+  params: { category: string }
 }) {
   const products = await fetch(
-    `https://.../products?category=${category}`
-  ).then((res) => res.json());
+    `https://.../products?category=${category}`,
+  ).then((res) => res.json())
 
   return products.map((product) => ({
     product: product.id,
-  }));
+  }))
 }
 
 export default function Page({
   params,
 }: {
-  params: { category: string; product: string };
+  params: { category: string; product: string }
 }) {
   // ...
 }
@@ -357,12 +349,12 @@ export default function Page({
 // 부모 세그먼트의 `generateStaticParams` 함수에서 전달된 `params`를 사용하여 [product]에 대한 세그먼트를 생성합니다.
 export async function generateStaticParams({ params: { category } }) {
   const products = await fetch(
-    `https://.../products?category=${category}`
-  ).then((res) => res.json());
+    `https://.../products?category=${category}`,
+  ).then((res) => res.json())
 
   return products.map((product) => ({
     product: product.id,
-  }));
+  }))
 }
 
 export default function Page({ params }) {

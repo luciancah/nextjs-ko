@@ -83,14 +83,14 @@ Next.js는 파일을 평가하고 적절한 태그를 앱의 `<head>` 요소에 
 아이콘을 생성하는 가장 쉬운 방법은 `next/og`의 [`ImageResponse`](/docs/app/api-reference/functions/image-response) API를 사용하는 것입니다.
 
 ```tsx filename="app/icon.tsx" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
 // 이미지 메타데이터
 export const size = {
   width: 32,
   height: 32,
-};
-export const contentType = "image/png";
+}
+export const contentType = 'image/png'
 
 // 이미지 생성
 export default function Icon() {
@@ -100,13 +100,13 @@ export default function Icon() {
       <div
         style={{
           fontSize: 24,
-          background: "black",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "white",
+          background: 'black',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
         }}
       >
         A
@@ -116,20 +116,20 @@ export default function Icon() {
     {
       // 편의를 위해 내보낸 아이콘 크기 메타데이터를 재사용하여 ImageResponse의 너비와 높이도 설정할 수 있습니다.
       ...size,
-    }
-  );
+    },
+  )
 }
 ```
 
 ```jsx filename="app/icon.js" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
 // 이미지 메타데이터
 export const size = {
   width: 32,
   height: 32,
-};
-export const contentType = "image/png";
+}
+export const contentType = 'image/png'
 
 // 이미지 생성
 export default function Icon() {
@@ -139,13 +139,13 @@ export default function Icon() {
       <div
         style={{
           fontSize: 24,
-          background: "black",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "white",
+          background: 'black',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
         }}
       >
         A
@@ -155,8 +155,8 @@ export default function Icon() {
     {
       // 편의를 위해 내보낸 아이콘 크기 메타데이터를 재사용하여 ImageResponse의 너비와 높이도 설정할 수 있습니다.
       ...size,
-    }
-  );
+    },
+  )
 }
 ```
 
@@ -217,13 +217,13 @@ export default function Icon({ params }) {
 #### `size`
 
 ```tsx filename="icon.tsx | apple-icon.tsx" switcher
-export const size = { width: 32, height: 32 };
+export const size = { width: 32, height: 32 }
 
 export default function Icon() {}
 ```
 
 ```jsx filename="icon.js | apple-icon.js" switcher
-export const size = { width: 32, height: 32 };
+export const size = { width: 32, height: 32 }
 
 export default function Icon() {}
 ```
@@ -235,13 +235,13 @@ export default function Icon() {}
 #### `contentType`
 
 ```tsx filename="icon.tsx | apple-icon.tsx" switcher
-export const contentType = "image/png";
+export const contentType = 'image/png'
 
 export default function Icon() {}
 ```
 
 ```jsx filename="icon.js | apple-icon.js" switcher
-export const contentType = "image/png";
+export const contentType = 'image/png'
 
 export default function Icon() {}
 ```

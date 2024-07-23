@@ -15,7 +15,7 @@ ISR(Incremental Static Regeneration)이 활성화된 페이지에 대해 CDN이 
 module.exports = {
   // 1년을 초 단위로 설정
   swrDelta: 31536000,
-};
+}
 ```
 
 이제 `Cache-Control` 헤더에 빈 `stale-while-revalidate` 기간 대신 사용자 정의된 기간이 포함됩니다.

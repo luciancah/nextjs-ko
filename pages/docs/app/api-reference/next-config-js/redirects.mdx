@@ -16,13 +16,13 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/about",
-        destination: "/",
+        source: '/about',
+        destination: '/',
         permanent: true,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 `redirects`는 `source`, `destination`, 및 `permanent` 속성을 가진 객체를 포함하는 배열을 반환하는 비동기 함수입니다:
@@ -63,13 +63,13 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/old-blog/:slug",
-        destination: "/news/:slug", // 매칭된 매개변수는 대상에서 사용할 수 있습니다
+        source: '/old-blog/:slug',
+        destination: '/news/:slug', // 매칭된 매개변수는 대상에서 사용할 수 있습니다
         permanent: true,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Wildcard Path Matching
@@ -81,13 +81,13 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/blog/:slug*",
-        destination: "/news/:slug*", // 매칭된 매개변수는 대상에서 사용할 수 있습니다
+        source: '/blog/:slug*',
+        destination: '/news/:slug*', // 매칭된 매개변수는 대상에서 사용할 수 있습니다
         permanent: true,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Regex Path Matching
@@ -99,13 +99,13 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/post/:slug(\\d{1,})",
-        destination: "/news/:slug", // 매칭된 매개변수는 대상에서 사용할 수 있습니다
+        source: '/post/:slug(\\d{1,})',
+        destination: '/news/:slug', // 매칭된 매개변수는 대상에서 사용할 수 있습니다
         permanent: false,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 다음 문자는 정규식 경로 매칭에 사용되므로, `source`에서 비특수 값으로 사용될 때는 앞에 `\\`를 추가하여 이스케이프해야 합니다: `(`, `)`, `{`, `}`, `:`, `*`, `+`, `?`
@@ -116,13 +116,13 @@ module.exports = {
     return [
       {
         // `/english(default)/something`이 요청될 때 일치합니다
-        source: "/english\\(default\\)/:slug",
-        destination: "/en-us/:slug",
+        source: '/english\\(default\\)/:slug',
+        destination: '/en-us/:slug',
         permanent: false,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ## Header, Cookie, and Query Matching
@@ -142,81 +142,81 @@ module.exports = {
       // 헤더 `x-redirect-me`가 있는 경우,
       // 이 리디렉션이 적용됩니다
       {
-        source: "/:path((?!another-page$).*)",
+        source: '/:path((?!another-page$).*)',
         has: [
           {
-            type: "header",
-            key: "x-redirect-me",
+            type: 'header',
+            key: 'x-redirect-me',
           },
         ],
         permanent: false,
-        destination: "/another-page",
+        destination: '/another-page',
       },
       // 헤더 `x-dont-redirect`가 있는 경우,
       // 이 리디렉션이 적용되지 않습니다
       {
-        source: "/:path((?!another-page$).*)",
+        source: '/:path((?!another-page$).*)',
         missing: [
           {
-            type: "header",
-            key: "x-do-not-redirect",
+            type: 'header',
+            key: 'x-do-not-redirect',
           },
         ],
         permanent: false,
-        destination: "/another-page",
+        destination: '/another-page',
       },
       // 소스, 쿼리 및 쿠키가 일치하는 경우,
       // 이 리디렉션이 적용됩니다
       {
-        source: "/specific/:path*",
+        source: '/specific/:path*',
         has: [
           {
-            type: "query",
-            key: "page",
+            type: 'query',
+            key: 'page',
             // 페이지 값은 제공된 값이 있고
             // 명명된 캡처 그룹을 사용하지 않으므로
             // 목적지에서 사용할 수 없습니다. 예: (?<page>home)
-            value: "home",
+            value: 'home',
           },
           {
-            type: "cookie",
-            key: "authorized",
-            value: "true",
+            type: 'cookie',
+            key: 'authorized',
+            value: 'true',
           },
         ],
         permanent: false,
-        destination: "/another/:path*",
+        destination: '/another/:path*',
       },
       // 헤더 `x-authorized`가 존재하고
       // 일치하는 값을 포함하는 경우, 이 리디렉션이 적용됩니다
       {
-        source: "/",
+        source: '/',
         has: [
           {
-            type: "header",
-            key: "x-authorized",
-            value: "(?<authorized>yes|true)",
+            type: 'header',
+            key: 'x-authorized',
+            value: '(?<authorized>yes|true)',
           },
         ],
         permanent: false,
-        destination: "/home?authorized=:authorized",
+        destination: '/home?authorized=:authorized',
       },
       // 호스트가 `example.com`인 경우,
       // 이 리디렉션이 적용됩니다
       {
-        source: "/:path((?!another-page$).*)",
+        source: '/:path((?!another-page$).*)',
         has: [
           {
-            type: "host",
-            value: "example.com",
+            type: 'host',
+            value: 'example.com',
           },
         ],
         permanent: false,
-        destination: "/another-page",
+        destination: '/another-page',
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Redirects with basePath support
@@ -225,25 +225,25 @@ module.exports = {
 
 ```js filename="next.config.js"
 module.exports = {
-  basePath: "/docs",
+  basePath: '/docs',
 
   async redirects() {
     return [
       {
-        source: "/with-basePath", // 자동으로 /docs/with-basePath가 됩니다
-        destination: "/another", // 자동으로 /docs/another가 됩니다
+        source: '/with-basePath', // 자동으로 /docs/with-basePath가 됩니다
+        destination: '/another', // 자동으로 /docs/another가 됩니다
         permanent: false,
       },
       {
         // basePath: false가 설정되어 있으므로 /docs가 추가되지 않습니다
-        source: "/without-basePath",
-        destination: "https://example.com",
+        source: '/without-basePath',
+        destination: 'https://example.com',
         basePath: false,
         permanent: false,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 ### Redirects with i18n support
@@ -263,48 +263,48 @@ module.exports = {
 ```js filename="next.config.js"
 module.exports = {
   i18n: {
-    locales: ["en", "fr", "de"],
-    defaultLocale: "en",
+    locales: ['en', 'fr', 'de'],
+    defaultLocale: 'en',
   },
 
   async redirects() {
     return [
       {
-        source: "/with-locale", // 모든 로케일을 자동으로 처리합니다
-        destination: "/another", // 로케일을 자동으로 전달합니다
+        source: '/with-locale', // 모든 로케일을 자동으로 처리합니다
+        destination: '/another', // 로케일을 자동으로 전달합니다
         permanent: false,
       },
       {
         // locale: false가 설정되어 있으므로 로케일을 자동으로 처리하지 않습니다
-        source: "/nl/with-locale-manual",
-        destination: "/nl/another",
+        source: '/nl/with-locale-manual',
+        destination: '/nl/another',
         locale: false,
         permanent: false,
       },
       {
         // `en`이 defaultLocale이므로 '/'와 일치합니다
-        source: "/en",
-        destination: "/en/another",
+        source: '/en',
+        destination: '/en/another',
         locale: false,
         permanent: false,
       },
       // locale: false가 설정된 경우에도 모든 로케일을 매칭할 수 있습니다
       {
-        source: "/:locale/page",
-        destination: "/en/newpage",
+        source: '/:locale/page',
+        destination: '/en/newpage',
         permanent: false,
         locale: false,
       },
       {
         // 이것은 /(en|fr|de)/(.*)로 변환되므로 최상위 수준의
         // `/` 또는 `/fr` 경로와 일치하지 않습니다
-        source: "/(.*)",
-        destination: "/another",
+        source: '/(.*)',
+        destination: '/another',
         permanent: false,
       },
-    ];
+    ]
   },
-};
+}
 ```
 
 드물게는, 이전 HTTP 클라이언트가 적절히 리디렉션되도록 사용자 정의 상태 코드를 지정해야 할 수 있습니다. 이러한 경우, `permanent` 속성 대신 `statusCode` 속성을 사용할 수 있지만, 두 속성을 모두 사용할 수는 없습니다. IE11 호환성을 보장하기 위해 308 상태 코드에는 자동으로 `Refresh` 헤더가 추가됩니다.

@@ -51,30 +51,30 @@ Next.js는 동일한 URL과 옵션을 가진 요청을 자동으로 **메모이�
 async function getItem() {
   // `fetch` 함수는 자동으로 메모이제이션되고 결과는
   // 캐싱됩니다.
-  const res = await fetch("https://.../item/1");
-  return res.json();
+  const res = await fetch('https://.../item/1')
+  return res.json()
 }
 
 // 이 함수는 두 번 호출되지만 처음에는 한 번만 실행됩니다.
-const item = await getItem(); // cache MISS
+const item = await getItem() // cache MISS
 
 // 두 번째 호출은 경로 어디에서든 발생할 수 있습니다.
-const item = await getItem(); // cache HIT
+const item = await getItem() // cache HIT
 ```
 
 ```jsx filename="app/example.js" switcher
 async function getItem() {
   // `fetch` 함수는 자동으로 메모이제이션되고 결과는
   // 캐싱됩니다.
-  const res = await fetch("https://.../item/1");
-  return res.json();
+  const res = await fetch('https://.../item/1')
+  return res.json()
 }
 
 // 이 함수는 두 번 호출되지만 처음에는 한 번만 실행됩니다.
-const item = await getItem(); // cache MISS
+const item = await getItem() // cache MISS
 
 // 두 번째 호출은 경로 어디에서든 발생할 수 있습니다.
-const item = await getItem(); // cache HIT
+const item = await getItem() // cache HIT
 ```
 
 **Request Memoization 작동 방식**
@@ -116,8 +116,8 @@ const item = await getItem(); // cache HIT
 개별 요청을 관리하려면 [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)의 [`signal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/signal) 속성을 사용할 수 있습니다. 그러나 이는 메모이제이션에서 요청을 선택 해제하는 것이 아니라, 비행 중인 요청을 중단하는 것입니다.
 
 ```js filename="app/example.js"
-const { signal } = new AbortController();
-fetch(url, { signal });
+const { signal } = new AbortController()
+fetch(url, { signal })
 ```
 
 ## Data Cache
@@ -167,7 +167,7 @@ Data Cache는 들어오는 요청과 배포 간에 지속되며 재검증하거�
 
 ```js
 // 최대 한 시간마다 재검증
-fetch("https://...", { next: { revalidate: 3600 } });
+fetch('https://...', { next: { revalidate: 3600 } })
 ```
 
 또한, [Route Segment Config options](#segment-config-options)을 사용하여 세그먼트 내의 모든 `fetch` 요청을 구성하거나 `fetch`를 사용할 수 없는 경우에도 구성할 수 있습니다.
@@ -425,7 +425,7 @@ Next.js 15부터 페이지 세그먼트는 기본적으로 옵트아웃됩니다
 
 ```jsx
 // 기본적으로 캐시됨. `no-store`는 기본 옵션이므로 생략할 수 있습니다.
-fetch(`https://...`, { cache: "no-store" });
+fetch(`https://...`, { cache: 'no-store' })
 ```
 
 렌더링 출력이 데이터에 의존하기 때문에, `cache: 'no-store'`를 사용하면 `fetch` 요청이 사용된 경로에 대해 Full Route Cache도 건너뜁니다. 즉, 경로는 모든 요청 시 동적으로 렌더링되지만, 동일한 경로에 다른 캐시된 데이터 요청이 여전히 있을 수 있습니다.
@@ -438,7 +438,7 @@ fetch(`https://...`, { cache: "no-store" });
 
 ```jsx
 // 캐시에서 옵트아웃
-fetch(`https://...`, { cache: "force-cache" });
+fetch(`https://...`, { cache: 'force-cache' })
 ```
 
 다양한 옵션에 대해서는 [`fetch` API 참조](/docs/app/api-reference/functions/fetch)를 확인하세요.
@@ -449,7 +449,7 @@ fetch(`https://...`, { cache: "force-cache" });
 
 ```jsx
 // 최대 1시간 후에 재검증
-fetch(`https://...`, { next: { revalidate: 3600 } });
+fetch(`https://...`, { next: { revalidate: 3600 } })
 ```
 
 다양한 옵션에 대해서는 [`fetch` API 참조](/docs/app/api-reference/functions/fetch)를 확인하세요.
@@ -465,14 +465,14 @@ Next.js는 세밀한 데이터 캐싱 및 재검증을 위한 캐시 태깅 시�
 
 ```jsx
 // 태그로 데이터 캐시
-fetch(`https://...`, { next: { tags: ["a", "b", "c"] } });
+fetch(`https://...`, { next: { tags: ['a', 'b', 'c'] } })
 ```
 
 그런 다음, 태그와 함께 `revalidateTag`를 호출하여 캐시 항목을 제거할 수 있습니다:
 
 ```jsx
 // 특정 태그가 있는 항목을 재검증
-revalidateTag("a");
+revalidateTag('a')
 ```
 
 `revalidateTag`를 사용할 수 있는 두 가지 장소가 있으며, 달성하려는 목표에 따라 다릅니다:
@@ -485,7 +485,7 @@ revalidateTag("a");
 `revalidatePath`를 사용하면 특정 경로 아래의 데이터 **및** 경로 세그먼트를 단일 작업으로 수동 재검증할 수 있습니다. `revalidatePath` 메서드를 호출하면 Data Cache가 재검증되고, 이는 다시 Full Route Cache를 무효화합니다.
 
 ```jsx
-revalidatePath("/");
+revalidatePath('/')
 ```
 
 `revalidatePath`를 사용할 수 있는 두 가지 장소가 있으며, 달성하려는 목표에 따라 다릅니다:
@@ -530,11 +530,11 @@ Route Segment Config 옵션을 사용하여 기본 경로 세그먼트를 재정
 
 ```jsx filename="app/blog/[slug]/page.js"
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   return posts.map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -542,12 +542,12 @@ export async function generateStaticParams() {
 
 ```jsx filename="app/blog/[slug]/page.js"
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   // 빌드 시 첫 10개의 게시물을 렌더링
   return posts.slice(0, 10).map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -555,14 +555,14 @@ export async function generateStaticParams() {
 
 ```jsx filename="app/blog/[slug]/page.js"
 export async function generateStaticParams() {
-  return [];
+  return []
 }
 ```
 
 > **알아두면 좋은 점:** `generateStaticParams`에서 빈 배열이라도 반환해야 합니다. 그렇지 않으면 경로가 동적으로 렌더링됩니다.
 
 ```jsx filename="app/changelog/[slug]/page.js"
-export const dynamic = "force-static";
+export const dynamic = 'force-static'
 ```
 
 요청 시 캐싱을 비활성화하려면 경로 세그먼트에 `export const dynamicParams = false` 옵션을 추가하세요. 이 구성 옵션을 사용하면 `generateStaticParams`에 의해 제공된 경로만 제공되며, 다른 경로는 404 오류가 발생하거나 (포괄 경로의 경우) 일치합니다.
@@ -574,21 +574,21 @@ React `cache` 함수는 함수의 반환 값을 메모이제이션하여 동일�
 `fetch` 요청은 자동으로 메모이제이션되므로 React `cache`로 감쌀 필요가 없습니다. 그러나 `fetch` API가 적합하지 않은 경우 데이터 요청을 수동으로 메모이제이션하는 데 `cache`를 사용할 수 있습니다. 예를 들어, 일부 데이터베이스 클라이언트, CMS 클라이언트 또는 GraphQL 클라이언트.
 
 ```ts filename="utils/get-item.ts" switcher
-import { cache } from "react";
-import db from "@/lib/db";
+import { cache } from 'react'
+import db from '@/lib/db'
 
 export const getItem = cache(async (id: string) => {
-  const item = await db.item.findUnique({ id });
-  return item;
-});
+  const item = await db.item.findUnique({ id })
+  return item
+})
 ```
 
 ```js filename="utils/get-item.js" switcher
-import { cache } from "react";
-import db from "@/lib/db";
+import { cache } from 'react'
+import db from '@/lib/db'
 
 export const getItem = cache(async (id) => {
-  const item = await db.item.findUnique({ id });
-  return item;
-});
+  const item = await db.item.findUnique({ id })
+  return item
+})
 ```

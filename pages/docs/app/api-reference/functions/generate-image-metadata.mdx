@@ -25,7 +25,7 @@ related:
 export function generateImageMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: { slug: string }
 }) {
   // ...
 }
@@ -55,21 +55,21 @@ export function generateImageMetadata({ params }) {
 | `contentType`          | `string`                            |
 
 ```tsx filename="icon.tsx" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
 export function generateImageMetadata() {
   return [
     {
-      contentType: "image/png",
+      contentType: 'image/png',
       size: { width: 48, height: 48 },
-      id: "small",
+      id: 'small',
     },
     {
-      contentType: "image/png",
+      contentType: 'image/png',
       size: { width: 72, height: 72 },
-      id: "medium",
+      id: 'medium',
     },
-  ];
+  ]
 }
 
 export default function Icon({ id }: { id: string }) {
@@ -77,39 +77,39 @@ export default function Icon({ id }: { id: string }) {
     (
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           fontSize: 88,
-          background: "#000",
-          color: "#fafafa",
+          background: '#000',
+          color: '#fafafa',
         }}
       >
         Icon {id}
       </div>
-    )
-  );
+    ),
+  )
 }
 ```
 
 ```jsx filename="icon.js" switcher
-import { ImageResponse } from "next/og";
+import { ImageResponse } from 'next/og'
 
 export function generateImageMetadata() {
   return [
     {
-      contentType: "image/png",
+      contentType: 'image/png',
       size: { width: 48, height: 48 },
-      id: "small",
+      id: 'small',
     },
     {
-      contentType: "image/png",
+      contentType: 'image/png',
       size: { width: 72, height: 72 },
-      id: "medium",
+      id: 'medium',
     },
-  ];
+  ]
 }
 
 export default function Icon({ id }) {
@@ -117,20 +117,20 @@ export default function Icon({ id }) {
     (
       <div
         style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           fontSize: 88,
-          background: "#000",
-          color: "#fafafa",
+          background: '#000',
+          color: '#fafafa',
         }}
       >
         Icon {id}
       </div>
-    )
-  );
+    ),
+  )
 }
 ```
 
@@ -141,34 +141,34 @@ export default function Icon({ id }) {
 이 예제는 `params` 객체와 외부 데이터를 사용하여 경로 세그먼트에 대해 여러 [오픈 그래프 이미지](/docs/app/api-reference/file-conventions/metadata/opengraph-image)를 생성합니다.
 
 ```tsx filename="app/products/[id]/opengraph-image.tsx" switcher
-import { ImageResponse } from "next/og";
-import { getCaptionForImage, getOGImages } from "@/app/utils/images";
+import { ImageResponse } from 'next/og'
+import { getCaptionForImage, getOGImages } from '@/app/utils/images'
 
 export async function generateImageMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { id: string }
 }) {
-  const images = await getOGImages(params.id);
+  const images = await getOGImages(params.id)
 
   return images.map((image, idx) => ({
     id: idx,
     size: { width: 1200, height: 600 },
     alt: image.text,
-    contentType: "image/png",
-  }));
+    contentType: 'image/png',
+  }))
 }
 
 export default async function Image({
   params,
   id,
 }: {
-  params: { id: string };
-  id: number;
+  params: { id: string }
+  id: number
 }) {
-  const productId = params.id;
-  const imageId = id;
-  const text = await getCaptionForImage(productId, imageId);
+  const productId = params.id
+  const imageId = id
+  const text = await getCaptionForImage(productId, imageId)
 
   return new ImageResponse(
     (
@@ -181,30 +181,30 @@ export default async function Image({
       >
         {text}
       </div>
-    )
-  );
+    ),
+  )
 }
 ```
 
 ```jsx filename="app/products/[id]/opengraph-image.js" switcher
-import { ImageResponse } from "next/og";
-import { getCaptionForImage, getOGImages } from "@/app/utils/images";
+import { ImageResponse } from 'next/og'
+import { getCaptionForImage, getOGImages } from '@/app/utils/images'
 
 export async function generateImageMetadata({ params }) {
-  const images = await getOGImages(params.id);
+  const images = await getOGImages(params.id)
 
   return images.map((image, idx) => ({
     id: idx,
     size: { width: 1200, height: 600 },
     alt: image.text,
-    contentType: "image/png",
-  }));
+    contentType: 'image/png',
+  }))
 }
 
 export default async function Image({ params, id }) {
-  const productId = params.id;
-  const imageId = id;
-  const text = await getCaptionForImage(productId, imageId);
+  const productId = params.id
+  const imageId = id
+  const text = await getCaptionForImage(productId, imageId)
 
   return new ImageResponse(
     (
@@ -217,8 +217,8 @@ export default async function Image({ params, id }) {
       >
         {text}
       </div>
-    )
-  );
+    ),
+  )
 }
 ```
 

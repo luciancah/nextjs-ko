@@ -64,23 +64,23 @@ npm run cypress:open
 `cypress.config.js` 파일에 다음 구성이 포함되어 있는지 확인하세요:
 
 ```ts filename="cypress.config.ts"
-import { defineConfig } from "cypress";
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {},
   },
-});
+})
 ```
 
 ```js filename="cypress.config.js"
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {},
   },
-});
+})
 ```
 
 그런 다음, 두 개의 새로운 Next.js 파일을 만드세요:
@@ -88,7 +88,7 @@ module.exports = defineConfig({
 <AppOnly>
 
 ```jsx filename="app/page.js"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -96,12 +96,12 @@ export default function Page() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/about/page.js"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -109,7 +109,7 @@ export default function Page() {
       <h1>About</h1>
       <Link href="/">Home</Link>
     </div>
-  );
+  )
 }
 ```
 
@@ -118,7 +118,7 @@ export default function Page() {
 <PagesOnly>
 
 ```jsx filename="pages/index.js"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -126,12 +126,12 @@ export default function Home() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="pages/about.js"
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function About() {
   return (
@@ -139,7 +139,7 @@ export default function About() {
       <h1>About</h1>
       <Link href="/">Home</Link>
     </div>
-  );
+  )
 }
 ```
 
@@ -148,21 +148,21 @@ export default function About() {
 탐색이 올바르게 작동하는지 확인하기 위해 테스트를 추가하세요:
 
 ```js filename="cypress/e2e/app.cy.js"
-describe("Navigation", () => {
-  it("should navigate to the about page", () => {
+describe('Navigation', () => {
+  it('should navigate to the about page', () => {
     // index 페이지에서 시작
-    cy.visit("http://localhost:3000/");
+    cy.visit('http://localhost:3000/')
 
     // "about"을 포함하는 href 속성을 가진 링크를 찾아 클릭
-    cy.get('a[href*="about"]').click();
+    cy.get('a[href*="about"]').click()
 
     // 새로운 URL에 "/about"이 포함되어야 함
-    cy.url().should("include", "/about");
+    cy.url().should('include', '/about')
 
     // 새로운 페이지에는 "About"라는 h1 요소가 있어야 함
-    cy.get("h1").contains("About");
-  });
-});
+    cy.get('h1').contains('About')
+  })
+})
 ```
 
 ### Running E2E Tests
@@ -185,29 +185,29 @@ Cypress 앱에서 **Component Testing**을 선택한 다음, 프론트엔드 프
 `cypress.config.js` 파일에 다음 구성이 포함되어 있는지 확인하세요:
 
 ```ts filename="cypress.config.ts"
-import { defineConfig } from "cypress";
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   component: {
     devServer: {
-      framework: "next",
-      bundler: "webpack",
+      framework: 'next',
+      bundler: 'webpack',
     },
   },
-});
+})
 ```
 
 ```js filename="cypress.config.js"
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   component: {
     devServer: {
-      framework: "next",
-      bundler: "webpack",
+      framework: 'next',
+      bundler: 'webpack',
     },
   },
-});
+})
 ```
 
 이전 섹션의 동일한 컴포넌트를 가정하여, 컴포넌트가 예상된 출력을 렌더링하는지 확인하는 테스트를 추가하세요:
@@ -215,21 +215,21 @@ module.exports = defineConfig({
 <AppOnly>
 
 ```tsx filename="cypress/component/about.cy.tsx"
-import Page from "../../app/page";
+import Page from '../../app/page'
 
-describe("<Page />", () => {
-  it("should render and display expected content", () => {
+describe('<Page />', () => {
+  it('should render and display expected content', () => {
     // Home 페이지의 React 컴포넌트를 마운트
-    cy.mount(<Page />);
+    cy.mount(<Page />)
 
     // 새로운 페이지에 "Home"이라는 h1 요소가 있어야 함
-    cy.get("h1").contains("Home");
+    cy.get('h1').contains('Home')
 
     // 예상된 URL을 가진 링크가 있는지 확인
     // 링크를 따라가는 것은 E2E 테스트에 더 적합
-    cy.get('a[href="/about"]').should("be.visible");
-  });
-});
+    cy.get('a[href="/about"]').should('be.visible')
+  })
+})
 ```
 
 </AppOnly>
@@ -237,21 +237,21 @@ describe("<Page />", () => {
 <PagesOnly>
 
 ```jsx filename="cypress/component/about.cy.js"
-import AboutPage from "../../pages/about";
+import AboutPage from '../../pages/about'
 
-describe("<AboutPage />", () => {
-  it("should render and display expected content", () => {
+describe('<AboutPage />', () => {
+  it('should render and display expected content', () => {
     // About 페이지의 React 컴포넌트를 마운트
-    cy.mount(<AboutPage />);
+    cy.mount(<AboutPage />)
 
     // 새로운 페이지에 "About page"라는 h1 요소가 있어야 함
-    cy.get("h1").contains("About");
+    cy.get('h1').contains('About')
 
     // 예상된 URL을 가진 링크가 있는지 확인
     // *링크를 따라가는* 것은 E2E 테스트에 더 적합
-    cy.get('a[href="/"]').should("be.visible");
-  });
-});
+    cy.get('a[href="/"]').should('be.visible')
+  })
+})
 ```
 
 </PagesOnly>

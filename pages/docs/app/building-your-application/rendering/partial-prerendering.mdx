@@ -26,18 +26,18 @@ Next.js 15에서는 `next.config.js` 파일에서 [`ppr`](/docs/app/api-referenc
 ```js filename="next.config.js"
 const nextConfig = {
   experimental: {
-    ppr: "incremental",
+    ppr: 'incremental',
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 ```tsx filename="app/page.tsx" switcher
-import { Suspense } from "react";
-import { StaticComponent, DynamicComponent, Fallback } from "@/app/ui";
+import { Suspense } from 'react'
+import { StaticComponent, DynamicComponent, Fallback } from '@/app/ui'
 
-export const experimental_ppr = true;
+export const experimental_ppr = true
 
 export default function Page() {
   return (
@@ -47,15 +47,15 @@ export default function Page() {
         <DynamicComponent />
       </Suspense>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import { Suspense } from "react";
-import { StaticComponent, DynamicComponent, Fallback } from "@/app/ui";
+import { Suspense } from 'react'
+import { StaticComponent, DynamicComponent, Fallback } from '@/app/ui'
 
-export const experimental_ppr = true;
+export const experimental_ppr = true
 
 export default function Page() {
   return (
@@ -65,7 +65,7 @@ export default function Page() {
         <DynamicComponent />
       </Suspense>
     </>
-  );
+  )
 }
 ```
 
@@ -84,7 +84,7 @@ const nextConfig = {
   experimental: {
     ppr: true,
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```

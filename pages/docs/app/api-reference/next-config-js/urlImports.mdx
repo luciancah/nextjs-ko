@@ -16,15 +16,15 @@ URL imports는 외부 서버에서 직접 모듈을 가져오는 실험적 기�
 ```js filename="next.config.js"
 module.exports = {
   experimental: {
-    urlImports: ["https://example.com/assets/", "https://cdn.skypack.dev"],
+    urlImports: ['https://example.com/assets/', 'https://cdn.skypack.dev'],
   },
-};
+}
 ```
 
 그런 다음 URL에서 모듈을 직접 가져올 수 있습니다:
 
 ```js
-import { a, b, c } from "https://example.com/assets/some/module.js";
+import { a, b, c } from 'https://example.com/assets/some/module.js'
 ```
 
 URL Imports는 일반 패키지 import가 사용될 수 있는 모든 곳에서 사용할 수 있습니다.
@@ -50,44 +50,44 @@ URL import를 사용할 때, Next.js는 `next.lock` 디렉터리를 생성하고
 ### Skypack
 
 ```js
-import confetti from "https://cdn.skypack.dev/canvas-confetti";
-import { useEffect } from "react";
+import confetti from 'https://cdn.skypack.dev/canvas-confetti'
+import { useEffect } from 'react'
 
 export default () => {
   useEffect(() => {
-    confetti();
-  });
-  return <p>Hello</p>;
-};
+    confetti()
+  })
+  return <p>Hello</p>
+}
 ```
 
 ### 정적 이미지 import
 
 ```js
-import Image from "next/image";
-import logo from "https://example.com/assets/logo.png";
+import Image from 'next/image'
+import logo from 'https://example.com/assets/logo.png'
 
 export default () => (
   <div>
     <Image src={logo} placeholder="blur" />
   </div>
-);
+)
 ```
 
 ### CSS에서의 URL
 
 ```css
 .className {
-  background: url("https://example.com/assets/hero.jpg");
+  background: url('https://example.com/assets/hero.jpg');
 }
 ```
 
 ### 자산 import
 
 ```js
-const logo = new URL("https://example.com/assets/file.txt", import.meta.url);
+const logo = new URL('https://example.com/assets/file.txt', import.meta.url)
 
-console.log(logo.pathname);
+console.log(logo.pathname)
 
 // prints "/_next/static/media/file.a9727b5d.txt"
 ```

@@ -26,46 +26,46 @@ description: API Reference for manifest.json file.
 > **알아두면 좋은 점**: `manifest.js`는 특수한 라우트 핸들러로, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions)나 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하지 않는 한 기본적으로 캐시됩니다.
 
 ```ts filename="app/manifest.ts" switcher
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Next.js App",
-    short_name: "Next.js App",
-    description: "Next.js App",
-    start_url: "/",
-    display: "standalone",
-    background_color: "#fff",
-    theme_color: "#fff",
+    name: 'Next.js App',
+    short_name: 'Next.js App',
+    description: 'Next.js App',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#fff',
+    theme_color: '#fff',
     icons: [
       {
-        src: "/favicon.ico",
-        sizes: "any",
-        type: "image/x-icon",
+        src: '/favicon.ico',
+        sizes: 'any',
+        type: 'image/x-icon',
       },
     ],
-  };
+  }
 }
 ```
 
 ```js filename="app/manifest.js" switcher
 export default function manifest() {
   return {
-    name: "Next.js App",
-    short_name: "Next.js App",
-    description: "Next.js App",
-    start_url: "/",
-    display: "standalone",
-    background_color: "#fff",
-    theme_color: "#fff",
+    name: 'Next.js App',
+    short_name: 'Next.js App',
+    description: 'Next.js App',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#fff',
+    theme_color: '#fff',
     icons: [
       {
-        src: "/favicon.ico",
-        sizes: "any",
-        type: "image/x-icon",
+        src: '/favicon.ico',
+        sizes: 'any',
+        type: 'image/x-icon',
       },
     ],
-  };
+  }
 }
 ```
 

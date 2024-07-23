@@ -37,22 +37,22 @@ CSS Modules는 자동으로 고유한 클래스 이름을 생성하여 CSS를 �
 CSS Modules는 `app` 디렉토리 내의 모든 파일에 임포트할 수 있습니다:
 
 ```tsx filename="app/dashboard/layout.tsx" switcher
-import styles from "./styles.module.css";
+import styles from './styles.module.css'
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return <section className={styles.dashboard}>{children}</section>;
+  return <section className={styles.dashboard}>{children}</section>
 }
 ```
 
 ```jsx filename="app/dashboard/layout.js" switcher
-import styles from "./styles.module.css";
+import styles from './styles.module.css'
 
 export default function DashboardLayout({ children }) {
-  return <section className={styles.dashboard}>{children}</section>;
+  return <section className={styles.dashboard}>{children}</section>
 }
 ```
 
@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }) {
 그런 다음, 위 CSS 파일을 임포트하고 사용하는 `components/Button.js`를 만듭니다:
 
 ```jsx filename="components/Button.js"
-import styles from "./Button.module.css";
+import styles from './Button.module.css'
 
 export function Button() {
   return (
@@ -94,7 +94,7 @@ export function Button() {
     >
       Destroy
     </button>
-  );
+  )
 }
 ```
 
@@ -129,31 +129,31 @@ body {
 
 ```tsx filename="app/layout.tsx" switcher
 // 이 스타일은 애플리케이션의 모든 경로에 적용됩니다.
-import "./global.css";
+import './global.css'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
 // 이 스타일은 애플리케이션의 모든 경로에 적용됩니다.
-import "./global.css";
+import './global.css'
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>{children}</body>
     </html>
-  );
+  )
 }
 ```
 
@@ -167,8 +167,8 @@ export default function RootLayout({ children }) {
 
 ```css filename="styles.css"
 body {
-  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-    "Arial", sans-serif;
+  font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica',
+    'Arial', sans-serif;
   padding: 20px 20px 60px;
   max-width: 680px;
   margin: 0 auto;
@@ -179,11 +179,11 @@ body {
 그런 다음, `styles.css` 파일을 [`import`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/import)하세요.
 
 ```jsx filename="pages/_app.js"
-import "../styles.css";
+import '../styles.css'
 
 // 이 기본 내보내기는 새로운 `pages/_app.js` 파일에 필요합니다.
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
@@ -195,16 +195,16 @@ export default function MyApp({ Component, pageProps }) {
 프로덕션에서는 모든 CSS 파일이 자동으로 하나의 미니파이된 `.css` 파일로 병합됩니다. CSS가 병합되는 순서는 `_app.js` 파일에 CSS가 임포트되는 순서를 따릅니다. 자체 CSS를 포함하는 JS 모듈을 임포트할 때도 동일한 순서 규칙이 적용됩니다. 예를 들어:
 
 ```jsx
-import "../styles.css";
+import '../styles.css'
 // ErrorBoundary의 CSS는 styles.css의 글로벌 CSS에 의존하므로, styles.css 다음에 임포트합니다.
-import ErrorBoundary from "../components/ErrorBoundary";
+import ErrorBoundary from '../components/ErrorBoundary'
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <ErrorBoundary>
       <Component {...pageProps} />
     </ErrorBoundary>
-  );
+  )
 }
 ```
 
@@ -217,30 +217,30 @@ export default function MyApp({ Component, pageProps }) {
 외부 패키지에서 발행된 스타일 시트는 `app` 디렉토리의 어느 곳에서나, 위치한 컴포넌트에 임포트할 수 있습니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
       <body className="container">{children}</body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="container">{children}</body>
     </html>
-  );
+  )
 }
 ```
 
@@ -263,25 +263,25 @@ Next.js **9.5.4** 버전부터 애플리케이션 어디에서나 `node_modules`
 예를 들어:
 
 ```jsx filename="pages/_app.js"
-import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap/dist/css/bootstrap.css'
 
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
 서드 파티 컴포넌트에 필요한 CSS를 임포트하려면 컴포넌트 내에서 할 수 있습니다. 예를 들어:
 
 ```jsx filename="components/example-dialog.js"
-import { useState } from "react";
-import { Dialog } from "@reach/dialog";
-import VisuallyHidden from "@reach/visually-hidden";
-import "@reach/dialog/styles.css";
+import { useState } from 'react'
+import { Dialog } from '@reach/dialog'
+import VisuallyHidden from '@reach/visually-hidden'
+import '@reach/dialog/styles.css'
 
 function ExampleDialog(props) {
-  const [showDialog, setShowDialog] = useState(false);
-  const open = () => setShowDialog(true);
-  const close = () => setShowDialog(false);
+  const [showDialog, setShowDialog] = useState(false)
+  const open = () => setShowDialog(true)
+  const close = () => setShowDialog(false)
 
   return (
     <div>
@@ -294,7 +294,7 @@ function ExampleDialog(props) {
         <p>Hello there. I am a dialog</p>
       </Dialog>
     </div>
-  );
+  )
 }
 ```
 
@@ -309,36 +309,36 @@ Next.js는 프로덕션 빌드 시 CSS를 자동으로 청크(병합)하여 최�
 예를 들어, `<BaseButton>`이 `<Page>`에서 먼저 임포트되었기 때문에 `base-button.module.css`는 `page.module.css`보다 먼저 순서가 매겨집니다:
 
 ```tsx filename="base-button.tsx" switcher
-import styles from "./base-button.module.css";
+import styles from './base-button.module.css'
 
 export function BaseButton() {
-  return <button className={styles.primary} />;
+  return <button className={styles.primary} />
 }
 ```
 
 ```jsx filename="base-button.js" switcher
-import styles from "./base-button.module.css";
+import styles from './base-button.module.css'
 
 export function BaseButton() {
-  return <button className={styles.primary} />;
+  return <button className={styles.primary} />
 }
 ```
 
 ```tsx filename="page.ts" switcher
-import { BaseButton } from "./base-button";
-import styles from "./page.module.css";
+import { BaseButton } from './base-button'
+import styles from './page.module.css'
 
 export function Page() {
-  return <BaseButton className={styles.primary} />;
+  return <BaseButton className={styles.primary} />
 }
 ```
 
 ```jsx filename="page.js" switcher
-import { BaseButton } from "./base-button";
-import styles from "./page.module.css";
+import { BaseButton } from './base-button'
+import styles from './page.module.css'
 
 export function Page() {
-  return <BaseButton className={styles.primary} />;
+  return <BaseButton className={styles.primary} />
 }
 ```
 

@@ -12,10 +12,10 @@ description: Opt-out specific dependencies from the Server Components bundling a
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ["@acme/ui"],
-};
+  serverExternalPackages: ['@acme/ui'],
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 Next.js는 현재 호환성을 작업 중인 [인기 패키지의 짧은 목록](https://github.com/vercel/next.js/blob/canary/packages/next/src/lib/server-external-packages.json)을 포함하며, 자동으로 제외됩니다:

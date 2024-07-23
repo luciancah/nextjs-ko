@@ -35,27 +35,27 @@ bun add -D vitest @vitejs/plugin-react jsdom @testing-library/react @testing-lib
 프로젝트의 루트에 `vitest.config.ts|js` 파일을 만들고 다음 옵션을 추가하세요:
 
 ```ts filename="vitest.config.ts" switcher
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: "jsdom",
+    environment: 'jsdom',
   },
-});
+})
 ```
 
 ```js filename="vitest.config.js" switcher
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: "jsdom",
+    environment: 'jsdom',
   },
-});
+})
 ```
 
 Vitest 설정에 대한 자세한 내용은 [Vitest Configuration](https://vitest.dev/config/#configuration) 문서를 참조하세요.
@@ -82,7 +82,7 @@ Vitest 설정에 대한 자세한 내용은 [Vitest Configuration](https://vites
 <AppOnly>
 
 ```tsx filename="app/page.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -90,12 +90,12 @@ export default function Page() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.jsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -103,30 +103,30 @@ export default function Page() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```tsx filename="__tests__/page.test.tsx" switcher
-import { expect, test } from "vitest";
-import { render, screen } from "@testing-library/react";
-import Page from "../app/page";
+import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import Page from '../app/page'
 
-test("Page", () => {
-  render(<Page />);
-  expect(screen.getByRole("heading", { level: 1, name: "Home" })).toBeDefined();
-});
+test('Page', () => {
+  render(<Page />)
+  expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined()
+})
 ```
 
 ```jsx filename="__tests__/page.test.jsx" switcher
-import { expect, test } from "vitest";
-import { render, screen } from "@testing-library/react";
-import Page from "../app/page";
+import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import Page from '../app/page'
 
-test("Page", () => {
-  render(<Page />);
-  expect(screen.getByRole("heading", { level: 1, name: "Home" })).toBeDefined();
-});
+test('Page', () => {
+  render(<Page />)
+  expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined()
+})
 ```
 
 > **유용한 정보**: 위 예제는 일반적인 `__tests__` 관례를 사용하지만, 테스트 파일은 `app` 라우터 내에 함께 배치될 수도 있습니다.
@@ -136,7 +136,7 @@ test("Page", () => {
 <PagesOnly>
 
 ```tsx filename="pages/index.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -144,12 +144,12 @@ export default function Page() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="pages/index.jsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -157,30 +157,30 @@ export default function Page() {
       <h1>Home</h1>
       <Link href="/about">About</Link>
     </div>
-  );
+  )
 }
 ```
 
 ```tsx filename="__tests__/index.test.tsx" switcher
-import { expect, test } from "vitest";
-import { render, screen } from "@testing-library/react";
-import Page from "../pages/index";
+import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import Page from '../pages/index'
 
-test("Page", () => {
-  render(<Page />);
-  expect(screen.getByRole("heading", { level: 1, name: "Home" })).toBeDefined();
-});
+test('Page', () => {
+  render(<Page />)
+  expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined()
+})
 ```
 
 ```jsx filename="__tests__/index.test.jsx" switcher
-import { expect, test } from "vitest";
-import { render, screen } from "@testing-library/react";
-import Page from "../pages/index";
+import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import Page from '../pages/index'
 
-test("Page", () => {
-  render(<Page />);
-  expect(screen.getByRole("heading", { level: 1, name: "Home" })).toBeDefined();
-});
+test('Page', () => {
+  render(<Page />)
+  expect(screen.getByRole('heading', { level: 1, name: 'Home' })).toBeDefined()
+})
 ```
 
 </PagesOnly>

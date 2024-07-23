@@ -1,15 +1,15 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 
 const PagesOnly = ({ children }) => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const isPageRoute = router.pathname.startsWith("/docs/pages");
+  const isPageRoute = router.pathname.startsWith('/docs/pages')
 
   if (!isPageRoute) {
-    return null;
+    return null
   }
 
-  return <>{children}</>;
-};
+  return <>{children}</>
+}
 
-export default PagesOnly;
+export default PagesOnly

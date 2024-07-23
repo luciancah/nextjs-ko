@@ -10,15 +10,15 @@ description: Use the new Rust compiler to compile MDX files in the App Router.
 `@next/mdx`와 함께 실험적으로 사용합니다. 새로운 Rust 컴파일러를 사용하여 MDX 파일을 컴파일합니다.
 
 ```js filename="next.config.js"
-const withMDX = require("@next/mdx")();
+const withMDX = require('@next/mdx')()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ["ts", "tsx", "mdx"],
+  pageExtensions: ['ts', 'tsx', 'mdx'],
   experimental: {
     mdxRs: true,
   },
-};
+}
 
-module.exports = withMDX(nextConfig);
+module.exports = withMDX(nextConfig)
 ```

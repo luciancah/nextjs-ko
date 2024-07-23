@@ -24,7 +24,7 @@ related:
 `redirect` 함수는 두 개의 인수를 받습니다:
 
 ```js
-redirect(path, type);
+redirect(path, type)
 ```
 
 | Parameter | Type                                                         | Description                                                   |
@@ -47,18 +47,18 @@ redirect(path, type);
 `redirect()` 함수를 호출하면 `NEXT_REDIRECT` 오류가 발생하고 해당 경로 세그먼트의 렌더링이 종료됩니다.
 
 ```jsx filename="app/team/[id]/page.js"
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 async function fetchTeam(id) {
-  const res = await fetch("https://...");
-  if (!res.ok) return undefined;
-  return res.json();
+  const res = await fetch('https://...')
+  if (!res.ok) return undefined
+  return res.json()
 }
 
 export default async function Profile({ params }) {
-  const team = await fetchTeam(params.id);
+  const team = await fetchTeam(params.id)
   if (!team) {
-    redirect("/login");
+    redirect('/login')
   }
 
   // ...
@@ -72,9 +72,9 @@ export default async function Profile({ params }) {
 `redirect`는 Server Action을 통해 Client Component에서 사용할 수 있습니다. 이벤트 핸들러를 사용하여 사용자를 리디렉션해야 하는 경우, [`useRouter`](/docs/app/api-reference/functions/use-router) 훅을 사용할 수 있습니다.
 
 ```tsx filename="app/client-redirect.tsx" switcher
-"use client";
+'use client'
 
-import { navigate } from "./actions";
+import { navigate } from './actions'
 
 export function ClientRedirect() {
   return (
@@ -82,14 +82,14 @@ export function ClientRedirect() {
       <input type="text" name="id" />
       <button>Submit</button>
     </form>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/client-redirect.jsx" switcher
-"use client";
+'use client'
 
-import { navigate } from "./actions";
+import { navigate } from './actions'
 
 export function ClientRedirect() {
   return (
@@ -97,27 +97,27 @@ export function ClientRedirect() {
       <input type="text" name="id" />
       <button>Submit</button>
     </form>
-  );
+  )
 }
 ```
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function navigate(data: FormData) {
-  redirect(`/posts/${data.get("id")}`);
+  redirect(`/posts/${data.get('id')}`)
 }
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function navigate(data) {
-  redirect(`/posts/${data.get("id")}`);
+  redirect(`/posts/${data.get('id')}`)
 }
 ```
 

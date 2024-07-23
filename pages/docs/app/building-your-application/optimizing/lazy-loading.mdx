@@ -28,18 +28,18 @@ Next.js에서 lazy loading을 구현하는 방법에는 두 가지가 있습니�
 ### Importing Client Components
 
 ```jsx filename="app/page.js"
-"use client";
+'use client'
 
-import { useState } from "react";
-import dynamic from "next/dynamic";
+import { useState } from 'react'
+import dynamic from 'next/dynamic'
 
 // Client Components:
-const ComponentA = dynamic(() => import("../components/A"));
-const ComponentB = dynamic(() => import("../components/B"));
-const ComponentC = dynamic(() => import("../components/C"), { ssr: false });
+const ComponentA = dynamic(() => import('../components/A'))
+const ComponentB = dynamic(() => import('../components/B'))
+const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
 
 export default function ClientComponentExample() {
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(false)
 
   return (
     <div>
@@ -53,7 +53,7 @@ export default function ClientComponentExample() {
       {/* Load only on the client side */}
       <ComponentC />
     </div>
-  );
+  )
 }
 ```
 
@@ -64,7 +64,7 @@ export default function ClientComponentExample() {
 Client Component에 대한 사전 렌더링을 비활성화하려면 `ssr` 옵션을 `false`로 설정할 수 있습니다:
 
 ```jsx
-const ComponentC = dynamic(() => import("../components/C"), { ssr: false });
+const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
 ```
 
 ### Importing Server Components
@@ -72,17 +72,17 @@ const ComponentC = dynamic(() => import("../components/C"), { ssr: false });
 서버 컴포넌트를 동적으로 가져오는 경우, 서버 컴포넌트 자체가 아닌 서버 컴포넌트의 자식인 클라이언트 컴포넌트만 lazy-loaded 됩니다.
 
 ```jsx filename="app/page.js"
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
 // Server Component:
-const ServerComponent = dynamic(() => import("../components/ServerComponent"));
+const ServerComponent = dynamic(() => import('../components/ServerComponent'))
 
 export default function ServerComponentExample() {
   return (
     <div>
       <ServerComponent />
     </div>
-  );
+  )
 }
 ```
 
@@ -91,14 +91,14 @@ export default function ServerComponentExample() {
 외부 라이브러리는 [`import()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import) 함수를 사용하여 필요한 경우에만 로드할 수 있습니다. 이 예제는 퍼지 검색을 위해 외부 라이브러리 `fuse.js`를 사용합니다. 모듈은 사용자가 검색 입력란에 입력한 후에만 클라이언트에서 로드됩니다.
 
 ```jsx filename="app/page.js"
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react'
 
-const names = ["Tim", "Joe", "Bel", "Lee"];
+const names = ['Tim', 'Joe', 'Bel', 'Lee']
 
 export default function Page() {
-  const [results, setResults] = useState();
+  const [results, setResults] = useState()
 
   return (
     <div>
@@ -106,31 +106,31 @@ export default function Page() {
         type="text"
         placeholder="Search"
         onChange={async (e) => {
-          const { value } = e.currentTarget;
+          const { value } = e.currentTarget
           // Dynamically load fuse.js
-          const Fuse = (await import("fuse.js")).default;
-          const fuse = new Fuse(names);
+          const Fuse = (await import('fuse.js')).default
+          const fuse = new Fuse(names)
 
-          setResults(fuse.search(value));
+          setResults(fuse.search(value))
         }}
       />
       <pre>Results: {JSON.stringify(results, null, 2)}</pre>
     </div>
-  );
+  )
 }
 ```
 
 ### Adding a custom loading component
 
 ```jsx filename="app/page.js"
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
 const WithCustomLoading = dynamic(
-  () => import("../components/WithCustomLoading"),
+  () => import('../components/WithCustomLoading'),
   {
     loading: () => <p>Loading...</p>,
-  }
-);
+  },
+)
 
 export default function Page() {
   return (
@@ -138,7 +138,7 @@ export default function Page() {
       {/* The loading component will be rendered while  <WithCustomLoading/> is loading */}
       <WithCustomLoading />
     </div>
-  );
+  )
 }
 ```
 
@@ -147,19 +147,19 @@ export default function Page() {
 명명된 내보내기를 동적으로 가져오려면, [`import()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import) 함수에서 반환된 Promise에서 반환할 수 있습니다:
 
 ```jsx filename="components/hello.js"
-"use client";
+'use client'
 
 export function Hello() {
-  return <p>Hello!</p>;
+  return <p>Hello!</p>
 }
 ```
 
 ```jsx filename="app/page.js"
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
 const ClientComponent = dynamic(() =>
-  import("../components/hello").then((mod) => mod.Hello)
-);
+  import('../components/hello').then((mod) => mod.Hello),
+)
 ```
 
 </AppOnly>
@@ -169,14 +169,14 @@ const ClientComponent = dynamic(() =>
 `next/dynamic`을 사용하면 헤더 컴포넌트는 페이지의 초기 JavaScript 번들에 포함되지 않습니다. 페이지는 먼저 Suspense `fallback`을 렌더링한 후, `Suspense` 경계가 해결되면 `Header` 컴포넌트를 렌더링합니다.
 
 ```jsx
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const DynamicHeader = dynamic(() => import("../components/header"), {
+const DynamicHeader = dynamic(() => import('../components/header'), {
   loading: () => <p>Loading...</p>,
-});
+})
 
 export default function Home() {
-  return <DynamicHeader />;
+  return <DynamicHeader />
 }
 ```
 
@@ -188,15 +188,15 @@ export default function Home() {
 
 ```jsx filename="components/hello.js"
 export function Hello() {
-  return <p>Hello!</p>;
+  return <p>Hello!</p>
 }
 
 // pages/index.js
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
 const DynamicComponent = dynamic(() =>
-  import("../components/hello").then((mod) => mod.Hello)
-);
+  import('../components/hello').then((mod) => mod.Hello),
+)
 ```
 
 ## With no SSR
@@ -204,11 +204,11 @@ const DynamicComponent = dynamic(() =>
 클라이언트 측에서 컴포넌트를 동적으로 로드하려면 `ssr` 옵션을 사용하여 서버 렌더링을 비활성화할 수 있습니다. 이는 `window`와 같은 브라우저 API에 의존하는 외부 종속성 또는 컴포넌트에 유용합니다.
 
 ```jsx
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const DynamicHeader = dynamic(() => import("../components/header"), {
+const DynamicHeader = dynamic(() => import('../components/header'), {
   ssr: false,
-});
+})
 ```
 
 ## With external libraries
@@ -216,12 +216,12 @@ const DynamicHeader = dynamic(() => import("../components/header"), {
 이 예제는 퍼지 검색을 위해 외부 라이브러리 `fuse.js`를 사용합니다. 모듈은 사용자가 검색 입력란에 입력한 후에만 브라우저에서 로드됩니다.
 
 ```jsx
-import { useState } from "react";
+import { useState } from 'react'
 
-const names = ["Tim", "Joe", "Bel", "Lee"];
+const names = ['Tim', 'Joe', 'Bel', 'Lee']
 
 export default function Page() {
-  const [results, setResults] = useState();
+  const [results, setResults] = useState()
 
   return (
     <div>
@@ -229,17 +229,17 @@ export default function Page() {
         type="text"
         placeholder="Search"
         onChange={async (e) => {
-          const { value } = e.currentTarget;
+          const { value } = e.currentTarget
           // Dynamically load fuse.js
-          const Fuse = (await import("fuse.js")).default;
-          const fuse = new Fuse(names);
+          const Fuse = (await import('fuse.js')).default
+          const fuse = new Fuse(names)
 
-          setResults(fuse.search(value));
+          setResults(fuse.search(value))
         }}
       />
       <pre>Results: {JSON.stringify(results, null, 2)}</pre>
     </div>
-  );
+  )
 }
 ```
 

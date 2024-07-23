@@ -14,14 +14,14 @@ Next.js에는 성능 메트릭을 측정하고 보고하는 기본 지원이 포
 <PagesOnly>
 
 ```jsx filename="pages/_app.js"
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 function MyApp({ Component, pageProps }) {
   useReportWebVitals((metric) => {
-    console.log(metric);
-  });
+    console.log(metric)
+  })
 
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
@@ -32,19 +32,19 @@ function MyApp({ Component, pageProps }) {
 <AppOnly>
 
 ```jsx filename="app/_components/web-vitals.js"
-"use client";
+'use client'
 
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 export function WebVitals() {
   useReportWebVitals((metric) => {
-    console.log(metric);
-  });
+    console.log(metric)
+  })
 }
 ```
 
 ```jsx filename="app/layout.js"
-import { WebVitals } from "./_components/web-vitals";
+import { WebVitals } from './_components/web-vitals'
 
 export default function Layout({ children }) {
   return (
@@ -54,7 +54,7 @@ export default function Layout({ children }) {
         {children}
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -80,22 +80,22 @@ export default function Layout({ children }) {
 <PagesOnly>
 
 ```jsx filename="pages/_app.js"
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 function MyApp({ Component, pageProps }) {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "FCP": {
+      case 'FCP': {
         // FCP 결과 처리
       }
-      case "LCP": {
+      case 'LCP': {
         // LCP 결과 처리
       }
       // ...
     }
-  });
+  })
 
-  return <Component {...pageProps} />;
+  return <Component {...pageProps} />
 }
 ```
 
@@ -104,42 +104,42 @@ function MyApp({ Component, pageProps }) {
 <AppOnly>
 
 ```tsx filename="app/_components/web-vitals.tsx" switcher
-"use client";
+'use client'
 
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 export function WebVitals() {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "FCP": {
+      case 'FCP': {
         // FCP 결과 처리
       }
-      case "LCP": {
+      case 'LCP': {
         // LCP 결과 처리
       }
       // ...
     }
-  });
+  })
 }
 ```
 
 ```jsx filename="app/_components/web-vitals.js" switcher
-"use client";
+'use client'
 
-import { useReportWebVitals } from "next/web-vitals";
+import { useReportWebVitals } from 'next/web-vitals'
 
 export function WebVitals() {
   useReportWebVitals((metric) => {
     switch (metric.name) {
-      case "FCP": {
+      case 'FCP': {
         // FCP 결과 처리
       }
-      case "LCP": {
+      case 'LCP': {
         // LCP 결과 처리
       }
       // ...
     }
-  });
+  })
 }
 ```
 
@@ -160,17 +160,17 @@ export function WebVitals() {
 ```js
 export function reportWebVitals(metric) {
   switch (metric.name) {
-    case "Next.js-hydration":
+    case 'Next.js-hydration':
       // 하이드레이션 결과 처리
-      break;
-    case "Next.js-route-change-to-render":
+      break
+    case 'Next.js-route-change-to-render':
       // 라우트 변경 후 렌더링 결과 처리
-      break;
-    case "Next.js-render":
+      break
+    case 'Next.js-render':
       // 렌더링 결과 처리
-      break;
+      break
     default:
-      break;
+      break
   }
 }
 ```
@@ -185,16 +185,16 @@ export function reportWebVitals(metric) {
 
 ```js
 useReportWebVitals((metric) => {
-  const body = JSON.stringify(metric);
-  const url = "https://example.com/analytics";
+  const body = JSON.stringify(metric)
+  const url = 'https://example.com/analytics'
 
   // `navigator.sendBeacon()`이 사용 가능한 경우 이를 사용하고, 그렇지 않으면 `fetch()`를 사용합니다.
   if (navigator.sendBeacon) {
-    navigator.sendBeacon(url, body);
+    navigator.sendBeacon(url, body)
   } else {
-    fetch(url, { body, method: "POST", keepalive: true });
+    fetch(url, { body, method: 'POST', keepalive: true })
   }
-});
+})
 ```
 
 > **알아두면 좋은 점**: [Google Analytics](https://analytics.google.com/analytics/web/)를 사용하는 경우 `id` 값을 사용하여 메트릭 분포를 수동으로 구성(백분위수 계산 등)할 수 있습니다.
@@ -203,14 +203,14 @@ useReportWebVitals((metric) => {
 > useReportWebVitals((metric) => {
 >   // Google Analytics를 다음 예제처럼 초기화한 경우 `window.gtag`를 사용합니다:
 >   // https://github.com/vercel/next.js/blob/canary/examples/with-google-analytics/pages/_app.js
->   window.gtag("event", metric.name, {
+>   window.gtag('event', metric.name, {
 >     value: Math.round(
->       metric.name === "CLS" ? metric.value * 1000 : metric.value
+>       metric.name === 'CLS' ? metric.value * 1000 : metric.value,
 >     ), // 값은 정수여야 합니다
 >     event_label: metric.id, // 현재 페이지 로드에 고유한 id
 >     non_interaction: true, // 이탈률에 영향을 주지 않음
->   });
-> });
+>   })
+> })
 > ```
 >
 > [Google Analytics로 결과 전송](https://github.com/GoogleChrome/web-vitals#send-the-results-to-google-analytics)에 대해 자세히 알아보세요.

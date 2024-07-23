@@ -35,7 +35,7 @@ module.exports = {
   compiler: {
     styledComponents: true,
   },
-};
+}
 ```
 
 고급 사용 사례의 경우, styled-components 컴파일을 위한 개별 속성을 구성할 수 있습니다.
@@ -87,18 +87,18 @@ Next.js Compiler는 테스트를 변환하고 Jest를 Next.js와 함께 쉽게 �
 먼저, Next.js의 최신 버전으로 업데이트하세요: `npm install next@latest`. 그런 다음, `jest.config.js` 파일을 업데이트하세요:
 
 ```js filename="jest.config.js"
-const nextJest = require("next/jest");
+const nextJest = require('next/jest')
 
 // next.config.js 및 .env 파일을 로드할 수 있도록 Next.js 앱의 경로 제공
-const createJestConfig = nextJest({ dir: "./" });
+const createJestConfig = nextJest({ dir: './' })
 
 // Jest에 전달할 커스텀 설정
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-};
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+}
 
 // createJestConfig가 Next.js 구성을 로드할 수 있도록 내보내는 방식
-module.exports = createJestConfig(customJestConfig);
+module.exports = createJestConfig(customJestConfig)
 ```
 
 ### Relay
@@ -110,13 +110,13 @@ module.exports = {
   compiler: {
     relay: {
       // relay.config.js와 일치해야 합니다.
-      src: "./",
-      artifactDirectory: "./__generated__",
-      language: "typescript",
+      src: './',
+      artifactDirectory: './__generated__',
+      language: 'typescript',
       eagerEsModules: false,
     },
   },
-};
+}
 ```
 
 > **알아두면 좋은 점**: Next.js에서는 `pages` 디렉토리의 모든 JavaScript 파일이 라우트로 간주됩니다. 따라서 `relay-compiler`의 경우 `pages` 외부의 `artifactDirectory` 구성 설정을 지정해야 합니다. 그렇지 않으면 `relay-compiler`가 `__generated__` 디렉토리의 소스 파일 옆에 파일을 생성하게 되며, 이 파일이 라우트로 간주되어 프로덕션 빌드를 중단시킬 수 있습니다.
@@ -132,7 +132,7 @@ module.exports = {
   compiler: {
     reactRemoveProperties: true,
   },
-};
+}
 ```
 
 사용자 정의 속성을 제거하려면:
@@ -142,9 +142,9 @@ module.exports = {
   compiler: {
     // 여기 정의된 정규 표현식은 Rust에서 처리되므로 JavaScript `RegExp`와 문법이 다릅니다.
     // 자세한 내용은 https://docs.rs/regex를 참조하세요.
-    reactRemoveProperties: { properties: ["^data-custom$"] },
+    reactRemoveProperties: { properties: ['^data-custom$'] },
   },
-};
+}
 ```
 
 ### 콘솔 제거
@@ -158,7 +158,7 @@ module.exports = {
   compiler: {
     removeConsole: true,
   },
-};
+}
 ```
 
 `console.error`를 제외한 모든 `console.*` 출력을 제거하려면:
@@ -167,10 +167,10 @@ module.exports = {
 module.exports = {
   compiler: {
     removeConsole: {
-      exclude: ["error"],
+      exclude: ['error'],
     },
   },
-};
+}
 ```
 
 ### 레거시 데코레이터
@@ -249,7 +249,7 @@ Next.js의 swc 컴파일러는 v13부터 기본적으로 축소에 사용됩니�
 ```js filename="next.config.js"
 module.exports = {
   swcMinify: false,
-};
+}
 ```
 
 ### 모듈 변환
@@ -258,8 +258,8 @@ Next.js는 로컬 패키지(모노레포와 같은) 또는 외부 종속성(`nod
 
 ```js filename="next.config.js"
 module.exports = {
-  transpilePackages: ["@acme/ui", "lodash-es"],
-};
+  transpilePackages: ['@acme/ui', 'lodash-es'],
+}
 ```
 
 ### 모듈화된 가져오기
@@ -277,7 +277,7 @@ module.exports = {
   experimental: {
     swcTraceProfiling: true,
   },
-};
+}
 ```
 
 활성화되면 swc는 `.next/` 디렉토리 아래에 `swc-trace-profile-${timestamp}.json`이라는 이름으로 트레이스를 생성합니다. 크로미엄의 트레이스 뷰어(chrome://tracing/, https://ui.perfetto.dev/) 또는 호환되는 플레임그래프 뷰어(https://www.speedscope.app/)가 생성된 트레이스를 로드하고 시각화할 수 있습니다.
@@ -291,14 +291,14 @@ module.exports = {
   experimental: {
     swcPlugins: [
       [
-        "plugin",
+        'plugin',
         {
           ...pluginOptions,
         },
       ],
     ],
   },
-};
+}
 ```
 
 `swcPlugins`는 플러그인을 구성하는 튜플 배열을 허용합니다. 플러그인의 튜플은 플러그인의 경로와 플러그인 구성을 위한 객체를 포함합니다. 플러그인의 경로는 npm 모듈 패키지 이름 또는 `.wasm` 바이너리의 절대 경로일 수 있습니다.

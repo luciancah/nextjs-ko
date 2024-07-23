@@ -32,8 +32,8 @@ revalidatePath(path: string, type?: 'page' | 'layout'): void;
 ### 특정 URL 재검증
 
 ```ts
-import { revalidatePath } from "next/cache";
-revalidatePath("/blog/post-1");
+import { revalidatePath } from 'next/cache'
+revalidatePath('/blog/post-1')
 ```
 
 이는 다음 페이지 방문 시 특정 URL을 재검증합니다.
@@ -41,10 +41,10 @@ revalidatePath("/blog/post-1");
 ### 페이지 경로 재검증
 
 ```ts
-import { revalidatePath } from "next/cache";
-revalidatePath("/blog/[slug]", "page");
+import { revalidatePath } from 'next/cache'
+revalidatePath('/blog/[slug]', 'page')
 // 또는 경로 그룹과 함께 사용
-revalidatePath("/(main)/post/[slug]", "page");
+revalidatePath('/(main)/post/[slug]', 'page')
 ```
 
 이는 다음 페이지 방문 시 제공된 `page` 파일과 일치하는 모든 URL을 재검증합니다. 특정 페이지 이하의 페이지는 무효화되지 않습니다. 예를 들어, `/blog/[slug]`는 `/blog/[slug]/[author]`를 무효화하지 않습니다.
@@ -52,10 +52,10 @@ revalidatePath("/(main)/post/[slug]", "page");
 ### 레이아웃 경로 재검증
 
 ```ts
-import { revalidatePath } from "next/cache";
-revalidatePath("/blog/[slug]", "layout");
+import { revalidatePath } from 'next/cache'
+revalidatePath('/blog/[slug]', 'layout')
 // 또는 경로 그룹과 함께 사용
-revalidatePath("/(main)/post/[slug]", "layout");
+revalidatePath('/(main)/post/[slug]', 'layout')
 ```
 
 이는 다음 페이지 방문 시 제공된 `layout` 파일과 일치하는 모든 URL을 재검증합니다. 이는 동일한 레이아웃을 가진 페이지들이 다음 방문 시 재검증되도록 합니다. 예를 들어, 위의 경우에서 `/blog/[slug]/[another]`도 다음 방문 시 재검증됩니다.
@@ -63,9 +63,9 @@ revalidatePath("/(main)/post/[slug]", "layout");
 ### 모든 데이터 재검증
 
 ```ts
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache'
 
-revalidatePath("/", "layout");
+revalidatePath('/', 'layout')
 ```
 
 이는 클라이언트 측 라우터 캐시를 제거하고, 다음 페이지 방문 시 데이터 캐시를 재검증합니다.
@@ -73,53 +73,53 @@ revalidatePath("/", "layout");
 ### 서버 액션
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache'
 
 export default async function submit() {
-  await submitForm();
-  revalidatePath("/");
+  await submitForm()
+  revalidatePath('/')
 }
 ```
 
 ### 라우트 핸들러
 
 ```ts filename="app/api/revalidate/route.ts" switcher
-import { revalidatePath } from "next/cache";
-import type { NextRequest } from "next/server";
+import { revalidatePath } from 'next/cache'
+import type { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const path = request.nextUrl.searchParams.get("path");
+  const path = request.nextUrl.searchParams.get('path')
 
   if (path) {
-    revalidatePath(path);
-    return Response.json({ revalidated: true, now: Date.now() });
+    revalidatePath(path)
+    return Response.json({ revalidated: true, now: Date.now() })
   }
 
   return Response.json({
     revalidated: false,
     now: Date.now(),
-    message: "Missing path to revalidate",
-  });
+    message: 'Missing path to revalidate',
+  })
 }
 ```
 
 ```js filename="app/api/revalidate/route.js" switcher
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache'
 
 export async function GET(request) {
-  const path = request.nextUrl.searchParams.get("path");
+  const path = request.nextUrl.searchParams.get('path')
 
   if (path) {
-    revalidatePath(path);
-    return Response.json({ revalidated: true, now: Date.now() });
+    revalidatePath(path)
+    return Response.json({ revalidated: true, now: Date.now() })
   }
 
   return Response.json({
     revalidated: false,
     now: Date.now(),
-    message: "Missing path to revalidate",
-  });
+    message: 'Missing path to revalidate',
+  })
 }
 ```

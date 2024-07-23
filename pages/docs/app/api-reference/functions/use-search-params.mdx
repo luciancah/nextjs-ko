@@ -10,41 +10,41 @@ description: API Reference for the useSearchParams hook.
 `useSearchParams`는 [`URLSearchParams`](https://developer.mozilla.org/docs/Web/API/URLSearchParams) 인터페이스의 **읽기 전용** 버전을 반환합니다.
 
 ```tsx filename="app/dashboard/search-bar.tsx" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search')
 
   // URL -> `/dashboard?search=my-project`
   // `search` -> 'my-project'
-  return <>Search: {search}</>;
+  return <>Search: {search}</>
 }
 ```
 
 ```jsx filename="app/dashboard/search-bar.js" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search')
 
   // URL -> `/dashboard?search=my-project`
   // `search` -> 'my-project'
-  return <>Search: {search}</>;
+  return <>Search: {search}</>
 }
 ```
 
 ## Parameters
 
 ```tsx
-const searchParams = useSearchParams();
+const searchParams = useSearchParams()
 ```
 
 `useSearchParams`는 파라미터를 받지 않습니다.
@@ -87,48 +87,48 @@ const searchParams = useSearchParams();
 예를 들어:
 
 ```tsx filename="app/dashboard/search-bar.tsx" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search')
 
   // 정적 렌더링을 사용할 때 서버에서 로그가 출력되지 않습니다.
-  console.log(search);
+  console.log(search)
 
-  return <>Search: {search}</>;
+  return <>Search: {search}</>
 }
 ```
 
 ```jsx filename="app/dashboard/search-bar.js" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search')
 
   // 정적 렌더링을 사용할 때 서버에서 로그가 출력되지 않습니다.
-  console.log(search);
+  console.log(search)
 
-  return <>Search: {search}</>;
+  return <>Search: {search}</>
 }
 ```
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-import { Suspense } from "react";
-import SearchBar from "./search-bar";
+import { Suspense } from 'react'
+import SearchBar from './search-bar'
 
 // 이 컴포넌트는 Suspense 경계에 대한 대체 콘텐츠로 전달됩니다.
 // 초기 HTML에서 검색 바 대신 렌더링됩니다.
 // React 수화 동안 값이 사용 가능해지면 대체 콘텐츠가 `<SearchBar>` 컴포넌트로 교체됩니다.
 function SearchBarFallback() {
-  return <>placeholder</>;
+  return <>placeholder</>
 }
 
 export default function Page() {
@@ -141,19 +141,19 @@ export default function Page() {
       </nav>
       <h1>Dashboard</h1>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-import { Suspense } from "react";
-import SearchBar from "./search-bar";
+import { Suspense } from 'react'
+import SearchBar from './search-bar'
 
 // 이 컴포넌트는 Suspense 경계에 대한 대체 콘텐츠로 전달됩니다.
 // 초기 HTML에서 검색 바 대신 렌더링됩니다.
 // React 수화 동안 값이 사용 가능해지면 대체 콘텐츠가 `<SearchBar>` 컴포넌트로 교체됩니다.
 function SearchBarFallback() {
-  return <>placeholder</>;
+  return <>placeholder</>
 }
 
 export default function Page() {
@@ -166,7 +166,7 @@ export default function Page() {
       </nav>
       <h1>Dashboard</h1>
     </>
-  );
+  )
 }
 ```
 
@@ -179,45 +179,45 @@ export default function Page() {
 예를 들어:
 
 ```tsx filename="app/dashboard/search-bar.tsx" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search')
 
   // 이는 초기 렌더링 중 서버에서 로그가 출력되며,
   // 이후 탐색에서는 클라이언트에서 로그가 출력됩니다.
-  console.log(search);
+  console.log(search)
 
-  return <>Search: {search}</>;
+  return <>Search: {search}</>
 }
 ```
 
 ```jsx filename="app/dashboard/search-bar.js" switcher
-"use client";
+'use client'
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams } from 'next/navigation'
 
 export default function SearchBar() {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const search = searchParams.get("search");
+  const search = searchParams.get('search')
 
   // 이는 초기 렌더링 중 서버에서 로그가 출력되며,
   // 이후 탐색에서는 클라이언트에서 로그가 출력됩니다.
-  console.log(search);
+  console.log(search)
 
-  return <>Search: {search}</>;
+  return <>Search: {search}</>
 }
 ```
 
 ```tsx filename="app/dashboard/page.tsx" switcher
-import SearchBar from "./search-bar";
+import SearchBar from './search-bar'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function Page() {
   return (
@@ -227,14 +227,14 @@ export default function Page() {
       </nav>
       <h1>Dashboard</h1>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/dashboard/page.js" switcher
-import SearchBar from "./search-bar";
+import SearchBar from './search-bar'
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'
 
 export default function Page() {
   return (
@@ -244,7 +244,7 @@ export default function Page() {
       </nav>
       <h1>Dashboard</h1>
     </>
-  );
+  )
 }
 ```
 
@@ -269,23 +269,23 @@ Pages와 달리, [Layouts](/docs/app/api-reference/file-conventions/layout) (Ser
 [`useRouter`](/docs/app/api-reference/functions/use-router) 또는 [`Link`](/docs/app/api-reference/components/link)를 사용하여 새로운 `searchParams`를 설정할 수 있습니다. 탐색이 수행된 후, 현재 [`page.js`](/docs/app/api-reference/file-conventions/page)는 업데이트된 [`searchParams` 프롭](/docs/app/api-reference/file-conventions/page#searchparams-optional)을 받습니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
-"use client";
+'use client'
 
 export default function ExampleClientComponent() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   // 현재 searchParams를 주어진 key/value 쌍과 병합하여 새 searchParams 문자열을 가져옵니다.
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
 
-      return params.toString();
+      return params.toString()
     },
-    [searchParams]
-  );
+    [searchParams],
+  )
 
   return (
     <>
@@ -295,7 +295,7 @@ export default function ExampleClientComponent() {
       <button
         onClick={() => {
           // <pathname>?sort=asc
-          router.push(pathname + "?" + createQueryString("sort", "asc"));
+          router.push(pathname + '?' + createQueryString('sort', 'asc'))
         }}
       >
         ASC
@@ -305,34 +305,34 @@ export default function ExampleClientComponent() {
       <Link
         href={
           // <pathname>?sort=desc
-          pathname + "?" + createQueryString("sort", "desc")
+          pathname + '?' + createQueryString('sort', 'desc')
         }
       >
         DESC
       </Link>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/example-client-component.js" switcher
-"use client";
+'use client'
 
 export default function ExampleClientComponent() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
   // 현재 searchParams를 주어진 key/value 쌍과 병합하여 새 searchParams 문자열을 가져옵니다.
   const createQueryString = useCallback(
     (name, value) => {
-      const params = new URLSearchParams(searchParams);
-      params.set(name, value);
+      const params = new URLSearchParams(searchParams)
+      params.set(name, value)
 
-      return params.toString();
+      return params.toString()
     },
-    [searchParams]
-  );
+    [searchParams],
+  )
 
   return (
     <>
@@ -342,7 +342,7 @@ export default function ExampleClientComponent() {
       <button
         onClick={() => {
           // <pathname>?sort=asc
-          router.push(pathname + "?" + createQueryString("sort", "asc"));
+          router.push(pathname + '?' + createQueryString('sort', 'asc'))
         }}
       >
         ASC
@@ -352,13 +352,13 @@ export default function ExampleClientComponent() {
       <Link
         href={
           // <pathname>?sort=desc
-          pathname + "?" + createQueryString("sort", "desc")
+          pathname + '?' + createQueryString('sort', 'desc')
         }
       >
         DESC
       </Link>
     </>
-  );
+  )
 }
 ```
 

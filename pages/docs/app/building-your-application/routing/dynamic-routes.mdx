@@ -29,13 +29,13 @@ related:
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export default function Page({ params }: { params: { slug: string } }) {
-  return <div>My Post: {params.slug}</div>;
+  return <div>My Post: {params.slug}</div>
 }
 ```
 
 ```jsx filename="app/blog/[slug]/page.js" switcher
 export default function Page({ params }) {
-  return <div>My Post: {params.slug}</div>;
+  return <div>My Post: {params.slug}</div>
 }
 ```
 
@@ -57,21 +57,21 @@ export default function Page({ params }) {
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   return posts.map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
 ```jsx filename="app/blog/[slug]/page.js" switcher
 export async function generateStaticParams() {
-  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const posts = await fetch('https://.../posts').then((res) => res.json())
 
   return posts.map((post) => ({
     slug: post.slug,
-  }));
+  }))
 }
 ```
 
@@ -120,13 +120,13 @@ TypeScript를 사용할 때, 구성된 경로 세그먼트에 따라 `params`에
 
 ```tsx filename="app/blog/[slug]/page.tsx" switcher
 export default function Page({ params }: { params: { slug: string } }) {
-  return <h1>My Page</h1>;
+  return <h1>My Page</h1>
 }
 ```
 
 ```jsx filename="app/blog/[slug]/page.js" switcher
 export default function Page({ params }) {
-  return <h1>My Page</h1>;
+  return <h1>My Page</h1>
 }
 ```
 

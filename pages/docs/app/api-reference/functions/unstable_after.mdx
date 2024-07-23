@@ -18,35 +18,35 @@ const nextConfig = {
   experimental: {
     after: true,
   },
-};
-module.exports = nextConfig;
+}
+module.exports = nextConfig
 ```
 
 이 함수는 응답이 완료된 후 실행될 콜백을 수락합니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import { unstable_after as after } from "next/server";
-import { log } from "@/app/utils";
+import { unstable_after as after } from 'next/server'
+import { log } from '@/app/utils'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   after(() => {
     // 레이아웃이 렌더링되어 사용자에게 전송된 후 실행됩니다.
-    log();
-  });
-  return <>{children}</>;
+    log()
+  })
+  return <>{children}</>
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
-import { unstable_after as after } from "next/server";
-import { log } from "@/app/utils";
+import { unstable_after as after } from 'next/server'
+import { log } from '@/app/utils'
 
 export default function Layout({ children }) {
   after(() => {
     // 레이아웃이 렌더링되어 사용자에게 전송된 후 실행됩니다.
-    log();
-  });
-  return <>{children}</>;
+    log()
+  })
+  return <>{children}</>
 }
 ```
 

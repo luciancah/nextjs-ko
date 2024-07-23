@@ -65,11 +65,11 @@ npm install next@latest
 ```js filename="next.config.mjs"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // Single-Page Application (SPA)을 출력합니다.
-  distDir: "./build", // 빌드 출력 디렉터리를 `./dist`로 변경합니다.
-};
+  output: 'export', // Single-Page Application (SPA)을 출력합니다.
+  distDir: './build', // 빌드 출력 디렉터리를 `./dist`로 변경합니다.
+}
 
-export default nextConfig;
+export default nextConfig
 ```
 
 ### 3단계: 루트 레이아웃 생성
@@ -87,15 +87,15 @@ CRA 애플리케이션에서 루트 레이아웃 파일에 가장 가까운 것�
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  return "...";
+  return '...'
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
 export default function RootLayout({ children }) {
-  return "...";
+  return '...'
 }
 ```
 
@@ -107,7 +107,7 @@ export default function RootLayout({ children }) {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -122,7 +122,7 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -141,7 +141,7 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -155,9 +155,9 @@ Next.js는 기본적으로 [meta charset](https://developer.mozilla.org/docs/Web
 export default function RootLayout({
   children,
 }: {
-  children: React.React;
+  children: React.React
 
-  Node;
+  Node
 }) {
   return (
     <html lang="en">
@@ -170,7 +170,7 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -187,7 +187,7 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -197,7 +197,7 @@ export default function RootLayout({ children }) {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -209,7 +209,7 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -225,24 +225,24 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 마지막으로 Next.js는 [Metadata API](/docs/app/building-your-application/optimizing/metadata)를 사용하여 나머지 `<head>` 태그를 관리할 수 있습니다. 최종 메타데이터 정보를 내보낸 [`metadata` 객체](/docs/app/api-reference/functions/generate-metadata#metadata-object)로 이동합니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "React App",
-  description: "Web site created with Next.js.",
-};
+  title: 'React App',
+  description: 'Web site created with Next.js.',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
@@ -250,15 +250,15 @@ export default function RootLayout({
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/layout.js" switcher
 export const metadata = {
-  title: "React App",
-  description: "Web site created with Next.js.",
-};
+  title: 'React App',
+  description: 'Web site created with Next.js.',
+}
 
 export default function RootLayout({ children }) {
   return (
@@ -267,7 +267,7 @@ export default function RootLayout({ children }) {
         <div id="root">{children}</div>
       </body>
     </html>
-  );
+  )
 }
 ```
 
@@ -280,7 +280,7 @@ Create React App과 마찬가지로 Next.js는 [CSS Modules](/docs/app/building-
 전역 CSS 파일을 사용하는 경우 `app/layout.tsx` 파일에 이를 가져옵니다:
 
 ```tsx filename="app/layout.tsx" switcher
-import "../index.css";
+import '../index.css'
 
 // ...
 ```
@@ -299,7 +299,7 @@ module.exports = {
     tailwindcss: {},
     autoprefixer: {},
   },
-};
+}
 ```
 
 ### 단계 6: 진입점 페이지 생성
@@ -316,21 +316,21 @@ Next.js에서는 `page.tsx` 파일을 생성하여 애플리케이션의 진입�
 
 ```tsx filename="app/[[...slug]]/page.tsx" switcher
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return "..."; // 업데이트 예정
+  return '...' // 업데이트 예정
 }
 ```
 
 ```jsx filename="app/[[...slug]]/page.js" switcher
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return "..."; // 업데이트 예정
+  return '...' // 업데이트 예정
 }
 ```
 
@@ -341,26 +341,26 @@ export default function Page() {
 이제 나머지 CRA 애플리케이션을 클라이언트 전용으로 이동합니다.
 
 ```tsx filename="app/[[...slug]]/client.tsx" switcher
-"use client";
+'use client'
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const App = dynamic(() => import("../../App"), { ssr: false });
+const App = dynamic(() => import('../../App'), { ssr: false })
 
 export function ClientOnly() {
-  return <App />;
+  return <App />
 }
 ```
 
 ```jsx filename="app/[[...slug]]/client.js" switcher
-"use client";
+'use client'
 
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const App = dynamic(() => import("../../App"), { ssr: false });
+const App = dynamic(() => import('../../App'), { ssr: false })
 
 export function ClientOnly() {
-  return <App />;
+  return <App />
 }
 ```
 
@@ -369,32 +369,32 @@ export function ClientOnly() {
 클라이언트 전용 애플리케이션을 시작하려면 `App` 컴포넌트부터 사전 렌더링을 비활성화하도록 Next.js를 구성할 수 있습니다.
 
 ```tsx
-const App = dynamic(() => import("../../App"), { ssr: false });
+const App = dynamic(() => import('../../App'), { ssr: false })
 ```
 
 이제 진입점 페이지를 업데이트하여 새 컴포넌트를 사용합니다:
 
 ```tsx filename="app/[[...slug]]/page.tsx" switcher
-import { ClientOnly } from "./client";
+import { ClientOnly } from './client'
 
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return <ClientOnly />;
+  return <ClientOnly />
 }
 ```
 
 ```jsx filename="app/[[...slug]]/page.js" switcher
-import { ClientOnly } from "./client";
+import { ClientOnly } from './client'
 
 export function generateStaticParams() {
-  return [{ slug: [""] }];
+  return [{ slug: [''] }]
 }
 
 export default function Page() {
-  return <ClientOnly />;
+  return <ClientOnly />
 }
 ```
 
@@ -403,10 +403,10 @@ export default function Page() {
 Next.js는 정적 이미지 가져오기를 CRA와 약간 다르게 처리합니다. CRA에서는 이미지 파일을 가져오면 해당 공용 URL이 문자열로 반환됩니다:
 
 ```tsx filename="App.tsx"
-import image from "./img.png";
+import image from './img.png'
 
 export default function App() {
-  return <img src={image} />;
+  return <img src={image} />
 }
 ```
 
@@ -420,10 +420,10 @@ Next.js에서는 정적 이미지 가져오기가 객체를 반환합니다. 이
 
 ```tsx
 // 이전
-import logo from "/logo.png";
+import logo from '/logo.png'
 
 // 이후
-import logo from "../public/logo.png";
+import logo from '../public/logo.png'
 ```
 
 **이미지 객체 대신 `src` 속성을 `<img>` 태그에 전달합니다:**

@@ -26,11 +26,11 @@ Server Components는 인라인 함수 레벨 또는 모듈 레벨의 `"use serve
 export default function Page() {
   // Server Action
   async function create() {
-    "use server";
+    'use server'
     // 데이터 변조
   }
 
-  return "...";
+  return '...'
 }
 ```
 
@@ -38,11 +38,11 @@ export default function Page() {
 export default function Page() {
   // Server Action
   async function create() {
-    "use server";
+    'use server'
     // 데이터 변조
   }
 
-  return "...";
+  return '...'
 }
 ```
 
@@ -51,34 +51,34 @@ export default function Page() {
 Client Component에서 Server Action을 호출하려면 새 파일을 생성하고 파일 상단에 `"use server"` 지시어를 추가하세요. 파일 내의 모든 함수는 Server 및 Client Components에서 재사용할 수 있는 Server Actions로 표시됩니다:
 
 ```tsx filename="app/actions.ts" switcher
-"use server";
+'use server'
 
 export async function create() {}
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
 export async function create() {}
 ```
 
 ```tsx filename="app/ui/button.tsx" switcher
-"use client";
+'use client'
 
-import { create } from "@/app/actions";
+import { create } from '@/app/actions'
 
 export function Button() {
-  return <Button onClick={create} />;
+  return <Button onClick={create} />
 }
 ```
 
 ```jsx filename="app/ui/button.js" switcher
-"use client";
+'use client'
 
-import { create } from "@/app/actions";
+import { create } from '@/app/actions'
 
 export function Button() {
-  return <Button onClick={create} />;
+  return <Button onClick={create} />
 }
 ```
 
@@ -91,22 +91,22 @@ Server Action을 Client Component에 prop으로 전달할 수도 있습니다:
 ```
 
 ```tsx filename="app/client-component.tsx" switcher
-"use client";
+'use client'
 
 export default function ClientComponent({
   updateItemAction,
 }: {
-  updateItemAction: (formData: FormData) => void;
+  updateItemAction: (formData: FormData) => void
 }) {
-  return <form action={updateItemAction}>{/* ... */}</form>;
+  return <form action={updateItemAction}>{/* ... */}</form>
 }
 ```
 
 ```jsx filename="app/client-component.jsx" switcher
-"use client";
+'use client'
 
 export default function ClientComponent({ updateItemAction }) {
-  return <form action={updateItemAction}>{/* ... */}</form>;
+  return <form action={updateItemAction}>{/* ... */}</form>
 }
 ```
 
@@ -140,38 +140,38 @@ React는 HTML [`<form>`](https://developer.mozilla.org/docs/Web/HTML/Element/for
 ```tsx filename="app/invoices/page.tsx" switcher
 export default function Page() {
   async function createInvoice(formData: FormData) {
-    "use server";
+    'use server'
 
     const rawFormData = {
-      customerId: formData.get("customerId"),
-      amount: formData.get("amount"),
-      status: formData.get("status"),
-    };
+      customerId: formData.get('customerId'),
+      amount: formData.get('amount'),
+      status: formData.get('status'),
+    }
 
     // 데이터 변조
     // 캐시 재검증
   }
 
-  return <form action={createInvoice}>...</form>;
+  return <form action={createInvoice}>...</form>
 }
 ```
 
 ```jsx filename="app/invoices/page.jsx" switcher
 export default function Page() {
   async function createInvoice(formData) {
-    "use server";
+    'use server'
 
     const rawFormData = {
-      customerId: formData.get("customerId"),
-      amount: formData.get("amount"),
-      status: formData.get("status"),
-    };
+      customerId: formData.get('customerId'),
+      amount: formData.get('amount'),
+      status: formData.get('status'),
+    }
 
     // 데이터 변조
     // 캐시 재검증
   }
 
-  return <form action={createInvoice}>...</form>;
+  return <form action={createInvoice}>...</form>
 }
 ```
 
@@ -186,43 +186,43 @@ export default function Page() {
 JavaScript `bind` 메서드를 사용하여 Server Action에 추가 인수를 전달할 수 있습니다.
 
 ```tsx filename="app/client-component.tsx" highlight={6} switcher
-"use client";
+'use client'
 
-import { updateUser } from "./actions";
+import { updateUser } from './actions'
 
 export function UserProfile({ userId }: { userId: string }) {
-  const updateUserWithId = updateUser.bind(null, userId);
+  const updateUserWithId = updateUser.bind(null, userId)
 
   return (
     <form action={updateUserWithId}>
       <input type="text" name="name" />
       <button type="submit">Update User Name</button>
     </form>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/client-component.js" highlight={6} switcher
-"use client";
+'use client'
 
-import { updateUser } from "./actions";
+import { updateUser } from './actions'
 
 export function UserProfile({ userId }) {
-  const updateUserWithId = updateUser.bind(null, userId);
+  const updateUserWithId = updateUser.bind(null, userId)
 
   return (
     <form action={updateUserWithId}>
       <input type="text" name="name" />
       <button type="submit">Update User Name</button>
     </form>
-  );
+  )
 }
 ```
 
 Server Action은 폼 데이터 외에 `userId` 인수를 받습니다:
 
 ```js filename="app/actions.js"
-"use server";
+'use server'
 
 export async function updateUser(userId, formData) {}
 ```
@@ -243,46 +243,46 @@ export async function updateUser(userId, formData) {}
 [`requestSubmit()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/requestSubmit) 메서드를 사용하여 프로그램적으로 폼 제출을 트리거할 수 있습니다. 예를 들어, 사용자가 `⌘` + `Enter` 키보드 단축키를 사용하여 폼을 제출할 때 `onKeyDown` 이벤트를 감지할 수 있습니다:
 
 ```tsx filename="app/entry.tsx" switcher
-"use client";
+'use client'
 
 export function Entry() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (
       (e.ctrlKey || e.metaKey) &&
-      (e.key === "Enter" || e.key === "NumpadEnter")
+      (e.key === 'Enter' || e.key === 'NumpadEnter')
     ) {
-      e.preventDefault();
-      e.currentTarget.form?.requestSubmit();
+      e.preventDefault()
+      e.currentTarget.form?.requestSubmit()
     }
-  };
+  }
 
   return (
     <div>
       <textarea name="entry" rows={20} required onKeyDown={handleKeyDown} />
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/entry.jsx" switcher
-"use client";
+'use client'
 
 export function Entry() {
   const handleKeyDown = (e) => {
     if (
       (e.ctrlKey || e.metaKey) &&
-      (e.key === "Enter" || e.key === "NumpadEnter")
+      (e.key === 'Enter' || e.key === 'NumpadEnter')
     ) {
-      e.preventDefault();
-      e.currentTarget.form?.requestSubmit();
+      e.preventDefault()
+      e.currentTarget.form?.requestSubmit()
     }
-  };
+  }
 
   return (
     <div>
       <textarea name="entry" rows={20} required onKeyDown={handleKeyDown} />
     </div>
-  );
+  )
 }
 ```
 
@@ -295,26 +295,26 @@ export function Entry() {
 더 고급 서버 측 검증을 위해 [zod](https://zod.dev/)와 같은 라이브러리를 사용하여 데이터 변조 전에 폼 필드를 검증할 수 있습니다:
 
 ```tsx filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { z } from "zod";
+import { z } from 'zod'
 
 const schema = z.object({
   email: z.string({
-    invalid_type_error: "Invalid Email",
+    invalid_type_error: 'Invalid Email',
   }),
-});
+})
 
 export default async function createUser(formData: FormData) {
   const validatedFields = schema.safeParse({
-    email: formData.get("email"),
-  });
+    email: formData.get('email'),
+  })
 
   // 폼 데이터가 유효하지 않은 경우 조기 반환
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-    };
+    }
   }
 
   // 데이터 변조
@@ -322,26 +322,26 @@ export default async function createUser(formData: FormData) {
 ```
 
 ```jsx filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { z } from "zod";
+import { z } from 'zod'
 
 const schema = z.object({
   email: z.string({
-    invalid_type_error: "Invalid Email",
+    invalid_type_error: 'Invalid Email',
   }),
-});
+})
 
 export default async function createsUser(formData) {
   const validatedFields = schema.safeParse({
-    email: formData.get("email"),
-  });
+    email: formData.get('email'),
+  })
 
   // 폼 데이터가 유효하지 않은 경우 조기 반환
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-    };
+    }
   }
 
   // 데이터 변조
@@ -354,53 +354,53 @@ export default async function createsUser(formData) {
 - `useActionState`는 React 훅이므로 Client Component에서만 사용해야 합니다.
 
 ```tsx filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function createUser(prevState: any, formData: FormData) {
-  const res = await fetch("https://...");
-  const json = await res.json();
+  const res = await fetch('https://...')
+  const json = await res.json()
 
   if (!res.ok) {
-    return { message: "Please enter a valid email" };
+    return { message: 'Please enter a valid email' }
   }
 
-  redirect("/dashboard");
+  redirect('/dashboard')
 }
 ```
 
 ```jsx filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation'
 
 export async function createUser(prevState, formData) {
-  const res = await fetch("https://...");
-  const json = await res.json();
+  const res = await fetch('https://...')
+  const json = await res.json()
 
   if (!res.ok) {
-    return { message: "Please enter a valid email" };
+    return { message: 'Please enter a valid email' }
   }
 
-  redirect("/dashboard");
+  redirect('/dashboard')
 }
 ```
 
 그런 다음, `useActionState` 훅에 액션을 전달하고 반환된 `state`를 사용하여 오류 메시지를 표시할 수 있습니다.
 
 ```tsx filename="app/ui/signup.tsx" highlight={11,18-20} switcher
-"use client";
+'use client'
 
-import { useActionState } from "react";
-import { createUser } from "@/app/actions";
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
 
 const initialState = {
-  message: "",
-};
+  message: '',
+}
 
 export function Signup() {
-  const [state, formAction] = useActionState(createUser, initialState);
+  const [state, formAction] = useActionState(createUser, initialState)
 
   return (
     <form action={formAction}>
@@ -410,22 +410,22 @@ export function Signup() {
       <p aria-live="polite">{state?.message}</p>
       <button>Sign up</button>
     </form>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/ui/signup.js" highlight={11,18-20} switcher
-"use client";
+'use client'
 
-import { useActionState } from "react";
-import { createUser } from "@/app/actions";
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
 
 const initialState = {
-  message: "",
-};
+  message: '',
+}
 
 export function Signup() {
-  const [state, formAction] = useActionState(createUser, initialState);
+  const [state, formAction] = useActionState(createUser, initialState)
 
   return (
     <form action={formAction}>
@@ -435,7 +435,7 @@ export function Signup() {
       <p aria-live="polite">{state?.message}</p>
       <button>Sign up</button>
     </form>
-  );
+  )
 }
 ```
 
@@ -449,17 +449,17 @@ export function Signup() {
 [`useActionState`](https://react.dev/reference/react/useActionState) 훅은 액션이 실행되는 동안 로딩 인디케이터를 표시하는 데 사용할 수 있는 `pending` 상태를 노출합니다.
 
 ```tsx filename="app/submit-button.tsx" highlight={11,21-23} switcher
-"use client";
+'use client'
 
-import { useActionState } from "react";
-import { createUser } from "@/app/actions";
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
 
 const initialState = {
-  message: "",
-};
+  message: '',
+}
 
 export function Signup() {
-  const [state, formAction, pending] = useActionState(createUser, initialState);
+  const [state, formAction, pending] = useActionState(createUser, initialState)
 
   return (
     <form action={formAction}>
@@ -470,25 +470,25 @@ export function Signup() {
         {state?.message}
       </p>
       <button aria-disabled={pending} type="submit">
-        {pending ? "Submitting..." : "Sign up"}
+        {pending ? 'Submitting...' : 'Sign up'}
       </button>
     </form>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/submit-button.jsx" highlight={11,21-23} switcher
-"use client";
+'use client'
 
-import { useActionState } from "react";
-import { createUser } from "@/app/actions";
+import { useActionState } from 'react'
+import { createUser } from '@/app/actions'
 
 const initialState = {
-  message: "",
-};
+  message: '',
+}
 
 export function Signup() {
-  const [state, formAction, pending] = useActionState(createUser, initialState);
+  const [state, formAction, pending] = useActionState(createUser, initialState)
 
   return (
     <form action={formAction}>
@@ -499,10 +499,10 @@ export function Signup() {
         {state?.message}
       </p>
       <button aria-disabled={pending} type="submit">
-        {pending ? "Submitting..." : "Sign up"}
+        {pending ? 'Submitting...' : 'Sign up'}
       </button>
     </form>
-  );
+  )
 }
 ```
 
@@ -513,26 +513,26 @@ export function Signup() {
 React [`useOptimistic`](https://react.dev/reference/react/useOptimistic) 훅을 사용하여 Server Action이 실행되기 전에 UI를 낙관적으로 업데이트할 수 있습니다:
 
 ```tsx filename="app/page.tsx" switcher
-"use client";
+'use client'
 
-import { useOptimistic } from "react";
-import { send } from "./actions";
+import { useOptimistic } from 'react'
+import { send } from './actions'
 
 type Message = {
-  message: string;
-};
+  message: string
+}
 
 export function Thread({ messages }: { messages: Message[] }) {
   const [optimisticMessages, addOptimisticMessage] = useOptimistic<
     Message[],
     string
-  >(messages, (state, newMessage) => [...state, { message: newMessage }]);
+  >(messages, (state, newMessage) => [...state, { message: newMessage }])
 
   const formAction = async (formData) => {
-    const message = formData.get("message") as string;
-    addOptimisticMessage(message);
-    await send(message);
-  };
+    const message = formData.get('message') as string
+    addOptimisticMessage(message)
+    await send(message)
+  }
 
   return (
     <div>
@@ -544,27 +544,27 @@ export function Thread({ messages }: { messages: Message[] }) {
         <button type="submit">Send</button>
       </form>
     </div>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.jsx" switcher
-"use client";
+'use client'
 
-import { useOptimistic } from "react";
-import { send } from "./actions";
+import { useOptimistic } from 'react'
+import { send } from './actions'
 
 export function Thread({ messages }) {
   const [optimisticMessages, addOptimisticMessage] = useOptimistic(
     messages,
-    (state, newMessage) => [...state, { message: newMessage }]
-  );
+    (state, newMessage) => [...state, { message: newMessage }],
+  )
 
   const formAction = async (formData) => {
-    const message = formData.get("message");
-    addOptimisticMessage(message);
-    await send(message);
-  };
+    const message = formData.get('message')
+    addOptimisticMessage(message)
+    await send(message)
+  }
 
   return (
     <div>
@@ -576,7 +576,7 @@ export function Thread({ messages }) {
         <button type="submit">Send</button>
       </form>
     </div>
-  );
+  )
 }
 ```
 
@@ -585,61 +585,61 @@ export function Thread({ messages }) {
 Server Actions를 `<form>` 요소 내에서 사용하는 것이 일반적이지만, `onClick`과 같은 이벤트 핸들러로도 호출할 수 있습니다. 예를 들어, 좋아요 수를 증가시키려면 다음과 같이 합니다:
 
 ```tsx filename="app/like-button.tsx" switcher
-"use client";
+'use client'
 
-import { incrementLike } from "./actions";
-import { useState } from "react";
+import { incrementLike } from './actions'
+import { useState } from 'react'
 
 export default function LikeButton({ initialLikes }: { initialLikes: number }) {
-  const [likes, setLikes] = useState(initialLikes);
+  const [likes, setLikes] = useState(initialLikes)
 
   return (
     <>
       <p>Total Likes: {likes}</p>
       <button
         onClick={async () => {
-          const updatedLikes = await incrementLike();
-          setLikes(updatedLikes);
+          const updatedLikes = await incrementLike()
+          setLikes(updatedLikes)
         }}
       >
         Like
       </button>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/like-button.js" switcher
-"use client";
+'use client'
 
-import { incrementLike } from "./actions";
-import { useState } from "react";
+import { incrementLike } from './actions'
+import { useState } from 'react'
 
 export default function LikeButton({ initialLikes }) {
-  const [likes, setLikes] = useState(initialLikes);
+  const [likes, setLikes] = useState(initialLikes)
 
   return (
     <>
       <p>Total Likes: {likes}</p>
       <button
         onClick={async () => {
-          const updatedLikes = await incrementLike();
-          setLikes(updatedLikes);
+          const updatedLikes = await incrementLike()
+          setLikes(updatedLikes)
         }}
       >
         Like
       </button>
     </>
-  );
+  )
 }
 ```
 
 이벤트 핸들러를 폼 요소에 추가할 수도 있습니다. 예를 들어, `onChange` 이벤트로 폼 필드를 저장하려면 다음과 같이 합니다:
 
 ```tsx filename="app/ui/edit-post.tsx"
-"use client";
+'use client'
 
-import { publishPost, saveDraft } from "./actions";
+import { publishPost, saveDraft } from './actions'
 
 export default function EditPost() {
   return (
@@ -647,12 +647,12 @@ export default function EditPost() {
       <textarea
         name="content"
         onChange={async (e) => {
-          await saveDraft(e.target.value);
+          await saveDraft(e.target.value)
         }}
       />
       <button type="submit">Publish</button>
     </form>
-  );
+  )
 }
 ```
 
@@ -663,46 +663,46 @@ export default function EditPost() {
 React [`useEffect`](https://react.dev/reference/react/useEffect) 훅을 사용하여 컴포넌트가 마운트될 때 또는 종속성이 변경될 때 Server Action을 호출할 수 있습니다. 이는 전역 이벤트에 의존하거나 자동으로 트리거되어야 하는 변조에 유용합니다. 예를 들어, 앱 단축키를 위한 `onKeyDown`, 무한 스크롤링을 위한 인터섹션 옵저버 훅, 또는 컴포넌트가 마운트될 때 조회수를 업데이트하는 경우가 있습니다:
 
 ```tsx filename="app/view-count.tsx" switcher
-"use client";
+'use client'
 
-import { incrementViews } from "./actions";
-import { useState, useEffect } from "react";
+import { incrementViews } from './actions'
+import { useState, useEffect } from 'react'
 
 export default function ViewCount({ initialViews }: { initialViews: number }) {
-  const [views, setViews] = useState(initialViews);
+  const [views, setViews] = useState(initialViews)
 
   useEffect(() => {
     const updateViews = async () => {
-      const updatedViews = await incrementViews();
-      setViews(updatedViews);
-    };
+      const updatedViews = await incrementViews()
+      setViews(updatedViews)
+    }
 
-    updateViews();
-  }, []);
+    updateViews()
+  }, [])
 
-  return <p>Total Views: {views}</p>;
+  return <p>Total Views: {views}</p>
 }
 ```
 
 ```jsx filename="app/view-count.js" switcher
-"use client";
+'use client'
 
-import { incrementViews } from "./actions";
-import { useState, useEffect } from "react";
+import { incrementViews } from './actions'
+import { useState, useEffect } from 'react'
 
 export default function ViewCount({ initialViews }) {
-  const [views, setViews] = useState(initialViews);
+  const [views, setViews] = useState(initialViews)
 
   useEffect(() => {
     const updateViews = async () => {
-      const updatedViews = await incrementViews();
-      setViews(updatedViews);
-    };
+      const updatedViews = await incrementViews()
+      setViews(updatedViews)
+    }
 
-    updateViews();
-  }, []);
+    updateViews()
+  }, [])
 
-  return <p>Total Views: {views}</p>;
+  return <p>Total Views: {views}</p>
 }
 ```
 
@@ -715,25 +715,25 @@ export default function ViewCount({ initialViews }) {
 예를 들어, 새로운 항목을 생성하는 Server Action이 오류를 처리하여 메시지를 반환하는 경우:
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
 export async function createTodo(prevState: any, formData: FormData) {
   try {
     // 데이터 변조
   } catch (e) {
-    throw new Error("Failed to create task");
+    throw new Error('Failed to create task')
   }
 }
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
 export async function createTodo(prevState, formData) {
   try {
     //  데이터 변조
   } catch (e) {
-    throw new Error("Failed to create task");
+    throw new Error('Failed to create task')
   }
 }
 ```
@@ -747,9 +747,9 @@ export async function createTodo(prevState, formData) {
 [`revalidatePath`](/docs/app/api-reference/functions/revalidatePath) API를 사용하여 Server Actions 내에서 Next.js 캐시를 재검증할 수 있습니다:
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache'
 
 export async function createPost() {
   try {
@@ -758,14 +758,14 @@ export async function createPost() {
     // ...
   }
 
-  revalidatePath("/posts");
+  revalidatePath('/posts')
 }
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath } from 'next/cache'
 
 export async function createPost() {
   try {
@@ -774,16 +774,16 @@ export async function createPost() {
     // ...
   }
 
-  revalidatePath("/posts");
+  revalidatePath('/posts')
 }
 ```
 
 또는 [`revalidateTag`](/docs/app/api-reference/functions/revalidateTag)를 사용하여 특정 데이터 fetch를 캐시 태그와 함께 무효화합니다:
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache'
 
 export async function createPost() {
   try {
@@ -792,14 +792,14 @@ export async function createPost() {
     // ...
   }
 
-  revalidateTag("posts");
+  revalidateTag('posts')
 }
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { revalidateTag } from "next/cache";
+import { revalidateTag } from 'next/cache'
 
 export async function createPost() {
   try {
@@ -808,7 +808,7 @@ export async function createPost() {
     // ...
   }
 
-  revalidateTag("posts");
+  revalidateTag('posts')
 }
 ```
 
@@ -819,10 +819,10 @@ Server Action 완료 후 사용자를 다른 경로로
 리디렉션하려면 [`redirect`](/docs/app/api-reference/functions/redirect) API를 사용할 수 있습니다. `redirect`는 `try/catch` 블록 외부에서 호출해야 합니다:
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { redirect } from 'next/navigation'
+import { revalidateTag } from 'next/cache'
 
 export async function createPost(id: string) {
   try {
@@ -831,16 +831,16 @@ export async function createPost(id: string) {
     // ...
   }
 
-  revalidateTag("posts"); // 캐시된 게시물 업데이트
-  redirect(`/post/${id}`); // 새로운 게시물 페이지로 이동
+  revalidateTag('posts') // 캐시된 게시물 업데이트
+  redirect(`/post/${id}`) // 새로운 게시물 페이지로 이동
 }
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { redirect } from "next/navigation";
-import { revalidateTag } from "next/cache";
+import { redirect } from 'next/navigation'
+import { revalidateTag } from 'next/cache'
 
 export async function createPost(id) {
   try {
@@ -849,8 +849,8 @@ export async function createPost(id) {
     // ...
   }
 
-  revalidateTag("posts"); // 캐시된 게시물 업데이트
-  redirect(`/post/${id}`); // 새로운 게시물 페이지로 이동
+  revalidateTag('posts') // 캐시된 게시물 업데이트
+  redirect(`/post/${id}`) // 새로운 게시물 페이지로 이동
 }
 ```
 
@@ -859,36 +859,36 @@ export async function createPost(id) {
 [`cookies`](/docs/app/api-reference/functions/cookies) API를 사용하여 Server Action 내에서 쿠키를 `get`, `set`, `delete` 할 수 있습니다:
 
 ```ts filename="app/actions.ts" switcher
-"use server";
+'use server'
 
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export async function exampleAction() {
   // 쿠키 가져오기
-  const value = cookies().get("name")?.value;
+  const value = cookies().get('name')?.value
 
   // 쿠키 설정
-  cookies().set("name", "Delba");
+  cookies().set('name', 'Delba')
 
   // 쿠키 삭제
-  cookies().delete("name");
+  cookies().delete('name')
 }
 ```
 
 ```js filename="app/actions.js" switcher
-"use server";
+'use server'
 
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers'
 
 export async function exampleAction() {
   // 쿠키 가져오기
-  const value = cookies().get("name")?.value;
+  const value = cookies().get('name')?.value
 
   // 쿠키 설정
-  cookies().set("name", "Delba");
+  cookies().set('name', 'Delba')
 
   // 쿠키 삭제
-  cookies().delete("name");
+  cookies().delete('name')
 }
 ```
 
@@ -901,14 +901,14 @@ Server Actions에서 쿠키를 삭제하는 [추가 예제](/docs/app/api-refere
 Server Actions를 공개 API 엔드포인트처럼 취급하고 사용자가 해당 작업을 수행할 권한이 있는지 확인해야 합니다. 예를 들어:
 
 ```tsx filename="app/actions.ts"
-"use server";
+'use server'
 
-import { auth } from "./lib";
+import { auth } from './lib'
 
 export function addItem() {
-  const { user } = auth();
+  const { user } = auth()
   if (!user) {
-    throw new Error("You must be signed in to perform this action");
+    throw new Error('You must be signed in to perform this action')
   }
 
   // ...
@@ -990,10 +990,10 @@ Server Actions는 `<form>` 요소 내에서 호출될 수 있기 때문에 [CSRF
 module.exports = {
   experimental: {
     serverActions: {
-      allowedOrigins: ["my-proxy.com", "*.my-proxy.com"],
+      allowedOrigins: ['my-proxy.com', '*.my-proxy.com'],
     },
   },
-};
+}
 ```
 
 [보안 및 Server Actions](https://nextjs.org/blog/security-nextjs-server-components-actions)에 대해 더 알아보세요.

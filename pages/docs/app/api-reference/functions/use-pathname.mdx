@@ -8,24 +8,24 @@ description: API Reference for the usePathname hook.
 `usePathname`은 현재 URL의 **경로명**을 읽을 수 있게 해주는 **클라이언트 컴포넌트** 훅입니다.
 
 ```tsx filename="app/example-client-component.tsx" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation'
 
 export default function ExampleClientComponent() {
-  const pathname = usePathname();
-  return <p>Current pathname: {pathname}</p>;
+  const pathname = usePathname()
+  return <p>Current pathname: {pathname}</p>
 }
 ```
 
 ```jsx filename="app/example-client-component.js" switcher
-"use client";
+'use client'
 
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation'
 
 export default function ExampleClientComponent() {
-  const pathname = usePathname();
-  return <p>Current pathname: {pathname}</p>;
+  const pathname = usePathname()
+  return <p>Current pathname: {pathname}</p>
 }
 ```
 
@@ -43,7 +43,7 @@ export default function ExampleClientComponent() {
 ## Parameters
 
 ```tsx
-const pathname = usePathname();
+const pathname = usePathname()
 ```
 
 `usePathname`은 파라미터를 받지 않습니다.
@@ -64,30 +64,30 @@ const pathname = usePathname();
 ### 경로 변경에 반응하여 작업 수행
 
 ```tsx filename="app/example-client-component.tsx" switcher
-"use client";
+'use client'
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from 'next/navigation'
 
 function ExampleClientComponent() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   useEffect(() => {
     // 여기에서 작업 수행...
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams])
 }
 ```
 
 ```jsx filename="app/example-client-component.js" switcher
-"use client";
+'use client'
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from 'next/navigation'
 
 function ExampleClientComponent() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
   useEffect(() => {
     // 여기에서 작업 수행...
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams])
 }
 ```
 

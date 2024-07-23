@@ -24,17 +24,17 @@ Sitemap: https://acme.com/sitemap.xml
 > **알아두면 좋은 점**: `robots.js`는 특수한 라우트 핸들러로, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions)나 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하지 않는 한 기본적으로 캐시됩니다.
 
 ```ts filename="app/robots.ts" switcher
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: "/private/",
+      userAgent: '*',
+      allow: '/',
+      disallow: '/private/',
     },
-    sitemap: "https://acme.com/sitemap.xml",
-  };
+    sitemap: 'https://acme.com/sitemap.xml',
+  }
 }
 ```
 
@@ -42,12 +42,12 @@ export default function robots(): MetadataRoute.Robots {
 export default function robots() {
   return {
     rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: "/private/",
+      userAgent: '*',
+      allow: '/',
+      disallow: '/private/',
     },
-    sitemap: "https://acme.com/sitemap.xml",
-  };
+    sitemap: 'https://acme.com/sitemap.xml',
+  }
 }
 ```
 
@@ -66,23 +66,23 @@ Sitemap: https://acme.com/sitemap.xml
 특정 검색 엔진 봇이 사이트를 크롤링하는 방식을 사용자 정의하려면 `rules` 속성에 사용자 에이전트 배열을 전달할 수 있습니다. 예를 들어:
 
 ```ts filename="app/robots.ts" switcher
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: "Googlebot",
-        allow: ["/"],
-        disallow: "/private/",
+        userAgent: 'Googlebot',
+        allow: ['/'],
+        disallow: '/private/',
       },
       {
-        userAgent: ["Applebot", "Bingbot"],
-        disallow: ["/"],
+        userAgent: ['Applebot', 'Bingbot'],
+        disallow: ['/'],
       },
     ],
-    sitemap: "https://acme.com/sitemap.xml",
-  };
+    sitemap: 'https://acme.com/sitemap.xml',
+  }
 }
 ```
 
@@ -91,17 +91,17 @@ export default function robots() {
   return {
     rules: [
       {
-        userAgent: "Googlebot",
-        allow: ["/"],
-        disallow: ["/private/"],
+        userAgent: 'Googlebot',
+        allow: ['/'],
+        disallow: ['/private/'],
       },
       {
-        userAgent: ["Applebot", "Bingbot"],
-        disallow: ["/"],
+        userAgent: ['Applebot', 'Bingbot'],
+        disallow: ['/'],
       },
     ],
-    sitemap: "https://acme.com/sitemap.xml",
-  };
+    sitemap: 'https://acme.com/sitemap.xml',
+  }
 }
 ```
 
@@ -127,20 +127,20 @@ Sitemap: https://acme.com/sitemap.xml
 type Robots = {
   rules:
     | {
-        userAgent?: string | string[];
-        allow?: string | string[];
-        disallow?: string | string[];
-        crawlDelay?: number;
+        userAgent?: string | string[]
+        allow?: string | string[]
+        disallow?: string | string[]
+        crawlDelay?: number
       }
     | Array<{
-        userAgent: string | string[];
-        allow?: string | string[];
-        disallow?: string | string[];
-        crawlDelay?: number;
-      }>;
-  sitemap?: string | string[];
-  host?: string;
-};
+        userAgent: string | string[]
+        allow?: string | string[]
+        disallow?: string | string[]
+        crawlDelay?: number
+      }>
+  sitemap?: string | string[]
+  host?: string
+}
 ```
 
 ## Version History

@@ -22,7 +22,7 @@ Next.js는 이 정적 내보내기를 지원하므로 HTML/CSS/JS 정적 자산�
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  output: "export",
+  output: 'export',
 
   // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
   // trailingSlash: true,
@@ -32,9 +32,9 @@ const nextConfig = {
 
   // Optional: Change the output directory `out` -> `dist`
   // distDir: 'dist',
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 `next build`를 실행한 후, Next.js는 애플리케이션의 HTML/CSS/JS 자산을 포함한 `out` 폴더를 생성합니다.
@@ -60,10 +60,10 @@ Next.js의 핵심은 정적 내보내기를 지원하도록 설계되었습니�
 ```tsx filename="app/page.tsx" switcher
 export default async function Page() {
   // 이 fetch는 `next build` 중에 서버에서 실행됩니다
-  const res = await fetch("https://api.example.com/...");
-  const data = await res.json();
+  const res = await fetch('https://api.example.com/...')
+  const data = await res.json()
 
-  return <main>...</main>;
+  return <main>...</main>
 }
 ```
 
@@ -72,47 +72,47 @@ export default async function Page() {
 클라이언트에서 데이터 가져오기를 수행하려면 [SWR](https://github.com/vercel/swr)을 사용하여 요청을 메모이제이션하는 Client Component를 사용할 수 있습니다.
 
 ```tsx filename="app/other/page.tsx" switcher
-"use client";
+'use client'
 
-import useSWR from "swr";
+import useSWR from 'swr'
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 export default function Page() {
   const { data, error } = useSWR(
     `https://jsonplaceholder.typicode.com/posts/1`,
-    fetcher
-  );
-  if (error) return "Failed to load";
-  if (!data) return "Loading...";
+    fetcher,
+  )
+  if (error) return 'Failed to load'
+  if (!data) return 'Loading...'
 
-  return data.title;
+  return data.title
 }
 ```
 
 ```jsx filename="app/other/page.js" switcher
-"use client";
+'use client'
 
-import useSWR from "swr";
+import useSWR from 'swr'
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Page() {
   const { data, error } = useSWR(
     `https://jsonplaceholder.typicode.com/posts/1`,
-    fetcher
-  );
-  if (error) return "Failed to load";
-  if (!data) return "Loading...";
+    fetcher,
+  )
+  if (error) return 'Failed to load'
+  if (!data) return 'Loading...'
 
-  return data.title;
+  return data.title
 }
 ```
 
 경로 전환이 클라이언트 측에서 발생하므로, 이는 전통적인 SPA처럼 동작합니다. 예를 들어, 다음 인덱스 경로는 클라이언트에서 다른 게시물로 네비게이션할 수 있게 합니다:
 
 ```tsx filename="app/page.tsx" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -128,12 +128,12 @@ export default function Page() {
         </li>
       </ul>
     </>
-  );
+  )
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -143,7 +143,7 @@ export default function Page() {
         <Link href="/other">Other Page</Link>
       </p>
     </>
-  );
+  )
 }
 ```
 
@@ -173,14 +173,14 @@ export default function Page() {
 ```js filename="next.config.js"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+  output: 'export',
   images: {
-    loader: "custom",
-    loaderFile: "./my-loader.ts",
+    loader: 'custom',
+    loaderFile: './my-loader.ts',
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
 ```
 
 이 커스텀 로더는 원격 소스에서 이미지를 가져오는 방법을 정의합니다. 예를 들어, 다음 로더는 Cloudinary를 위한 URL을 구성합니다:
@@ -191,41 +191,41 @@ export default function cloudinaryLoader({
   width,
   quality,
 }: {
-  src: string;
-  width: number;
-  quality?: number;
+  src: string
+  width: number
+  quality?: number
 }) {
-  const params = ["f_auto", "c_limit", `w_${width}`, `q_${quality || "auto"}`];
+  const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://res.cloudinary.com/demo/image/upload/${params.join(
-    ","
-  )}${src}`;
+    ',',
+  )}${src}`
 }
 ```
 
 ```js filename="my-loader.js" switcher
 export default function cloudinaryLoader({ src, width, quality }) {
-  const params = ["f_auto", "c_limit", `w_${width}`, `q_${quality || "auto"}`];
+  const params = ['f_auto', 'c_limit', `w_${width}`, `q_${quality || 'auto'}`]
   return `https://res.cloudinary.com/demo/image/upload/${params.join(
-    ","
-  )}${src}`;
+    ',',
+  )}${src}`
 }
 ```
 
 그런 다음 애플리케이션에서 `next/image`를 사용하여 Cloudinary의 이미지에 대한 상대 경로를 정의할 수 있습니다:
 
 ```tsx filename="app/page.tsx" switcher
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page() {
-  return <Image alt="turtles" src="/turtles.jpg" width={300} height={300} />;
+  return <Image alt="turtles" src="/turtles.jpg" width={300} height={300} />
 }
 ```
 
 ```jsx filename="app/page.js" switcher
-import Image from "next/image";
+import Image from 'next/image'
 
 export default function Page() {
-  return <Image alt="turtles" src="/turtles.jpg" width={300} height={300} />;
+  return <Image alt="turtles" src="/turtles.jpg" width={300} height={300} />
 }
 ```
 
@@ -237,13 +237,13 @@ export default function Page() {
 
 ```ts filename="app/data.json/route.ts" switcher
 export async function GET() {
-  return Response.json({ name: "Lee" });
+  return Response.json({ name: 'Lee' })
 }
 ```
 
 ```js filename="app/data.json/route.js" switcher
 export async function GET() {
-  return Response.json({ name: "Lee" });
+  return Response.json({ name: 'Lee' })
 }
 ```
 
@@ -294,7 +294,7 @@ Node.js 서버가 필요하거나 빌드 과정에서 계산할 수 없는 동�
 `next dev`를 사용하여 이러한 기능을 사용하려고 시도하면, 루트 레이아웃에서 [`dynamic`](/docs/app/api-reference/file-conventions/route-segment-config#dynamic) 옵션을 `error`로 설정한 것과 유사한 오류가 발생합니다.
 
 ```jsx
-export const dynamic = "error";
+export const dynamic = 'error'
 ```
 
 </AppOnly>
