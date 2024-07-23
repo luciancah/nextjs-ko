@@ -1,0 +1,80 @@
+---
+title: revalidateTag
+description: API Reference for the revalidateTag function.
+---
+
+# revalidateTag
+
+`revalidateTag` 함수는 특정 캐시 태그에 대해 필요에 따라 [캐시된 데이터](/docs/app/building-your-application/caching)를 무효화할 수 있게 해줍니다.
+
+> **참고 사항**:
+>
+> - `revalidateTag`는 [Node.js와 Edge 런타임](/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes) 모두에서 사용할 수 있습니다.
+> - `revalidateTag`는 경로가 다음에 방문될 때 캐시를 무효화합니다. 즉, 동적 경로 세그먼트를 가진 경로로 `revalidateTag`를 호출해도 즉시 많은 재검증이 발생하지 않습니다. 무효화는 경로가 다음에 방문될 때 발생합니다.
+
+## Parameters
+
+```tsx
+revalidateTag(tag: string): void;
+```
+
+- `tag`: 재검증하려는 데이터와 관련된 캐시 태그를 나타내는 문자열입니다. 256자 이하이어야 하며, 대소문자를 구분합니다.
+
+태그를 `fetch`에 추가할 수 있습니다:
+
+```tsx
+fetch(url, { next: { tags: [...] } });
+```
+
+## Returns
+
+`revalidateTag`는 값을 반환하지 않습니다.
+
+## Examples
+
+### 서버 액션
+
+```ts filename="app/actions.ts" switcher
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export default async function submit() {
+  await addPost();
+  revalidateTag("posts");
+}
+```
+
+```js filename="app/actions.js" switcher
+"use server";
+
+import { revalidateTag } from "next/cache";
+
+export default async function submit() {
+  await addPost();
+  revalidateTag("posts");
+}
+```
+
+### 라우트 핸들러
+
+```ts filename="app/api/revalidate/route.ts" switcher
+import type { NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
+
+export async function GET(request: NextRequest) {
+  const tag = request.nextUrl.searchParams.get("tag");
+  revalidateTag(tag);
+  return Response.json({ revalidated: true, now: Date.now() });
+}
+```
+
+```js filename="app/api/revalidate/route.js" switcher
+import { revalidateTag } from "next/cache";
+
+export async function GET(request) {
+  const tag = request.nextUrl.searchParams.get("tag");
+  revalidateTag(tag);
+  return Response.json({ revalidated: true, now: Date.now() });
+}
+```

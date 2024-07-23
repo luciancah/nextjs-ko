@@ -1,0 +1,65 @@
+---
+title: unstable_rethrow (experimental)
+description: API Reference for the unstable_rethrow function.
+---
+
+# unstable_rethrow (experimental)
+
+`unstable_rethrow`는 애플리케이션 코드에서 발생한 오류를 처리하려고 할 때 Next.js가 내부 오류를 잡는 것을 방지하는 데 사용할 수 있습니다.
+
+예를 들어, `notFound` 함수를 호출하면 내부 Next.js 오류가 발생하고 [`not-found.js`](/docs/app/api-reference/file-conventions/not-found) 컴포넌트가 렌더링됩니다. 그러나 `try/catch` 블록 내에서 사용되면 오류가 잡혀 `not-found.js`가 렌더링되지 않게 됩니다:
+
+```tsx filename="@/app/ui/component.tsx"
+import { notFound } from "next/navigation";
+
+export default async function Page() {
+  try {
+    const post = await fetch("https://.../posts/1").then((res) => {
+      if (res.status === 404) notFound();
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
+`unstable_rethrow` API를 사용하여 내부 오류를 다시 던지고 예상된 동작을 계속할 수 있습니다:
+
+```tsx filename="@/app/ui/component.tsx"
+import { notFound, unstable_rethrow } from "next/navigation";
+
+export default async function Page() {
+  try {
+    const post = await fetch("https://.../posts/1").then((res) => {
+      if (res.status === 404) notFound();
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    });
+  } catch (err) {
+    unstable_rethrow(err);
+    console.error(err);
+  }
+}
+```
+
+다음 Next.js API들은 오류를 던지는데 의존하며, 이러한 오류는 다시 던져지고 Next.js 자체에서 처리해야 합니다:
+
+- [`notFound()`](/docs/app/api-reference/functions/not-found)
+- [`redirect()`](/docs/app/building-your-application/routing/redirecting#redirect-function)
+- [`permanentRedirect()`](/docs/app/building-your-application/routing/redirecting#permanentredirect-function)
+
+라우트 세그먼트가 정적으로 표시되지 않는 한 오류를 던지도록 표시되면, 동적 함수 호출도 마찬가지로 개발자가 잡아서는 안 되는 오류를 던집니다. 부분 프리렌더링(PPR)도 이 동작에 영향을 미칩니다. 이러한 API들은 다음과 같습니다:
+
+- [`cookies()`](/docs/app/api-reference/functions/cookies)
+- [`headers()`](/docs/app/api-reference/functions/headers)
+- [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional)
+- `fetch(..., { cache: 'no-store' })`
+- `fetch(..., { next: { revalidate: 0 } })`
+
+> **참고 사항**:
+>
+> - 이 메소드는 catch 블록의 상단에서 오류 객체를 유일한 인수로 전달하여 호출해야 합니다. 또한 프라미스의 `.catch` 핸들러 내에서 사용할 수도 있습니다.
+> - 오류를 던지는 API 호출이 `try/catch`로 래핑되지 않도록 보장한다면 `unstable_rethrow`를 사용할 필요가 없습니다.
+> - 리소스 정리(인터벌, 타이머 등)를 호출하기 전이나 `finally` 블록 내에서 수행해야 합니다.

@@ -1,0 +1,175 @@
+---
+title: layout.js
+description: API reference for the layout.js file.
+---
+
+import Image from "next/image";
+
+# layout.js
+
+**layout**는 라우트 간에 공유되는 UI입니다.
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <section>{children}</section>;
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+export default function DashboardLayout({ children }) {
+  return <section>{children}</section>;
+}
+```
+
+**root layout**는 루트 `app` 디렉터리에서 최상위 레이아웃입니다. 이것은 `<html>` 및 `<body>` 태그와 다른 전역적으로 공유되는 UI를 정의하는 데 사용됩니다.
+
+```tsx filename="app/layout.tsx" switcher
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+## Props
+
+### `children` (required)
+
+레이아웃 컴포넌트는 `children` prop을 받아 사용해야 합니다. 렌더링 시, `children`은 레이아웃이 감싸는 라우트 세그먼트로 채워집니다. 이들은 주로 하위 [Layout](/docs/app/building-your-application/routing/pages) 컴포넌트나 [Page](/docs/app/building-your-application/routing/pages) 컴포넌트가 될 것이며, 경우에 따라 [Loading](/docs/app/building-your-application/routing/loading-ui-and-streaming)이나 [Error](/docs/app/building-your-application/routing/error-handling) 같은 다른 특수 파일일 수도 있습니다.
+
+### `params` (optional)
+
+루트 세그먼트부터 해당 레이아웃까지의 [동적 라우트 매개변수](/docs/app/building-your-application/routing/dynamic-routes) 객체입니다.
+
+| Example                           | URL            | `params`                  |
+| --------------------------------- | -------------- | ------------------------- |
+| `app/dashboard/[team]/layout.js`  | `/dashboard/1` | `{ team: '1' }`           |
+| `app/shop/[tag]/[item]/layout.js` | `/shop/1/2`    | `{ tag: '1', item: '2' }` |
+| `app/blog/[...slug]/layout.js`    | `/blog/1/2`    | `{ slug: ['1', '2'] }`    |
+
+예시:
+
+```tsx filename="app/shop/[tag]/[item]/layout.tsx" switcher
+export default function ShopLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: {
+    tag: string;
+    item: string;
+  };
+}) {
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  return <section>{children}</section>;
+}
+```
+
+```jsx filename="app/shop/[tag]/[item]/layout.js" switcher
+export default function ShopLayout({ children, params }) {
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  return <section>{children}</section>;
+}
+```
+
+## Good to know
+
+### Root Layouts
+
+- `app` 디렉터리는 **반드시** 루트 `app/layout.js`를 포함해야 합니다.
+- 루트 레이아웃은 **반드시** `<html>` 및 `<body>` 태그를 정의해야 합니다.
+  - 루트 레이아웃에 `<title>` 및 `<meta>`와 같은 `<head>` 태그를 수동으로 추가해서는 **안 됩니다**. 대신, [Metadata API](/docs/app/api-reference/functions/generate-metadata)를 사용하여 스트리밍 및 `<head>` 요소의 중복 제거와 같은 고급 요구 사항을 자동으로 처리해야 합니다.
+- [라우트 그룹](/docs/app/building-your-application/routing/route-groups)을 사용하여 여러 개의 루트 레이아웃을 만들 수 있습니다.
+  - **여러 루트 레이아웃 간**의 탐색은 **전체 페이지 로드**를 발생시킵니다 (클라이언트 측 탐색과는 다릅니다). 예를 들어, `app/(shop)/layout.js`를 사용하는 `/cart`에서 `app/(marketing)/layout.js`를 사용하는 `/blog`로 이동하면 전체 페이지 로드가 발생합니다. 이는 **오직** 여러 루트 레이아웃에만 적용됩니다.
+
+### Layouts do not receive `searchParams`
+
+[Pages](/docs/app/api-reference/file-conventions/page)와는 달리, Layout 컴포넌트는 `searchParams` prop을 받지 **않습니다**. 이는 공유 레이아웃이 [탐색 중에 다시 렌더링되지 않기](/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering) 때문에, 탐색 간에 `searchParams`가 오래된 상태로 남을 수 있기 때문입니다.
+
+클라이언트 측 탐색을 사용할 때, Next.js는 두 라우트 간의 공통 레이아웃 아래의 페이지 부분만 렌더링합니다.
+
+예를 들어, 다음 디렉터리 구조에서, `dashboard/layout.tsx`는 `/dashboard/settings`와 `/dashboard/analytics` 모두에 대한 공통 레이아웃입니다:
+
+<Image
+  alt="대시보드 폴더 안에 layout.tsx 파일과 settings 및 analytics 폴더가 있는 파일 구조"
+  srcLight="/docs/light/shared-dashboard-layout.png"
+  srcDark="/docs/dark/shared-dashboard-layout.png"
+  width="1600"
+  height="687"
+/>
+
+`/dashboard/settings`에서 `/dashboard/analytics`로 이동할 때, `/dashboard/analytics`의 `page.tsx`는 서버에서 다시 렌더링되지만, `dashboard/layout.tsx`는 두 라우트 간에 공유되는 공통 UI이므로 다시 렌더링되지 않습니다.
+
+이 성능 최적화는 레이아웃을 공유하는 페이지 간의 탐색을 더 빠르게 하여, 페이지에 대한 데이터 페칭과 렌더링만 실행되도록 합니다. 대신, 공유 레이아웃이 자체 데이터를 페칭할 필요는 없습니다.
+
+`dashboard/layout.tsx`가 다시 렌더링되지 않기 때문에, 레이아웃 서버 컴포넌트의 `searchParams` prop이 탐색 후 **오래된** 상태로 남을 수 있습니다.
+
+대신, 페이지 [`searchParams`](/docs/app/api-reference/file-conventions/page#searchparams-optional) prop 또는 클라이언트 컴포넌트에서 최신 `searchParams`로 클라이언트에서 다시 렌더링되는 [`useSearchParams`](/docs/app/api-reference/functions/use-search-params) 훅을 사용하십시오.
+
+### Layouts cannot access `pathname`
+
+레이아웃은 `pathname`에 접근할 수 없습니다. 이는 레이아웃이 기본적으로 서버 컴포넌트이며, [클라이언트 측 탐색 동안 다시 렌더링되지 않기](/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering) 때문에, 탐색 간에 `pathname`이 오래된 상태로 남을 수 있기 때문입니다. 오래된 상태를 방지하기 위해, Next.js는 라우트의 모든 세그먼트를 다시 페칭해야 하며, 이는 캐싱의 이점을 잃고 탐색 시 [RSC 페이로드](/docs/app/building-your-application/rendering/server-components#what-is-the-react-server-component-payload-rsc) 크기를 증가시킵니다.
+
+대신, `pathname`에 의존하는 로직을 클라이언트 컴포넌트로 추출하여 레이아웃에 가져올 수 있습니다. 클라이언트 컴포넌트는 탐색 중에 다시 렌더링되지만 다시 페칭되지 않기 때문에, [`usePathname`](https://nextjs.org/docs/app/api-reference/functions/use-pathname)과 같은 Next.js 훅을 사용하여 현재 pathname에 접근하고 오래된 상태를 방지할 수 있습니다.
+
+```tsx filename="app/dashboard/layout.tsx" switcher
+import { ClientComponent } from "@/app/ui/ClientComponent";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <ClientComponent />
+      {/* Other Layout UI */}
+      <main>{children}</main>
+    </>
+  );
+}
+```
+
+```jsx filename="app/dashboard/layout.js" switcher
+import { ClientComponent } from "@/app/ui/ClientComponent";
+
+export default function Layout({ children }) {
+  return (
+    <>
+      <ClientComponent />
+      {/* Other Layout UI */}
+      <main>{children}</main>
+    </>
+  );
+}
+```
+
+일반적인 `pathname` 패턴은 [`params`](#params-optional) prop으로도 구현할 수 있습니다.
+
+자세한 내용은 [examples](/docs/app/building-your-application/routing/layouts-and-templates#examples) 섹
+
+션을 참조하십시오.
+
+## Version History
+
+| Version   | Changes              |
+| --------- | -------------------- |
+| `v13.0.0` | `layout` introduced. |

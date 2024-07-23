@@ -1,0 +1,74 @@
+---
+title: manifest.json
+description: API Reference for manifest.json file.
+---
+
+# manifest.json
+
+`app` 디렉터리의 **루트**에 [웹 매니페스트 사양](https://developer.mozilla.org/docs/Web/Manifest)을 따르는 `manifest.(json|webmanifest)` 파일을 추가하거나 생성하여 브라우저에 웹 애플리케이션에 대한 정보를 제공하십시오.
+
+## Static Manifest file
+
+```json filename="app/manifest.json | app/manifest.webmanifest"
+{
+  "name": "My Next.js Application",
+  "short_name": "Next.js App",
+  "description": "An application built with Next.js",
+  "start_url": "/"
+  // ...
+}
+```
+
+## Generate a Manifest file
+
+[`Manifest` 객체](#manifest-object)를 반환하는 `manifest.js` 또는 `manifest.ts` 파일을 추가하십시오.
+
+> **알아두면 좋은 점**: `manifest.js`는 특수한 라우트 핸들러로, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions)나 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하지 않는 한 기본적으로 캐시됩니다.
+
+```ts filename="app/manifest.ts" switcher
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Next.js App",
+    short_name: "Next.js App",
+    description: "Next.js App",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#fff",
+    theme_color: "#fff",
+    icons: [
+      {
+        src: "/favicon.ico",
+        sizes: "any",
+        type: "image/x-icon",
+      },
+    ],
+  };
+}
+```
+
+```js filename="app/manifest.js" switcher
+export default function manifest() {
+  return {
+    name: "Next.js App",
+    short_name: "Next.js App",
+    description: "Next.js App",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#fff",
+    theme_color: "#fff",
+    icons: [
+      {
+        src: "/favicon.ico",
+        sizes: "any",
+        type: "image/x-icon",
+      },
+    ],
+  };
+}
+```
+
+### Manifest Object
+
+매니페스트 객체에는 새 웹 표준으로 인해 업데이트될 수 있는 다양한 옵션이 포함되어 있습니다. 현재 모든 옵션에 대한 정보는 [TypeScript](https://nextjs.org/docs/app/building-your-application/configuring/typescript#typescript-plugin)를 사용하는 경우 코드 편집기에서 `MetadataRoute.Manifest` 타입을 참조하거나 [MDN](https://developer.mozilla.org/docs/Web/Manifest) 문서를 참조하십시오.

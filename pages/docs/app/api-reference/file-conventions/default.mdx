@@ -1,0 +1,41 @@
+---
+title: default.js
+description: API Reference for the default.js file.
+related:
+  title: Learn more about Parallel Routes
+  links:
+    - app/building-your-application/routing/parallel-routes
+---
+
+# default.js
+
+`default.js` 파일은 Next.js가 전체 페이지 로드 후에 [슬롯](/docs/app/building-your-application/routing/parallel-routes#slots)의 활성 상태를 복구할 수 없을 때 [병렬 경로](/docs/app/building-your-application/routing/parallel-routes) 내에서 폴백을 렌더링하는 데 사용됩니다.
+
+[소프트 네비게이션](/docs/app/building-your-application/routing/linking-and-navigating#5-soft-navigation) 동안 Next.js는 각 슬롯의 활성 _상태_ (하위 페이지)를 추적합니다. 그러나 하드 네비게이션(전체 페이지 로드)의 경우, Next.js는 활성 상태를 복구할 수 없습니다. 이 경우, 현재 URL과 일치하지 않는 하위 페이지에 대해 `default.js` 파일을 렌더링할 수 있습니다.
+
+다음 폴더 구조를 고려해보세요. `@team` 슬롯에는 `settings` 페이지가 있지만 `@analytics` 슬롯에는 없습니다.
+
+<Image
+  alt="병렬 경로의 일치하지 않는 경로"
+  srcLight="/docs/light/parallel-routes-unmatched-routes.png"
+  srcDark="/docs/dark/parallel-routes-unmatched-routes.png"
+  width="1600"
+  height="930"
+/>
+
+`/settings`로 네비게이션할 때, `@team` 슬롯은 현재 `@analytics` 슬롯의 활성 페이지를 유지하면서 `settings` 페이지를 렌더링합니다.
+
+새로고침 시, Next.js는 `@analytics`에 대해 `default.js`를 렌더링합니다. `default.js`가 없으면 대신 `404`가 렌더링됩니다.
+
+또한, `children`은 암시적인 슬롯이므로 Next.js가 부모 페이지의 활성 상태를 복구할 수 없을 때 `children`에 대한 폴백을 렌더링하기 위해 `default.js` 파일을 생성해야 합니다.
+
+## Props
+
+### `params` (optional)
+
+루트 세그먼트부터 슬롯의 하위 페이지까지의 [동적 경로 매개변수](/docs/app/building-your-application/routing/dynamic-routes)를 포함하는 객체입니다. 예를 들어:
+
+| 예시                                       | URL          | `params`                            |
+| ------------------------------------------ | ------------ | ----------------------------------- |
+| `app/[artist]/@sidebar/default.js`         | `/zack`      | `{ artist: 'zack' }`                |
+| `app/[artist]/[album]/@sidebar/default.js` | `/zack/next` | `{ artist: 'zack', album: 'next' }` |

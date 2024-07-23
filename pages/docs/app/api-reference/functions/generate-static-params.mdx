@@ -1,0 +1,379 @@
+---
+title: generateStaticParams
+description: generateStaticParams 함수에 대한 API 참조.
+---
+
+# generateStaticParams
+
+`generateStaticParams` 함수는 [동적 경로 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)와 함께 사용되어 요청 시점이 아닌 빌드 시점에 경로를 [정적으로 생성](/docs/app/building-your-application/rendering/server-components#static-rendering-default)합니다.
+
+```jsx filename="app/blog/[slug]/page.js"
+// [slug] 동적 세그먼트를 채우기 위한 `params` 목록을 반환합니다.
+export async function generateStaticParams() {
+  const posts = await fetch("https://.../posts").then((res) => res.json());
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 여러 버전이 정적으로 생성됩니다.
+export default function Page({ params }) {
+  const { slug } = params;
+  // ...
+}
+```
+
+> **알아두면 좋은 사항**
+>
+> - `generateStaticParams`를 사용하여 생성되지 않은 동적 세그먼트가 방문될 때의 동작을 제어하려면 [`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) 세그먼트 구성 옵션을 사용할 수 있습니다.
+> - 런타임 시 [경로를 재검증 (ISR)](#all-paths-at-runtime)하려면 [`export const dynamic = 'force-static'`](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 사용하거나 [빈 배열을 `generateStaticParams`에서 반환해야 합니다](#all-paths-at-build-time).
+> - `next dev` 중에는 경로로 이동할 때 `generateStaticParams`가 호출됩니다.
+> - `next build` 중에는 해당 레이아웃이나 페이지가 생성되기 전에 `generateStaticParams`가 실행됩니다.
+> - 재검증 (ISR) 중에는 `generateStaticParams`가 다시 호출되지 않습니다.
+> - `generateStaticParams`는 Pages Router의 [`getStaticPaths`](/docs/pages/api-reference/functions/get-static-paths) 함수를 대체합니다.
+
+## Parameters
+
+`options.params` (선택 사항)
+
+경로의 여러 동적 세그먼트가 `generateStaticParams`를 사용하는 경우, 부모가 생성한 각 `params` 세트에 대해 하위 `generateStaticParams` 함수가 한 번씩 실행됩니다.
+
+`params` 객체는 부모 `generateStaticParams`에서 채워진 `params`를 포함하며, 이는 [하위 세그먼트의 `params`를 생성하는 데 사용할 수 있습니다](#multiple-dynamic-segments-in-a-route).
+
+## Returns
+
+`generateStaticParams`는 각 객체가 단일 경로의 동적 세그먼트를 채운 객체 배열을 반환해야 합니다.
+
+- 객체의 각 속성은 경로에 대해 채워야 할 동적 세그먼트입니다.
+- 속성 이름은 세그먼트의 이름이며 속성 값은 해당 세그먼트에 채워야 할 값입니다.
+
+| 예시 경로                        | `generateStaticParams` 반환 형식          |
+| -------------------------------- | ----------------------------------------- |
+| `/product/[id]`                  | `{ id: string }[]`                        |
+| `/products/[category]/[product]` | `{ category: string, product: string }[]` |
+| `/products/[...slug]`            | `{ slug: string[] }[]`                    |
+
+## 단일 동적 세그먼트
+
+```tsx filename="app/product/[id]/page.tsx" switcher
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
+// - /product/1
+// - /product/2
+// - /product/3
+export default function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
+  // ...
+}
+```
+
+```jsx filename="app/product/[id]/page.js" switcher
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
+// - /product/1
+// - /product/2
+// - /product/3
+export default function Page({ params }) {
+  const { id } = params;
+  // ...
+}
+```
+
+## 여러 동적 세그먼트
+
+```tsx filename="app/products/[category]/[product]/page.tsx" switcher
+export function generateStaticParams() {
+  return [
+    { category: "a", product: "1" },
+    { category: "b", product: "2" },
+    { category: "c", product: "3" },
+  ];
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
+// - /products/a/1
+// - /products/b/2
+// - /products/c/3
+export default function Page({
+  params,
+}: {
+  params: { category: string; product: string };
+}) {
+  const { category, product } = params;
+  // ...
+}
+```
+
+```jsx filename="app/products/[category]/[product]/page.js" switcher
+export function generateStaticParams() {
+  return [
+    { category: "a", product: "1" },
+    { category: "b", product: "2" },
+    { category: "c", product: "3" },
+  ];
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
+// - /products/a/1
+// - /products/b/2
+// - /products/c/3
+export default function Page({ params }) {
+  const { category, product } = params;
+  // ...
+}
+```
+
+## 캐치올 동적 세그먼트
+
+```tsx filename="app/product/[...slug]/page.tsx" switcher
+export function generateStaticParams() {
+  return [{ slug: ["a", "1"] }, { slug: ["b", "2"] }, { slug: ["c", "3"] }];
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
+// - /product/a/1
+// - /product/b/2
+// - /product/c/3
+export default function Page({ params }: { params: { slug: string[] } }) {
+  const { slug } = params;
+  // ...
+}
+```
+
+```jsx filename="app/product/[...slug]/page.js" switcher
+export function generateStaticParams() {
+  return [{ slug: ["a", "1"] }, { slug: ["b", "2"] }, { slug: ["c", "3"] }];
+}
+
+// `generateStaticParams`가 반환한 `params`를 사용하여 이 페이지의 세 가지 버전이 정적으로 생성됩니다.
+// - /product/a/1
+// - /product/b/2
+// - /product/c/3
+export default function Page({ params }) {
+  const { slug } = params;
+  // ...
+}
+```
+
+## 예제
+
+### 정적 렌더링
+
+#### 빌드 시 모든 경로
+
+모든 경로를 빌드 시 정적으로 렌더링하려면 `generateStaticParams`에 경로의 전체 목록을 제공하세요:
+
+```tsx filename="app/blog/[slug]/page.tsx" switcher
+export async function generateStaticParams() {
+  const posts = await fetch("https://.../posts").then((res) => res.json());
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+#### 빌드 시 일부 경로
+
+빌드 시 경로의 일부만 정적으로 렌더링하고 나머지는 처음 방문 시 런타임에 렌더링하려면 부분적인 경로 목록을 반환하세요:
+
+```tsx filename="app/blog/[slug]/page.tsx" switcher
+export async function generateStaticParams() {
+  const posts = await fetch("https://.../posts").then((res) => res.json());
+
+  // 빌드 시 첫 10개의 포스트를 렌더링합니다.
+  return posts.slice(0, 10).map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+그런 다음 [`dynamicParams`](/docs/app/api-reference/file-conventions/route-segment-config#dynamicparams) 세그먼트 구성 옵션을 사용하여 `generateStaticParams`를 사용하여 생성되지 않은 동적 세그먼트가 방문될 때의 동작을 제어할 수 있습니다.
+
+```jsx filename="app/blog/[slug]/page.js"
+// 상위 10개 포스트 외의 모든 포스트는 404가 됩니다.
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const posts = await fetch("https://.../posts").then((res) => res.json());
+  const topPosts = posts.slice(0, 10);
+
+  return topPosts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+```
+
+#### 런타임에 모든 경로
+
+모든 경로를 처음 방문 시 정적으로 렌
+
+더링하려면 빈 배열을 반환하세요(빌드 시 경로가 렌더링되지 않음) 또는 [`export const dynamic = 'force-static'`](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 사용하세요:
+
+```jsx filename="app/blog/[slug]/page.js"
+export async function generateStaticParams() {
+  return [];
+}
+```
+
+> **알아두면 좋은 사항:** 항상 `generateStaticParams`에서 배열을 반환해야 하며, 빈 배열이어도 괜찮습니다. 그렇지 않으면 경로가 동적으로 렌더링됩니다.
+
+```jsx filename="app/changelog/[slug]/page.js"
+export const dynamic = "force-static";
+```
+
+### 지정되지 않은 경로에 대한 렌더링 비활성화
+
+지정되지 않은 경로를 런타임에 정적으로 렌더링하지 않으려면 경로 세그먼트에 `export const dynamicParams = false` 옵션을 추가하세요. 이 구성 옵션을 사용하면 `generateStaticParams`가 제공한 경로만 제공되며, 지정되지 않은 경로는 404가 되거나 (캐치올 경로의 경우) 일치합니다.
+
+### 경로에 여러 동적 세그먼트가 있는 경우
+
+경로의 동적 세그먼트는 현재 레이아웃 또는 페이지 위에서 생성할 수 있지만 **아래에서는** 생성할 수 없습니다. 예를 들어, `app/products/[category]/[product]` 경로가 주어졌을 때:
+
+- `app/products/[category]/[product]/page.js`는 `[category]`와 `[product]` 모두에 대한 세그먼트를 생성할 수 있습니다.
+- `app/products/[category]/layout.js`는 `[category]`에 대한 세그먼트만 생성할 수 있습니다.
+
+경로에 여러 동적 세그먼트가 있는 경우에는 두 가지 접근 방식이 있습니다:
+
+#### 아래에서 위로 세그먼트 생성
+
+하위 경로 세그먼트에서 여러 동적 세그먼트를 생성합니다.
+
+```tsx filename="app/products/[category]/[product]/page.tsx" switcher
+// [category]와 [product] 모두에 대한 세그먼트를 생성합니다.
+export async function generateStaticParams() {
+  const products = await fetch("https://.../products").then((res) =>
+    res.json()
+  );
+
+  return products.map((product) => ({
+    category: product.category.slug,
+    product: product.id,
+  }));
+}
+
+export default function Page({
+  params,
+}: {
+  params: { category: string; product: string };
+}) {
+  // ...
+}
+```
+
+```jsx filename="app/products/[category]/[product]/page.js" switcher
+// [category]와 [product] 모두에 대한 세그먼트를 생성합니다.
+export async function generateStaticParams() {
+  const products = await fetch("https://.../products").then((res) =>
+    res.json()
+  );
+
+  return products.map((product) => ({
+    category: product.category.slug,
+    product: product.id,
+  }));
+}
+
+export default function Page({ params }) {
+  // ...
+}
+```
+
+#### 위에서 아래로 세그먼트 생성
+
+부모 세그먼트를 먼저 생성하고 그 결과를 사용하여 자식 세그먼트를 생성합니다.
+
+```tsx filename="app/products/[category]/layout.tsx" switcher
+// [category]에 대한 세그먼트를 생성합니다.
+export async function generateStaticParams() {
+  const products = await fetch("https://.../products").then((res) =>
+    res.json()
+  );
+
+  return products.map((product) => ({
+    category: product.category.slug,
+  }));
+}
+
+export default function Layout({ params }: { params: { category: string } }) {
+  // ...
+}
+```
+
+```jsx filename="app/products/[category]/layout.js" switcher
+// [category]에 대한 세그먼트를 생성합니다.
+export async function generateStaticParams() {
+  const products = await fetch("https://.../products").then((res) =>
+    res.json()
+  );
+
+  return products.map((product) => ({
+    category: product.category.slug,
+  }));
+}
+
+export default function Layout({ params }) {
+  // ...
+}
+```
+
+부모 `generateStaticParams`가 생성한 각 세그먼트에 대해 하위 경로 세그먼트의 `generateStaticParams` 함수가 한 번씩 실행됩니다.
+
+하위 `generateStaticParams` 함수는 부모 `generateStaticParams` 함수에서 반환한 `params`를 사용하여 자체 세그먼트를 동적으로 생성할 수 있습니다.
+
+```tsx filename="app/products/[category]/[product]/page.tsx" switcher
+// 부모 세그먼트의 `generateStaticParams` 함수에서 전달된 `params`를 사용하여 [product]에 대한 세그먼트를 생성합니다.
+export async function generateStaticParams({
+  params: { category },
+}: {
+  params: { category: string };
+}) {
+  const products = await fetch(
+    `https://.../products?category=${category}`
+  ).then((res) => res.json());
+
+  return products.map((product) => ({
+    product: product.id,
+  }));
+}
+
+export default function Page({
+  params,
+}: {
+  params: { category: string; product: string };
+}) {
+  // ...
+}
+```
+
+```jsx filename="app/products/[category]/[product]/page.js" switcher
+// 부모 세그먼트의 `generateStaticParams` 함수에서 전달된 `params`를 사용하여 [product]에 대한 세그먼트를 생성합니다.
+export async function generateStaticParams({ params: { category } }) {
+  const products = await fetch(
+    `https://.../products?category=${category}`
+  ).then((res) => res.json());
+
+  return products.map((product) => ({
+    product: product.id,
+  }));
+}
+
+export default function Page({ params }) {
+  // ...
+}
+```
+
+> **알아두면 좋은 사항**: `fetch` 요청은 모든 `generate` 접두사가 붙은 함수, 레이아웃, 페이지 및 서버 컴포넌트 간에 동일한 데이터에 대해 자동으로 [메모이제이션](/docs/app/building-your-application/caching#request-memoization)됩니다. `fetch`를 사용할 수 없는 경우 React [`cache`를 사용할 수 있습니다](/docs/app/building-your-application/caching#react-cache-function).
+
+## Version History
+
+| Version   | Changes                      |
+| --------- | ---------------------------- |
+| `v13.0.0` | `generateStaticParams` 도입. |

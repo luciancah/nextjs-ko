@@ -1,0 +1,95 @@
+---
+title: not-found.js
+description: API reference for the not-found.js file.
+---
+
+# not-found.js
+
+**not-found** 파일은 라우트 세그먼트 내에서 [`notFound`](/docs/app/api-reference/functions/not-found) 함수가 호출될 때 UI를 렌더링하는 데 사용됩니다. 커스텀 UI를 제공하는 것과 함께, Next.js는 스트리밍 응답에 대해 `200` HTTP 상태 코드를 반환하고, 스트리밍되지 않은 응답에 대해서는 `404` 상태 코드를 반환합니다.
+
+```tsx filename="app/not-found.tsx" switcher
+import Link from "next/link";
+
+export default function NotFound() {
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+      <Link href="/">Return Home</Link>
+    </div>
+  );
+}
+```
+
+```jsx filename="app/blog/not-found.js" switcher
+import Link from "next/link";
+
+export default function NotFound() {
+  return (
+    <div>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+      <Link href="/">Return Home</Link>
+    </div>
+  );
+}
+```
+
+> **알아두면 좋은 점**: 예상된 `notFound()` 오류를 잡는 것 외에도, 루트 `app/not-found.js` 파일은 애플리케이션 전체에 대해 일치하지 않는 URL을 처리합니다. 이는 애플리케이션에서 처리되지 않는 URL을 방문하는 사용자에게 `app/not-found.js` 파일이 내보내는 UI가 표시된다는 것을 의미합니다.
+
+## Props
+
+`not-found.js` 컴포넌트는 어떤 props도 받지 않습니다.
+
+## Data Fetching
+
+기본적으로, `not-found`는 서버 컴포넌트입니다. 데이터를 페칭하고 표시하려면 `async`로 표시할 수 있습니다:
+
+```tsx filename="app/not-found.tsx" switcher
+import Link from "next/link";
+import { headers } from "next/headers";
+
+export default async function NotFound() {
+  const headersList = headers();
+  const domain = headersList.get("host");
+  const data = await getSiteData(domain);
+  return (
+    <div>
+      <h2>Not Found: {data.name}</h2>
+      <p>Could not find requested resource</p>
+      <p>
+        View <Link href="/blog">all posts</Link>
+      </p>
+    </div>
+  );
+}
+```
+
+```jsx filename="app/not-found.jsx" switcher
+import Link from "next/link";
+import { headers } from "next/headers";
+
+export default async function NotFound() {
+  const headersList = headers();
+  const domain = headersList.get("host");
+  const data = await getSiteData(domain);
+  return (
+    <div>
+      <h2>Not Found: {data.name}</h2>
+      <p>Could not find requested resource</p>
+      <p>
+        View <Link href="/blog">all posts</Link>
+      </p>
+    </div>
+  );
+}
+```
+
+경로에 따라 콘텐츠를 표시하기 위해 `usePathname`과 같은 클라이언트 컴포넌트 훅을 사용해야 하는 경우, 클라이언트 측에서 데이터를 페칭해야 합니다.
+
+## Version History
+
+| Version   | Changes                                             |
+| --------- | --------------------------------------------------- |
+| `v13.3.0` | Root `app/not-found` handles global unmatched URLs. |
+| `v13.0.0` | `not-found` introduced.                             |

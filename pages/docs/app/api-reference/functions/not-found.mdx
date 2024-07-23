@@ -1,0 +1,40 @@
+---
+title: notFound
+description: API Reference for the notFound function.
+---
+
+# notFound
+
+`notFound` 함수는 라우트 세그먼트 내에서 [`not-found 파일`](/docs/app/api-reference/file-conventions/not-found)을 렌더링하고 `<meta name="robots" content="noindex" />` 태그를 주입할 수 있게 합니다.
+
+## `notFound()`
+
+`notFound()` 함수를 호출하면 `NEXT_NOT_FOUND` 오류가 발생하며, 오류가 발생한 라우트 세그먼트의 렌더링이 중단됩니다. [**not-found** 파일](/docs/app/api-reference/file-conventions/not-found)을 지정하면 해당 세그먼트 내에서 Not Found UI를 렌더링하여 이러한 오류를 우아하게 처리할 수 있습니다.
+
+```jsx filename="app/user/[id]/page.js"
+import { notFound } from "next/navigation";
+
+async function fetchUser(id) {
+  const res = await fetch("https://...");
+  if (!res.ok) return undefined;
+  return res.json();
+}
+
+export default async function Profile({ params }) {
+  const user = await fetchUser(params.id);
+
+  if (!user) {
+    notFound();
+  }
+
+  // ...
+}
+```
+
+> **알아두면 좋은 점**: TypeScript의 [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에 `return notFound()`를 사용할 필요가 없습니다.
+
+## Version History
+
+| Version   | Changes                |
+| --------- | ---------------------- |
+| `v13.0.0` | `notFound` introduced. |

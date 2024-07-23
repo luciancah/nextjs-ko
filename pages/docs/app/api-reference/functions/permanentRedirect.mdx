@@ -1,0 +1,69 @@
+---
+title: permanentRedirect
+description: API Reference for the permanentRedirect function.
+related:
+  links:
+    - app/api-reference/functions/redirect
+---
+
+# permanentRedirect
+
+`permanentRedirect` 함수는 사용자를 다른 URL로 리디렉션할 수 있게 해줍니다. `permanentRedirect`는 서버 컴포넌트, 클라이언트 컴포넌트, [라우트 핸들러](/docs/app/building-your-application/routing/route-handlers) 및 [서버 액션](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)에서 사용할 수 있습니다.
+
+스트리밍 컨텍스트에서 사용될 때는 메타 태그를 삽입하여 클라이언트 측에서 리디렉션을 발생시킵니다. 서버 액션에서 사용될 때는 호출자에게 303 HTTP 리디렉션 응답을 제공합니다. 그 외에는 호출자에게 308 (Permanent) HTTP 리디렉션 응답을 제공합니다.
+
+리소스가 존재하지 않는 경우, [`notFound` 함수](/docs/app/api-reference/functions/not-found)를 대신 사용할 수 있습니다.
+
+> **알아두면 좋은 점**: 307 (Temporary) HTTP 리디렉션을 반환하려면 [`redirect` 함수](/docs/app/api-reference/functions/redirect)를 사용할 수 있습니다.
+
+## Parameters
+
+`permanentRedirect` 함수는 두 개의 인수를 받습니다:
+
+```js
+permanentRedirect(path, type);
+```
+
+| Parameter | Type                                                    | Description                                             |
+| --------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| `path`    | `string`                                                | 리디렉션할 URL. 상대 경로 또는 절대 경로일 수 있습니다. |
+| `type`    | `'replace'` (기본값) 또는 `'push'` (서버 액션의 기본값) | 수행할 리디렉션의 유형.                                 |
+
+기본적으로 `permanentRedirect`는 [서버 액션](/docs/app/building-your-application/data-fetching/server-actions-and-mutations)에서 `push` (브라우저 기록 스택에 새 항목 추가)를 사용하고, 다른 곳에서는 `replace` (브라우저 기록 스택의 현재 URL 대체)를 사용합니다. `type` 매개변수를 지정하여 이 동작을 재정의할 수 있습니다.
+
+서버 컴포넌트에서 사용될 때 `type` 매개변수는 아무런 효과가 없습니다.
+
+## Returns
+
+`permanentRedirect`는 값을 반환하지 않습니다.
+
+## Example
+
+`permanentRedirect()` 함수를 호출하면 `NEXT_REDIRECT` 오류가 발생하며, 오류가 발생한 라우트 세그먼트의 렌더링이 중단됩니다.
+
+```jsx filename="app/team/[id]/page.js"
+import { permanentRedirect } from "next/navigation";
+
+async function fetchTeam(id) {
+  const res = await fetch("https://...");
+  if (!res.ok) return undefined;
+  return res.json();
+}
+
+export default async function Profile({ params }) {
+  const team = await fetchTeam(params.id);
+  if (!team) {
+    permanentRedirect("/login");
+  }
+
+  // ...
+}
+```
+
+> **알아두면 좋은 점**: `permanentRedirect`는 TypeScript의 [`never`](https://www.typescriptlang.org/docs/handbook/2/functions.html#never) 타입을 사용하기 때문에 `return permanentRedirect()`를 사용할 필요가 없습니다.
+
+## Version History
+
+| Version   | Changes                         |
+| --------- | ------------------------------- |
+| `v13.0.0` | `permanentRedirect` introduced. |

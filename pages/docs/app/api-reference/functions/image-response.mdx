@@ -1,0 +1,47 @@
+---
+title: ImageResponse
+description: ImageResponse 생성자에 대한 API 참조.
+---
+
+# ImageResponse
+
+`ImageResponse` 생성자는 JSX 및 CSS를 사용하여 동적 이미지를 생성할 수 있게 합니다. 이는 소셜 미디어 이미지, 예를 들어 Open Graph 이미지나 Twitter 카드 등을 생성하는 데 유용합니다.
+
+`ImageResponse`에 사용할 수 있는 옵션은 다음과 같습니다:
+
+```jsx
+import { ImageResponse } from 'next/og'
+
+new ImageResponse(
+  element: ReactElement,
+  options: {
+    width?: number = 1200
+    height?: number = 630
+    emoji?: 'twemoji' | 'blobmoji' | 'noto' | 'openmoji' = 'twemoji',
+    fonts?: {
+      name: string,
+      data: ArrayBuffer,
+      weight: number,
+      style: 'normal' | 'italic'
+    }[]
+    debug?: boolean = false
+
+    // HTTP 응답에 전달될 옵션
+    status?: number = 200
+    statusText?: string
+    headers?: Record<string, string>
+  },
+)
+```
+
+## 지원되는 CSS 속성
+
+지원되는 HTML 및 CSS 기능 목록은 [Satori의 문서](https://github.com/vercel/satori#css)를 참조하십시오.
+
+## 버전 기록
+
+| Version   | Changes                                              |
+| --------- | ---------------------------------------------------- |
+| `v14.0.0` | `ImageResponse`가 `next/server`에서 `next/og`로 이동 |
+| `v13.3.0` | `ImageResponse`를 `next/server`에서 가져올 수 있음.  |
+| `v13.0.0` | `ImageResponse`가 `@vercel/og` 패키지를 통해 도입됨. |

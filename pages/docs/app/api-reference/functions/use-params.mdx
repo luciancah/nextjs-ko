@@ -1,0 +1,75 @@
+---
+title: useParams
+description: API Reference for the useParams hook.
+---
+
+# useParams
+
+`useParams`는 현재 URL에 의해 채워진 경로의 [동적 파라미터](/docs/app/building-your-application/routing/dynamic-routes)를 읽을 수 있게 해주는 **클라이언트 컴포넌트** 훅입니다.
+
+```tsx filename="app/example-client-component.tsx" switcher
+"use client";
+
+import { useParams } from "next/navigation";
+
+export default function ExampleClientComponent() {
+  const params = useParams<{ tag: string; item: string }>();
+
+  // Route -> /shop/[tag]/[item]
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  console.log(params);
+
+  return "...";
+}
+```
+
+```jsx filename="app/example-client-component.js" switcher
+"use client";
+
+import { useParams } from "next/navigation";
+
+export default function ExampleClientComponent() {
+  const params = useParams();
+
+  // Route -> /shop/[tag]/[item]
+  // URL -> /shop/shoes/nike-air-max-97
+  // `params` -> { tag: 'shoes', item: 'nike-air-max-97' }
+  console.log(params);
+
+  return "...";
+}
+```
+
+## Parameters
+
+```tsx
+const params = useParams();
+```
+
+`useParams`는 파라미터를 받지 않습니다.
+
+## Returns
+
+`useParams`는 현재 경로의 [동적 파라미터](/docs/app/building-your-application/routing/dynamic-routes)를 포함하는 객체를 반환합니다.
+
+- 객체의 각 속성은 활성 동적 세그먼트입니다.
+- 속성의 이름은 세그먼트의 이름이며, 속성의 값은 세그먼트에 채워진 값입니다.
+- 속성 값은 [동적 세그먼트의 유형](/docs/app/building-your-application/routing/dynamic-routes)에 따라 `string` 또는 `string` 배열입니다.
+- 경로에 동적 파라미터가 포함되지 않은 경우, `useParams`는 빈 객체를 반환합니다.
+- Pages Router에서 사용되는 경우, `useParams`는 초기 렌더링 시 `null`을 반환하며, 라우터가 준비되면 위의 규칙을 따르는 속성으로 업데이트됩니다.
+
+예시:
+
+| Route                           | URL         | `useParams()`             |
+| ------------------------------- | ----------- | ------------------------- |
+| `app/shop/page.js`              | `/shop`     | `{}`                      |
+| `app/shop/[slug]/page.js`       | `/shop/1`   | `{ slug: '1' }`           |
+| `app/shop/[tag]/[item]/page.js` | `/shop/1/2` | `{ tag: '1', item: '2' }` |
+| `app/shop/[...slug]/page.js`    | `/shop/1/2` | `{ slug: ['1', '2'] }`    |
+
+## Version History
+
+| Version   | Changes                 |
+| --------- | ----------------------- |
+| `v13.3.0` | `useParams` introduced. |

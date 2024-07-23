@@ -1,0 +1,210 @@
+---
+title: error.js
+description: API reference for the error.js special file.
+related:
+  title: Learn more about error handling
+  links:
+    - app/building-your-application/routing/error-handling
+---
+
+import Image from "next/image";
+
+# error.js
+
+**error** 파일을 사용하면 예상치 못한 런타임 오류를 처리하고 대체 UI를 표시할 수 있습니다.
+
+<Image
+  alt="error.js special file"
+  srcLight="/docs/light/error-special-file.png"
+  srcDark="/docs/dark/error-special-file.png"
+  width="1600"
+  height="606"
+/>
+
+```tsx filename="app/dashboard/error.tsx" switcher
+"use client"; // Error boundaries must be Client Components
+
+import { useEffect } from "react";
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          () => reset()
+        }
+      >
+        Try again
+      </button>
+    </div>
+  );
+}
+```
+
+```jsx filename="app/dashboard/error.js" switcher
+"use client"; // Error boundaries must be Client Components
+
+import { useEffect } from "react";
+
+export default function Error({ error, reset }) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button
+        onClick={
+          // Attempt to recover by trying to re-render the segment
+          () => reset()
+        }
+      >
+        Try again
+      </button>
+    </div>
+  );
+}
+```
+
+## How `error.js` Works
+
+`error.js`는 [React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) 안에서 라우트 세그먼트와 그 하위 요소들을 감쌉니다. 경계 내에서 오류가 발생하면 `error` 컴포넌트가 대체 UI로 표시됩니다.
+
+<Image
+  alt="How error.js works"
+  srcLight="/docs/light/error-overview.png"
+  srcDark="/docs/dark/error-overview.png"
+  width="1600"
+  height="903"
+/>
+
+> **알아두면 좋은 점**:
+>
+> - [React DevTools](https://react.dev/learn/react-developer-tools)를 사용하면 오류 경계를 전환하여 오류 상태를 테스트할 수 있습니다.
+
+## Props
+
+### `error`
+
+[`Error`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error) 객체의 인스턴스로, `error.js` 클라이언트 컴포넌트로 전달됩니다.
+
+> **알아두면 좋은 점:** 개발 중에는 클라이언트로 전달된 `Error` 객체가 직렬화되어 원본 오류의 `message`를 포함하여 디버깅을 쉽게 할 수 있습니다. 하지만, **이 동작은 프로덕션에서는 다릅니다**. 클라이언트에 포함된 잠재적으로 민감한 세부 정보를 누출하지 않기 위해서입니다.
+
+#### `error.message`
+
+- 클라이언트 컴포넌트에서 전달된 오류는 원본 `Error` 메시지를 표시합니다.
+- 서버 컴포넌트에서 전달된 오류는 식별자가 포함된 일반 메시지를 표시합니다. 이는 민감한 세부 정보가 누출되는 것을 방지하기 위한 것입니다. `errors.digest`에 있는 식별자를 사용하여 해당 서버 측 로그를 일치시킬 수 있습니다.
+
+#### `error.digest`
+
+발생한 오류의 자동 생성된 해시입니다. 서버 측 로그에서 해당 오류와 일치시키는 데 사용할 수 있습니다.
+
+### `reset`
+
+오류의 원인이 일시적일 수 있습니다. 이런 경우 다시 시도하면 문제가 해결될 수 있습니다.
+
+오류 컴포넌트는 `reset()` 함수를 사용하여 사용자가 오류에서 복구를 시도하도록 할 수 있습니다. 이 함수가 실행되면 오류 경계의 내용을 다시 렌더링하려고 시도합니다. 성공하면 대체 오류 컴포넌트가 다시 렌더링된 결과로 대체됩니다.
+
+```tsx filename="app/dashboard/error.tsx" switcher
+"use client"; // Error boundaries must be Client Components
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button onClick={() => reset()}>Try again</button>
+    </div>
+  );
+}
+```
+
+```jsx filename="app/dashboard/error.js" switcher
+"use client"; // Error boundaries must be Client Components
+
+export default function Error({ error, reset }) {
+  return (
+    <div>
+      <h2>Something went wrong!</h2>
+      <button onClick={() => reset()}>Try again</button>
+    </div>
+  );
+}
+```
+
+## `global-error.js`
+
+드물긴 하지만, [internationalization](/docs/app/building-your-application/routing/internationalization)을 활용할 때도 `app/global-error.js`를 사용하여 루트 레이아웃 또는 템플릿에서 오류를 처리할 수 있습니다. 글로벌 오류 UI는 자체 `<html>` 및 `<body>` 태그를 정의해야 합니다. 이 파일은 활성화될 때 루트 레이아웃 또는 템플릿을 대체합니다.
+
+```tsx filename="app/global-error.tsx" switcher
+"use client"; // Error boundaries must be Client Components
+
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  return (
+    // global-error must include html and body tags
+    <html>
+      <body>
+        <h2>Something went wrong!</h2>
+        <button onClick={() => reset()}>Try again</button>
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/global-error.js" switcher
+"use client"; // Error boundaries must be Client Components
+
+export default function GlobalError({ error, reset }) {
+  return (
+    // global-error must include html and body tags
+    <html>
+      <body>
+        <h2>Something went wrong!</h2>
+        <button onClick={() => reset()}>Try again</button>
+      </body>
+    </html>
+  );
+}
+```
+
+> **알아두면 좋은 점**:
+>
+> - `global-error.js`는 프로덕션에서만 활성화됩니다. 개발 중에는 오류 오버레이가 대신 표시됩니다.
+
+## not-found.js
+
+[`not-found`](https://nextjs.org/docs/app/api-reference/file-conventions/not-found) 파일은 라우트 세그먼트 내에서 `notFound()` 함수를 호출할 때 UI를 표시합니다.
+
+## Version History
+
+| Version   | Changes                    |
+| --------- | -------------------------- |
+| `v13.1.0` | `global-error` introduced. |
+| `v13.0.0` | `error` introduced.        |

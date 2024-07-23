@@ -1,0 +1,28 @@
+---
+title: draftMode
+description: draftMode 함수에 대한 API 참고 문서.
+---
+
+# draftMode
+
+`draftMode` 함수는 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components) 내에서 [Draft 모드](/docs/app/building-your-application/configuring/draft-mode)를 감지할 수 있게 해줍니다.
+
+```jsx filename="app/page.js"
+import { draftMode } from "next/headers";
+
+export default function Page() {
+  const { isEnabled } = draftMode();
+  return (
+    <main>
+      <h1>My Blog Post</h1>
+      <p>Draft 모드가 현재 {isEnabled ? "활성화됨" : "비활성화됨"}</p>
+    </main>
+  );
+}
+```
+
+## 버전 기록
+
+| 버전      | 변경 사항         |
+| --------- | ----------------- |
+| `v13.4.0` | `draftMode` 도입. |

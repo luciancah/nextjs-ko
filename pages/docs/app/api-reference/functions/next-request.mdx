@@ -1,0 +1,153 @@
+---
+title: NextRequest
+description: NextRequest에 대한 API 참조.
+---
+
+{/* 이 문서의 내용은 app 및 pages 라우터에서 공유됩니다. Pages 라우터에 특정한 내용을 추가하려면 `<PagesOnly>Content</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 공유된 콘텐츠는 컴포넌트로 래핑되지 않아야 합니다. */}
+
+# NextRequest
+
+NextRequest는 추가 편의 메서드와 함께 [Web Request API](https://developer.mozilla.org/docs/Web/API/Request)를 확장합니다.
+
+## `cookies`
+
+[`Set-Cookie`](https://developer.mozilla.org/docs/Web/HTTP/Headers/Set-Cookie) 헤더의 요청을 읽거나 수정합니다.
+
+### `set(name, value)`
+
+주어진 이름으로 요청에 주어진 값의 쿠키를 설정합니다.
+
+```ts
+// /home 요청이 주어졌을 때
+// 배너를 숨기기 위한 쿠키 설정
+// 요청에는 `Set-Cookie:show-banner=false;path=/home` 헤더가 추가됩니다.
+request.cookies.set("show-banner", "false");
+```
+
+### `get(name)`
+
+주어진 쿠키 이름을 기준으로 쿠키의 값을 반환합니다. 쿠키가 발견되지 않으면 `undefined`를 반환합니다. 여러 개의 쿠키가 발견되면 첫 번째 쿠키만 반환합니다.
+
+```ts
+// /home 요청이 주어졌을 때
+// { name: 'show-banner', value: 'false', Path: '/home' }
+request.cookies.get("show-banner");
+```
+
+### `getAll()`
+
+주어진 쿠키 이름을 기준으로 쿠키의 값을 반환합니다. 이름이 주어지지 않으면 요청에 있는 모든 쿠키를 반환합니다.
+
+```ts
+// /home 요청이 주어졌을 때
+// [
+//   { name: 'experiments', value: 'new-pricing-page', Path: '/home' },
+//   { name: 'experiments', value: 'winter-launch', Path: '/home' },
+// ]
+request.cookies.getAll("experiments");
+// 또는, 요청에 있는 모든 쿠키를 가져옵니다.
+request.cookies.getAll();
+```
+
+### `delete(name)`
+
+주어진 쿠키 이름을 기준으로 쿠키를 요청에서 삭제합니다.
+
+```ts
+// 삭제된 경우 true를 반환하고, 그렇지 않으면 false를 반환합니다.
+request.cookies.delete("experiments");
+```
+
+### `has(name)`
+
+주어진 쿠키 이름을 기준으로 요청에 쿠키가 있는지 여부를 반환합니다.
+
+```ts
+// 쿠키가 존재하면 true, 그렇지 않으면 false를 반환합니다.
+request.cookies.has("experiments");
+```
+
+### `clear()`
+
+요청에서 `Set-Cookie` 헤더를 제거합니다.
+
+```ts
+request.cookies.clear();
+```
+
+## `nextUrl`
+
+네이티브 [`URL`](https://developer.mozilla.org/docs/Web/API/URL) API를 확장하여 추가 편의 메서드와 Next.js 특정 속성을 포함합니다.
+
+```ts
+// /home 요청이 주어졌을 때, pathname은 /home입니다.
+request.nextUrl.pathname;
+// /home?name=lee 요청이 주어졌을 때, searchParams는 { 'name': 'lee' }입니다.
+request.nextUrl.searchParams;
+```
+
+사용할 수 있는 옵션은 다음과 같습니다:
+
+<PagesOnly>
+
+| 속성              | 유형                      | 설명                                                                                                               |
+| ----------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `basePath`        | `string`                  | URL의 [기본 경로](/docs/pages/api-reference/next-config-js/basePath).                                              |
+| `buildId`         | `string` \| `undefined`   | Next.js 애플리케이션의 빌드 식별자. [커스터마이징](/docs/pages/api-reference/next-config-js/generateBuildId) 가능. |
+| `defaultLocale`   | `string` \| `undefined`   | [국제화](/docs/pages/building-your-application/routing/internationalization)의 기본 로케일.                        |
+| `domainLocale`    |                           |                                                                                                                    |
+| - `defaultLocale` | `string`                  | 도메인 내의 기본 로케일.                                                                                           |
+| - `domain`        | `string`                  | 특정 로케일과 연관된 도메인.                                                                                       |
+| - `http`          | `boolean` \| `undefined`  | 도메인이 HTTP를 사용하는지 여부를 나타냅니다.                                                                      |
+| `locales`         | `string[]` \| `undefined` | 사용 가능한 로케일의 배열.                                                                                         |
+| `locale`          | `string` \| `undefined`   | 현재 활성화된 로케일.                                                                                              |
+| `url`             | `URL`                     | URL 객체.                                                                                                          |
+
+</PagesOnly>
+
+<AppOnly>
+
+| 속성           | 유형                    | 설명                                                                                                             |
+| -------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `basePath`     | `string`                | URL의 [기본 경로](/docs/app/api-reference/next-config-js/basePath).                                              |
+| `buildId`      | `string` \| `undefined` | Next.js 애플리케이션의 빌드 식별자. [커스터마이징](/docs/app/api-reference/next-config-js/generateBuildId) 가능. |
+| `pathname`     | `string`                | URL의 pathname.                                                                                                  |
+| `searchParams` | `Object`                | URL의 검색 매개변수.                                                                                             |
+
+> **참고:** Pages 라우터의 국제화 속성은 App 라우터에서는 사용 불가능합니다. [App 라우터를 사용한 국제화](/docs/app/building-your-application/routing/internationalization)에 대해 자세히 알아보세요.
+
+</AppOnly>
+
+## `ip`
+
+`ip` 속성은 요청의 IP 주소를 포함하는 문자열입니다. 이 값은 호스팅 플랫폼에 의해 선택적으로 제공될 수 있습니다.
+
+> **참고:** [Vercel](https://vercel.com/docs/frameworks/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)에서는 이 값이 기본적으로 제공됩니다. 다른 플랫폼에서는 [`X-Forwarded-For`](https://developer.mozilla.org/docs/Web/HTTP/Headers/X-Forwarded-For) 헤더를 사용하여 IP 주소를 제공할 수 있습니다.
+
+```ts
+// Vercel에서 제공
+request.ip;
+// 자체 호스팅
+request.headers.get("X-Forwarded-For");
+```
+
+## `geo`
+
+`geo` 속성은 요청의 지리적 정보를 포함하는 객체입니다. 이 값은 호스팅 플랫폼에 의해 선택적으로 제공될 수 있습니다.
+
+> **참고:** [Vercel](https://vercel.com/docs/frameworks/nextjs?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)에서는 이 값이 기본적으로 제공됩니다. 다른 플랫폼에서는 [`X-Forwarded-For`](https://developer.mozilla.org/docs/Web/HTTP/Headers/X-Forwarded-For) 헤더를 사용하여 IP 주소를 제공한 후, [타사 서비스](https://ip-api.com/)를 사용하여 지리적 정보를 조회할 수 있습니다.
+
+```ts
+// Vercel에서 제공
+request.geo.city;
+request.geo.country;
+request.geo.region;
+request.geo.latitude;
+request.geo.longitude;
+
+// 자체 호스팅
+function getGeo(request) {
+  let ip = request.headers.get("X-Forwarded-For");
+  // 타사 서비스를 사용하여 지리적 정보를 조회합니다.
+}
+```

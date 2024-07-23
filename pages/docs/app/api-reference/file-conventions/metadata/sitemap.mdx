@@ -1,0 +1,304 @@
+---
+title: sitemap.xml
+description: API Reference for the sitemap.xml file.
+related:
+  title: Next Steps
+  description: Learn how to use the generateSitemaps function.
+  links:
+    - app/api-reference/functions/generate-sitemaps
+---
+
+# sitemap.xml
+
+`sitemap.(xml|js|ts)`는 검색 엔진 크롤러가 사이트를 더 효율적으로 색인할 수 있도록 돕는 [Sitemaps XML 형식](https://www.sitemaps.org/protocol.html)에 맞는 특수 파일입니다.
+
+### Sitemap files (.xml)
+
+작은 애플리케이션의 경우, `sitemap.xml` 파일을 생성하여 `app` 디렉터리의 루트에 배치할 수 있습니다.
+
+```xml filename="app/sitemap.xml"
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://acme.com</loc>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1</priority>
+  </url>
+  <url>
+    <loc>https://acme.com/about</loc>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://acme.com/blog</loc>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
+```
+
+### Generating a sitemap using code (.js, .ts)
+
+`sitemap.(js|ts)` 파일 규칙을 사용하여 URL 배열을 반환하는 기본 함수를 내보내어 프로그램적으로 **사이트맵**을 생성할 수 있습니다. TypeScript를 사용하는 경우, [`Sitemap`](#returns) 타입을 사용할 수 있습니다.
+
+> **알아두면 좋은 점**: `sitemap.js`는 특수한 라우트 핸들러로, [동적 함수](/docs/app/building-your-application/caching#dynamic-functions)나 [동적 구성](/docs/app/building-your-application/caching#segment-config-options) 옵션을 사용하지 않는 한 기본적으로 캐시됩니다.
+
+```ts filename="app/sitemap.ts" switcher
+import type { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: "https://acme.com",
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 1,
+    },
+    {
+      url: "https://acme.com/about",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: "https://acme.com/blog",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.5,
+    },
+  ];
+}
+```
+
+```js filename="app/sitemap.js" switcher
+export default function sitemap() {
+  return [
+    {
+      url: "https://acme.com",
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 1,
+    },
+    {
+      url: "https://acme.com/about",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: "https://acme.com/blog",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.5,
+    },
+  ];
+}
+```
+
+출력:
+
+```xml filename="acme.com/sitemap.xml"
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://acme.com</loc>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>1</priority>
+  </url>
+  <url>
+    <loc>https://acme.com/about</loc>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://acme.com/blog</loc>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
+```
+
+### Generate a localized Sitemap
+
+```ts filename="app/sitemap.ts" switcher
+import type { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: "https://acme.com",
+      lastModified: new Date(),
+      alternates: {
+        languages: {
+          es: "https://acme.com/es",
+          de: "https://acme.com/de",
+        },
+      },
+    },
+    {
+      url: "https://acme.com/about",
+      lastModified: new Date(),
+      alternates: {
+        languages: {
+          es: "https://acme.com/es/about",
+          de: "https://acme.com/de/about",
+        },
+      },
+    },
+    {
+      url: "https://acme.com/blog",
+      lastModified: new Date(),
+      alternates: {
+        languages: {
+          es: "https://acme.com/es/blog",
+          de: "https://acme.com/de/blog",
+        },
+      },
+    },
+  ];
+}
+```
+
+출력:
+
+```xml filename="acme.com/sitemap.xml"
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://acme.com</loc>
+    <xhtml:link
+      rel="alternate"
+      hreflang="es"
+      href="https://acme.com/es"/>
+    <xhtml:link
+      rel="alternate"
+      hreflang="de"
+      href="https://acme.com/de"/>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+  </url>
+  <url>
+    <loc>https://acme.com/about</loc>
+    <xhtml:link
+      rel="alternate"
+      hreflang="es"
+      href="https://acme.com/es/about"/>
+    <xhtml:link
+      rel="alternate"
+      hreflang="de"
+      href="https://acme.com/de/about"/>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+  </url>
+  <url>
+    <loc>https://acme.com/blog</loc>
+    <xhtml:link
+      rel="alternate"
+      hreflang="es"
+      href="https://acme.com/es/blog"/>
+    <xhtml:link
+      rel="alternate"
+      hreflang="de"
+      href="https://acme.com/de/blog"/>
+    <lastmod>2023-04-06T15:02:24.021Z</lastmod>
+  </url>
+</urlset>
+```
+
+### Generating multiple sitemaps
+
+대부분의 애플리케이션에는 단일 사이트맵이 충분합니다. 하지만 대규모 웹 애플리케이션의 경우, 사이트맵을 여러 파일로 분할해야 할 수 있습니다.
+
+여러 개의 사이트맵을 생성하는 방법은 두 가지가 있습니다:
+
+- 여러 라우트 세그먼트 내부에 `sitemap.(xml|js|ts)`를 중첩하여 생성합니다. 예: `app/sitemap.xml` 및 `app/products/sitemap.xml`.
+- [`generateSitemaps`](/docs/app/api-reference/functions/generate-sitemaps) 함수를 사용합니다.
+
+예를 들어, `generateSitemaps`를 사용하여 사이트맵을 분할하려면 사이트맵 `id`가 포함된 객체 배열을 반환합니다. 그런 다음, 고유한 사이트맵을 생성하기 위해 `id`를 사용합니다.
+
+```ts filename="app/product/sitemap.ts" switcher
+import type { MetadataRoute } from "next";
+import { BASE_URL } from "@/app/lib/constants";
+
+export async function generateSitemaps() {
+  // 제품 총 수를 가져와서 필요한 사이트맵 수를 계산합니다.
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
+}
+
+export default async function sitemap({
+  id,
+}: {
+  id: number;
+}): Promise<MetadataRoute.Sitemap> {
+  // Google의 제한은 사이트맵당 50,000개의 URL입니다.
+  const start = id * 50000;
+  const end = start + 50000;
+  const products = await getProducts(
+    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`
+  );
+  return products.map((product) => ({
+    url: `${BASE_URL}/product/${product.id}`,
+    lastModified: product.date,
+  }));
+}
+```
+
+```
+
+js filename="app/product/sitemap.js" switcher
+import { BASE_URL } from '@/app/lib/constants'
+
+export async function generateSitemaps() {
+  // 제품 총 수를 가져와서 필요한 사이트맵 수를 계산합니다.
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }]
+}
+
+export default async function sitemap({ id }) {
+  // Google의 제한은 사이트맵당 50,000개의 URL입니다.
+  const start = id * 50000
+  const end = start + 50000
+  const products = await getProducts(
+    `SELECT id, date FROM products WHERE id BETWEEN ${start} AND ${end}`
+  )
+  return products.map((product) => ({
+    url: `${BASE_URL}/product/${product.id}`,
+    lastModified: product.date,
+  }))
+}
+```
+
+생성된 사이트맵은 `/.../sitemap/[id]`에서 사용할 수 있습니다. 예를 들어, `/product/sitemap/1.xml`.
+
+자세한 내용은 [`generateSitemaps` API 참조](/docs/app/api-reference/functions/generate-sitemaps)를 참조하십시오.
+
+## Returns
+
+`sitemap.(xml|ts|js)`에서 내보낸 기본 함수는 다음 속성을 가진 객체 배열을 반환해야 합니다:
+
+```tsx
+type Sitemap = Array<{
+  url: string;
+  lastModified?: string | Date;
+  changeFrequency?:
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly"
+    | "never";
+  priority?: number;
+  alternates?: {
+    languages?: Languages<string>;
+  };
+}>;
+```
+
+## Version History
+
+| Version   | Changes                                                      |
+| --------- | ------------------------------------------------------------ |
+| `v14.2.0` | Add localizations support.                                   |
+| `v13.4.5` | Add `changeFrequency` and `priority` attributes to sitemaps. |
+| `v13.3.0` | `sitemap` introduced.                                        |

@@ -1,0 +1,36 @@
+---
+title: loading.js
+description: API reference for the loading.js  file.
+---
+
+# loading.js
+
+**loading** 파일은 [Suspense](/docs/app/building-your-application/routing/loading-ui-and-streaming)를 기반으로 즉시 로딩 상태를 생성할 수 있습니다.
+
+기본적으로 이 파일은 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)이지만, `"use client"` 지시어를 통해 클라이언트 컴포넌트로도 사용할 수 있습니다.
+
+```tsx filename="app/feed/loading.tsx" switcher
+export default function Loading() {
+  // 또는 커스텀 로딩 스켈레톤 컴포넌트
+  return <p>Loading...</p>;
+}
+```
+
+```jsx filename="app/feed/loading.js" switcher
+export default function Loading() {
+  // 또는 커스텀 로딩 스켈레톤 컴포넌트
+  return <p>Loading...</p>;
+}
+```
+
+로딩 UI 컴포넌트는 어떠한 매개변수도 받지 않습니다.
+
+> **알아두면 좋은 점**
+>
+> - 로딩 UI를 설계할 때, [React Developer Tools](https://react.dev/learn/react-developer-tools)를 사용하여 수동으로 Suspense 경계를 전환하는 것이 유용할 수 있습니다.
+
+## Version History
+
+| Version   | Changes               |
+| --------- | --------------------- |
+| `v13.0.0` | `loading` introduced. |

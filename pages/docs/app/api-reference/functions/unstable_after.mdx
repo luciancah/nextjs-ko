@@ -1,0 +1,80 @@
+---
+title: unstable_after (experimental)
+description: API Reference for the unstable_after function.
+---
+
+# unstable_after (experimental)
+
+> This API is **experimental** and subject to change.
+
+`unstable_after()` 함수는 응답이 완료된 후 작업을 실행하도록 예약할 수 있게 해줍니다. 이는 로깅 및 분석과 같은 응답을 차단하지 않아야 하는 작업 및 기타 부수 효과에 유용합니다.
+
+이 함수는 [Server Components](/docs/app/building-your-application/rendering/server-components) (예: [`generateMetadata`](https://nextjs.org/docs/app/api-reference/functions/generate-metadata)), [Server Actions](/docs/app/building-your-application/data-fetching/server-actions-and-mutations), [Route Handlers](/docs/app/building-your-application/routing/route-handlers) 및 [Middleware](/docs/app/building-your-application/routing/middleware)에서 사용할 수 있습니다.
+
+`unstable_after()`를 사용하려면 `next.config.js` 파일에서 `experimental.after` 구성을 사용 설정해야 합니다:
+
+```js filename="next.config.js"
+const nextConfig = {
+  experimental: {
+    after: true,
+  },
+};
+module.exports = nextConfig;
+```
+
+이 함수는 응답이 완료된 후 실행될 콜백을 수락합니다:
+
+```tsx filename="app/layout.tsx" switcher
+import { unstable_after as after } from "next/server";
+import { log } from "@/app/utils";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  after(() => {
+    // 레이아웃이 렌더링되어 사용자에게 전송된 후 실행됩니다.
+    log();
+  });
+  return <>{children}</>;
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { unstable_after as after } from "next/server";
+import { log } from "@/app/utils";
+
+export default function Layout({ children }) {
+  after(() => {
+    // 레이아웃이 렌더링되어 사용자에게 전송된 후 실행됩니다.
+    log();
+  });
+  return <>{children}</>;
+}
+```
+
+> **참고 사항**:
+>
+> - `unstable_after()`는 응답이 성공적으로 완료되지 않은 경우에도 실행됩니다. 오류가 발생했거나 `notFound()` 또는 `redirect()`가 호출된 경우를 포함합니다.
+> - `unstable_after()`는 경로를 동적 렌더링으로 설정하는 [dynamic function](/docs/app/building-your-application/rendering/server-components#dynamic-functions)입니다. 이 동작은 [`export dynamic = "force-static"`](/docs/app/api-reference/file-conventions/route-segment-config#dynamic) 세그먼트 구성을 사용하여 재정의할 수 있습니다.
+> - `unstable_after()` 내부에서 호출된 함수를 중복 제거하기 위해 React `cache`를 사용할 수 있습니다.
+> - 응답이 이미 전송되었기 때문에 `unstable_after()` 내부에서는 [`cookies()`](/docs/app/api-reference/functions/cookies)를 설정할 수 없습니다.
+> - `unstable_after()`는 다른 `unstable_after()` 호출 내부에 중첩될 수 있습니다.
+
+## Parameters
+
+- 응답이 완료된 후 실행될 콜백 함수.
+
+## Returns
+
+- `unstable_after()`는 값을 반환하지 않습니다.
+
+## Alternatives
+
+`unstable_after()`의 사용 목적은 기본 응답을 차단하지 않고 보조 작업을 처리하는 것입니다. 이는 플랫폼의 [`waitUntil()`](https://vercel.com/docs/functions/functions-api-reference)를 사용하거나 promise에서 `await`을 제거하는 것과 유사하지만, 다음과 같은 차이점이 있습니다:
+
+- **`waitUntil()`**: promise를 수락하고 요청의 생명 주기 동안 실행될 작업을 큐에 넣는 반면, `unstable_after()`는 응답이 완료된 **후에** 실행될 콜백을 수락합니다.
+- **`await` 제거**: 응답 중에 실행을 시작하여 리소스를 사용합니다. 또한 서버리스 환경에서는 응답이 전송된 후 즉시 계산이 중단되어 작업이 중단될 수 있어 신뢰할 수 없습니다.
+
+`unstable_after()`는 다른 Next.js API 및 컨텍스트를 고려하여 설계되었으므로 사용하는 것이 좋습니다.
+
+## Serverless function duration
+
+`unstable_after()`는 플랫폼의 기본값 또는 구성된 최대 지속 시간 동안 실행됩니다. 플랫폼에서 지원하는 경우, [`maxDuration`](/docs/app/api-reference/file-conventions/route-segment-config#maxduration) 경로 세그먼트 구성을 사용하여 타임아웃 제한을 구성할 수 있습니다.

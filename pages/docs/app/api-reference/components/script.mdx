@@ -1,0 +1,251 @@
+---
+title: <Script>
+description: Optimize third-party scripts in your Next.js application using the built-in `next/script` Component.
+---
+
+{/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+
+# `<Script>`
+
+이 API 참조는 Script 컴포넌트에 사용할 수 있는 [props](#props)를 이해하는 데 도움이 됩니다. 기능과 사용법에 대해서는 [Optimizing Scripts](/docs/app/building-your-application/optimizing/scripts) 페이지를 참조하세요.
+
+```tsx filename="app/dashboard/page.tsx" switcher
+import Script from "next/script";
+
+export default function Dashboard() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" />
+    </>
+  );
+}
+```
+
+```jsx filename="app/dashboard/page.js" switcher
+import Script from "next/script";
+
+export default function Dashboard() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" />
+    </>
+  );
+}
+```
+
+## Props
+
+여기 Script 컴포넌트에 사용할 수 있는 props 요약이 있습니다:
+
+| Prop                    | Example                           | Type     | Required                              |
+| ----------------------- | --------------------------------- | -------- | ------------------------------------- |
+| [`src`](#src)           | `src="http://example.com/script"` | String   | Required unless inline script is used |
+| [`strategy`](#strategy) | `strategy="lazyOnload"`           | String   | -                                     |
+| [`onLoad`](#onload)     | `onLoad={onLoadFunc}`             | Function | -                                     |
+| [`onReady`](#onready)   | `onReady={onReadyFunc}`           | Function | -                                     |
+| [`onError`](#onerror)   | `onError={onErrorFunc}`           | Function | -                                     |
+
+## Required Props
+
+`<Script />` 컴포넌트에는 다음과 같은 속성이 필요합니다.
+
+### `src`
+
+외부 스크립트의 URL을 지정하는 경로 문자열입니다. 이는 절대 외부 URL이나 내부 경로일 수 있습니다. 인라인 스크립트를 사용하지 않는 한 `src` 속성이 필요합니다.
+
+## Optional Props
+
+`<Script />` 컴포넌트는 필요한 속성 외에도 여러 추가 속성을 허용합니다.
+
+### `strategy`
+
+스크립트의 로딩 전략입니다. 사용할 수 있는 네 가지 다른 전략이 있습니다:
+
+- `beforeInteractive`: 모든 Next.js 코드와 페이지 하이드레이션이 발생하기 전에 로드됩니다.
+- `afterInteractive`: (**기본값**) 초기 하이드레이션 후에 로드됩니다.
+- `lazyOnload`: 브라우저 유휴 시간 동안 로드됩니다.
+- `worker`: (실험적) 웹 워커에서 로드됩니다.
+
+### `beforeInteractive`
+
+`beforeInteractive` 전략으로 로드되는 스크립트는 서버에서 초기 HTML에 삽입되고, 모든 Next.js 모듈 전에 다운로드되며, 페이지에 _어떠한_ 하이드레이션이 발생하기 전에 배치된 순서대로 실행됩니다.
+
+이 전략으로 표시된 스크립트는 미리 로드되고 첫 번째 코드가 실행되기 전에 가져오지만, 실행이 페이지 하이드레이션이 발생하는 것을 차단하지 않습니다.
+
+<AppOnly>
+
+`beforeInteractive` 스크립트는 루트 레이아웃(`app/layout.tsx`) 내부에 배치되어야 하며, 사이트 전체에서 필요한 스크립트를 로드하도록 설계되었습니다 (즉, 응용 프로그램의 모든 페이지가 서버 측에서 로드될 때 스크립트가 로드됩니다).
+
+</AppOnly>
+
+<PagesOnly>
+
+`beforeInteractive` 스크립트는 `Document` 컴포넌트(`pages/_document.js`) 내부에 배치되어야 하며, 사이트 전체에서 필요한 스크립트를 로드하도록 설계되었습니다 (즉, 응용 프로그램의 모든 페이지가 서버 측에서 로드될 때 스크립트가 로드됩니다).
+
+</PagesOnly>
+
+**이 전략은 페이지의 어느 부분도 인터랙티브해지기 전에 가져와야 하는 중요한 스크립트에만 사용해야 합니다.**
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import Script from "next/script";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Script
+          src="https://example.com/script.js"
+          strategy="beforeInteractive"
+        />
+      </body>
+    </html>
+  );
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import Script from "next/script";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Script
+          src="https://example.com/script.js"
+          strategy="beforeInteractive"
+        />
+      </body>
+    </html>
+  );
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+```jsx filename="pages/_document.js"
+import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
+
+export default function Document() {
+  return (
+    <Html>
+      <Head />
+      <body>
+        <Main />
+        <NextScript />
+        <Script
+          src="https://example.com/script.js"
+          strategy="beforeInteractive"
+        />
+      </body>
+    </Html>
+  );
+}
+```
+
+</PagesOnly>
+
+> **유용한 정보**: `beforeInteractive` 스크립트는 컴포넌트 내의 어디에 배치되든 관계없이 항상 HTML 문서의 `head` 내부에 삽입됩니다.
+
+가능한 한 빨리 로드되어야 하는 스크립트의 예는 다음과 같습니다:
+
+- 봇 탐지기
+- 쿠키 동의 관리자
+
+### `afterInteractive`
+
+`afterInteractive` 전략을 사용하는 스크립트는 클라이언트 측 HTML에 삽입되고 페이지의 일부 (또는 전체) 하이드레이션 후에 로드됩니다. **이것이 Script 컴포넌트의 기본 전략**이며, 가능한 한 빨리 로드되어야 하지만 첫 번째 Next.js 코드 이전에는 로드되지 않아야 하는 스크립트에 사용해야 합니다.
+
+`afterInteractive` 스크립트는 모든 페이지 또는 레이아웃 내부에 배치할 수 있으며, 브라우저에서 해당 페이지 (또는 페이지 그룹)가 열릴 때만 로드되고 실행됩니다.
+
+```jsx filename="app/page.js"
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" strategy="afterInteractive" />
+    </>
+  );
+}
+```
+
+`afterInteractive`에 적합한 스크립트의 예는 다음과 같습니다:
+
+- 태그 관리자
+- 애널리틱스
+
+### `lazyOnload`
+
+`lazyOnload` 전략을 사용하는 스크립트는 클라이언트 측 HTML에 브라우저 유휴 시간 동안 삽입되고 페이지의 모든 리소스가 페치된 후에 로드됩니다. 이 전략은 초기 로드가 필요하지 않은 백그라운드 또는 저우선 순위 스크립트에 사용해야 합니다.
+
+`lazyOnload` 스크립트는 모든 페이지 또는 레이아웃 내부에 배치할 수 있으며, 브라우저에서 해당 페이지 (또는 페이지 그룹)가 열릴 때만 로드되고 실행됩니다.
+
+```jsx filename="app/page.js"
+import Script from "next/script";
+
+export default function Page() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" strategy="lazyOnload" />
+    </>
+  );
+}
+```
+
+즉시 로드될 필요가 없고 `lazyOnload`로 페치될 수 있는 스크립트의 예는 다음과 같습니다:
+
+- 채팅 지원 플러그인
+- 소셜 미디어 위젯
+
+### `worker`
+
+> **경고:** `worker` 전략은 아직 안정적이지 않으며 `app` 디렉토리와 아직 작동하지 않습니다. 주의해서 사용하세요.
+
+`worker` 전략을 사용하는 스크립트는 웹 워커로 오프로드되어 메인 스레드를 확보하고 중요한 첫 번째 리소스만 처리되도록 합니다. 이 전략은 모든 스크립트에 사용할 수 있지만, 모든 서드파티 스크립트를 지원한다고 보장되지 않는 고급 사용 사례입니다.
+
+`worker`를 전략으로 사용하려면 `next.config.js`에서 `nextScriptWorkers` 플래그를 활성화해야 합니다:
+
+```js filename="next.config.js"
+module.exports = {
+  experimental: {
+    nextScriptWorkers: true,
+  },
+};
+```
+
+`worker` 스크립트는 **현재 `pages/` 디렉토리에서만 사용할 수 있습니다**:
+
+```tsx filename="pages/home.tsx" switcher
+import Script from "next/script";
+
+export default function Home() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" strategy="worker" />
+    </>
+  );
+}
+```
+
+```jsx filename="pages/home.js" switcher
+import Script from "next/script";
+
+export default function Home() {
+  return (
+    <>
+      <Script src="https://example.com/script.js" strategy="worker" />
+    </>
+  );
+}
+```

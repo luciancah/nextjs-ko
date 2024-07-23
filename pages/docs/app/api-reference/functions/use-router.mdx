@@ -1,0 +1,163 @@
+---
+title: useRouter
+description: API reference for the useRouter hook.
+---
+
+# useRouter
+
+`useRouter` 훅은 [Client Components](/docs/app/building-your-application/rendering/client-components) 내에서 프로그래밍 방식으로 라우트를 변경할 수 있게 해줍니다.
+
+> **추천:** `useRouter`를 사용해야 하는 특정 요구 사항이 없는 한, 탐색에는 [`<Link>` 컴포넌트](/docs/app/building-your-application/routing/linking-and-navigating#link-component)를 사용하는 것이 좋습니다.
+
+```tsx filename="app/example-client-component.tsx" switcher
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function Page() {
+  const router = useRouter();
+
+  return (
+    <button type="button" onClick={() => router.push("/dashboard")}>
+      Dashboard
+    </button>
+  );
+}
+```
+
+```jsx filename="app/example-client-component.js" switcher
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function Page() {
+  const router = useRouter();
+
+  return (
+    <button type="button" onClick={() => router.push("/dashboard")}>
+      Dashboard
+    </button>
+  );
+}
+```
+
+## `useRouter()`
+
+- `router.push(href: string, { scroll: boolean })`: 제공된 라우트로 클라이언트 측 탐색을 수행합니다. [브라우저의 히스토리](https://developer.mozilla.org/docs/Web/API/History_API) 스택에 새로운 항목을 추가합니다.
+- `router.replace(href: string, { scroll: boolean })`: 브라우저의 [히스토리 스택](https://developer.mozilla.org/docs/Web/API/History_API)에 새로운 항목을 추가하지 않고 제공된 라우트로 클라이언트 측 탐색을 수행합니다.
+- `router.refresh()`: 현재 라우트를 새로 고칩니다. 서버에 새로운 요청을 보내고, 데이터 요청을 다시 가져오며, Server Components를 다시 렌더링합니다. 클라이언트는 영향을 받지 않는 클라이언트 측 React 상태 (예: `useState`) 또는 브라우저 상태 (예: 스크롤 위치)를 잃지 않고 업데이트된 React Server Component 페이로드를 병합합니다.
+- `router.prefetch(href: string)`: 더 빠른 클라이언트 측 전환을 위해 제공된 라우트를 [미리 가져오기](/docs/app/building-your-application/routing/linking-and-navigating#2-prefetching)합니다.
+- `router.back()`: 브라우저의 히스토리 스택에서 이전 라우트로 돌아갑니다.
+- `router.forward()`: 브라우저의 히스토리 스택에서 다음 페이지로 이동합니다.
+
+> **알아두면 좋은 점**:
+>
+> - `<Link>` 컴포넌트는 뷰포트에서 보일 때 자동으로 라우트를 미리 가져옵니다.
+> - `refresh()`는 가져오기 요청이 캐시된 경우 동일한 결과를 다시 생성할 수 있습니다. `cookies` 및 `headers`와 같은 다른 동적 함수도 응답을 변경할 수 있습니다.
+
+### `next/router`에서 마이그레이션
+
+- `useRouter` 훅은 App Router를 사용할 때 `next/router`가 아닌 `next/navigation`에서 가져와야 합니다.
+- `pathname` 문자열은 제거되었으며 [`usePathname()`](/docs/app/api-reference/functions/use-pathname)로 대체되었습니다.
+- `query` 객체는 제거되었으며 [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)로 대체되었습니다.
+- `router.events`는 대체되었습니다. [자세한 내용은 아래를 참조하세요.](#router-events)
+
+[전체 마이그레이션 가이드 보기](/docs/app/building-your-application/upgrading/app-router-migration).
+
+## 예제
+
+### Router events
+
+`usePathname` 및 `useSearchParams`와 같은 다른 Client Component 훅을 구성하여 페이지 변경 사항을 청취할 수 있습니다.
+
+```jsx filename="app/components/navigation-events.js"
+"use client";
+
+import { useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+
+export function NavigationEvents() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const url = `${pathname}?${searchParams}`;
+    console.log(url);
+    // 이제 현재 URL을 사용할 수 있습니다.
+    // ...
+  }, [pathname, searchParams]);
+
+  return "...";
+}
+```
+
+레이아웃에 가져올 수 있습니다.
+
+```jsx filename="app/layout.js" highlight={2,10-12}
+import { Suspense } from "react";
+import { NavigationEvents } from "./components/navigation-events";
+
+export default function Layout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
+      </body>
+    </html>
+  );
+}
+```
+
+> **알아두면 좋은 점**: `<NavigationEvents>`는 [`Suspense` 경계](/docs/app/building-your-application/routing/loading-ui-and-streaming#example)로 감싸져 있습니다. 이는 [`useSearchParams()`](/docs/app/api-reference/functions/use-search-params)가 [정적 렌더링](/docs/app/building-your-application/rendering/server-components#static-rendering-default) 중 가장 가까운 `Suspense` 경계까지 클라이언트 측 렌더링을 유발하기 때문입니다. [자세히 알아보기](/docs/app/api-reference/functions/use-search-params#behavior).
+
+### 스크롤 복원 비활성화
+
+기본적으로, Next.js는 새로운 라우트로 이동할 때 페이지 상단으로 스크롤합니다. `router.push()` 또는 `router.replace()`에 `scroll: false`를 전달하여 이 동작을 비활성화할 수 있습니다.
+
+```tsx filename="app/example-client-component.tsx" switcher
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function Page() {
+  const router = useRouter();
+
+  return (
+    <button
+      type="button"
+      onClick={() => router.push("/dashboard", { scroll: false })}
+    >
+      Dashboard
+    </button>
+  );
+}
+```
+
+```jsx filename="app/example-client-component.jsx" switcher
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export default function Page() {
+  const router = useRouter();
+
+  return (
+    <button
+      type="button"
+      onClick={() => router.push("/dashboard", { scroll: false })}
+    >
+      Dashboard
+    </button>
+  );
+}
+```
+
+## Version History
+
+| Version   | Changes                                        |
+| --------- | ---------------------------------------------- |
+| `v13.0.0` | `useRouter` from `next/navigation` introduced. |
