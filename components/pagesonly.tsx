@@ -1,9 +1,15 @@
+import { useRouter } from "next/router";
+
 const PagesOnly = ({ children }) => {
-  return (
-    <div style={{ border: "1px solid red", padding: "10px", margin: "10px" }}>
-      <code>Pages Only</code> {children}
-    </div>
-  );
+  const router = useRouter();
+
+  const isPageRoute = router.pathname.startsWith("/docs/pages");
+
+  if (!isPageRoute) {
+    return null;
+  }
+
+  return <>{children}</>;
 };
 
 export default PagesOnly;

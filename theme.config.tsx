@@ -5,6 +5,7 @@ import AppOnly from "components/apponly";
 import PagesOnly from "components/pagesonly";
 import Cross from "components/cross";
 import Check from "components/check";
+import Image from "components/externalImage";
 
 const config: DocsThemeConfig = {
   logo: <span>Nextjs 한국어 번역</span>,
@@ -24,7 +25,7 @@ const config: DocsThemeConfig = {
     key: "banner",
     text: (
       <a href="https://github.com/luciancah/nextjs-ko" target="_blank">
-        🎉 공식문서 번역에 참여해주세요.
+        🎉 공식문서 번역에 참여해주세요. &nbsp;🐙&nbsp; Github 바로가기 &nbsp;🐙
       </a>
     ),
   },
@@ -33,6 +34,7 @@ const config: DocsThemeConfig = {
     Cross,
     AppOnly,
     PagesOnly,
+    Image,
   },
   editLink: {
     component: null,
@@ -40,6 +42,7 @@ const config: DocsThemeConfig = {
   feedback: {
     content: null,
   },
+  darkMode: true,
   footer: {
     text: "Using Nextra Docs Template",
   },

@@ -8,6 +8,8 @@ related:
     - getting-started/project-structure
 ---
 
+import ExternalImage from "components/externalImage";
+
 # 설치
 
 시스템 요구 사항:
@@ -83,6 +85,15 @@ Next.js는 파일 시스템 라우팅을 사용하므로 애플리케이션의 �
 새로운 애플리케이션에는 [App Router](/docs/app)를 사용하는 것이 좋습니다. 이 라우터는 React의 최신 기능을 사용할 수 있으며, 커뮤니티 피드백을 기반으로 한 [Pages Router](/docs/pages)의 발전된 버전입니다.
 
 `app/` 폴더를 만들고 `layout.tsx` 및 `page.tsx` 파일을 추가하세요. 이 파일들은 사용자가 애플리케이션의 루트(`/`)를 방문할 때 렌더링됩니다.
+
+<ExternalImage
+  srcLight="/docs/light/app-getting-started.png"
+  srcDark="/docs/dark/app-getting-started.png"
+  alt="App Folder Structure"
+  width={1600}
+  height={363}
+  unoptimized={true}
+/>
 
 ```tsx filename="app/layout.tsx" switcher
 export default function RootLayout({

@@ -1,12 +1,12 @@
 {
+  "index": {
+    "title": "시작하기"
+  },
+  "---": {
+    "type": "separator"
+  },
   "getting-started": {
     "title": "Getting Started"
-  },
-  "getting-started/installation": {
-    "title": "Installation"
-  },
-  "getting-started/project-structure": {
-    "title": "Next.js Project Structure"
   },
   "app": {
     "title": "App Router"

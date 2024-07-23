@@ -1,10 +1,15 @@
+import { useRouter } from "next/router";
+
 const AppOnly = ({ children }) => {
-  return (
-    <div style={{ border: "1px solid red", padding: "10px", margin: "10px" }}>
-      App Only
-      {children}
-    </div>
-  );
+  const router = useRouter();
+
+  const isAppRoute = router.pathname.startsWith("/docs/app");
+
+  if (!isAppRoute) {
+    return null;
+  }
+
+  return <>{children}</>;
 };
 
 export default AppOnly;
