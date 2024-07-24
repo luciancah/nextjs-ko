@@ -3,6 +3,7 @@
 ### 기여 가능 항목
 
 Next.js 한국어 번역 프로젝트에 참여해 주셔서 감사합니다. 다음은 기여 가능한 항목입니다.
+
 **현재 진행중인 목록은 [Issue](https://github.com/luciancah/nextjs-ko/issues)를 확인해 주세요.**
 
 1. 새로운 문서 번역
