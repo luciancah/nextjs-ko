@@ -14,7 +14,8 @@
 
 ## 번역에 참여하고 싶나요?
 
-[기여 안내서](https://github.com/luciancah/nextjs-ko/blob/main/CONTRIBUTING.md)와 등록된 Issue를 확인해 주세요.
+[기여 안내서](https://github.com/luciancah/nextjs-ko/blob/main/CONTRIBUTING.MD)와 등록된 Issue를 확인해 주세요.
+
 
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
