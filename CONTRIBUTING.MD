@@ -89,6 +89,8 @@ Next.js 한국어 번역 프로젝트에 참여해 주셔서 감사합니다. �
 }
 ```
 
+- title과 description 등 markdown tag는 원본 영문 그대로 작성합니다.
+
 ```mdx filename="installation.mdx"
 ---
 title: Installation
