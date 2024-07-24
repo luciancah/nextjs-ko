@@ -2,79 +2,79 @@ name: Sync Next.js docs to Korean repo
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
-  workflow_dispatch:  # Allows manual triggering
+    - cron: '0 0 * * *' # Runs at 00:00 UTC every day
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   sync-docs:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Next.js
-      uses: actions/checkout@v2
-      with:
-        repository: vercel/next.js
-        ref: canary
-        path: next-js
-        sparse-checkout: |
-          docs
+      - name: Checkout Next.js
+        uses: actions/checkout@v2
+        with:
+          repository: vercel/next.js
+          ref: canary
+          path: next-js
+          sparse-checkout: |
+            docs
 
-    - name: Checkout Korean repo
-      uses: actions/checkout@v2
-      with:
-        repository: luciancah/nextjs-ko
-        token: ${{ secrets.ACTION_PAT }}
-        path: nextjs-ko
-        ref: main
+      - name: Checkout Korean repo
+        uses: actions/checkout@v2
+        with:
+          repository: luciancah/nextjs-ko
+          token: ${{ secrets.ACTION_PAT }}
+          path: nextjs-ko
+          ref: main
 
-    - name: Configure Git
-      run: |
-        git config --global user.name github-actions
-        git config --global user.email github-actions@github.com
+      - name: Configure Git
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
 
-    - name: Sync and check differences
-      id: sync
-      run: |
-        # Ensure target directory exists
-        mkdir -p nextjs-ko/origin/canary/docs
+      - name: Sync and check differences
+        id: sync
+        run: |
+          # Ensure target directory exists
+          mkdir -p nextjs-ko/origin/canary/docs
 
-        # Use rsync to sync files and track changes
-        changes=$(rsync -avrc --delete --out-format="%n" next-js/docs/ nextjs-ko/origin/canary/docs/ | grep -v "/$" || true)
+          # Use rsync to sync files and track changes
+          changes=$(rsync -avrc --delete --out-format="%n" next-js/docs/ nextjs-ko/origin/canary/docs/ | grep -v "/$" || true)
 
-        # If there are changes, commit and push to docs-update branch
-        if [ ! -z "$changes" ]; then
-          cd nextjs-ko
-          git checkout -B docs-update
-          git add origin/canary/docs
-          git commit -m "Sync docs from Next.js
+          # If there are changes, commit and push to docs-update branch
+          if [ ! -z "$changes" ]; then
+            cd nextjs-ko
+            git checkout -B docs-update
+            git add origin/canary/docs
+            git commit -m "Sync docs from Next.js
 
-        Changes:
-        $changes"
-          git push -f origin docs-update
-          echo "has_changes=true" >> $GITHUB_OUTPUT
-          echo 'changes<<EOF' >> $GITHUB_OUTPUT
-          echo "$changes" >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
-        else
-          echo "No changes detected"
-          echo "has_changes=false" >> $GITHUB_OUTPUT
-        fi
+          Changes:
+          $changes"
+            git push -f origin docs-update
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo 'changes<<EOF' >> $GITHUB_OUTPUT
+            echo "$changes" >> $GITHUB_OUTPUT
+            echo 'EOF' >> $GITHUB_OUTPUT
+          else
+            echo "No changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
 
-    - name: Create issue for new changes
-      if: steps.sync.outputs.has_changes == 'true'
-      uses: actions/github-script@v6
-      with:
-        github-token: ${{secrets.ACTION_PAT}}
-        script: |
-          const changes = `${{ steps.sync.outputs.changes }}`.split('\n').filter(Boolean);
-          await github.rest.issues.create({
-            owner: 'luciancah',
-            repo: 'nextjs-ko',
-            title: 'vercel/next.js canary 문서에 업데이트 사항이 있습니다.',
-            body: `The following files have been updated in the Next.js docs:
+      - name: Create issue for new changes
+        if: steps.sync.outputs.has_changes == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.ACTION_PAT}}
+          script: |
+            const changes = `${{ steps.sync.outputs.changes }}`.split('\n').filter(Boolean);
+            await github.rest.issues.create({
+              owner: 'luciancah',
+              repo: 'nextjs-ko',
+              title: 'vercel/next.js canary 문서에 업데이트 사항이 있습니다.',
+              body: `The following files have been updated in the Next.js docs:
 
-          ${changes.map(file => `- ${file}`).join('\n')}
+            ${changes.map(file => `- ${file}`).join('\n')}
 
-          Please review these changes and update the Korean translation accordingly.
-          The changes have been pushed to the \`docs-update\` branch.`
-          });
+            Please review these changes and update the Korean translation accordingly.
+            The changes have been pushed to the \`docs-update\` branch.`
+            });

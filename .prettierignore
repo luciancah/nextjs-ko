@@ -1,3 +1,4 @@
 origin/
 node_modules/
 *.yaml
+*.yml
