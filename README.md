@@ -1,4 +1,7 @@
 # Next.js 공식문서 한국어 번역 프로젝트
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Next.js 문서](https://nextjs.org/docs)의 전체 한국어 번역을 목표로 합니다.
 - `nextjs.org` -> `nextjs-ko.org` 도메인 변경 만으로 한국어 문서의 동등한 접근을 목표로 합니다.
@@ -140,3 +143,25 @@ export default function Home() {
 - `AppOnly`: App Router 문서 `/docs/app`에서만 보이는 컴포넌트
 - `PagesOnly`: Page Router 문서 `/docs/pages`에서만 보이는 컴포넌트
 - `Image`: next.js 이미지를 확장한 컴포넌트
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://blog.luciancah.com"><img src="https://avatars.githubusercontent.com/u/8311335?v=4?s=100" width="100px;" alt="Jinhyung Lee"/><br /><sub><b>Jinhyung Lee</b></sub></a><br /><a href="https://github.com/luciancah/nextjs-ko/commits?author=luciancah" title="Documentation">📖</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
