@@ -1,2 +1,3 @@
-origin
+origin/
+node_modules/
 *.yaml
