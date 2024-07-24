@@ -1,10 +1,12 @@
+# 기여 안내서
+
+해당 문서를 확인하기 전에 [Next.js 프레임워크 Docs 기여 가이드](/docs/community/contribution-guide)를 먼저 확인해 주세요.
+
 ## 한국어 문서 번역 기여 안내서
 
 ### 기여 가능 항목
 
 Next.js 한국어 번역 프로젝트에 참여해 주셔서 감사합니다. 다음은 기여 가능한 항목입니다.
-
-**현재 진행중인 목록은 [Issue](https://github.com/luciancah/nextjs-ko/issues)를 확인해 주세요.**
 
 1. 새로운 문서 번역
 2. 기 번역된 문서의 오타, 컨벤션 수정 (아래 가이드에 따름)
@@ -33,7 +35,7 @@ Next.js 한국어 번역 프로젝트에 참여해 주셔서 감사합니다. �
 1. [해당 레포지토리](https://github.com/luciancah/nextjs-ko)를 포크합니다.
 2. 포크한 레포지토리를 로컬에 클론합니다.
 3. `pnpm install` 명령어를 통해 의존성을 설치합니다.
-4. `npm run dev` 명령어를 통해 로컬에서 확인합니다.
+4. `pnpm run dev` 명령어를 통해 로컬에서 확인합니다.
 5. 문서에서 오류를 확인하셨다면 수정하고 커밋합니다.
 
 - 새롭게 번역이 필요한 문서는 [Issue](https://github.com/luciancah/nextjs-ko/issues)를 통해 등록됩니다.
@@ -43,6 +45,7 @@ Next.js 한국어 번역 프로젝트에 참여해 주셔서 감사합니다. �
 #### PR 제출 방법
 
 - 커밋 전 husky를 통해 prettier 포맷팅과 lint-staged를 실행합니다.
+- 자동 실행이 불가능하다면 pnpm run format:fix를 실행합니다.
 - 커밋 메시지의 컨벤션은 다음과 같습니다:
 
 ```bash

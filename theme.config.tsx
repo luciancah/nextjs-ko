@@ -9,6 +9,19 @@ import Image from 'components/externalImage'
 
 const config: DocsThemeConfig = {
   logo: <span>Nextjs 한국어 번역</span>,
+  head: (
+    <>
+      <link rel="icon" href="/favicon.ico" />
+      <meta
+        name="google-site-verification"
+        content="iK4L0Q5k7Z7rJf9UzZz8bHJUz2w1J5WgWwY1v0QsV3I"
+      />
+      <meta
+        name="naver-site-verification"
+        content="5c8d3e1d2f9b4d2c4c2c8e5c8d3e1d2f9b4d2c4c2c8e5c8d3e1d2f9b4d2c4c2c8e5c8d3e1d2f9b4d2c4c2c8e5"
+      />
+    </>
+  ),
   project: {
     link: 'https://github.com/luciancah/nextjs-ko',
   },
@@ -44,7 +57,7 @@ const config: DocsThemeConfig = {
   },
   darkMode: true,
   footer: {
-    text: 'Using Nextra Docs Template',
+    text: 'Nextjs 한국어 번역 | Using Nextra Docs Template',
   },
 }
 
