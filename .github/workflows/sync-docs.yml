@@ -51,8 +51,10 @@ jobs:
         Changes:
         $changes"
           git push -f origin docs-update
-          echo "changes=$changes" >> $GITHUB_OUTPUT
           echo "has_changes=true" >> $GITHUB_OUTPUT
+          echo 'changes<<EOF' >> $GITHUB_OUTPUT
+          echo "$changes" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
         else
           echo "No changes detected"
           echo "has_changes=false" >> $GITHUB_OUTPUT
