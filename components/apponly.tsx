@@ -6,7 +6,7 @@ const AppOnly = ({ children }) => {
   const isAppRoute = router.pathname.startsWith('/docs/app')
 
   if (!isAppRoute) {
-    return null
+    return null;
   }
 
   return <>{children}</>
