@@ -1,4 +1,17 @@
-# Next.js 공식문서 한국어 번역 프로젝트
+<p align="center">
+  <a href="https://nextjs.org">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png">
+      <img src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_light_background.png" height="128">
+    </picture>
+    <h1 align="center">Next.js 문서 한국어 번역 프로젝트</h1>
+  </a>
+</p>
+
+## 문서는 여기서 확인하실 수 있습니다.
+
+[문서](https://nextjs-ko.org)
+
 
 ## 안녕하세요!
 
