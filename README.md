@@ -3,7 +3,9 @@
 ## 안녕하세요!
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Next.js 문서](https://nextjs.org/docs)의 전체 한국어 번역을 목표로 합니다.
@@ -15,8 +17,6 @@
 ## 번역에 참여하고 싶나요?
 
 [기여 안내서](https://github.com/luciancah/nextjs-ko/blob/main/CONTRIBUTING.MD)와 등록된 Issue를 확인해 주세요.
-
-
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
