@@ -1,6 +1,6 @@
 ---
 title: Debugging
-description: 당신의 Next.js 애플리케이션을 VS Code와 Chore DevTools로 어떻게 디버깅하는지를 배워봅시다.
+description: VS Code 또는 Chrome DevTools로 Next.js 애플리케이션을 디버그하는 방법을 알아보세요.
 ---
 
 # Debugging
@@ -55,11 +55,11 @@ Yarn을 사용하는 경우 `npm run dev`를 `yarn dev`로 바꾸거나 pnpm을 
 
 루트가 아닌 디렉터리에서 Next.js를 실행하는 경우(예: Turborepo를 사용하는 경우) 서버 측 및 전체 스택 디버깅 작업에 'cwd'를 추가해야 합니다. 예를 들어 `"cwd": "${workspaceFolder}/apps/web"`입니다.
 
-이제 디버그 패널(Windows/Linux에서는 `Ctrl+Shift+D`, macOS에서는 `⇧+⌘+D`)로 이동하여 실행 구성을 선택한 다음 `F5`를 누르거나 **Debug: Start Debugging**을 선택합니다. 명령 팔레트에서 디버깅 세션을 시작하세요.
+이제 디버그 패널(Windows/Linux에서는 `Ctrl+Shift+D`, macOS에서는 `⇧+⌘+D`)로 이동하여 실행 구성을 선택한 다음 `F5`를 누르거나 **Debug: Start Debugging**을 선택합니다. 명령 팔레트에서 디버깅 세션을 시작합니다.
 
 ## Jetbrains WebStorm에서 디버거 사용
 
-런타임 구성이 나열된 드롭다운 메뉴를 클릭하고 `Edit Configurations...`을 클릭합니다. `http://localhost:3000`을 URL로 사용하여 `Javascript Debug` 디버그 구성을 만듭니다. 원하는 대로 사용자 정의하고(예: 디버깅용 브라우저, 프로젝트 파일로 저장) `OK`를 클릭하세요.
+런타임 구성이 나열된 드롭다운 메뉴를 클릭하고 `Edit Configurations...`을 클릭합니다. `http://localhost:3000`을 URL로 사용하여 `Javascript Debug` 디버그 구성을 만듭니다. 원하는 대로 사용자 정의하고(예: 디버깅용 브라우저, 프로젝트 파일로 저장) `OK`를 클릭합니다.
 이 디버그 구성을 실행하면 선택한 브라우저가 자동으로 열립니다. 이 시점에서 디버그 모드에는 NextJS 노드 애플리케이션과 클라이언트/브라우저 애플리케이션이라는 2개의 애플리케이션이 있어야 합니다.
 
 ## Chrome DevTools로 디버깅
@@ -100,7 +100,7 @@ ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 
 서버가 시작되면 Chrome에서 새 탭을 열고 `chrome://inspect`로 이동하세요. **Remote Target** 섹션에서 Next.js 애플리케이션을 볼 수 있습니다. 애플리케이션 아래의 **inspect**를 클릭하여 별도의 DevTools 창을 열고, **Sources** 탭으로 이동합니다.
 
-여기서 서버 측 코드를 디버깅하는 것은 Chrome DevTools로 클라이언트 측 코드를 디버깅하는 것과 매우 유사합니다. 다만, 여기서 `Ctrl+P` 또는 `⌘+P`를 사용하여 파일을 검색할 때 소스 파일 경로는 `webpack://{application-name}/./`로 시작합니다 (`{application-name}`은 `package.json` 파일에 명시된 애플리케이션 이름으로 대체됩니다).
+여기서 서버 측 코드를 디버깅하는 것은 Chrome DevTools로 클라이언트 측 코드를 디버깅하는 것과 매우 유사합니다. 다만, 여기서 `Ctrl+P` 또는 `⌘+P`를 사용하여 파일을 검색할 때 소스 파일 경로는 `webpack://{application-name}/./`로 시작합니다. (`{application-name}`은 `package.json` 파일에 명시된 애플리케이션 이름으로 대체됩니다).
 
 ### Windows에서 디버깅
 
