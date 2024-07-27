@@ -4,13 +4,15 @@
   "description": "nextjs 공식문서 한국어 번역",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build-local": "pnpm run generate-sitemap && next build",
+    "build": "NODE_ENV=production pnpm run generate-sitemap && next build",
     "start": "next start",
     "lint": "next lint --cache",
     "format": "prettier --cache --check .",
-    "format:fix": "prettier --cache --write --log-level warn .",
+    "format:fix": "prettier --cache --write --log-level warn . --ignore-path .prettierignore",
     "prepare": "husky",
-    "lint-staged": "pnpm format:fix && pnpm lint"
+    "lint-staged": "pnpm format:fix && pnpm lint",
+    "generate-sitemap": "node scripts/generate-sitemap.mjs"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,8 @@
   "homepage": "https://github.com/nextjs-ko#readme",
   "dependencies": {
     "@next/third-parties": "^14.2.5",
+    "globby": "^14.0.2",
+    "gray-matter": "^4.0.3",
     "next": "^13.0.6",
     "next-themes": "^0.3.0",
     "nextra": "latest",
