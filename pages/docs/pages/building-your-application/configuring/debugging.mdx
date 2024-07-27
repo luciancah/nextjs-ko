@@ -5,8 +5,7 @@ description: VS Code 또는 Chrome DevTools로 Next.js 애플리케이션을 디
 
 # Debugging
 
-이 문서에서는 [VS 코드 디버거]를 사용하여 전체 소스 맵을 지원하는 Next.js 프런트엔드 및 백엔드 코드를 디버깅하는 방법을 설명합니다.
-(https://code.visualstudio.com/docs/editor/debugging) or [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools).
+이 문서에서는 [VS Code debugger](https://code.visualstudio.com/docs/editor/debugging)와 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools)를 사용하여 전체 소스 맵을 지원하는 Next.js 프런트엔드 및 백엔드 코드를 디버깅하는 방법을 설명합니다.
 
 Node.js에 연결할 수 있는 모든 디버거를 사용하여 Next.js 애플리케이션을 디버깅할 수도 있습니다. Node.js에서 자세한 내용을 확인할 수 있습니다. [Debugging Guide](https://nodejs.org/en/docs/guides/debugging-getting-started/).
 
@@ -96,7 +95,7 @@ For help, see: https://nodejs.org/en/docs/inspector
 ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 ```
 
-> `NODE_OPTIONS='--inspect' npm run dev` 또는 `NODE_OPTIONS='--inspect' Yarn dev`를 실행하면 작동하지 않는 것을 주의하세요. 이는 npm/yarn 프로세스와 Next.js 모두 동일한 포트에서 디버거를 시작하려고 시도하기 때문입니다. 이로 인해 콘솔에서 Starting inspector on 127.0.0.1:9229 failed: address already in use와 같은 오류가 발생할 수 있습니다.
+> `NODE_OPTIONS='--inspect' npm run dev` 또는 `NODE_OPTIONS='--inspect' Yarn dev`를 실행하면 작동하지 않는 것을 주의하세요. 이는 npm/yarn 프로세스와 Next.js 모두 동일한 포트에서 디버거를 시작하려고 시도하기 때문입니다. 이로 인해 콘솔에서 `Starting inspector on 127.0.0.1:9229 failed: address already in use`와 같은 오류가 발생할 수 있습니다.
 
 서버가 시작되면 Chrome에서 새 탭을 열고 `chrome://inspect`로 이동하세요. **Remote Target** 섹션에서 Next.js 애플리케이션을 볼 수 있습니다. 애플리케이션 아래의 **inspect**를 클릭하여 별도의 DevTools 창을 열고, **Sources** 탭으로 이동합니다.
 
