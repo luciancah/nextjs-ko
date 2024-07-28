@@ -8,7 +8,9 @@ node_modules/
 
 origin/
 public/
+.all-contributorsrc
 
 # 확장자
 *.yml
 *.yaml
+*.md

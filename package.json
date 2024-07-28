@@ -4,8 +4,8 @@
   "description": "nextjs 공식문서 한국어 번역",
   "scripts": {
     "dev": "next dev",
-    "build-local": "pnpm run generate-sitemap && next build",
     "build": "NODE_ENV=production pnpm run generate-sitemap && next build",
+    "build:local": "pnpm run generate-sitemap && next build",
     "start": "next start",
     "lint": "next lint --cache",
     "format": "prettier --cache --check .",
