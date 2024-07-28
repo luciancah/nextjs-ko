@@ -30,7 +30,7 @@ const config: DocsThemeConfig = {
     const { asPath } = useRouter()
     if (asPath !== '/') {
       return {
-        titleTemplate: '%s – Nextjs 한국어 번역',
+        titleTemplate: '%s – Nextjs 한글/한국어 번역',
       }
     }
   },
@@ -57,7 +57,7 @@ const config: DocsThemeConfig = {
   },
   darkMode: true,
   footer: {
-    text: 'Nextjs 한국어 번역 | Using Nextra Docs Template',
+    text: 'Nextjs 공식 문서 한글/한국어 번역 (비공식) | Using Nextra Docs Template',
   },
 }
 
