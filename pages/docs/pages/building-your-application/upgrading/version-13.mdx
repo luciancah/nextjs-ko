@@ -3,13 +3,11 @@ title: Version 13
 description: Upgrade your Next.js Application from Version 12 to 13.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # Version 13
 
 ## Upgrading from 12 to 13
 
-To update to Next.js version 13, run the following command using your preferred package manager:
+Next.js 버전 13으로 업데이트하려면, 선호하는 패키지 매니저를 사용해 다음 명령어를 실행하세요:
 
 ```bash filename="Terminal"
 npm i next@13 react@latest react-dom@latest eslint-config-next@13
@@ -27,65 +25,66 @@ pnpm i next@13 react@latest react-dom@latest eslint-config-next@13
 bun add next@13 react@latest react-dom@latest eslint-config-next@13
 ```
 
-> **Good to know:** If you are using TypeScript, ensure you also upgrade `@types/react` and `@types/react-dom` to their latest versions.
+> **참고:** TypeScript를 사용하는 경우, `@types/react` 와 `@types/react-dom` 도 최신 버전으로 업그레이드해야 합니다.
 
 ### v13 Summary
 
-- The [Supported Browsers](/docs/architecture/supported-browsers) have been changed to drop Internet Explorer and target modern browsers.
-- The minimum Node.js version has been bumped from 12.22.0 to 16.14.0, since 12.x and 14.x have reached end-of-life.
-- The minimum React version has been bumped from 17.0.2 to 18.2.0.
-- The `swcMinify` configuration property was changed from `false` to `true`. See [Next.js Compiler](/docs/architecture/nextjs-compiler) for more info.
-- The `next/image` import was renamed to `next/legacy/image`. The `next/future/image` import was renamed to `next/image`. A [codemod is available](/docs/pages/building-your-application/upgrading/codemods#next-image-to-legacy-image) to safely and automatically rename your imports.
-- The `next/link` child can no longer be `<a>`. Add the `legacyBehavior` prop to use the legacy behavior or remove the `<a>` to upgrade. A [codemod is available](/docs/pages/building-your-application/upgrading/codemods#new-link) to automatically upgrade your code.
-- The `target` configuration property has been removed and superseded by [Output File Tracing](/docs/pages/api-reference/next-config-js/output).
+- [지원되는 브라우저](/docs/architecture/supported-browsers)가 Internet Explorer를 제외하고 최신 브라우저를 대상으로 변경되었습니다.
+- 최소 Node.js 버전이 12.22.0에서 16.14.0으로 상향되었습니다. 이는 12.x 및 14.x 버전이 지원 종료되었기 때문입니다.
+- 최소 React 버전이 17.0.2에서 18.2.0으로 상향되었습니다.
+- `swcMinify` 설정 속성이 `false`에서 `true`로 변경되었습니다. 자세한 내용은 [Next.js 컴파일러](/docs/architecture/nextjs-compiler)를 참조하세요.
+- `next/image` import가 `next/legacy/image`로, `next/future/image` import가 `next/image`로 변경되었습니다. import를 안전하게 자동으로 변경해주는 [codemod](/docs/pages/building-your-application/upgrading/codemods#next-image-to-legacy-image)가 제공됩니다.
+- `next/link`의 자식으로 `<a>` 태그를 사용할 수 없습니다. 레거시 동작을 사용하려면 `legacyBehavior prop`을 추가하거나 `<a>` 태그를 제거하여 업그레이드하세요. 코드를 자동으로 업그레이드 해주는 [codemod](/docs/pages/building-your-application/upgrading/codemods#new-link)가 제공됩니다.
+- `target` 설정 속성이 제거되고 [출력 파일 추적](/docs/pages/api-reference/next-config-js/output)으로 대체되었습니다.
 
 ## Migrating shared features
 
-Next.js 13 introduces a new [`app` directory](/docs/app/building-your-application/routing) with new features and conventions. However, upgrading to Next.js 13 does **not** require using the new [`app` directory](/docs/app/building-your-application/routing#the-app-router).
+Next.js 13은 새로운 기능과 규칙을 갖춘 [`app` 디렉토리](/docs/app/building-your-application/routing)를 도입했습니다. 그러나 Next.js 13으로 업그레이드 하기 위해 새로운 [`app` 디렉토리](/docs/app/building-your-application/routing#the-app-router)를 **반드시 사용해야 하는 것은 아닙니다.**
 
-You can continue using `pages` with new features that work in both directories, such as the updated [Image component](#image-component), [Link component](#link-component), [Script component](#script-component), and [Font optimization](#font-optimization).
+`pages`를 계속 사용할 수 있으며, 업데이트된 [Image 컴포넌트](#image-component), [Link 컴포넌트](#link-component), [Script 컴포넌트](#script-component), 및 [폰트 최적화](#font-optimization)와 같은 새 기능을 사용할 수 있습니다.
 
 ### `<Image/>` Component
 
-Next.js 12 introduced many improvements to the Image Component with a temporary import: `next/future/image`. These improvements included less client-side JavaScript, easier ways to extend and style images, better accessibility, and native browser lazy loading.
+Next.js 12는 임시 import인 `next/future/image`로 이미지 컴포넌트에 많은 개선 사항을 도입했습니다. 이러한 개선 사항에는 클라이언트 사이드 자바스크립트 감소, 이미지 확장 및 스타일링의 용이성, 더 나은 접근성, 및 브라우저의 네이티브 지연 로딩이 포함되었습니다.
 
-Starting in Next.js 13, this new behavior is now the default for `next/image`.
+Next.js 13부터 이러한 새로운 동작은 `next/image`의 기본 동작이 되었습니다.
 
-There are two codemods to help you migrate to the new Image Component:
+새로은 Image 컴포넌트로 마이그레이션하는 데 도움이 되는 두 가지 codemod가 있습니다:
 
-- [next-image-to-legacy-image](/docs/pages/building-your-application/upgrading/codemods#next-image-to-legacy-image): This codemod will safely and automatically rename `next/image` imports to `next/legacy/image` to maintain the same behavior as Next.js 12. We recommend running this codemod to quickly update to Next.js 13 automatically.
-- [next-image-experimental](/docs/pages/building-your-application/upgrading/codemods#next-image-experimental): After running the previous codemod, you can optionally run this experimental codemod to upgrade `next/legacy/image` to the new `next/image`, which will remove unused props and add inline styles. Please note this codemod is experimental and only covers static usage (such as `<Image src={img} layout="responsive" />`) but not dynamic usage (such as `<Image {...props} />`).
+- [next-image-to-legacy-image](/docs/pages/building-your-application/upgrading/codemods#next-image-to-legacy-image): 이 codemod는 `next/image` import를 `next/legacy/image`로 안전하게 자동으로 이름을 변경하여 Next.js 12와 동일한 동작을 유지합니다. Next.js 13으로 빠르게 자동으로 업데이트를 하려면 이 codemod를 실행하는 것이 좋습니다.
 
-Alternatively, you can manually update by following the [migration guide](/docs/pages/building-your-application/upgrading/codemods#next-image-experimental) and also see the [legacy comparison](/docs/pages/api-reference/components/image-legacy#comparison).
+- [next-image-experimental](/docs/pages/building-your-application/upgrading/codemods#next-image-experimental): 이전 codemod를 실행한 후, 이 실험적인 codemod를 선택적으로 실행하여 `next/legacy/image`를 새로운 `next/image`로 업그레이드할 수 있습니다. 이는 사용하지 않는 속성을 제거하고 인라인 스타일을 추가합니다. 이 codemod는 실험적이고 정적 사용(예: <Image src={img} layout="responsive" />)만을 다루며 동적 사용(예: <Image {...props} />)은 다루지 않습니다.
+
+또한, [마이그레이션 가이드]((/docs/pages/building-your-application/upgrading/codemods#next-image-experimental))를 따라 수동으로 업데이트할 수 있으며 [레거시 비교](/docs/pages/api-reference/components/image-legacy#comparison)도 참조하세요.
 
 ### `<Link>` Component
 
-The [`<Link>` Component](/docs/pages/api-reference/components/link) no longer requires manually adding an `<a>` tag as a child. This behavior was added as an experimental option in [version 12.2](https://nextjs.org/blog/next-12-2) and is now the default. In Next.js 13, `<Link>` always renders `<a>` and allows you to forward props to the underlying tag.
+[`<Link>` 컴포넌트](/docs/pages/api-reference/components/link)는 더 이상 `<a>` 태그를 수동으로 추가할 필요가 없습니다. 이 동작은 [버전 12.2](https://nextjs.org/blog/next-12-2)에서 실험적인 옵션으로 추가되었으며 이제 기본 동작이 되었습니다. Next.js 13에서는 `<Link>`가 항상 `<a>` 태그를 렌더링하고 기본 태그에 props를 전달할 수 있습니다.
 
-For example:
+예를 들어:
 
 ```jsx
 import Link from 'next/link'
 
-// Next.js 12: `<a>` has to be nested otherwise it's excluded
+// Next.js 12: `<a>` 태그가 자식 요소로 중첩되지 않으면 브라우저에서 링크로 렌더링되지 않습니다.
 <Link href="/about">
   <a>About</a>
 </Link>
 
-// Next.js 13: `<Link>` always renders `<a>` under the hood
+// Next.js 13: `<Link>`는 항상 내부적으로 `<a>` 태그를 렌더링합니다.
 <Link href="/about">
   About
 </Link>
 ```
 
-To upgrade your links to Next.js 13, you can use the [`new-link` codemod](/docs/pages/building-your-application/upgrading/codemods#new-link).
+링크를 Next.js 13으로 업그레이드하려면 [`new-link` codemod](/docs/pages/building-your-application/upgrading/codemods#new-link)를 사용할 수 있습니다.
 
 ### `<Script>` Component
 
-The behavior of [`next/script`](/docs/pages/api-reference/components/script) has been updated to support both `pages` and `app`. If incrementally adopting `app`, read the [upgrade guide](/docs/pages/building-your-application/upgrading).
+[`next/script`](/docs/pages/api-reference/components/script)의 동작은 `pages`와 `app` 모두를 지원하도록 업데이트되었습니다. `app`을 점진적으로 도입하려면 [업그레이드 가이드](/docs/pages/building-your-application/upgrading)를 읽어보세요.
 
 ### Font Optimization
 
-Previously, Next.js helped you optimize fonts by inlining font CSS. Version 13 introduces the new [`next/font`](/docs/pages/building-your-application/optimizing/fonts) module which gives you the ability to customize your font loading experience while still ensuring great performance and privacy.
+이전의 Next.js는 폰트 CSS를 인라인으로 포함하여 폰트를 최적화하는 데 도움을 주었습니다. 버전 13에서는 새 [`next/font`](/docs/pages/building-your-application/optimizing/fonts) 모듈을 도입하여 뛰어난 성능과 개인 정보 보호를 유지하면서도 폰트 로딩 경험을 사용자 맞춤으로 설정할 수 있습니다.
 
-See [Optimizing Fonts](/docs/pages/building-your-application/optimizing/fonts) to learn how to use `next/font`.
+`next/font`의 사용 방법을 알아보려면 [폰트 최적화](/docs/pages/building-your-application/optimizing/fonts)를 참조하세요.
