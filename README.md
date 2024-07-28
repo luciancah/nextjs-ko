@@ -15,9 +15,7 @@
 ## 안녕하세요!
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Next.js 문서](https://nextjs.org/docs)의 전체 한국어 번역을 목표로 합니다.
@@ -33,6 +31,14 @@
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://blog.luciancah.com"><img src="https://avatars.githubusercontent.com/u/8311335?v=4?s=100" width="100px;" alt="Jinhyung Lee"/><br /><sub><b>Jinhyung Lee</b></sub></a><br /><a href="https://github.com/luciancah/nextjs-ko/commits?author=luciancah" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.hansololiviakim.com"><img src="https://avatars.githubusercontent.com/u/84097192?v=4?s=100" width="100px;" alt="Hansol Olivia Kim"/><br /><sub><b>Hansol Olivia Kim</b></sub></a><br /><a href="#content-hansololiviakim" title="Content">🖋</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
