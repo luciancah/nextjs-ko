@@ -35,6 +35,7 @@
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://blog.luciancah.com"><img src="https://avatars.githubusercontent.com/u/8311335?v=4?s=100" width="100px;" alt="Jinhyung Lee"/><br /><sub><b>Jinhyung Lee</b></sub></a><br /><a href="https://github.com/luciancah/nextjs-ko/commits?author=luciancah" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kmsu44"><img src="https://avatars.githubusercontent.com/u/45655623?v=4?s=100" width="100px;" alt="MINSU KIM"/><br /><sub><b>MINSU KIM</b></sub></a><br /><a href="#content-kmsu44" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/4anghyeon"><img src="https://avatars.githubusercontent.com/u/64076628?v=4?s=100" width="100px;" alt="sanghyeon"/><br /><sub><b>sanghyeon</b></sub></a><br /><a href="#content-4anghyeon" title="Content">🖋</a></td>
     </tr>
   </tbody>
