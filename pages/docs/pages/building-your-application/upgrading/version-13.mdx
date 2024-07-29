@@ -53,9 +53,9 @@ Next.js 13부터 이러한 새로운 동작은 `next/image`의 기본 동작이 
 
 - [next-image-to-legacy-image](/docs/pages/building-your-application/upgrading/codemods#next-image-to-legacy-image): 이 codemod는 `next/image` import를 `next/legacy/image`로 안전하게 자동으로 이름을 변경하여 Next.js 12와 동일한 동작을 유지합니다. Next.js 13으로 빠르게 자동으로 업데이트를 하려면 이 codemod를 실행하는 것이 좋습니다.
 
-- [next-image-experimental](/docs/pages/building-your-application/upgrading/codemods#next-image-experimental): 이전 codemod를 실행한 후, 이 실험적인 codemod를 선택적으로 실행하여 `next/legacy/image`를 새로운 `next/image`로 업그레이드할 수 있습니다. 이는 사용하지 않는 속성을 제거하고 인라인 스타일을 추가합니다. 이 codemod는 실험적이고 정적 사용(예: <Image src={img} layout="responsive" />)만을 다루며 동적 사용(예: <Image {...props} />)은 다루지 않습니다.
+- [next-image-experimental](/docs/pages/building-your-application/upgrading/codemods#next-image-experimental): 이전 codemod를 실행한 후, 이 실험적인 codemod를 선택적으로 실행하여 `next/legacy/image`를 새로운 `next/image`로 업그레이드할 수 있습니다. 이는 사용하지 않는 속성을 제거하고 인라인 스타일을 추가합니다. 이 codemod는 실험적이고 정적 사용(예: `<Image src={img} layout="responsive" />`)만을 다루며 동적 사용(예: `<Image {...props} />`)은 다루지 않습니다.
 
-또한, [마이그레이션 가이드]((/docs/pages/building-your-application/upgrading/codemods#next-image-experimental))를 따라 수동으로 업데이트할 수 있으며 [레거시 비교](/docs/pages/api-reference/components/image-legacy#comparison)도 참조하세요.
+또한, [마이그레이션 가이드](<(/docs/pages/building-your-application/upgrading/codemods#next-image-experimental)>)를 따라 수동으로 업데이트할 수 있으며 [레거시 비교](/docs/pages/api-reference/components/image-legacy#comparison)도 참조하세요.
 
 ### `<Link>` Component
 
