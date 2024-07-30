@@ -115,7 +115,7 @@ Next.js는 **동적 경로**를 사용하여 페이지를 생성할 수 있습�
 ```jsx
 // 이 함수는 빌드 타임에 호출됩니다
 export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
+  // posts를 가져오기 위해 외부 API 엔드포인트를 호출합니다
   const res = await fetch('https://.../posts')
   const posts = await res.json()
 
