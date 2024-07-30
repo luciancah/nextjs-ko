@@ -1,0 +1,1639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      
+            <url>
+              <loc>https://nextjs-ko.org/contribution</loc>
+              <lastmod>2024-07-28T08:38:46.418Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org</loc>
+              <lastmod>2024-07-28T08:38:46.418Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app</loc>
+              <lastmod>2024-07-28T08:38:46.420Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/architecture</loc>
+              <lastmod>2024-07-28T08:38:46.420Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/community</loc>
+              <lastmod>2024-07-28T08:38:46.420Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/getting-started</loc>
+              <lastmod>2024-07-28T08:38:46.421Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs</loc>
+              <lastmod>2024-07-28T08:38:46.421Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages</loc>
+              <lastmod>2024-07-28T08:38:46.421Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference</loc>
+              <lastmod>2024-07-28T08:38:46.421Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application</loc>
+              <lastmod>2024-07-28T08:38:46.422Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/architecture/accessibility</loc>
+              <lastmod>2024-07-28T08:38:46.422Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/architecture/fast-refresh</loc>
+              <lastmod>2024-07-28T08:38:46.422Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/architecture/nextjs-compiler</loc>
+              <lastmod>2024-07-28T08:38:46.422Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/architecture/supported-browsers</loc>
+              <lastmod>2024-07-28T08:38:46.422Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/architecture/turbopack</loc>
+              <lastmod>2024-07-28T08:38:46.422Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/community/contribution-guide</loc>
+              <lastmod>2024-07-28T08:38:46.423Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/getting-started/installation</loc>
+              <lastmod>2024-07-28T08:38:46.423Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/getting-started/project-structure</loc>
+              <lastmod>2024-07-28T08:38:46.423Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference</loc>
+              <lastmod>2024-07-28T08:38:46.423Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application</loc>
+              <lastmod>2024-07-28T08:38:46.423Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/components</loc>
+              <lastmod>2024-07-28T08:38:46.424Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/create-next-app</loc>
+              <lastmod>2024-07-28T08:38:46.424Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/edge</loc>
+              <lastmod>2024-07-28T08:38:46.424Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions</loc>
+              <lastmod>2024-07-28T08:38:46.424Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions</loc>
+              <lastmod>2024-07-28T08:38:46.425Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-cli</loc>
+              <lastmod>2024-07-28T08:38:46.425Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js</loc>
+              <lastmod>2024-07-28T08:38:46.425Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/authentication</loc>
+              <lastmod>2024-07-28T08:38:46.426Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/caching</loc>
+              <lastmod>2024-07-28T08:38:46.426Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring</loc>
+              <lastmod>2024-07-28T08:38:46.426Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/data-fetching</loc>
+              <lastmod>2024-07-28T08:38:46.427Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/deploying</loc>
+              <lastmod>2024-07-28T08:38:46.427Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing</loc>
+              <lastmod>2024-07-28T08:38:46.427Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/rendering</loc>
+              <lastmod>2024-07-28T08:38:46.427Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/styling</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/testing</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/create-next-app</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/edge</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions</loc>
+              <lastmod>2024-07-28T08:38:46.428Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-cli</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/Rendering</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/Routing</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/authentication</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching</loc>
+              <lastmod>2024-07-28T08:38:46.429Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/deploying</loc>
+              <lastmod>2024-07-28T08:38:46.430Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing</loc>
+              <lastmod>2024-07-28T08:38:46.430Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/styling</loc>
+              <lastmod>2024-07-28T08:38:46.430Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/testing</loc>
+              <lastmod>2024-07-28T08:38:46.430Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading</loc>
+              <lastmod>2024-07-28T08:38:46.430Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/components/font</loc>
+              <lastmod>2024-07-28T08:38:46.430Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/components/image</loc>
+              <lastmod>2024-07-28T08:38:46.431Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/components/link</loc>
+              <lastmod>2024-07-28T08:38:46.431Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/components/script</loc>
+              <lastmod>2024-07-28T08:38:46.431Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/default</loc>
+              <lastmod>2024-07-28T08:38:46.432Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/error</loc>
+              <lastmod>2024-07-28T08:38:46.432Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/instrumentation</loc>
+              <lastmod>2024-07-28T08:38:46.432Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/layout</loc>
+              <lastmod>2024-07-28T08:38:46.432Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/loading</loc>
+              <lastmod>2024-07-28T08:38:46.432Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/mdx-components</loc>
+              <lastmod>2024-07-28T08:38:46.433Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata</loc>
+              <lastmod>2024-07-28T08:38:46.433Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/middleware</loc>
+              <lastmod>2024-07-28T08:38:46.433Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/not-found</loc>
+              <lastmod>2024-07-28T08:38:46.433Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/page</loc>
+              <lastmod>2024-07-28T08:38:46.433Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/route-segment-config</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/route</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/template</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/appDir</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/assetPrefix</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/basePath</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/compress</loc>
+              <lastmod>2024-07-28T08:38:46.434Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/crossOrigin</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/cssChunking</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/devIndicators</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/distDir</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/env</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/eslint</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/exportPathMap</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/generateBuildId</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/generateEtags</loc>
+              <lastmod>2024-07-28T08:38:46.435Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/headers</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/httpAgentOptions</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/images</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/incrementalCacheHandlerPath</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/instrumentationHook</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/logging</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/mdxRs</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/onDemandEntries</loc>
+              <lastmod>2024-07-28T08:38:46.436Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/optimizePackageImports</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/output</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/pageExtensions</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/poweredByHeader</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/ppr</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/productionBrowserSourceMaps</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/reactCompiler</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/reactStrictMode</loc>
+              <lastmod>2024-07-28T08:38:46.437Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/redirects</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/rewrites</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/serverActions</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/serverExternalPackages</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/staleTimes</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/swrDelta</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/trailingSlash</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/transpilePackages</loc>
+              <lastmod>2024-07-28T08:38:46.438Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/turbo</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/typedRoutes</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/typescript</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/urlImports</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/webVitalsAttribution</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/next-config-js/webpack</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/cookies</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/draft-mode</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/fetch</loc>
+              <lastmod>2024-07-28T08:38:46.439Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/generate-image-metadata</loc>
+              <lastmod>2024-07-28T08:38:46.440Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/generate-metadata</loc>
+              <lastmod>2024-07-28T08:38:46.440Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/generate-sitemaps</loc>
+              <lastmod>2024-07-28T08:38:46.440Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/generate-static-params</loc>
+              <lastmod>2024-07-28T08:38:46.440Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/generate-viewport</loc>
+              <lastmod>2024-07-28T08:38:46.441Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/headers</loc>
+              <lastmod>2024-07-28T08:38:46.441Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/image-response</loc>
+              <lastmod>2024-07-28T08:38:46.441Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/next-request</loc>
+              <lastmod>2024-07-28T08:38:46.441Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/next-response</loc>
+              <lastmod>2024-07-28T08:38:46.441Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/not-found</loc>
+              <lastmod>2024-07-28T08:38:46.441Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/permanentRedirect</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/redirect</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/revalidatePath</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/revalidateTag</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/unstable_after</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/unstable_cache</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/unstable_noStore</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/unstable_rethrow</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-params</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-pathname</loc>
+              <lastmod>2024-07-28T08:38:46.442Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-report-web-vitals</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-router</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-search-params</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-selected-layout-segment</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/use-selected-layout-segments</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/functions/userAgent</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/absolute-imports-and-module-aliases</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/content-security-policy</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/draft-mode</loc>
+              <lastmod>2024-07-28T08:38:46.443Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/environment-variables</loc>
+              <lastmod>2024-07-28T08:38:46.444Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/eslint</loc>
+              <lastmod>2024-07-28T08:38:46.444Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/mdx</loc>
+              <lastmod>2024-07-28T08:38:46.444Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/src-directory</loc>
+              <lastmod>2024-07-28T08:38:46.444Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/configuring/typescript</loc>
+              <lastmod>2024-07-28T08:38:46.444Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/data-fetching/caching-and-revalidating</loc>
+              <lastmod>2024-07-28T08:38:46.444Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/data-fetching/fetching</loc>
+              <lastmod>2024-07-28T08:38:46.445Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations</loc>
+              <lastmod>2024-07-28T08:38:46.445Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/deploying/multi-zones</loc>
+              <lastmod>2024-07-28T08:38:46.445Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/deploying/production-checklist</loc>
+              <lastmod>2024-07-28T08:38:46.446Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/deploying/static-exports</loc>
+              <lastmod>2024-07-28T08:38:46.446Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/analytics</loc>
+              <lastmod>2024-07-28T08:38:46.446Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/fonts</loc>
+              <lastmod>2024-07-28T08:38:46.447Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/images</loc>
+              <lastmod>2024-07-28T08:38:46.447Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/instrumentation</loc>
+              <lastmod>2024-07-28T08:38:46.448Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/lazy-loading</loc>
+              <lastmod>2024-07-28T08:38:46.448Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/memory-usage</loc>
+              <lastmod>2024-07-28T08:38:46.448Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/metadata</loc>
+              <lastmod>2024-07-28T08:38:46.448Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/open-telemetry</loc>
+              <lastmod>2024-07-28T08:38:46.448Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/package-bundling</loc>
+              <lastmod>2024-07-28T08:38:46.449Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/scripts</loc>
+              <lastmod>2024-07-28T08:38:46.449Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/static-assets</loc>
+              <lastmod>2024-07-28T08:38:46.449Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/third-party-libraries</loc>
+              <lastmod>2024-07-28T08:38:46.449Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/optimizing/videos</loc>
+              <lastmod>2024-07-28T08:38:46.450Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/rendering/client-components</loc>
+              <lastmod>2024-07-28T08:38:46.450Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/rendering/composition-patterns</loc>
+              <lastmod>2024-07-28T08:38:46.450Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes</loc>
+              <lastmod>2024-07-28T08:38:46.450Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/rendering/partial-prerendering</loc>
+              <lastmod>2024-07-28T08:38:46.450Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/rendering/server-components</loc>
+              <lastmod>2024-07-28T08:38:46.451Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/colocation</loc>
+              <lastmod>2024-07-28T08:38:46.451Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/defining-routes</loc>
+              <lastmod>2024-07-28T08:38:46.451Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/dynamic-routes</loc>
+              <lastmod>2024-07-28T08:38:46.451Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/error-handling</loc>
+              <lastmod>2024-07-28T08:38:46.451Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/intercepting-routes</loc>
+              <lastmod>2024-07-28T08:38:46.452Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/internationalization</loc>
+              <lastmod>2024-07-28T08:38:46.452Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/layouts-and-templates</loc>
+              <lastmod>2024-07-28T08:38:46.452Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/linking-and-navigating</loc>
+              <lastmod>2024-07-28T08:38:46.452Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/loading-ui-and-streaming</loc>
+              <lastmod>2024-07-28T08:38:46.452Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/middleware</loc>
+              <lastmod>2024-07-28T08:38:46.453Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/pages</loc>
+              <lastmod>2024-07-28T08:38:46.453Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/parallel-routes</loc>
+              <lastmod>2024-07-28T08:38:46.453Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/redirecting</loc>
+              <lastmod>2024-07-28T08:38:46.453Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/route-groups</loc>
+              <lastmod>2024-07-28T08:38:46.453Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/routing/route-handlers</loc>
+              <lastmod>2024-07-28T08:38:46.453Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/styling/css-in-js</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/styling/sass</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/styling/stylesheets</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/styling/tailwind-css</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/testing/cypress</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/testing/jest</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/testing/playwright</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/testing/vitest</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/app-router-migration</loc>
+              <lastmod>2024-07-28T08:38:46.454Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/codemods</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/from-create-react-app(alter)</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/from-create-react-app</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/from-vite</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/version-14</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/building-your-application/upgrading/version-15</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components/font</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components/head</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components/image-legacy</loc>
+              <lastmod>2024-07-28T08:38:46.455Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components/image</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components/link</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/components/script</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/get-initial-props</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/get-server-side-props</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/get-static-paths</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/get-static-props</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/next-request</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/next-response</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/use-amp</loc>
+              <lastmod>2024-07-28T08:38:46.456Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/use-report-web-vitals</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/use-router</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/functions/userAgent</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/assetPrefix</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/basePath</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/compress</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/crossOrigin</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/devIndicators</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/distDir</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/env</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/eslint</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/exportPathMap</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/generateBuildId</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/generateEtags</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/headers</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/httpAgentOptions</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/images</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/incrementalCacheHandlerPath</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/instrumentationHook</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/onDemandEntries</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/optimizePackageImports</loc>
+              <lastmod>2024-07-28T08:38:46.457Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/output</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/pageExtensions</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/poweredByHeader</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/productionBrowserSourceMaps</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/reactStrictMode</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/redirects</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/rewrites</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/runtime-configuration</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/serverExternalPackages</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/trailingSlash</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/turbo</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/typescript</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/urlImports</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/webVitalsAttribution</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/api-reference/next-config-js/webpack</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/amp</loc>
+              <lastmod>2024-07-28T08:38:46.458Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/babel</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/content-security-policy</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/custom-server</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/debugging</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/draft-mode</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/environment-variables</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/error-handling</loc>
+              <lastmod>2024-07-28T08:38:46.459Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/eslint</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/mdx</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/post-css</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/preview-mode</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/src-directory</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/configuring/typescript</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching/client-side</loc>
+              <lastmod>2024-07-28T08:38:46.460Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching/forms-and-mutations</loc>
+              <lastmod>2024-07-28T08:38:46.461Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching/get-server-side-props</loc>
+              <lastmod>2024-07-28T08:38:46.461Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching/get-static-paths</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching/get-static-props</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/deploying/ci-build-caching</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/deploying/multi-zones</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/deploying/production-checklist</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/deploying/static-exports</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/analytics</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/fonts</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/images</loc>
+              <lastmod>2024-07-28T08:38:46.462Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/instrumentation</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/lazy-loading</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/open-telemetry</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/package-bundling</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/scripts</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/static-assets</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/optimizing/third-party-libraries</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/rendering/automatic-static-optimization</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/rendering/client-side-rendering</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/rendering/edge-and-nodejs-runtimes</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/rendering/server-side-rendering</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/rendering/static-site-generation</loc>
+              <lastmod>2024-07-28T08:38:46.463Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/api-routes</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/custom-app</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/custom-document</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/custom-error</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/dynamic-routes</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/internationalization</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/linking-and-navigating</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/middleware</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/pages-and-layouts</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/routing/redirecting</loc>
+              <lastmod>2024-07-28T08:38:46.464Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/styling/css-in-js</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/styling/css-modules</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/styling/sass</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/styling/tailwind-css</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/testing/cypress</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/testing/jest</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/testing/playwright</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/testing/vitest</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/app-router-migration</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/codemods</loc>
+              <lastmod>2024-07-28T08:38:46.465Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/from-create-react-app</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/from-vite</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/version-10</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/version-11</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/version-12</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/version-13</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/version-14</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/pages/building-your-application/upgrading/version-9</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata/app-icons</loc>
+              <lastmod>2024-07-28T08:38:46.466Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata/manifest</loc>
+              <lastmod>2024-07-28T08:38:46.467Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata/opengraph-image</loc>
+              <lastmod>2024-07-28T08:38:46.467Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata/robots</loc>
+              <lastmod>2024-07-28T08:38:46.467Z</lastmod>
+            </url>
+          
+            <url>
+              <loc>https://nextjs-ko.org/docs/app/api-reference/file-conventions/metadata/sitemap</loc>
+              <lastmod>2024-07-28T08:38:46.467Z</lastmod>
+            </url>
+          
+    </urlset>

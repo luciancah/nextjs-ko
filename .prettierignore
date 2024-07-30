@@ -1,4 +1,16 @@
-origin/
+# gitignore 상속: prettier --ignore-path 패턴에서 아직 여러 파일을 받지 못하는 문제 있음
+
 node_modules/
-*.yaml
+.github/
+.next/
+.husky/
+
+
+origin/
+public/
+.all-contributorsrc
+
+# 확장자
 *.yml
+*.yaml
+*.md
