@@ -1,14 +1,18 @@
-`PR를 작성하시기 전에 [기여 가이드[(https://nextjs-ko.org/contribution)을 먼저 확인해주세요.`
+<!-- PR를 작성하시기 전에 [기여 가이드[(https://nextjs-ko.org/contribution)을 먼저 확인해주세요. -->
+<!-- 이 문법으로 작성된 문장은 주석입니다. 문서의 모든 필드를 채워주세요! -->
 
 **컨트리뷰션 체크리스트**
 
-- [ ] 기여 가이드를 확인한 후 작성 하셨나요?
+- [ ] [기여 가이드](https://github.com/luciancah/nextjs-ko/blob/main/CONTRIBUTING.MD)를 확인한 후 작성 하셨나요?
+- [ ] [용어집](https://github.com/luciancah/nextjs-ko/issues/18)을 확인한 후 작성 하셨나요? 번역하신 단어 중 용어집에 추가하고싶은 단어가 있으시다면 이슈에 댓글로 남겨주세요.
 - [ ] title, description 등 마크다운 태그의 영문 원본 유지를 하셨나요?
-- [ ] 소제목 (h1~h6)의 영문 유지를 하셨나요?
+- [ ] 소제목 (h1~h6, ### ... 등)의 영문 유지를 하셨나요?
 - [ ] 문서의 전반적인 어조 톤과 일치하게 작성 하셨나요?
 - [ ] 코드블록 내부의 주석이나 업데이트 로그 등 표 내부의 문자도 한국어로 번역 하셨나요?
 
+
 **연관된 이슈 확인**
+<!-- closes #이슈번호 -->
 closes
 
 **기여 내용**
@@ -20,4 +24,4 @@ closes
 - [ ] 기타 기능 개선 및 수정
 
 **문서 경로**
-`e.g. /docs/getting-started/installation`
+<!-- 예시) /docs/getting-started/installation -->
