@@ -96,13 +96,13 @@ export async function getStaticProps() {
 }
 ```
 
-`getStaticProps`가 어떻게 작동하는지 자세히 알아보려면, [Data Fetching 문서](/docs/pages/building-your-application/data-fetching/get-static-props)를 확인하세요.
+`getStaticProps`가 어떻게 작동하는지 자세히 알아보려면, [Data Fetching 문서](/docs/pages/building-your-application/data-fetching/get-static-props)를 확인합니다.
 
 #### Scenario 2: Your page paths depend on external data
 
 Next.js는 **동적 경로**를 사용하여 페이지를 생성할 수 있습니다. 예를 들어, `id`에 기반하여 단일 블로그 포스트를 보여주는 `pages/posts/[id].js` 파일을 만들 수 있습니다. 이렇게 하면 `posts/1`에 접근할 때 `id: 1`의 블로그 포스트를 보여줄 수 있습니다.
 
-> 동적 라우팅에 대해 더 알아보려면, [동적 라우팅 문서](/docs/pages/building-your-application/routing/dynamic-routes)를 확인하세요.
+> 동적 라우팅에 대해 더 알아보려면, [동적 라우팅 문서](/docs/pages/building-your-application/routing/dynamic-routes)를 확인합니다.
 
 그러나, 빌드 타임에 어떤 `id`를 프리 렌더링하려는지는 외부 데이터에 따라 달라질 수 있습니다.
 
@@ -153,7 +153,7 @@ export async function getStaticProps({ params }) {
 }
 ```
 
-`getStaticPaths`가 어떻게 작동하는지 자세히 알아보려면, [Data Fetching 문서](/docs/pages/building-your-application/data-fetching/get-static-paths)를 확인하세요.
+`getStaticPaths`가 어떻게 작동하는지 자세히 알아보려면, [Data Fetching 문서](/docs/pages/building-your-application/data-fetching/get-static-paths)를 확인합니다.
 
 ### When should I use Static Generation?
 
@@ -172,5 +172,5 @@ export async function getStaticProps({ params }) {
 
 이런 경우, 다음 중 하나를 수행할 수 있습니다:
 
-- **클라이언트 사이드 데이터 페칭**과 함께 **Static Generation** 사용: 페이지의 일부를 미리 렌더링하지 않고 클라이언트 사이드 JavaScript를 사용하여 채울 수 있습니다. 이 접근 방식에 대해 자세히 알아보려면 [데이터 페칭 문서](/docs/pages/building-your-application/data-fetching/client-side)를 확인하세요.
+- **클라이언트 사이드 데이터 페칭**과 함께 **Static Generation** 사용: 페이지의 일부를 미리 렌더링하지 않고 클라이언트 사이드 JavaScript를 사용하여 채울 수 있습니다. 이 접근 방식에 대해 자세히 알아보려면 [데이터 페칭 문서](/docs/pages/building-your-application/data-fetching/client-side)를 확인합니다.
 - **서버 사이드 렌더링** 사용: Next.js는 각 요청에 대해 페이지를 미리 렌더링합니다. CDN에 의해 캐시될 수 없기 때문에 느릴 수 있지만, 미리 렌더링된 페이지는 항상 최신 상태가 됩니다. 이 접근 방식에 대해 아래에서 더 자세히 이야기하겠습니다.
