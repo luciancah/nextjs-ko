@@ -60,6 +60,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "pySoo",
+      "name": "Suhyeon Park",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55135881?v=4",
+      "profile": "https://enjoydev.life",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
