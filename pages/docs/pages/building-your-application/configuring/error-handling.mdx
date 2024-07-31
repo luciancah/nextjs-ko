@@ -24,7 +24,6 @@ Next.js는 애플리케이션에서 발생하는 서버 측 오류를 처리하�
 
 `file not found`와 같은 특정 런타임 오류를 처리하려면 [404 페이지](/docs/pages/building-your-application/routing/custom-error#404-page)를 사용할 수도 있습니다.
 
-
 ## Handling Client Errors
 
 React [Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)는 클라이언트의 JavaScript 오류를 우아하게 처리하여 애플리케이션의 다른 부분이 계속 작동하도록 하는 방법입니다. 페이지가 충돌하지 않도록 하는 것 외에도 사용자 정의 폴백(fallback) 컴포넌트를 제공하고 오류 정보를 기록할 수 있습니다.
@@ -36,7 +35,6 @@ Next.js 애플리케이션에서 Error Boundaries를 사용하려면 `ErrorBound
 - 오류 정보 로깅
 
 `React.Component`를 확장하여 `ErrorBoundary` 클래스 컴포넌트를 생성할 수 있습니다. 예를 들어:
-
 
 ```jsx
 class ErrorBoundary extends React.Component {
