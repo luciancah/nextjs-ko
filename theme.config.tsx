@@ -8,7 +8,7 @@ import Check from 'components/check'
 import Image from 'components/externalImage'
 
 const config: DocsThemeConfig = {
-  logo: <span>Nextjs 한국어 번역</span>,
+  logo: <span>Nextjs 한글 문서 (커뮤니티)</span>,
   head: (
     <>
       <link rel="icon" href="/favicon.ico" />
@@ -30,7 +30,7 @@ const config: DocsThemeConfig = {
     const { asPath } = useRouter()
     if (asPath !== '/') {
       return {
-        titleTemplate: '%s – Nextjs 한글/한국어 번역',
+        titleTemplate: '%s – Nextjs 한글 문서',
       }
     }
   },
@@ -57,7 +57,7 @@ const config: DocsThemeConfig = {
   },
   darkMode: true,
   footer: {
-    text: 'Nextjs 공식 문서 한글/한국어 번역 (비공식) | Using Nextra Docs Template',
+    text: 'Nextjs 한글/한국어 문서 번역 (비공식) | Using Nextra Docs Template',
   },
 }
 
