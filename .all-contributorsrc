@@ -78,6 +78,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "f0rever0",
+      "name": "송우영",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62867581?v=4",
+      "profile": "https://velog.io/@soy0830",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
