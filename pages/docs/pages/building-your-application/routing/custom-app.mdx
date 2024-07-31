@@ -7,15 +7,15 @@ description: Control page initialization and add a layout that persists for all 
 
 # Custom App
 
-Next.js uses the `App` component to initialize pages. You can override it and control the page initialization and:
+Next.js는 `App` 컴포넌트를 사용하여 페이지를 초기화합니다. 이를 재정의하고 페이지 초기화를 제어할 수 있습니다.
 
-- Create a shared layout between page changes
-- Inject additional data into pages
-- [Add global CSS](/docs/pages/building-your-application/styling)
+- 페이지 변경 간에 공유 레이아웃 만들기
+- 페이지에 추가 데이터 삽입
+- [글로벌 CSS 추가하기](/docs/pages/building-your-application/styling)
 
 ## Usage
 
-To override the default `App`, create the file `pages/_app` as shown below:
+기본 `App`을 오버라이드 하려면 아래와 같이 `pages/_app`파일을 생성합니다.
 
 ```tsx filename="pages/_app.tsx" switcher
 import type { AppProps } from 'next/app'
@@ -31,20 +31,20 @@ export default function MyApp({ Component, pageProps }) {
 }
 ```
 
-The `Component` prop is the active `page`, so whenever you navigate between routes, `Component` will change to the new `page`. Therefore, any props you send to `Component` will be received by the `page`.
+`Component` 프로퍼티는 활성 `page`이므로 라우트를 이동할 때마다 `Component`가 새 `page`로 변경됩니다. 따라서 `Component`로 보내는 모든 프로퍼티는 `page`에서 수신됩니다.
 
-`pageProps` is an object with the initial props that were preloaded for your page by one of our [data fetching methods](/docs/pages/building-your-application/data-fetching), otherwise it's an empty object.
+`pageProps`는 [데이터 가져오기 메서드](/docs/pages/building-your-application/data-fetching) 중 하나에 의해 페이지에 미리 로딩된 초기 프로퍼티즈가 있는 객체이며, 그렇지 않으면 빈 객체입니다.
 
-> **Good to know**
+> **알아두면 유용한 정보**
 >
-> - If your app is running and you added a custom `App`, you'll need to restart the development server. Only required if `pages/_app.js` didn't exist before.
-> - `App` does not support Next.js [Data Fetching methods](/docs/pages/building-your-application/data-fetching) like [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) or [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props).
+> - 앱이 실행 중이고 사용자 지정 `App`을 추가한 경우 개발 서버를 다시 시작해야 합니다. `pages/_app.js`가 이전에 존재하지 않았던 경우에만 필요합니다.
+> - `App`은 Next.js [데이터 가져오기 메서드](/docs/pages/building-your-application/data-fetching) (예: [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props) 또는 [`getServerSideProps`](/docs/pages/building-your-application/data-fetching/get-server-side-props)) 를 지원하지 않습니다.
 
 ## `getInitialProps` with `App`
 
-Using [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props) in `App` will disable [Automatic Static Optimization](/docs/pages/building-your-application/rendering/automatic-static-optimization) for pages without [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props).
+`App`에서 [`getInitialProps`](/docs/pages/api-reference/functions/get-initial-props)를 사용하면 [`getStaticProps`](/docs/pages/building-your-application/data-fetching/get-static-props)가 없는 페이지에 대한 [자동 정적 최적화](/docs/pages/building-your-application/rendering/automatic-static-optimization)가 비활성화됩니다.
 
-**We do not recommend using this pattern.** Instead, consider [incrementally adopting](/docs/app/building-your-application/upgrading/app-router-migration) the App Router, which allows you to more easily fetch data for [pages and layouts](/docs/app/building-your-application/routing/layouts-and-templates).
+**이 패턴은 사용하지 않는 것이 좋습니다.** 대신 [페이지 및 레이아웃](/docs/app/building-your-application/routing/layouts-and-templates)에 대한 데이터를 더 쉽게 가져올 수 있는 앱 라우터를 [점진적 도입](/docs/app/building-your-application/upgrading/app-router-migration)하는 것을 고려하세요.
 
 ```tsx filename="pages/_app.tsx" switcher
 import App, { AppContext, AppInitialProps, AppProps } from 'next/app'
