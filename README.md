@@ -40,6 +40,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kmsu44"><img src="https://avatars.githubusercontent.com/u/45655623?v=4?s=100" width="100px;" alt="MINSU KIM"/><br /><sub><b>MINSU KIM</b></sub></a><br /><a href="#content-kmsu44" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/4anghyeon"><img src="https://avatars.githubusercontent.com/u/64076628?v=4?s=100" width="100px;" alt="sanghyeon"/><br /><sub><b>sanghyeon</b></sub></a><br /><a href="#content-4anghyeon" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.hansololiviakim.com"><img src="https://avatars.githubusercontent.com/u/84097192?v=4?s=100" width="100px;" alt="Hansol Olivia Kim"/><br /><sub><b>Hansol Olivia Kim</b></sub></a><br /><a href="#content-hansololiviakim" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://dev-daejlee.tistory.com/"><img src="https://avatars.githubusercontent.com/u/94844819?v=4?s=100" width="100px;" alt="Lee Daejin"/><br /><sub><b>Lee Daejin</b></sub></a><br /><a href="#content-daejlee" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
