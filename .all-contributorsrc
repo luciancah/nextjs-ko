@@ -96,8 +96,16 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "jiyeon2536",
+      "name": "JIYEON KIM",
+      "avatar_url": "https://avatars.githubusercontent.com/u/125720796?v=4",
+      "profile": "https://github.com/jiyeon2536",
+      "contributions": [
+        "content"
+      ]
     }
-
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
