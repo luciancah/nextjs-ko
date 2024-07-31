@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/imdaxsz"><img src="https://avatars.githubusercontent.com/u/80813703?v=4?s=100" width="100px;" alt="mihee"/><br /><sub><b>mihee</b></sub></a><br /><a href="#content-imdaxsz" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jiyeon2536"><img src="https://avatars.githubusercontent.com/u/125720796?v=4?s=100" width="100px;" alt="JIYEON KIM"/><br /><sub><b>JIYEON KIM</b></sub></a><br /><a href="#content-jiyeon2536" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://dev-daejlee.tistory.com/"><img src="https://avatars.githubusercontent.com/u/94844819?v=4?s=100" width="100px;" alt="Lee Daejin"/><br /><sub><b>Lee Daejin</b></sub></a><br /><a href="#content-daejlee" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@sinjuk1"><img src="https://avatars.githubusercontent.com/u/66900221?v=4?s=100" width="100px;" alt="신종욱"/><br /><sub><b>신종욱</b></sub></a><br /><a href="#content-dlsxjzld" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
