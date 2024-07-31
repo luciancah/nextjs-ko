@@ -3,25 +3,23 @@ title: Continuous Integration (CI) Build Caching
 description: Learn how to configure CI to cache Next.js builds
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # Continuous Integration (CI) Build Caching
 
-To improve build performance, Next.js saves a cache to `.next/cache` that is shared between builds.
+Next.js는 빌드 성능을 향상시키기 위해 빌드 간에 공유되는 캐시를 `.next/cache`에 저장합니다.
 
-To take advantage of this cache in Continuous Integration (CI) environments, your CI workflow will need to be configured to correctly persist the cache between builds.
+Continuous Integration (CI) 환경에서 이 캐시를 활용하려면 빌드 간의 캐시가 올바르게 유지되도록 CI 워크플로우를 구성해야 합니다.
 
-> If your CI is not configured to persist `.next/cache` between builds, you may see a [No Cache Detected](/docs/messages/no-cache) error.
+> CI가 빌드 간에 `.next/cache`를 유지하도록 구성되지 않은 경우 [No Cache Detected](/docs/messages/no-cache) 오류가 발생할 수 있습니다.
 
-Here are some example cache configurations for common CI providers:
+다음은 일반적인 CI providers에 대한 캐시 구성 예시입니다:
 
 ## Vercel
 
-Next.js caching is automatically configured for you. There's no action required on your part.
+Next.js 캐시는 자동으로 구성됩니다. 추가로 필요한 작업은 없습니다.
 
 ## CircleCI
 
-Edit your `save_cache` step in `.circleci/config.yml` to include `.next/cache`:
+`.circleci/config.yml`의 `save_cache` 단계를 수정하여 `.next/cache`를 포함합니다:
 
 ```yaml
 steps:
@@ -32,11 +30,11 @@ steps:
         - ./.next/cache
 ```
 
-If you do not have a `save_cache` key, please follow CircleCI's [documentation on setting up build caching](https://circleci.com/docs/2.0/caching/).
+`save_cache` 키가 없는 경우, CircleCI의 [빌드 캐시 설정 문서](https://circleci.com/docs/2.0/caching/)를 참조하십시오.
 
 ## Travis CI
 
-Add or merge the following into your `.travis.yml`:
+다음 내용을 `.travis.yml`에 추가하거나 병합합니다:
 
 ```yaml
 cache:
@@ -48,7 +46,7 @@ cache:
 
 ## GitLab CI
 
-Add or merge the following into your `.gitlab-ci.yml`:
+다음 내용을 `.gitlab-ci.yml`에 추가하거나 병합합니다:
 
 ```yaml
 cache:
@@ -60,40 +58,40 @@ cache:
 
 ## Netlify CI
 
-Use [Netlify Plugins](https://www.netlify.com/products/build/plugins/) with [`@netlify/plugin-nextjs`](https://www.npmjs.com/package/@netlify/plugin-nextjs).
+[`@netlify/plugin-nextjs`](https://www.npmjs.com/package/@netlify/plugin-nextjs)와 함께 [Netlify Plugins](https://www.netlify.com/products/build/plugins/)를 사용합니다.
 
 ## AWS CodeBuild
 
-Add (or merge in) the following to your `buildspec.yml`:
+`buildspec.yml`에 다음 내용을 추가하거나 병합합니다:
 
 ```yaml
 cache:
   paths:
-    - 'node_modules/**/*' # Cache `node_modules` for faster `yarn` or `npm i`
-    - '.next/cache/**/*' # Cache Next.js for faster application rebuilds
+    - 'node_modules/**/*' # `yarn` 또는 `npm i`를 더 빠르게 수행하기 위해 `node_modules`를 캐시합니다.
+    - '.next/cache/**/*' # 애플리케이션 재빌드를 더 빠르게 수행하기 위해 Next.js를 캐시합니다.
 ```
 
 ## GitHub Actions
 
-Using GitHub's [actions/cache](https://github.com/actions/cache), add the following step in your workflow file:
+GitHub의 [actions/cache](https://github.com/actions/cache)를 사용하여 워크플로우 파일에 다음 단계를 추가합니다:
 
 ```yaml
 uses: actions/cache@v4
 with:
-  # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
+  # `yarn`을 사용하여 캐싱 하거나 https://github.com/actions/cache/blob/main/examples.md#node---yarn, actions/setup-node를 사용하여 https://github.com/actions/setup-node 캐싱을 활용할 수 있습니다.
   path: |
     ~/.npm
     ${{ github.workspace }}/.next/cache
-  # Generate a new cache whenever packages or source files change.
+  # 패키지 또는 소스 파일이 변경될 때마다 새로운 캐시를 생성합니다.
   key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-  # If source files changed but packages didn't, rebuild from a prior cache.
+  # 소스 파일이 변경되었지만 패키지가 변경되지 않은 경우 이전 캐시에서 다시 빌드합니다.
   restore-keys: |
     ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 ```
 
 ## Bitbucket Pipelines
 
-Add or merge the following into your `bitbucket-pipelines.yml` at the top level (same level as `pipelines`):
+`bitbucket-pipelines.yml`의 최상위 수준(`pipelines`와 동일한 수준)에 다음 내용을 추가하거나 병합합니다:
 
 ```yaml
 definitions:
@@ -101,7 +99,7 @@ definitions:
     nextcache: .next/cache
 ```
 
-Then reference it in the `caches` section of your pipeline's `step`:
+그런 다음 파이프라인 `step`의 `caches` 섹션에서 아래 내용을 참조하십시오:
 
 ```yaml
 - step:
@@ -113,7 +111,7 @@ Then reference it in the `caches` section of your pipeline's `step`:
 
 ## Heroku
 
-Using Heroku's [custom cache](https://devcenter.heroku.com/articles/nodejs-support#custom-caching), add a `cacheDirectories` array in your top-level package.json:
+Heroku의 [custom cache](https://devcenter.heroku.com/articles/nodejs-support#custom-caching)를 사용하여 최상위 package.json에 `cacheDirectories` 배열을 추가합니다:
 
 ```javascript
 "cacheDirectories": [".next/cache"]
@@ -121,7 +119,7 @@ Using Heroku's [custom cache](https://devcenter.heroku.com/articles/nodejs-suppo
 
 ## Azure Pipelines
 
-Using Azure Pipelines' [Cache task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/cache), add the following task to your pipeline yaml file somewhere prior to the task that executes `next build`:
+Azure Pipelines의 [Cache task](https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/utility/cache)를 사용하여 `next build`를 실행하는 작업 이전의 파이프라인 yaml 파일에 다음 작업을 추가합니다:
 
 ```yaml
 - task: Cache@2
@@ -133,12 +131,12 @@ Using Azure Pipelines' [Cache task](https://docs.microsoft.com/en-us/azure/devop
 
 ## Jenkins (Pipeline)
 
-Using Jenkins' [Job Cacher](https://www.jenkins.io/doc/pipeline/steps/jobcacher/) plugin, add the following build step to your `Jenkinsfile` where you would normally run `next build` or `npm install`:
+Jenkins의 [Job Cacher](https://www.jenkins.io/doc/pipeline/steps/jobcacher/) 플러그인을 사용하여 `Jenkinsfile`에서 `next build` 또는 `npm install`을 실행하는 부분에 다음 빌드 단계를 추가합니다:
 
 ```yaml
 stage("Restore npm packages") {
     steps {
-        // Writes lock-file to cache based on the GIT_COMMIT hash
+        // GIT_COMMIT 해시를 기반으로 캐시에 lock-file을 작성합니다.
         writeFile file: "next-lock.cache", text: "$GIT_COMMIT"
 
         cache(caches: [
@@ -154,7 +152,7 @@ stage("Restore npm packages") {
 }
 stage("Build") {
     steps {
-        // Writes lock-file to cache based on the GIT_COMMIT hash
+        // GIT_COMMIT 해시를 기반으로 캐시에 lock-file을 작성합니다.
         writeFile file: "next-lock.cache", text: "$GIT_COMMIT"
 
         cache(caches: [
