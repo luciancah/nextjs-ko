@@ -74,16 +74,16 @@ class MyDocument extends Document {
   ): Promise<DocumentInitialProps> {
     const originalRenderPage = ctx.renderPage
 
-    // Run the React rendering logic synchronously
+    // React 렌더링 로직을 동기적으로 실행합니다.
     ctx.renderPage = () =>
       originalRenderPage({
-        // Useful for wrapping the whole react tree
+        // 전체 React 트리를 래핑하는 데 유용합니다.
         enhanceApp: (App) => App,
-        // Useful for wrapping in a per-page basis
+        // 페이지별로 래핑하는 데 유용합니다.
         enhanceComponent: (Component) => Component,
       })
 
-    // Run the parent `getInitialProps`, it now includes the custom `renderPage`
+    //  부모의 `getInitialProps`를 실행하며, 이제 커스텀 `renderPage`가 포함됩니다.
     const initialProps = await Document.getInitialProps(ctx)
 
     return initialProps
@@ -112,16 +112,16 @@ class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const originalRenderPage = ctx.renderPage
 
-    // Run the React rendering logic synchronously
+    // React 렌더링 로직을 동기적으로 실행합니다.
     ctx.renderPage = () =>
       originalRenderPage({
-        // Useful for wrapping the whole react tree
+        // 전체 React 트리를 래핑하는 데 유용합니다.
         enhanceApp: (App) => App,
-        // Useful for wrapping in a per-page basis
+        // 페이지별로 래핑하는 데 유용합니다.
         enhanceComponent: (Component) => Component,
       })
 
-    // Run the parent `getInitialProps`, it now includes the custom `renderPage`
+    //  부모의 `getInitialProps`를 실행하며, 이제 커스텀 `renderPage`가 포함됩니다.
     const initialProps = await Document.getInitialProps(ctx)
 
     return initialProps
