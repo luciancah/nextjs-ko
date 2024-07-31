@@ -44,6 +44,51 @@
       ]
     },
     {
+      "login": "gkfyr",
+      "name": "gkfyr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/104775567?v=4",
+      "profile": "https://github.com/gkfyr",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Hongheesun",
+      "name": "Heesun",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91399033?v=4",
+      "profile": "https://github.com/Hongheesun",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "pySoo",
+      "name": "Suhyeon Park",
+      "avatar_url": "https://avatars.githubusercontent.com/u/55135881?v=4",
+      "profile": "https://enjoydev.life",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "aken-you",
+      "name": "kinsk2839",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96980857?v=4",
+      "profile": "https://velog.io/@kinsk2839/posts",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "f0rever0",
+      "name": "송우영",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62867581?v=4",
+      "profile": "https://velog.io/@soy0830",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
       "login": "imdaxsz",
       "name": "mihee",
       "avatar_url": "https://avatars.githubusercontent.com/u/80813703?v=4",
@@ -52,6 +97,7 @@
         "content"
       ]
     }
+
   ],
   "contributorsPerLine": 7,
   "skipCi": true,

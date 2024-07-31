@@ -3,19 +3,17 @@ title: Client-side Fetching
 description: Learn about client-side data fetching, and how to use SWR, a data fetching React hook library that handles caching, revalidation, focus tracking, refetching on interval and more.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # Client-side Fetching
 
-Client-side data fetching is useful when your page doesn't require SEO indexing, when you don't need to pre-render your data, or when the content of your pages needs to update frequently. Unlike the server-side rendering APIs, you can use client-side data fetching at the component level.
+클라이언트 사이드 데이터 페칭은 페이지가 SEO 인덱싱을 필요로 하지 않거나, 데이터를 미리 렌더링할 필요가 없거나, 페이지의 내용이 자주 업데이트되어야 할 때 유용합니다. 서버 사이드 렌더링 API들과 달리, 클라이언트 사이드 데이터 페칭은 컴포넌트 레벨에서 사용할 수 있습니다.
 
-If done at the page level, the data is fetched at runtime, and the content of the page is updated as the data changes. When used at the component level, the data is fetched at the time of the component mount, and the content of the component is updated as the data changes.
+페이지 레벨에서 데이터 페칭을 하면, 데이터는 런타임에 페칭되며, 페이지의 내용은 데이터 변경에 따라 업데이트됩니다. 컴포넌트 레벨에서 데이터 페칭을 하면, 데이터는 컴포넌트가 마운트 시점에 페칭되며, 컴포넌트의 내용은 데이터 변경에 따라 업데이트됩니다.
 
-It's important to note that using client-side data fetching can affect the performance of your application and the load speed of your pages. This is because the data fetching is done at the time of the component or pages mount, and the data is not cached.
+클라이언트 사이드 데이터 페칭은 어플리케이션의 성능과 페이지 로딩 속도에 영향을 줄 수 있다는 점을 인지하는 것이 중요합니다. 이는 데이터 페칭이 컴포넌트나 페이지 마운트 시점에 실행되며, 데이터가 캐시되지 않기 때문입니다.
 
 ## Client-side data fetching with useEffect
 
-The following example shows how you can fetch data on the client side using the useEffect hook.
+다음 예시는 useEffect hook을 사용해 클라이언트 사이드에서 데이터를 페칭하는 방법을 보여줍니다.
 
 ```jsx
 import { useState, useEffect } from 'react'
@@ -47,11 +45,11 @@ function Profile() {
 
 ## Client-side data fetching with SWR
 
-The team behind Next.js has created a React hook library for data fetching called [**SWR**](https://swr.vercel.app/). It is **highly recommended** if you are fetching data on the client-side. It handles caching, revalidation, focus tracking, refetching on intervals, and more.
+Next.js 팀은 [**SWR**](https://swr.vercel.app/)이라는 데이터 페칭 React hook 라이브러리를 만들었습니다. 이 라이브러리는 클라이언트 사이드에서 데이터를 페칭한다면 **강력하게 권장**됩니다. SWR은 캐싱, revalidation, 포커스 추적, 주기적 refetch 등을 처리합니다.
 
-Using the same example as above, we can now use SWR to fetch the profile data. SWR will automatically cache the data for us and will revalidate the data if it becomes stale.
+위와 동일한 예제를 사용하여, 이제 SWR을 이용해 프로필 데이터를 페칭할 수 있습니다. SWR은 데이터를 자동으로 캐싱하고, 데이터가 더 이상 유효하지 않을 경우 revalidate합니다.
 
-For more information on using SWR, check out the [SWR docs](https://swr.vercel.app/docs/getting-started).
+SWR 사용에 대핸 자세한 내용은 [SWR 문서](https://swr.vercel.app/docs/getting-started)를 참고하세요.
 
 ```jsx
 import useSWR from 'swr'
