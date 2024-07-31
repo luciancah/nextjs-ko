@@ -3,46 +3,42 @@ title: PostCSS
 description: Extend the PostCSS config and plugins added by Next.js with your own.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # PostCSS
 
 <details open>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Tailwind CSS Example](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss)
+- [Tailwind CSS 예시](https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss)
 
 </details>
 
 ## Default Behavior
 
-Next.js compiles CSS for its [built-in CSS support](/docs/pages/building-your-application/styling) using PostCSS.
+Next.js는 [내장 CSS 지원](/docs/pages/building-your-application/styling)을 위해 PostCSS를 사용하여 CSS를 컴파일합니다.
 
-Out of the box, with no configuration, Next.js compiles CSS with the following transformations:
+별도의 설정 없이도 Next.js는 다음과 같은 변환을 통해 CSS를 컴파일합니다:
 
-- [Autoprefixer](https://github.com/postcss/autoprefixer) automatically adds vendor prefixes to CSS rules (back to IE11).
-- [Cross-browser Flexbox bugs](https://github.com/philipwalton/flexbugs) are corrected to behave like [the spec](https://www.w3.org/TR/css-flexbox-1/).
-- New CSS features are automatically compiled for Internet Explorer 11 compatibility:
-  - [`all` Property](https://developer.mozilla.org/docs/Web/CSS/all)
-  - [Break Properties](https://developer.mozilla.org/docs/Web/CSS/break-after)
-  - [`font-variant` Property](https://developer.mozilla.org/docs/Web/CSS/font-variant)
-  - [Gap Properties](https://developer.mozilla.org/docs/Web/CSS/gap)
-  - [Media Query Ranges](https://developer.mozilla.org/docs/Web/CSS/Media_Queries/Using_media_queries#Syntax_improvements_in_Level_4)
+- [Autoprefixer](https://github.com/postcss/autoprefixer)가 CSS 규칙에 자동으로 vender prefixes를 추가합니다 (IE11까지 지원).
+- [다양한 브라우저에서 발생하는 Flexbox 버그](https://github.com/philipwalton/flexbugs)가 [명세서](https://www.w3.org/TR/css-flexbox-1/)대로 동작합니다.
+- 새로운 CSS 기능들이 Internet Explorer 11과 호환되도록 자동으로 컴파일됩니다:
+  - [`all` 프로퍼티](https://developer.mozilla.org/docs/Web/CSS/all)
+  - [Break 프로퍼티](https://developer.mozilla.org/docs/Web/CSS/break-after)
+  - [`font-variant` 프로퍼티](https://developer.mozilla.org/docs/Web/CSS/font-variant)
+  - [Gap 프로퍼티](https://developer.mozilla.org/docs/Web/CSS/gap)
+  - [Media Query 범위](https://developer.mozilla.org/docs/Web/CSS/Media_Queries/Using_media_queries#Syntax_improvements_in_Level_4)
 
-By default, [CSS Grid](https://www.w3.org/TR/css-grid-1/) and [Custom Properties](https://developer.mozilla.org/docs/Web/CSS/var) (CSS variables) are **not compiled** for IE11 support.
+기본적으로, [CSS Grid](https://www.w3.org/TR/css-grid-1/) 및 [Custom Properties](https://developer.mozilla.org/docs/Web/CSS/var)(CSS 변수)는 IE11 지원을 위해 **컴파일되지 않습니다.**
 
-To compile [CSS Grid Layout](https://developer.mozilla.org/docs/Web/CSS/grid) for IE11, you can place the following comment at the top of your CSS file:
+[CSS Grid Layout](https://developer.mozilla.org/docs/Web/CSS/grid)을 IE11에서 컴파일하려면, CSS 파일의 맨 위에 다음 주석을 추가할 수 있습니다:
 
 ```css
 /* autoprefixer grid: autoplace */
 ```
 
-You can also enable IE11 support for [CSS Grid Layout](https://developer.mozilla.org/docs/Web/CSS/grid)
-in your entire project by configuring autoprefixer with the configuration shown below (collapsed).
-See ["Customizing Plugins"](#customizing-plugins) below for more information.
+전체 프로젝트에서 [CSS Grid Layout](https://developer.mozilla.org/docs/Web/CSS/grid)의 IE11 지원을 활성화하려면, 아래 구성에서와 같이 autoprefixer를 설정할 수 있습니다(아래 접혀진 섹션 참조). 자세한 내용은 ["Customizing Plugins"](#customizing-plugins)을 참조하세요.
 
 <details>
-  <summary>Click to view the configuration to enable CSS Grid Layout</summary>
+  <summary>CSS Grid Layout을 활성화하기 위한 설정을 보려면 클릭하세요.</summary>
 
 ```json filename="postcss.config.json"
 {
@@ -67,14 +63,14 @@ See ["Customizing Plugins"](#customizing-plugins) below for more information.
 
 </details>
 
-CSS variables are not compiled because it is [not possible to safely do so](https://github.com/MadLittleMods/postcss-css-variables#caveats).
-If you must use variables, consider using something like [Sass variables](https://sass-lang.com/documentation/variables) which are compiled away by [Sass](https://sass-lang.com/).
+CSS 변수는 [안전하게 컴파일할 수 없기 때문에](https://github.com/MadLittleMods/postcss-css-variables#caveats) 컴파일되지 않습니다.
+변수를 사용해야 한다면 [Sass](https://sass-lang.com/)에 의해 컴파일되는 [Sass 변수](https://sass-lang.com/documentation/variables)와 같은 것을 사용하는 것을 고려해보세요.
 
 ## Customizing Target Browsers
 
-Next.js allows you to configure the target browsers (for [Autoprefixer](https://github.com/postcss/autoprefixer) and compiled css features) through [Browserslist](https://github.com/browserslist/browserslist).
+Next.js는 [Browserslist](https://github.com/browserslist/browserslist)를 통해 ([Autoprefixer](https://github.com/postcss/autoprefixer) 및 컴파일된 css 기능에 대한) 대상 브라우저를 설정할 수 있습니다.
 
-To customize browserslist, create a `browserslist` key in your `package.json` like so:
+browserslist를 사용자 정의하려면, `package.json` 파일에 다음과 같이 `browserslist` 키를 추가하세요:
 
 ```json filename="package.json"
 {
@@ -82,23 +78,23 @@ To customize browserslist, create a `browserslist` key in your `package.json` li
 }
 ```
 
-You can use the [browsersl.ist](https://browsersl.ist/?q=%3E0.3%25%2C+not+ie+11%2C+not+dead%2C+not+op_mini+all) tool to visualize what browsers you are targeting.
+[browsersl.ist](https://browsersl.ist/?q=%3E0.3%25%2C+not+ie+11%2C+not+dead%2C+not+op_mini+all) 도구를 사용하여 대상으로 하는 브라우저를 시각화할 수 있습니다.
 
 ## CSS Modules
 
-No configuration is needed to support CSS Modules. To enable CSS Modules for a file, rename the file to have the extension `.module.css`.
+CSS Modules를 지원하기 위해 별도의 설정이 필요하지 않습니다. 파일에 `.module.css` 확장자를 사용하여 CSS Modules를 활성화할 수 있습니다.
 
-You can learn more about [Next.js' CSS Module support here](/docs/pages/building-your-application/styling).
+Next.js의 CSS Module 지원에 대한 자세한 내용은 [Next.js' CSS Module support](/docs/pages/building-your-application/styling)를 참조하세요.
 
 ## Customizing Plugins
 
-> **Warning**: When you define a custom PostCSS configuration file, Next.js **completely disables** the [default behavior](#default-behavior).
-> Be sure to manually configure all the features you need compiled, including [Autoprefixer](https://github.com/postcss/autoprefixer).
-> You also need to install any plugins included in your custom configuration manually, i.e. `npm install postcss-flexbugs-fixes postcss-preset-env`.
+> **경고**: 사용자 정의 PostCSS 설정 파일을 정의하면 Next.js는 [기본 동작](#default-behavior)을 **완전히 비활성화**합니다.
+> 컴파일이 필요한 모든 기능을 수동으로 설정해야 하며, 여기에는 [Autoprefixer](https://github.com/postcss/autoprefixer)도 포함됩니다.
+> 또한 사용자 정의 설정에 포함된 모든 플러그인을 수동으로 설치해야 합니다. 예: `npm install postcss-flexbugs-fixes` `postcss-preset-env`.
 
-To customize the PostCSS configuration, create a `postcss.config.json` file in the root of your project.
+PostCSS 설정을 사용자 정의하려면, 프로젝트의 루트에 `postcss.config.json` 파일을 생성하세요.
 
-This is the default configuration used by Next.js:
+다음은 Next.js에서 사용하는 기본 설정입니다:
 
 ```json filename="postcss.config.json"
 {
@@ -120,9 +116,9 @@ This is the default configuration used by Next.js:
 }
 ```
 
-> **Good to know**: Next.js also allows the file to be named `.postcssrc.json`, or, to be read from the `postcss` key in `package.json`.
+> **알아두면 좋은 점**: Next.js는 파일 이름을 '.postcssrc.json'으로 지정하거나 package.json의 'postcss' 키에서 읽을 수 있습니다.
 
-It is also possible to configure PostCSS with a `postcss.config.js` file, which is useful when you want to conditionally include plugins based on environment:
+PostCSS를 `postcss.config.js` 파일로 구성하는 것도 가능합니다. 이 설정은 환경에 따라 플러그인을 조건부로 포함하고자 할 때 유용합니다:
 
 ```js filename="postcss.config.js"
 module.exports = {
@@ -144,16 +140,16 @@ module.exports = {
           ],
         ]
       : [
-          // No transformations in development
+          // development 환경에서는 변환을 수행하지 않습니다.
         ],
 }
 ```
 
-> **Good to know**: Next.js also allows the file to be named `.postcssrc.js`.
+> **알아두면 좋은 점**: Next.js는 파일 이름을 `.postcssrc.js`로 지정할 수도 있습니다.
 
-Do **not use `require()`** to import the PostCSS Plugins. Plugins must be provided as strings.
+PostCSS 플러그인을 가져올 때 require()를 사용하지 마세요. 플러그인은 문자열로 지정해야 합니다.
 
-> **Good to know**: If your `postcss.config.js` needs to support other non-Next.js tools in the same project, you must use the interoperable object-based format instead:
+> **알아두면 좋은 점**: 동일한 프로젝트에서 `postcss.config.js`가 다른 non-Next.js 도구를 지원해야 하는 경우, 다음과 같이 상호 운용 가능한 객체 기반 형식을 대신 사용해야 합니다:
 >
 > ```js
 > module.exports = {
