@@ -45,6 +45,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://enjoydev.life"><img src="https://avatars.githubusercontent.com/u/55135881?v=4?s=100" width="100px;" alt="Suhyeon Park"/><br /><sub><b>Suhyeon Park</b></sub></a><br /><a href="#content-pySoo" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@kinsk2839/posts"><img src="https://avatars.githubusercontent.com/u/96980857?v=4?s=100" width="100px;" alt="kinsk2839"/><br /><sub><b>kinsk2839</b></sub></a><br /><a href="#content-aken-you" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@soy0830"><img src="https://avatars.githubusercontent.com/u/62867581?v=4?s=100" width="100px;" alt="송우영"/><br /><sub><b>송우영</b></sub></a><br /><a href="#content-f0rever0" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/imdaxsz"><img src="https://avatars.githubusercontent.com/u/80813703?v=4?s=100" width="100px;" alt="mihee"/><br /><sub><b>mihee</b></sub></a><br /><a href="#content-imdaxsz" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
