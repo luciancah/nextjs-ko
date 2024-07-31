@@ -3,17 +3,15 @@ title: Debugging
 description: Learn how to debug your Next.js application with VS Code or Chrome DevTools.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # Debugging
 
-This documentation explains how you can debug your Next.js frontend and backend code with full source maps support using either the [VS Code debugger](https://code.visualstudio.com/docs/editor/debugging) or [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools).
+이 문서에서는 [VS Code debugger](https://code.visualstudio.com/docs/editor/debugging)와 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools)를 사용하여 전체 소스 맵을 지원하는 Next.js 프런트엔드 및 백엔드 코드를 디버깅하는 방법을 설명합니다.
 
-Any debugger that can attach to Node.js can also be used to debug a Next.js application. You can find more details in the Node.js [Debugging Guide](https://nodejs.org/en/docs/guides/debugging-getting-started/).
+Node.js에 연결할 수 있는 모든 디버거를 사용하여 Next.js 애플리케이션을 디버깅할 수도 있습니다. Node.js에서 자세한 내용을 확인할 수 있습니다. [Debugging Guide](https://nodejs.org/en/docs/guides/debugging-getting-started/).
 
 ## Debugging with VS Code
 
-Create a file named `.vscode/launch.json` at the root of your project with the following content:
+다음 json을 사용하여 프로젝트 루트에 `.vscode/launch.json`이라는 파일을 만듭니다:
 
 ```json filename="launch.json"
 {
@@ -50,35 +48,36 @@ Create a file named `.vscode/launch.json` at the root of your project with the f
 }
 ```
 
-`npm run dev` can be replaced with `yarn dev` if you're using Yarn or `pnpm dev` if you're using pnpm.
+Yarn을 사용하는 경우 `npm run dev`를 `yarn dev`로 바꾸거나 pnpm을 사용하는 경우 `pnpm dev`로 바꿀 수 있습니다.
 
-If you're [changing the port number](/docs/pages/api-reference/next-cli#development) your application starts on, replace the `3000` in `http://localhost:3000` with the port you're using instead.
+만약 애플리케이션이 시작되는 [포트 번호를 변경하는 경우](/docs/pages/api-reference/next-cli#development), `http://localhost:3000`의 `3000`을 사용 중인 포트로 교체합니다.
 
-If you're running Next.js from a directory other than root (for example, if you're using Turborepo) then you need to add `cwd` to the server-side and full stack debugging tasks. For example, `"cwd": "${workspaceFolder}/apps/web"`.
+루트가 아닌 디렉터리에서 Next.js를 실행하는 경우(예: Turborepo를 사용하는 경우) 서버 측 및 전체 스택 디버깅 작업에 'cwd'를 추가해야 합니다. 예를 들어 `"cwd": "${workspaceFolder}/apps/web"`입니다.
 
-Now go to the Debug panel (`Ctrl+Shift+D` on Windows/Linux, `⇧+⌘+D` on macOS), select a launch configuration, then press `F5` or select **Debug: Start Debugging** from the Command Palette to start your debugging session.
+이제 디버그 패널(Windows/Linux에서는 `Ctrl+Shift+D`, macOS에서는 `⇧+⌘+D`)로 이동하여 실행 구성을 선택한 다음 `F5`를 누르거나 **Debug: Start Debugging**을 선택합니다. 명령 팔레트에서 디버깅 세션을 시작합니다.
 
 ## Using the Debugger in Jetbrains WebStorm
 
-Click the drop down menu listing the runtime configuration, and click `Edit Configurations...`. Create a `Javascript Debug` debug configuration with `http://localhost:3000` as the URL. Customize to your liking (e.g. Browser for debugging, store as project file), and click `OK`. Run this debug configuration, and the selected browser should automatically open. At this point, you should have 2 applications in debug mode: the NextJS node application, and the client/ browser application.
+런타임 구성이 나열된 드롭다운 메뉴를 클릭하고 `Edit Configurations...`을 클릭합니다. `http://localhost:3000`을 URL로 사용하여 `Javascript Debug` 디버그 구성을 만듭니다. 원하는 대로 사용자 정의하고(예: 디버깅용 브라우저, 프로젝트 파일로 저장) `OK`를 클릭합니다.
+이 디버그 구성을 실행하면 선택한 브라우저가 자동으로 열립니다. 이 시점에서 디버그 모드에는 NextJS 노드 애플리케이션과 클라이언트/브라우저 애플리케이션이라는 2개의 애플리케이션이 있어야 합니다.
 
 ## Debugging with Chrome DevTools
 
 ### Client-side code
 
-Start your development server as usual by running `next dev`, `npm run dev`, or `yarn dev`. Once the server starts, open `http://localhost:3000` (or your alternate URL) in Chrome. Next, open Chrome's Developer Tools (`Ctrl+Shift+J` on Windows/Linux, `⌥+⌘+I` on macOS), then go to the **Sources** tab.
+개발 서버를 평소처럼 next dev, npm run dev 또는 yarn dev를 실행하여 시작하세요. 서버가 시작되면 Chrome에서 http://localhost:3000 (또는 대체 URL)을 엽니다. 그런 다음, Chrome의 개발자 도구를 엽니다 (Windows/Linux에서는 Ctrl+Shift+J, macOS에서는 ⌥+⌘+I), 그리고 **Sources** 탭으로 이동합니다.
 
-Now, any time your client-side code reaches a [`debugger`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/debugger) statement, code execution will pause and that file will appear in the debug area. You can also press `Ctrl+P` on Windows/Linux or `⌘+P` on macOS to search for a file and set breakpoints manually. Note that when searching here, your source files will have paths starting with `webpack://_N_E/./`.
+이제 클라이언트 측 코드가 [`debugger`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/debugger)문에 도달할 때마다 코드 실행이 중단되고 해당 파일이 디버그 영역에 나타납니다. 또한, Windows/Linux에서는 `Ctrl+P`, macOS에서는 `⌘+P`를 눌러 파일을 검색하고 수동으로 중단점을 설정할 수 있습니다. 이곳에서 검색할 때 소스 파일 경로는 `webpack://_N_E/./`로 시작합니다.
 
 ### Server-side code
 
-To debug server-side Next.js code with Chrome DevTools, you need to pass the [`--inspect`](https://nodejs.org/api/cli.html#cli_inspect_host_port) flag to the underlying Node.js process:
+Chrome DevTools로 서버 측 Next.js 코드를 디버그하려면 기본 Node.js 프로세스에 [`--inspect`](https://nodejs.org/api/cli.html#cli_inspect_host_port) 플래그를 전달해야 합니다.
 
 ```bash filename="Terminal"
 NODE_OPTIONS='--inspect' next dev
 ```
 
-If you're using `npm run dev` or `yarn dev` then you should update the `dev` script on your `package.json`:
+`npm run dev` 또는 `yarn dev`를 사용하는 경우 `package.json`에서 `dev` 스크립트를 업데이트해야 합니다:
 
 ```json filename="package.json"
 {
@@ -88,7 +87,7 @@ If you're using `npm run dev` or `yarn dev` then you should update the `dev` scr
 }
 ```
 
-Launching the Next.js dev server with the `--inspect` flag will look something like this:
+`--inspect` 플래그를 사용하여 Next.js 개발 서버를 시작하면 다음과 같습니다:
 
 ```bash filename="Terminal"
 Debugger listening on ws://127.0.0.1:9229/0cf90313-350d-4466-a748-cd60f4e47c95
@@ -96,15 +95,15 @@ For help, see: https://nodejs.org/en/docs/inspector
 ready - started server on 0.0.0.0:3000, url: http://localhost:3000
 ```
 
-> Be aware that running `NODE_OPTIONS='--inspect' npm run dev` or `NODE_OPTIONS='--inspect' yarn dev` won't work. This would try to start multiple debuggers on the same port: one for the npm/yarn process and one for Next.js. You would then get an error like `Starting inspector on 127.0.0.1:9229 failed: address already in use` in your console.
+> `NODE_OPTIONS='--inspect' npm run dev` 또는 `NODE_OPTIONS='--inspect' Yarn dev`를 실행하면 작동하지 않는 것을 주의하세요. 이는 npm/yarn 프로세스와 Next.js 모두 동일한 포트에서 디버거를 시작하려고 시도하기 때문입니다. 이로 인해 콘솔에서 `Starting inspector on 127.0.0.1:9229 failed: address already in use`와 같은 오류가 발생할 수 있습니다.
 
-Once the server starts, open a new tab in Chrome and visit `chrome://inspect`, where you should see your Next.js application inside the **Remote Target** section. Click **inspect** under your application to open a separate DevTools window, then go to the **Sources** tab.
+서버가 시작되면 Chrome에서 새 탭을 열고 `chrome://inspect`로 이동하세요. **Remote Target** 섹션에서 Next.js 애플리케이션을 볼 수 있습니다. 애플리케이션 아래의 **inspect**를 클릭하여 별도의 DevTools 창을 열고, **Sources** 탭으로 이동합니다.
 
-Debugging server-side code here works much like debugging client-side code with Chrome DevTools, except that when you search for files here with `Ctrl+P` or `⌘+P`, your source files will have paths starting with `webpack://{application-name}/./` (where `{application-name}` will be replaced with the name of your application according to your `package.json` file).
+여기서 서버 측 코드를 디버깅하는 것은 Chrome DevTools로 클라이언트 측 코드를 디버깅하는 것과 매우 유사합니다. 다만, 여기서 `Ctrl+P` 또는 `⌘+P`를 사용하여 파일을 검색할 때 소스 파일 경로는 `webpack://{application-name}/./`로 시작합니다. (`{application-name}`은 `package.json` 파일에 명시된 애플리케이션 이름으로 대체됩니다).
 
 ### Debugging on Windows
 
-Windows users may run into an issue when using `NODE_OPTIONS='--inspect'` as that syntax is not supported on Windows platforms. To get around this, install the [`cross-env`](https://www.npmjs.com/package/cross-env) package as a development dependency (`-D` with `npm` and `yarn`) and replace the `dev` script with the following.
+Windows 사용자들은 NODE_OPTIONS='--inspect'를 사용할 때 해당 구문이 Windows 플랫폼에서 지원되지 않아 문제가 발생할 수 있습니다. 이를 해결하기 위해 [`cross-env`](https://www.npmjs.com/package/cross-env) 패키지를 개발 종속성(npm과 yarn에서 -D)으로 설치하고 dev 스크립트를 다음과 같이 교체하세요.
 
 ```json filename="package.json"
 {
@@ -114,13 +113,13 @@ Windows users may run into an issue when using `NODE_OPTIONS='--inspect'` as tha
 }
 ```
 
-`cross-env` will set the `NODE_OPTIONS` environment variable regardless of which platform you are on (including Mac, Linux, and Windows) and allow you to debug consistently across devices and operating systems.
+`cross-env`는 사용 중인 플랫폼(Mac, Linux, Windows 포함)에 관계없이 `NODE_OPTIONS` 환경 변수를 설정하고 장치와 운영 체제 전반에 걸쳐 일관되게 디버깅할 수 있도록 해줍니다.
 
-> **Good to know**: Ensure Windows Defender is disabled on your machine. This external service will check _every file read_, which has been reported to greatly increase Fast Refresh time with `next dev`. This is a known issue, not related to Next.js, but it does affect Next.js development.
+> **알아두면 좋은 정보**: Windows Defender가 비활성화되어 있는지 확인하세요. Windows Defender는 _모든 파일 읽기_를 검사하므로 next dev를 사용할 때 빠른 새로 고침 시간이 크게 증가할 수 있습니다. 이는 Next.js와 관련된 문제가 아니지만, Next.js 개발에 영향을 미칩니다.
 
 ## More information
 
-To learn more about how to use a JavaScript debugger, take a look at the following documentation:
+JavaScript 디버거 사용 방법에 대해 자세히 알아보려면 다음 문서를 살펴보세요:
 
 - [Node.js debugging in VS Code: Breakpoints](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_breakpoints)
 - [Chrome DevTools: Debug JavaScript](https://developers.google.com/web/tools/chrome-devtools/javascript)
