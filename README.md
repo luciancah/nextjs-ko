@@ -53,6 +53,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
         <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@sinjuk1"><img src="https://avatars.githubusercontent.com/u/66900221?v=4?s=100" width="100px;" alt="신종욱"/><br /><sub><b>신종욱</b></sub></a><br /><a href="#content-dlsxjzld" title="Content">🖋</a></td>
         <td align="center" valign="top" width="14.28%"><a href="https://hotjae.com"><img src="https://avatars.githubusercontent.com/u/41367134?v=4?s=100" width="100px;" alt="김학재"/><br /><sub><b>김학재</b></sub></a><br /><a href="#content-gouz7514" title="Content">🖋</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@mini-boo/"><img src="https://avatars.githubusercontent.com/u/81962257?v=4?s=100" width="100px;" alt="김현수"/><br /><sub><b>김현수</b></sub></a><br /><a href="#content-mini-boo" title="Content">🖋</a></td>
+    </tr>
   </tbody>
 </table>
 
