@@ -56,7 +56,7 @@ export default function Page() {
       body: formData,
     })
 
-    // Handle response if necessary
+    // 필요에 따라 응답 처리
     const data = await response.json()
     // ...
   }
@@ -81,7 +81,7 @@ export default function Page() {
       body: formData,
     })
 
-    // Handle response if necessary
+    // 필요한 경우 응답 처리
     const data = await response.json()
     // ...
   }
@@ -145,7 +145,7 @@ export default function Page() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsLoading(true)
-    setError(null) // Clear previous errors when a new request starts
+    setError(null) // 새 요청이 시작되면 이전 오류를 삭제
 
     try {
       const formData = new FormData(event.currentTarget)
@@ -158,11 +158,11 @@ export default function Page() {
         throw new Error('Failed to submit the data. Please try again.')
       }
 
-      // Handle response if necessary
+      // 필요한 경우 응답 처리
       const data = await response.json()
       // ...
     } catch (error) {
-      // Capture the error message to display to the user
+      // 오류 메세지를 캡처하여 사용자에게 표시
       setError(error.message)
       console.error(error)
     } finally {
@@ -194,7 +194,7 @@ export default function Page() {
   async function onSubmit(event) {
     event.preventDefault()
     setIsLoading(true)
-    setError(null) // Clear previous errors when a new request starts
+    setError(null) // 새 요청이 시작되면 이전 오류를 삭제
 
     try {
       const formData = new FormData(event.currentTarget)
@@ -207,11 +207,11 @@ export default function Page() {
         throw new Error('Failed to submit the data. Please try again.')
       }
 
-      // Handle response if necessary
+      // 필요한 경우 응답 처리
       const data = await response.json()
       // ...
     } catch (error) {
-      // Capture the error message to display to the user
+      // 오류 메세지를 캡처하여 사용자에게 표시
       setError(error.message)
       console.error(error)
     } finally {
@@ -245,7 +245,7 @@ export default function Page() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setIsLoading(true) // Set loading to true when the request starts
+    setIsLoading(true) // 요청이 시작되면 로딩 상태를 true로 설정
 
     try {
       const formData = new FormData(event.currentTarget)
@@ -254,14 +254,14 @@ export default function Page() {
         body: formData,
       })
 
-      // Handle response if necessary
+      // 필요한 경우 응답 처리
       const data = await response.json()
       // ...
     } catch (error) {
       // Handle error if necessary
       console.error(error)
     } finally {
-      setIsLoading(false) // Set loading to false when the request completes
+      setIsLoading(false) // 요청이 성공적으로 끝난 경우 로딩 상태를 false로 설정
     }
   }
 
@@ -284,7 +284,7 @@ export default function Page() {
 
   async function onSubmit(event) {
     event.preventDefault()
-    setIsLoading(true) // Set loading to true when the request starts
+    setIsLoading(true) // 요청이 시작되면 로딩 상태를 true로 설정
 
     try {
       const formData = new FormData(event.currentTarget)
@@ -293,14 +293,14 @@ export default function Page() {
         body: formData,
       })
 
-      // Handle response if necessary
+      // 필요한 경우 응답 처리
       const data = await response.json()
       // ...
     } catch (error) {
       // Handle error if necessary
       console.error(error)
     } finally {
-      setIsLoading(false) // Set loading to false when the request completes
+      setIsLoading(false) // 요청이 성공적으로 끝난 경우 로딩 상태를 false로 설정
     }
   }
 
