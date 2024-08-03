@@ -31,7 +31,7 @@ description: Next.js has the preview mode for statically generated pages. You ca
 
 </details>
 
-[Pages documentation](/docs/pages/building-your-application/routing/pages-and-layouts) 및 [Data Fetching documentation](/docs/pages/building-your-application/data-fetching) 문서에서 `getStaticProps`와 `getStaticPaths`를 사용하여 빌드 타임에 페이지를 사전 렌더링(**정적 생성**)하는 방법에 대해 이야기했습니다.
+[Pages 문서](/docs/pages/building-your-application/routing/pages-and-layouts) 및 [Data Fetching 문서](/docs/pages/building-your-application/data-fetching)에서 `getStaticProps`와 `getStaticPaths`를 사용하여 빌드 타임에 페이지를 사전 렌더링(**정적 생성**)하는 방법에 대해 이야기했습니다.
 
 정적 생성은 페이지가 헤드리스 CMS에서 데이터를 가져올 때 유용합니다. 하지만 헤드리스 CMS에서 초안을 작성하고 페이지에서 바로 **미리보기**를 원할 때는 이상적이지 않습니다. 이러한 경우 Next.js가 이 페이지들을 빌드 타임이 아닌 **요청 타임**에 렌더링하고 게시된 컨텐츠 대신 초안 컨텐츠를 가져오도록 하고 싶을 것입니다. 이와 같이 Next.js가 특정 경우에 정적 생성을 우회하기를 원할 수 있습니다.
 
@@ -39,7 +39,7 @@ Next.js에는 이러한 문제를 해결하는 **Preview Mode**라는 기능을 
 
 ## Step 1: Create and access a preview API route
 
-> Next.js API Routes를 잘 모르는 경우 [API Routes documentation](/docs/pages/building-your-application/routing/api-routes)을 먼저 참조하십시오.
+> Next.js API Routes를 잘 모르는 경우 [API Routes 문서](/docs/pages/building-your-application/routing/api-routes)을 먼저 참조하십시오.
 
 먼저 **미리보기 API route**를 만듭니다. 이름은 자유롭게 설정할 수 있습니다 - 예: `pages/api/preview.js` (TypeScript를 사용하는 경우 `.ts`).
 
