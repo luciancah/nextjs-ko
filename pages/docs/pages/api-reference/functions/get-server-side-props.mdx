@@ -16,7 +16,7 @@ type Repo = {
 }
 
 export const getServerSideProps = (async () => {
-  // API 외부 API에서 데이터를 가져옵니다.
+  // 외부 API에서 데이터를 가져옵니다.
   const res = await fetch('https://api.github.com/repos/vercel/next.js')
   const repo: Repo = await res.json()
   // props를 통해 페이지에 데이터를 전달합니다.
@@ -36,7 +36,7 @@ export default function Page({
 
 ```jsx filename="pages/index.js" switcher
 export async function getServerSideProps() {
-  // API 외부 API에서 데이터를 가져옵니다.
+  // 외부 API에서 데이터를 가져옵니다.
   const res = await fetch('https://api.github.com/repos/vercel/next.js')
   const repo = await res.json()
   // props를 통해 페이지에 데이터를 전달합니다.
