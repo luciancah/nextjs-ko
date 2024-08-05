@@ -3,41 +3,33 @@ title: Version 12
 description: Upgrade your Next.js Application from Version 11 to Version 12.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # Version 12
 
-To upgrade to version 12, run the following command:
+버전 `12` 으로 업그레이드하려면 아래의 커맨드를 실행하세요:
 
-```bash filename="Terminal"
+```bash
 npm i next@12 react@17 react-dom@17 eslint-config-next@12
-```
 
-```bash filename="Terminal"
 yarn add next@12 react@17 react-dom@17 eslint-config-next@12
-```
 
-```bash filename="Terminal"
 pnpm up next@12 react@17 react-dom@17 eslint-config-next@12
-```
 
-```bash filename="Terminal"
 bun add next@12 react@17 react-dom@17 eslint-config-next@12
 ```
 
-> **Good to know:** If you are using TypeScript, ensure you also upgrade `@types/react` and `@types/react-dom` to their corresponding versions.
+> **알아두면 좋은 사항:** TypeScript를 사용하는 경우, `@types/react` 및 `@types/react-dom`도 해당 버전으로 업그레이드해야 합니다.
 
 ### Upgrading to 12.2
 
-[Middleware](/docs/messages/middleware-upgrade-guide) - If you were using Middleware prior to `12.2`, please see the [upgrade guide](/docs/messages/middleware-upgrade-guide) for more information.
+[Middleware](/docs/messages/middleware-upgrade-guide) - `12.2` 이전에 Middleware를 사용한 경우, 자세한 내용은 [업그레이드 가이드](/docs/messages/middleware-upgrade-guide)를 참조하세요.
 
 ### Upgrading to 12.0
 
-[Minimum Node.js Version](https://nodejs.org/en/) - The minimum Node.js version has been bumped from `12.0.0` to `12.22.0` which is the first version of Node.js with native ES Modules support.
+[Minimum Node.js Version](https://nodejs.org/en/) - 최소 Node.js 버전이 `12.0.0`에서 `12.22.0`으로 상향 조정되었습니다. 이는 Node.js의 첫 번째 네이티브 ES 모듈 지원 버전입니다.
 
-[Minimum React Version](https://react.dev/learn/add-react-to-an-existing-project) - The minimum required React version is `17.0.2`. To upgrade you can run the following command in the terminal:
+[Minimum React Version](https://react.dev/learn/add-react-to-an-existing-project) - 최소 요구 React 버전은 `17.0.2`입니다. 업그레이드하려면 터미널에서 다음 명령어를 실행할 수 있습니다:
 
-```bash filename="Terminal"
+```bash
 npm install react@latest react-dom@latest
 
 yarn add react@latest react-dom@latest
@@ -49,23 +41,23 @@ bun add react@latest react-dom@latest
 
 #### SWC replacing Babel
 
-Next.js now uses the Rust-based compiler [SWC](https://swc.rs/) to compile JavaScript/TypeScript. This new compiler is up to 17x faster than Babel when compiling individual files and up to 5x faster Fast Refresh.
+Next.js는 이제 Rust 기반 컴파일러인 [SWC](https://swc.rs/)를 사용하여 JavaScript/TypeScript를 컴파일합니다. 이 새로운 컴파일러는 개별 파일을 컴파일할 때 Babel보다 최대 17배 빠르고, Fast Refresh에서는 최대 5배 빠릅니다.
 
-Next.js provides full backward compatibility with applications that have [custom Babel configuration](/docs/pages/building-your-application/configuring/babel). All transformations that Next.js handles by default like styled-jsx and tree-shaking of `getStaticProps` / `getStaticPaths` / `getServerSideProps` have been ported to Rust.
+Next.js는 [커스텀 Babel 구성](/docs/pages/building-your-application/configuring/babel)을 가진 애플리케이션과의 완전한 하위 호환성을 제공합니다. Next.js가 기본적으로 처리하는 styled-jsx 및 `getStaticProps` / `getStaticPaths` / `getServerSideProps`의 트리 쉐이킹과 같은 모든 변환은 Rust로 포팅되었습니다.
 
-When an application has a custom Babel configuration, Next.js will automatically opt-out of using SWC for compiling JavaScript/Typescript and will fall back to using Babel in the same way that it was used in Next.js 11.
+애플리케이션이 커스텀 Babel 구성을 가지고 있는 경우, Next.js는 JavaScript/Typescript를 컴파일할 때 SWC 대신 Babel을 사용하도록 자동으로 옵트아웃됩니다.
 
-Many of the integrations with external libraries that currently require custom Babel transformations will be ported to Rust-based SWC transforms in the near future. These include but are not limited to:
+현재 커스텀 Babel 변환이 필요한 외부 라이브러리와의 많은 통합은 가까운 미래에 Rust 기반 SWC 변환으로 포팅될 예정입니다. 여기에는 다음이 포함되지만 이에 국한되지 않습니다:
 
 - Styled Components
 - Emotion
 - Relay
 
-In order to prioritize transforms that will help you adopt SWC, please provide your `.babelrc` on [this feedback thread](https://github.com/vercel/next.js/discussions/30174).
+SWC 채택을 도울 수 있는 변환을 우선시하기 위해, [이 피드백 스레드](https://github.com/vercel/next.js/discussions/30174)에 `.babelrc`를 제공해주세요.
 
 #### SWC replacing Terser for minification
 
-You can opt-in to replacing Terser with SWC for minifying JavaScript up to 7x faster using a flag in `next.config.js`:
+JavaScript를 최대 7배 빠르게 압축하기 위해 `next.config.js`에서 플래그를 사용하여 Terser를 SWC로 교체할 수 있습니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -73,31 +65,31 @@ module.exports = {
 }
 ```
 
-Minification using SWC is an opt-in flag to ensure it can be tested against more real-world Next.js applications before it becomes the default in Next.js 12.1. If you have feedback about minification, please leave it on [this feedback thread](https://github.com/vercel/next.js/discussions/30237).
+SWC를 사용한 압축은 Next.js 12.1에서 기본값이 되기 전에 더 많은 실제 Next.js 애플리케이션에 대해 테스트할 수 있도록 옵트인 플래그입니다. 압축에 대한 피드백이 있는 경우, [이 피드백 스레드](https://github.com/vercel/next.js/discussions/30237)에 남겨주세요.
 
 #### Improvements to styled-jsx CSS parsing
 
-On top of the Rust-based compiler we've implemented a new CSS parser based on the one used for the styled-jsx Babel transform. This new parser has improved handling of CSS and now errors when invalid CSS is used that would previously slip through and cause unexpected behavior.
+Rust 기반 컴파일러 외에도 styled-jsx Babel 변환에 사용된 새로운 CSS 파서를 구현했습니다. 이 새로운 파서는 CSS 처리 능력을 개선했으며, 이전에는 잘못된 CSS가 통과되어 예기치 않은 동작을 유발할 수 있었던 경우를 오류로 처리합니다.
 
-Because of this change invalid CSS will throw an error during development and `next build`. This change only affects styled-jsx usage.
+이 변경으로 인해 잘못된 CSS는 개발 중 및 `next build` 중에 오류를 발생시킵니다. 이 변경은 styled-jsx 사용에만 영향을 미칩니다.
 
 #### `next/image` changed wrapping element
 
-`next/image` now renders the `<img>` inside a `<span>` instead of `<div>`.
+`next/image`는 이제 `<div>` 대신 `<span>` 내부에 `<img>`를 렌더링합니다.
 
-If your application has specific CSS targeting span such as `.container span`, upgrading to Next.js 12 might incorrectly match the wrapping element inside the `<Image>` component. You can avoid this by restricting the selector to a specific class such as `.container span.item` and updating the relevant component with that className, such as `<span className="item" />`.
+애플리케이션에 `.container span`과 같은 span을 타겟팅하는 특정 CSS가 있는 경우, Next.js 12로 업그레이드하면 `<Image>` 컴포넌트 내부의 래핑 요소가 잘못 일치할 수 있습니다. 이 문제를 피하려면 `.container span.item`과 같이 선택기를 특정 클래스에 제한하고 해당 클래스 이름으로 관련 컴포넌트를 업데이트하세요, 예를 들어 `<span className="item" />`.
 
-If your application has specific CSS targeting the `next/image` `<div>` tag, for example `.container div`, it may not match anymore. You can update the selector `.container span`, or preferably, add a new `<div className="wrapper">` wrapping the `<Image>` component and target that instead such as `.container .wrapper`.
+애플리케이션에 `next/image` `<div>` 태그를 타겟팅하는 특정 CSS가 있는 경우, 예를 들어 `.container div`, 더 이상 일치하지 않을 수 있습니다. 선택기를 `.container span`으로 업데이트하거나, 선호되는 방법으로 `<Image>` 컴포넌트를 래핑하는 새로운 `<div className="wrapper">`를 추가하고 이를 타겟팅하세요, 예를 들어 `.container .wrapper`.
 
-The `className` prop is unchanged and will still be passed to the underlying `<img>` element.
+`className` prop은 변경되지 않으며, 여전히 기본 `<img>` 요소에 전달됩니다.
 
-See the [documentation](/docs/pages/building-your-application/optimizing/images#styling) for more info.
+자세한 내용은 [문서](/docs/pages/building-your-application/optimizing/images#styling)를 참조하세요.
 
 #### HMR connection now uses a WebSocket
 
-Previously, Next.js used a [server-sent events](https://developer.mozilla.org/docs/Web/API/Server-sent_events) connection to receive HMR events. Next.js 12 now uses a WebSocket connection.
+이전에는 Next.js가 HMR 이벤트를 수신하기 위해 [server-sent events](https://developer.mozilla.org/docs/Web/API/Server-sent_events) 연결을 사용했습니다. Next.js 12는 이제 WebSocket 연결을 사용합니다.
 
-In some cases when proxying requests to the Next.js dev server, you will need to ensure the upgrade request is handled correctly. For example, in `nginx` you would need to add the following configuration:
+Next.js dev 서버로 요청을 프록시할 때 업그레이드 요청이 올바르게 처리되도록 해야 할 경우가 있습니다. 예를 들어, `nginx`에서 다음 구성을 추가해야 합니다:
 
 ```nginx
 location /_next/webpack-hmr {
@@ -108,7 +100,7 @@ location /_next/webpack-hmr {
 }
 ```
 
-If you are using Apache (2.x), you can add the following configuration to enable web sockets to the server. Review the port, host name and server names.
+Apache (2.x)를 사용하는 경우, 서버에 웹 소켓을 활성화하려면 다음 구성을 추가할 수 있습니다. 포트, 호스트 이름 및 서버 이름을 검토하세요.
 
 ```
 <VirtualHost *:443>
@@ -129,7 +121,7 @@ If you are using Apache (2.x), you can add the following configuration to enable
 </VirtualHost>
 ```
 
-For custom servers, such as `express`, you may need to use `app.all` to ensure the request is passed correctly, for example:
+`express`와 같은 커스텀 서버의 경우, 요청이 올바르게 전달되도록 `app.all`을 사용해야 할 수 있습니다. 예를 들어:
 
 ```js
 app.all('/_next/webpack-hmr', (req, res) => {
@@ -139,18 +131,18 @@ app.all('/_next/webpack-hmr', (req, res) => {
 
 #### Webpack 4 support has been removed
 
-If you are already using webpack 5 you can skip this section.
+이미 webpack 5를 사용 중인 경우, 이 섹션을 건너뛸 수 있습니다.
 
-Next.js has adopted webpack 5 as the default for compilation in Next.js 11. As communicated in the [webpack 5 upgrading documentation](/docs/messages/webpack5) Next.js 12 removes support for webpack 4.
+Next.js는 Next.js 11에서 기본 컴파일러로 webpack 5를 채택했습니다. [webpack 5 업그레이드 문서](/docs/messages/webpack5)에 명시된 바와 같이 Next.js 12는 webpack 4에 대한 지원을 제거합니다.
 
-If your application is still using webpack 4 using the opt-out flag, you will now see an error linking to the [webpack 5 upgrading documentation](/docs/messages/webpack5).
+opt-out 플래그를 사용하여 여전히 webpack 4를 사용 중인 애플리케이션의 경우, 이제 [webpack 5 업그레이드 문서](/docs/messages/webpack5)로 연결되는 오류가 표시됩니다.
 
 #### `target` option deprecated
 
-If you do not have `target` in `next.config.js` you can skip this section.
+`next.config.js`에 `target`이 없는 경우, 이 섹션을 건너뛸 수 있습니다.
 
-The target option has been deprecated in favor of built-in support for tracing what dependencies are needed to run a page.
+target 옵션은 페이지를 실행하는 데 필요한 종속성을 추적하는 기본 제공 지원으로 대체되었습니다.
 
-During `next build`, Next.js will automatically trace each page and its dependencies to determine all of the files that are needed for deploying a production version of your application.
+`next build` 중에 Next.js는 각 페이지와 해당 종속성을 자동으로 추적하여 애플리케이션의 프로덕션 버전을 배포하는 데 필요한 모든 파일을 결정합니다.
 
-If you are currently using the `target` option set to `serverless`, please read the [documentation on how to leverage the new output](/docs/pages/api-reference/next-config-js/output).
+현재 `serverless`로 설정된 `target` 옵션을 사용하는 경우, 새로운 출력 활용 방법에 대한 [문서](/docs/pages/api-reference/next-config-js/output)를 읽어보세요.

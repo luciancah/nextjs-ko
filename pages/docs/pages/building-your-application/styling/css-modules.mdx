@@ -4,8 +4,168 @@ description: Style your Next.js Application using CSS Modules.
 source: app/building-your-application/styling/stylesheets
 ---
 
-{/* TODO: 번역이 필요합니다. */}
+{/* 이 문서의 내용은 app과 pages 라우터 간에 공유됩니다. Pages Router에 특정한 내용을 추가하려면 `<PagesOnly>Content</PagesOnly>` 컴포넌트를 사용할 수 있습니다. 모든 공유 내용은 컴포넌트로 감싸지 않아야 합니다. */}
 
 # CSS Modules
 
-{/* DO NOT EDIT. The content of this doc is generated from the source above. To edit the content of this page, navigate to the source page in your editor. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
+<PagesOnly>
+
+<details open>
+  <summary>Examples</summary>
+
+- [Basic CSS Example](https://github.com/vercel/next.js/tree/canary/examples/basic-css)
+
+</details>
+
+</PagesOnly>
+
+Next.js는 다음을 포함한 다양한 유형의 스타일시트를 지원합니다:
+
+- [CSS Modules](https://nextjs.org/docs/pages/building-your-application/styling/css-modules#css-modules)
+- [Global Styles](https://nextjs.org/docs/pages/building-your-application/styling/css-modules#global-styles)
+- [External Stylesheets](https://nextjs.org/docs/pages/building-your-application/styling/css-modules#external-stylesheets)
+
+## CSS Modules
+
+Next.js는 `.module.css` 확장자를 사용하여 CSS Modules를 기본적으로 지원합니다.
+
+CSS Modules는 고유한 클래스 이름을 자동으로 생성하여 CSS를 로컬 범위로 지정합니다. 이를 통해 충돌을 걱정하지 않고 다른 파일에서 동일한 클래스 이름을 사용할 수 있습니다. 이러한 동작은 CSS Modules를 컴포넌트 수준의 CSS를 포함하는 이상적인 방법으로 만듭니다.
+
+## Example
+
+예를 들어, `components/` 폴더에 재사용 가능한 `Button` 컴포넌트를 고려해 보겠습니다:
+
+먼저, 다음 내용으로 `components/Button.module.css`를 생성합니다:
+
+```css filename="Button.module.css"
+/* 
+다른 .css 또는 .module.css 파일과 충돌하는 것에 대해 걱정할 필요가 없습니다!
+*/
+.error {
+  color: white;
+  background-color: red;
+}
+```
+
+그런 다음, 위의 CSS 파일을 가져와서 사용하는 `components/Button.js`를 생성합니다:
+
+```js filename="components/Button.js"
+import styles from './Button.module.css'
+
+export function Button() {
+  return (
+    <button
+      type="button"
+      // "error" 클래스가 가져온 `styles` 객체의 속성으로 접근되는 것을 주목하세요.
+      className={styles.error}
+    >
+      Destroy
+    </button>
+  )
+}
+```
+
+CSS Modules는 **`.module.css` 및 `.module.sass` 확장자를 가진 파일에만 활성화됩니다.**
+
+프로덕션에서는 모든 CSS Module 파일이 자동으로 **여러 축소되고 코드 분할된** `.css` 파일로 연결됩니다. 이러한 `.css` 파일은 애플리케이션의 주요 실행 경로를 나타내며, 애플리케이션을 렌더링하는 데 필요한 최소한의 CSS만 로드되도록 보장합니다
+
+## Global Styles
+
+애플리케이션에 스타일시트를 추가하려면 `pages/_app.js` 내에서 CSS 파일을 가져오세요.
+
+예를 들어, `styles.css`라는 다음 스타일시트를 고려해 보겠습니다:
+
+```css filename="styles.css"
+body {
+  font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica',
+    'Arial', sans-serif;
+  padding: 20px 20px 60px;
+  max-width: 680px;
+  margin: 0 auto;
+}
+```
+
+[`pages/_app.js`](https://nextjs.org/docs/pages/building-your-application/routing/custom-app) 파일이 없으면 생성한 후, `styles.css` 파일을 [`불러옵니다`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/import).
+
+```js filename="pages/_app.js"
+import '../styles.css'
+
+// 해당 내보내기는 새 `pages/_app.js` 파일에서 필요합니다.
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
+```
+
+이 스타일(`styles.css`)은 애플리케이션의 모든 페이지와 컴포넌트에 적용됩니다. 스타일시트의 전역적 특성 때문에 충돌을 피하기 위해, **오직 [`pages/_app.js`](https://nextjs.org/docs/pages/building-your-application/routing/custom-app) 내에서만 가져올 수 있습니다.**
+
+개발 시, 이러한 방식으로 스타일시트를 표현하면 스타일을 편집할 때 즉시 반영되어 애플리케이션 상태를 유지할 수 있습니다.
+
+프로덕션에서는 모든 CSS 파일이 자동으로 단일 축소된 `.css` 파일로 결합됩니다. CSS가 결합되는 순서는 `_app.js` 파일에 CSS가 가져오는 순서와 일치합니다. 자체 CSS를 포함하는 가져온 JS 모듈에 특별히 주의하세요; JS 모듈의 CSS는 가져온 CSS 파일과 동일한 순서 규칙에 따라 결합됩니다. 예를 들어:
+
+```js
+import '../styles.css'
+// ErrorBoundary의 CSS는 styles.css의 전역 CSS에 의존하므로, styles.css 이후에 가져옵니다.
+import ErrorBoundary from '../components/ErrorBoundary'
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <ErrorBoundary>
+      <Component {...pageProps} />
+    </ErrorBoundary>
+  )
+}
+```
+
+## External Stylesheets
+
+Next.js는 JavaScript 파일에서 CSS 파일 [`가져오기`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/import)를 허용합니다. 이는 Next.js가 import의 개념을 JavaScript 이상으로 확장했기 때문입니다.
+
+### Import styles from `node_modules`
+
+Next.js **9.5.4**부터 애플리케이션 내 어디에서나 `node_modules`에서 CSS 파일을 가져오는 것이 허용됩니다.
+
+전역 스타일시트의 경우, `bootstrap` 또는 `nprogress`와 같이 파일을 `pages/_app.js` 내에서 가져와야 합니다. 예를 들어:
+
+```js filename="pages/_app.js"
+import 'bootstrap/dist/css/bootstrap.css'
+
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
+```
+
+서드 파티 컴포넌트에서 필요한 CSS를 가져오려면, 해당 컴포넌트에서 가져올 수 있습니다. 예를 들어:
+
+```js filename="components/example-dialog.js"
+import { useState } from 'react'
+import { Dialog } from '@reach/dialog'
+import VisuallyHidden from '@reach/visually-hidden'
+import '@reach/dialog/styles.css'
+
+function ExampleDialog(props) {
+  const [showDialog, setShowDialog] = useState(false)
+  const open = () => setShowDialog(true)
+  const close = () => setShowDialog(false)
+
+  return (
+    <div>
+      <button onClick={open}>Open Dialog</button>
+      <Dialog isOpen={showDialog} onDismiss={close}>
+        <button className="close-button" onClick={close}>
+          <VisuallyHidden>Close</VisuallyHidden>
+          <span aria-hidden>×</span>
+        </button>
+        <p>Hello there. I am a dialog</p>
+      </Dialog>
+    </div>
+  )
+}
+```
+
+## Additional Features
+
+Next.js는 스타일 추가의 개발자 경험을 개선하기 위해 추가 기능을 포함합니다:
+
+- `next dev`로 로컬에서 실행할 때, 로컬 스타일시트(전역 또는 CSS 모듈)는 [Fast Refresh](https://nextjs.org/docs/architecture/fast-refresh)를 활용하여 수정사항이 저장될 때 즉시 반영됩니다.
+- `next build`로 프로덕션 빌드를 할 때, CSS 파일은 더 적은 수의 축소된 `.css` 파일로 번들링되어 스타일을 검색하는 데 필요한 네트워크 요청 수를 줄입니다.
+- JavaScript를 비활성화하면, 스타일은 프로덕션 빌드(`next start`)에서 여전히 로드됩니다. 그러나, [Fast Refresh](https://nextjs.org/docs/architecture/fast-refresh)를 활성화하기 위해 `next dev`에는 여전히 JavaScript가 필요합니다.
