@@ -20,17 +20,17 @@ jobs:
       - name: Run Prettier
         id: prettier-run
         run: |
-          npx prettier --check "**/*" --config ./.prettierrc --ignore-path ./.prettierignore || true
+          npx prettier --check "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore || true
 
       - name: Collect Prettier Output
         id: prettier-output
         run: |
           echo "## Prettier Report" > prettier_report.md
           echo "The following files are not formatted:" >> prettier_report.md
-          npx prettier --list-different "**/*" --config ./.prettierrc --ignore-path ./.prettierignore >> prettier_report.md
+          npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore >> prettier_report.md
           echo "" >> prettier_report.md
           echo "Detailed formatting differences:" >> prettier_report.md
-          for file in $(npx prettier --list-different "**/*" --config ./.prettierrc --ignore-path ./.prettierignore); do
+          for file in $(npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore); do
             echo "Differences in $file:" >> prettier_report.md
             npx prettier --write "$file" --config ./.prettierrc --ignore-path ./.prettierignore --loglevel debug >> prettier_report.md
             echo "" >> prettier_report.md
