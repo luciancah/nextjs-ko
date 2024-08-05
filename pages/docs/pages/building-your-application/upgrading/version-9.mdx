@@ -6,7 +6,7 @@ description: Upgrade your Next.js Application from Version 8 to Version 9.
 
 # Upgrading to Version 9
 
-버전 `9` 로 업그레이드하려면 아래의 명령어를 실행하세요:
+버전 9로 업그레이드하려면 아래의 명령어를 실행하세요:
 
 ```bash filename="Terminal"
 npm i next@9
@@ -28,7 +28,7 @@ bun add next@9
 
 ## Production Deployment on Vercel
 
-과거에 vercel.json 파일에서 동적 경로를 위해 routes를 구성했다면, Next.js 9의 새로운 기능인 [Dynamic Routing feature](/docs/pages/building-your-application/routing/dynamic-routes)을 활용해 이러한 규칙을 제거할 수 있습니다.
+과거에 `vercel.json` 파일에서 동적 경로를 위해 `routes`를 구성했다면, Next.js 9의 새로운 기능인 [Dynamic Routing feature](/docs/pages/building-your-application/routing/dynamic-routes)을 활용해 이러한 규칙을 제거할 수 있습니다.
 
 Next.js 9의 동적 경로는 **[Vercel](https://vercel.com/)에서 자동으로 구성**되며, vercel.json 추가 설정이 필요하지 않습니다.
 
@@ -126,7 +126,7 @@ Next.js에서 page-level configuration 개념을 도입했기 때문에 일관�
 curl -L https://github.com/vercel/next-codemod/archive/master.tar.gz | tar -xz --strip=2 next-codemod-master/transforms/withamp-to-config.js npx jscodeshift -t ./withamp-to-config.js pages/**/*.js
 ```
 
-마이그레이션을 수동으로 수행하거나, 코드 변환기의 생성 결과를 보려면 아래를 참조하세요:
+마이그레이션을 수동으로 수행하거나, codemod의 생성 결과를 보려면 아래를 참조하세요:
 
 **Before**
 
