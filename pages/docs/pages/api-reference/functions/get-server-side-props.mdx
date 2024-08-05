@@ -58,19 +58,19 @@ export default function Page({ repo }) {
 
 `context` 매개변수는 다음 키를 포함하는 객체입니다:
 
-| Name            | Description                                                                                                                                                                                                           |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `params`        | 이 페이지가 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)를 사용하는 경우, `params`에는 라우트 매개변수가 포함됩니다. 페이지 이름이 `[id].js`면, `params`는 `{ id: ... }`와 같이 표시됩니다.     |
-| `req`           | 추가적인 `cookies` prop이 있는 [The HTTP IncomingMessage 객체](https://nodejs.org/api/http.html#http_class_http_incomingmessage)이며, 이는 문자열 값을 가진 쿠키의 문자열 키를 매핑하는 객체입니다.                          |
-| `res`           | [The `HTTP` response 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse)입니다.                                                                                                                     |
+| Name            | Description                                                                                                                                                                                                                |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `params`        | 이 페이지가 [동적 라우트](/docs/pages/building-your-application/routing/dynamic-routes)를 사용하는 경우, `params`에는 라우트 매개변수가 포함됩니다. 페이지 이름이 `[id].js`면, `params`는 `{ id: ... }`와 같이 표시됩니다. |
+| `req`           | 추가적인 `cookies` prop이 있는 [The HTTP IncomingMessage 객체](https://nodejs.org/api/http.html#http_class_http_incomingmessage)이며, 이는 문자열 값을 가진 쿠키의 문자열 키를 매핑하는 객체입니다.                        |
+| `res`           | [The `HTTP` response 객체](https://nodejs.org/api/http.html#http_class_http_serverresponse)입니다.                                                                                                                         |
 | `query`         | 동적 라우트 매개변수를 포함한 쿼리 문자열을 나타내는 객체입니다.                                                                                                                                                           |
-| `preview`       | (`draftMode`로 대체 예정) 페이지가 [미리보기 모드](/docs/pages/building-your-application/configuring/preview-mode)에 있는 경우 `preview`는 `true`이고, 그렇지 않으면 `false`입니다.                                         |
-| `previewData`   | (`draftMode`로 대체 예정) `setPreviewData`에 의해 설정된 [미리보기](/docs/pages/building-your-application/configuring/preview-mode) 데이터입니다.                                                                         |
-| `draftMode`     | 페이지가 [Draft Mode](/docs/pages/building-your-application/configuring/draft-mode)에 있는 경우 `draftMode`는 `true`이고, 그렇지 않으면 `false`입니다.                                                                    |
-| `resolvedUrl`   | 클라이언트 전환을 위한 `_next/data` 접두사를 제거하고 원래 쿼리 값을 포함하는 요청 `URL`의 정규화된 버전입니다.                                                                                                              |
-| `locale`        | 활성 로케일이 포함됩니다. (활성화된 경우)                                                                                                                                                                                |
-| `locales`       | 지원되는 모든 로케일이 포함됩니다. (활성화된 경우)                                                                                                                                                                        |
-| `defaultLocale` | 설정된 기본 로케일이 포함됩니다. (활성화된 경우)                                                                                                                                                                          |
+| `preview`       | (`draftMode`로 대체 예정) 페이지가 [미리보기 모드](/docs/pages/building-your-application/configuring/preview-mode)에 있는 경우 `preview`는 `true`이고, 그렇지 않으면 `false`입니다.                                        |
+| `previewData`   | (`draftMode`로 대체 예정) `setPreviewData`에 의해 설정된 [미리보기](/docs/pages/building-your-application/configuring/preview-mode) 데이터입니다.                                                                          |
+| `draftMode`     | 페이지가 [Draft Mode](/docs/pages/building-your-application/configuring/draft-mode)에 있는 경우 `draftMode`는 `true`이고, 그렇지 않으면 `false`입니다.                                                                     |
+| `resolvedUrl`   | 클라이언트 전환을 위한 `_next/data` 접두사를 제거하고 원래 쿼리 값을 포함하는 요청 `URL`의 정규화된 버전입니다.                                                                                                            |
+| `locale`        | 활성 로케일이 포함됩니다. (활성화된 경우)                                                                                                                                                                                  |
+| `locales`       | 지원되는 모든 로케일이 포함됩니다. (활성화된 경우)                                                                                                                                                                         |
+| `defaultLocale` | 설정된 기본 로케일이 포함됩니다. (활성화된 경우)                                                                                                                                                                           |
 
 ## getServerSideProps return values
 
@@ -135,8 +135,8 @@ export async function getServerSideProps(context) {
 
 ## Version History
 
-| Version   | Changes                                                                                                        |
-| --------- | -------------------------------------------------------------------------------------------------------------- |
+| Version   | Changes                                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------------------------ |
 | `v13.4.0` | [App Router](/docs/app/building-your-application/data-fetching)가 안정화되었고, 단순화된 데이터 페칭을 지원합니다. |
-| `v10.0.0` | `locale`, `locales`, `defaultLocale`, 및 `notFound` 옵션이 추가되었습니다.                                       |
-| `v9.3.0`  | `getServerSideProps`가 도입되었습니다.                                                                           |
+| `v10.0.0` | `locale`, `locales`, `defaultLocale`, 및 `notFound` 옵션이 추가되었습니다.                                         |
+| `v9.3.0`  | `getServerSideProps`가 도입되었습니다.                                                                             |
