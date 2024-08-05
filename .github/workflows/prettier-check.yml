@@ -60,3 +60,9 @@ jobs:
               repo: context.repo.repo,
               body: prettierReport
             });
+
+      - name: Fail if Prettier found issues
+        if: steps.prettier-check.outcome == 'failure'
+        run: |
+          echo "Prettier found formatting issues. Please fix them and try again."
+          exit 1
