@@ -1,6 +1,5 @@
 name: Continuous Integration
 
-# This action works with pull requests and pushes on the main branch
 on:
   pull_request:
   push:
@@ -14,40 +13,50 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Install Prettier
-        run: npm install --global prettier@latest
+        run: npm install prettier@latest
 
       - name: Run Prettier Check
         id: prettier-check
         run: |
-          npx prettier --check "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore || true
+          npx prettier --check "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore
+        continue-on-error: true
 
       - name: Collect Prettier Output
+        if: steps.prettier-check.outcome == 'failure'
         id: prettier-output
         run: |
           echo "## Prettier Report" > prettier_report.md
           echo "The following files are not formatted:" >> prettier_report.md
-          npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore >> prettier_report.md
+          npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore >> prettier_report.md || true
           echo "" >> prettier_report.md
           echo "Detailed formatting differences:" >> prettier_report.md
-          for file in $(npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore); do
-            echo "Differences in $file:" >> prettier_report.md
-            npx prettier --write "$file" --config ./.prettierrc --ignore-path ./.prettierignore --loglevel debug || true
-            echo "" >> prettier_report.md
-          done
+          while IFS= read -r file; do
+            if [ -n "$file" ]; then
+              echo "Differences in $file:" >> prettier_report.md
+              npx prettier "$file" --config ./.prettierrc --ignore-path ./.prettierignore > formatted_file.tmp 2>/dev/null || true
+              diff -u "$file" formatted_file.tmp >> prettier_report.md 2>/dev/null || true
+              echo "" >> prettier_report.md
+            fi
+          done < <(npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore)
         continue-on-error: true
 
       - name: Create Pull Request Comment
-        if: ${{ failure() }}
+        if: steps.prettier-check.outcome == 'failure' && github.event_name == 'pull_request'
         uses: actions/github-script@v6
         with:
+          github-token: ${{secrets.ACTION_PAT}}
           script: |
             const fs = require('fs');
             const prettierReport = fs.readFileSync('prettier_report.md', 'utf8');
-            const { context } = require('@actions/github');
-
             github.rest.issues.createComment({
-              ...context.repo,
               issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               body: prettierReport
             });
