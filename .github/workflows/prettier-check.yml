@@ -17,8 +17,8 @@ jobs:
       - name: Install Prettier
         run: npm install --global prettier@latest
 
-      - name: Run Prettier
-        id: prettier-run
+      - name: Run Prettier Check
+        id: prettier-check
         run: |
           npx prettier --check "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore || true
 
@@ -32,7 +32,7 @@ jobs:
           echo "Detailed formatting differences:" >> prettier_report.md
           for file in $(npx prettier --list-different "**/*.{js,jsx,ts,tsx,css,scss,mdx}" --config ./.prettierrc --ignore-path ./.prettierignore); do
             echo "Differences in $file:" >> prettier_report.md
-            npx prettier --write "$file" --config ./.prettierrc --ignore-path ./.prettierignore --loglevel debug >> prettier_report.md
+            git diff --color=always --word-diff "$file" >> prettier_report.md
             echo "" >> prettier_report.md
           done
         continue-on-error: true
