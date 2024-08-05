@@ -32,8 +32,6 @@
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tbody>
-    ```html
 <tbody>
     <tr>
         <td align="center" valign="top" width="14.28%"><a href="https://blog.luciancah.com"><img src="https://avatars.githubusercontent.com/u/8311335?v=4?s=100" width="100px;" alt="Jinhyung Lee"/><br /><sub><b>Jinhyung Lee</b></sub></a><br /><a href="https://github.com/luciancah/nextjs-ko/commits?author=luciancah" title="Documentation">📖</a></td>
@@ -67,7 +65,6 @@
         <td align="center" valign="top" width="14.28%"><a href="https://github.com/yoouyeon"><img src="https://avatars.githubusercontent.com/u/57761286?v=4?s=100" width="100px;" alt="Yoon Jeongyeon"/><br /><sub><b>Yoon Jeongyeon</b></sub></a><br /><a href="#content-yoouyeon" title="Content">🖋</a></td>
     </tr>
 </tbody>
-  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
