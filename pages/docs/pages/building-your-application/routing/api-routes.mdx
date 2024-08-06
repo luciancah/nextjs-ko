@@ -47,9 +47,7 @@ export default function handler(req, res) {
 }
 ```
 
-> **Good to know**:
->
-> - API Routes는 기본적으로 **동일 출처** 만 허용하며, [CORS 헤더를 지정하지 않습니다](https://developer.mozilla.org/docs/Web/HTTP/CORS) . 이러한 동작은 [CORS 요청 도우미](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors) 로 요청 핸들러를 감싸서 사용자 정의할 수 있습니다.
+> **Good to know**:- API Routes는 기본적으로 **동일 출처** 만 허용하며, [CORS 헤더를 지정하지 않습니다](https://developer.mozilla.org/docs/Web/HTTP/CORS) . 이러한 동작은 [CORS 요청 도우미](https://github.com/vercel/next.js/tree/canary/examples/api-routes-cors) 로 요청 핸들러를 감싸서 사용자 정의할 수 있습니다.
 
 - API Routes는 [정적 내보내기](/docs/pages/building-your-application/deploying/static-exports) 와 함께 사용할 수 없습니다. 그러나 App Router의 [Route Handlers](/docs/app/building-your-application/routing/route-handlers) 를 사용할 수 있습니다.
   > - API Routes는 `next.config.js`의 [pageExtensions 설정](/docs/pages/api-reference/next-config-js/pageExtensions) 의 영향을 받습니다.
