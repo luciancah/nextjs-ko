@@ -16,7 +16,7 @@ Next.js 13부터 `next/image` 컴포넌트가 성능과 개발자 경험을 개�
 
 **새로운** [`next/image` API 참조](/docs/pages/api-reference/components/image)를 확인하세요.
 
-## 비교
+## Comparison
 
 `next/legacy/image`와 비교하여 새로운 `next/image` 컴포넌트에는 다음과 같은 변경 사항이 있습니다:
 
@@ -32,7 +32,7 @@ Next.js 13부터 `next/image` 컴포넌트가 성능과 개발자 경험을 개�
 - `alt` prop을 선택 사항에서 필수로 변경
 - `onLoadingComplete` 콜백이 `<img>` 요소에 대한 참조를 받도록 변경
 
-## 필수 Props
+## Required Props
 
 `<Image />` 컴포넌트에는 다음 속성이 필요합니다.
 
@@ -65,7 +65,7 @@ Next.js 13부터 `next/image` 컴포넌트가 성능과 개발자 경험을 개�
 
 `height` 속성은 [정적으로 가져온 이미지](/docs/pages/building-your-application/optimizing/images#local-images)나 `layout="fill"`을 사용하는 경우를 제외하고 필수입니다.
 
-## 선택적 Props
+## Optional Props
 
 `<Image />` 컴포넌트는 필수 속성 외에도 여러 추가 속성을 허용합니다. 이 섹션에서는 Image 컴포넌트의 가장 일반적으로 사용되는 속성에 대해 설명합니다. 더 드물게 사용되는 속성에 대한 자세한 내용은 [고급 Props](#advanced-props) 섹션에서 확인할 수 있습니다.
 
@@ -532,7 +532,7 @@ module.exports = {
 
 현재 캐시를 무효화하는 메커니즘은 없으므로 `minimumCacheTTL`을 낮게 유지하는 것이 좋습니다. 그렇지 않으면 [`src`](#src) 속성을 수동으로 변경하거나 `<distDir>/cache/images`를 삭제해야 할 수도 있습니다.
 
-### 정적 가져오기 비활성화
+### Disable Static Imports
 
 기본 동작은 `import icon from './icon.png'`와 같은 정적 파일을 가져온 후 이를 `src` 속성에 전달할 수 있게 해줍니다.
 
