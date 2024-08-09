@@ -3,32 +3,30 @@ title: AMP
 description: With minimal config, and without leaving React, you can start adding AMP and improve the performance and speed of your pages.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
 # AMP
 
 <details>
   <summary>Examples</summary>
-  
+
 - [AMP](https://github.com/vercel/next.js/tree/canary/examples/amp)
 
 </details>
 
-With Next.js you can turn any React page into an AMP page, with minimal config, and without leaving React.
+Next.js를 사용하면 최소한의 설정만으로 React 환경을 벗어나지 않고도 모든 React 페이지를 AMP 페이지로 쉽게 변환할 수 있습니다.
 
-You can read more about AMP in the official [amp.dev](https://amp.dev/) site.
+AMP에 대해 자세히 알아보려면 공식 [amp.dev](https://amp.dev) 사이트를 방문해 보세요.
 
 ## Enabling AMP
 
-To enable AMP support for a page, and to learn more about the different AMP configs, read the [API documentation for `next/amp`](/docs/pages/building-your-application/configuring/amp).
+AMP를 페이지에서 활성화하고 다양한 AMP 설정에 대해 더 알아보려면 [`next/amp`의 API 문서](/docs/app/building-your-application/configuring/amp)를 읽어보세요.
 
 ## Caveats
 
-- Only CSS-in-JS is supported. [CSS Modules](/docs/pages/building-your-application/styling) aren't supported by AMP pages at the moment. You can [contribute CSS Modules support to Next.js](https://github.com/vercel/next.js/issues/10549).
+- 현재 AMP 페이지에서는 CSS-in-JS만 지원되며, [CSS Modules](/docs/app/building-your-application/styling)는 지원되지 않습니다. [Next.js에 CSS Modules 지원을 직접 기여하실 수 있습니다.](https://github.com/vercel/next.js/issues/10549)
 
 ## Adding AMP Components
 
-The AMP community provides [many components](https://amp.dev/documentation/components/) to make AMP pages more interactive. Next.js will automatically import all components used on a page and there is no need to manually import AMP component scripts:
+AMP 커뮤니티는 AMP 페이지를 더욱 인터랙티브하게 만들기 위해 [다양한 컴포넌트](https://amp.dev/documentation/components/)를 제공합니다. Next.js는 페이지에서 사용되는 모든 AMP 컴포넌트를 자동으로 가져오기 때문에 AMP 컴포넌트 스크립트를 수동으로 가져올 필요가 없습니다:
 
 ```jsx
 export const config = { amp: true }
@@ -54,9 +52,9 @@ function MyAmpPage() {
 export default MyAmpPage
 ```
 
-The above example uses the [`amp-timeago`](https://amp.dev/documentation/components/amp-timeago/?format=websites) component.
+위 예제는 [`amp-timeago`](https://amp.dev/documentation/components/amp-timeago/?format=websites) 컴포넌트를 사용합니다.
 
-By default, the latest version of a component is always imported. If you want to customize the version, you can use `next/head`, as in the following example:
+기본적으로 항상 최신 버전의 컴포넌트를 가져옵니다(import). 버전을 커스터마이징하여 사용하려면 `next/head`를 사용해 다음과 같이 사용할 수 있습니다:
 
 ```jsx
 import Head from 'next/head'
@@ -95,13 +93,13 @@ export default MyAmpPage
 
 ## AMP Validation
 
-AMP pages are automatically validated with [amphtml-validator](https://www.npmjs.com/package/amphtml-validator) during development. Errors and warnings will appear in the terminal where you started Next.js.
+AMP 페이지는 개발 중에 [amphtml-validator](https://www.npmjs.com/package/amphtml-validator)를 통해 자동으로 검증됩니다. 오류와 경고는 터미널에 출력됩니다.
 
-Pages are also validated during [Static HTML export](/docs/pages/building-your-application/deploying/static-exports) and any warnings / errors will be printed to the terminal. Any AMP errors will cause the export to exit with status code `1` because the export is not valid AMP.
+[정적 HTML 내보내기](/docs/app/building-your-application/deploying/static-exports) 중에도 페이지가 검증되며, 경고나 오류는 터미널에 출력됩니다. AMP 오류가 있을 경우, 내보내기(export)는 상태 코드 `1`로 종료되며, 이는 내보내기(export)가 유효한 AMP가 아니기 때문입니다.
 
 ### Custom Validators
 
-You can set up custom AMP validator in `next.config.js` as shown below:
+다음과 같이 `next.config.js`에서 커스텀 AMP validator를 설정할 수 있습니다:
 
 ```js
 module.exports = {
@@ -113,7 +111,7 @@ module.exports = {
 
 ### Skip AMP Validation
 
-To turn off AMP validation add the following code to `next.config.js`
+AMP 검증을 비활성화하려면 next.config.js에 다음 코드를 추가하세요:
 
 ```js
 experimental: {
@@ -125,36 +123,35 @@ experimental: {
 
 ### AMP in Static HTML Export
 
-When using [Static HTML export](/docs/pages/building-your-application/deploying/static-exports) statically prerender pages, Next.js will detect if the page supports AMP and change the exporting behavior based on that.
+[정적 HTML 내보내기 기능을](/docs/app/building-your-application/deploying/static-exports) 사용하여 페이지를 정적으로 사전 렌더링(prerender)할 때, Next.js는 페이지가 AMP를 지원하는지 감지하고 이에 따라 내보내기(export) 동작을 변경합니다.
+예를 들어, 하이브리드 AMP 페이지 `pages/about.js`는 다음과 같이 출력됩니다:
 
-For example, the hybrid AMP page `pages/about.js` would output:
+- `out/about.html` - 클라이언트 사이드에서 실행되는 HTML 페이지
+- `out/about.amp.html-AMP` - AMP 페이지
 
-- `out/about.html` - HTML page with client-side React runtime
-- `out/about.amp.html` - AMP page
+그리고 만약 `pages/about.js`가 AMP-only 페이지일 경우:
 
-And if `pages/about.js` is an AMP-only page, then it would output:
+- `out/about.html` - 최적화된 AMP 페이지
 
-- `out/about.html` - Optimized AMP page
-
-Next.js will automatically insert a link to the AMP version of your page in the HTML version, so you don't have to, like so:
+Next.js는 HTML 버전에 페이지의 AMP 버전 링크를 자동으로 삽입하므로 이를 직접 추가할 필요가 없습니다. 예를 들어:
 
 ```jsx
 <link rel="amphtml" href="/about.amp.html" />
 ```
 
-And the AMP version of your page will include a link to the HTML page:
+그리고 페이지의 AMP 버전에는 HTML 페이지에 대한 링크가 다음과 같이 포함됩니다:
 
 ```jsx
 <link rel="canonical" href="/about" />
 ```
 
-When [`trailingSlash`](/docs/pages/api-reference/next-config-js/trailingSlash) is enabled the exported pages for `pages/about.js` would be:
+[`trailingSlash`](/docs/app/api-reference/next-config-js/trailingSlash)가 활성화된 경우, 내보내지는 `pages/about.js` 페이지의 결과는 다음과 같습니다:
 
-- `out/about/index.html` - HTML page
-- `out/about.amp/index.html` - AMP page
+- `out/about/index.html` - HTML 페이지
+- `out/about.amp/index.html` - AMP 페이지
 
 ## TypeScript
 
-AMP currently doesn't have built-in types for TypeScript, but it's in their roadmap ([#13791](https://github.com/ampproject/amphtml/issues/13791)).
+현재 AMP는 TypeScript를 위한 내장 타입을 제공하지 않지만, 이는 로드맵([#13791](https://github.com/ampproject/amphtml/issues/13791))에 포함되어 있습니다.
 
-As a workaround you can manually create a file called `amp.d.ts` inside your project and add these [custom types](https://stackoverflow.com/a/50601125).
+대안으로, 프로젝트 내에 `amp.d.ts`라는 파일을 수동으로 생성하고 다음과 같은 [사용자 정의 타입](https://stackoverflow.com/questions/50585952/property-amp-img-does-not-exist-on-type-jsx-intrinsicelements/50601125#50601125)을 추가할 수 있습니다.
