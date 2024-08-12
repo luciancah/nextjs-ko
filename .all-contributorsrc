@@ -213,6 +213,78 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "kor-bim",
+      "name": "Yoon Han Bin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69673803?v=4",
+      "profile": "https://github.com/kor-bim",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "WaterMinCho",
+      "name": "조민수",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74204327?v=4",
+      "profile": "https://github.com/WaterMinCho",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "jinlee0310",
+      "name": "HyojinLee",
+      "avatar_url": "https://avatars.githubusercontent.com/u/177381010?v=4",
+      "profile": "https://github.com/jinlee0310",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "davindev",
+      "name": "vinnie",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67614188?v=4",
+      "profile": "https://velog.io/@davin",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "hyunmyungJaneLee",
+      "name": "Arin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28864029?v=4",
+      "profile": "http://hyunmyungjanelee.github.io/blog",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "wlstmd",
+      "name": "Jinseung",
+      "avatar_url": "https://avatars.githubusercontent.com/u/127307160?v=4",
+      "profile": "https://litt.ly/jinseung_",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "mini-boo",
+      "name": "Hyunsoo Kim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81962257?v=4",
+      "profile": "https://velog.io/@mini-boo/posts",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "Ubinquitous",
+      "name": "박우빈",
+      "avatar_url": "https://avatars.githubusercontent.com/u/102154880?v=4",
+      "profile": "https://parkubin.notion.site/a71d9b12489e4a93ab2d7c51b9b1e00b",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -220,5 +292,5 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "nextjs-ko",
-  "projectOwner": "luciancah"
+  "projectOner": "luciancah"
 }
