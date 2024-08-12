@@ -3,109 +3,107 @@ title: <Image> (Legacy)
 description: Backwards compatible Image Optimization with the Legacy Image component.
 ---
 
-{/* TODO: 번역이 필요합니다. */}
-
-`<Image>` (Legacy)
+# `<Image>` (Legacy)
 
 <details>
-  <summary>Examples</summary>
+  <summary>예시</summary>
 
-- [Legacy Image Component](https://github.com/vercel/next.js/tree/canary/examples/image-legacy-component)
+- [Legacy Image 컴포넌트](https://github.com/vercel/next.js/tree/canary/examples/image-legacy-component)
 
 </details>
 
-Starting with Next.js 13, the `next/image` component was rewritten to improve both the performance and developer experience. In order to provide a backwards compatible upgrade solution, the old `next/image` was renamed to `next/legacy/image`.
+Next.js 13부터 `next/image` 컴포넌트가 성능과 개발자 경험을 개선하기 위해 다시 작성되었습니다. 이전 버전과 호환되는 업그레이드 솔루션을 제공하기 위해 기존의 `next/image`는 `next/legacy/image`로 이름이 변경되었습니다.
 
-View the **new** [`next/image` API Reference](/docs/pages/api-reference/components/image)
+**새로운** [`next/image` API 참조](/docs/pages/api-reference/components/image)를 확인하세요.
 
 ## Comparison
 
-Compared to `next/legacy/image`, the new `next/image` component has the following changes:
+`next/legacy/image`와 비교하여 새로운 `next/image` 컴포넌트에는 다음과 같은 변경 사항이 있습니다:
 
-- Removes `<span>` wrapper around `<img>` in favor of [native computed aspect ratio](https://caniuse.com/mdn-html_elements_img_aspect_ratio_computed_from_attributes)
-- Adds support for canonical `style` prop
-  - Removes `layout` prop in favor of `style` or `className`
-  - Removes `objectFit` prop in favor of `style` or `className`
-  - Removes `objectPosition` prop in favor of `style` or `className`
-- Removes `IntersectionObserver` implementation in favor of [native lazy loading](https://caniuse.com/loading-lazy-attr)
-  - Removes `lazyBoundary` prop since there is no native equivalent
-  - Removes `lazyRoot` prop since there is no native equivalent
-- Removes `loader` config in favor of [`loader`](#loader) prop
-- Changed `alt` prop from optional to required
-- Changed `onLoadingComplete` callback to receive reference to `<img>` element
+- `<img>` 주위의 `<span>` 래퍼를 제거하고 [네이티브 계산 종횡비](https://caniuse.com/mdn-html_elements_img_aspect_ratio_computed_from_attributes)를 사용합니다
+- 표준 `style` prop 지원 추가
+  - `layout` prop 대신 `style` 또는 `className` 사용
+  - `objectFit` prop 대신 `style` 또는 `className` 사용
+  - `objectPosition` prop 대신 `style` 또는 `className` 사용
+- `IntersectionObserver` 구현을 제거하고 [네이티브 지연 로딩](https://caniuse.com/loading-lazy-attr)을 사용합니다
+  - 네이티브 대체품이 없으므로 `lazyBoundary` prop 제거
+  - 네이티브 대체품이 없으므로 `lazyRoot` prop 제거
+- `loader` 설정 대신 [`loader`](#loader) prop 사용
+- `alt` prop을 선택 사항에서 필수로 변경
+- `onLoadingComplete` 콜백이 `<img>` 요소에 대한 참조를 받도록 변경
 
 ## Required Props
 
-The `<Image />` component requires the following properties.
+`<Image />` 컴포넌트에는 다음 속성이 필요합니다.
 
 ### src
 
-Must be one of the following:
+다음 중 하나여야 합니다:
 
-- A [statically imported](/docs/pages/building-your-application/optimizing/images#local-images) image file
-- A path string. This can be either an absolute external URL, or an internal path depending on the [loader](#loader) prop or [loader configuration](#loader-configuration).
+- [정적으로 가져온](/docs/pages/building-your-application/optimizing/images#local-images) 이미지 파일
+- 경로 문자열. [loader](#loader) prop 또는 [loader 설정](#loader-configuration)에 따라 절대 외부 URL이나 내부 경로일 수 있습니다.
 
-When using an external URL, you must add it to [remotePatterns](#remote-patterns) in `next.config.js`.
+외부 URL을 사용할 때는 `next.config.js`의 [remotePatterns](#remote-patterns)에 추가해야 합니다.
 
 ### width
 
-The `width` property can represent either the _rendered_ width or _original_ width in pixels, depending on the [`layout`](#layout) and [`sizes`](#sizes) properties.
+`width` 속성은 [`layout`](#layout)과 [`sizes`](#sizes) 속성에 따라 _렌더링된_ 너비 또는 _원본_ 너비(픽셀 단위)를 나타낼 수 있습니다.
 
-When using `layout="intrinsic"` or `layout="fixed"` the `width` property represents the _rendered_ width in pixels, so it will affect how large the image appears.
+`layout="intrinsic"` 또는 `layout="fixed"`를 사용할 때 `width` 속성은 _렌더링된_ 너비(픽셀 단위)를 나타내므로 이미지가 표시되는 크기에 영향을 줍니다.
 
-When using `layout="responsive"`, `layout="fill"`, the `width` property represents the _original_ width in pixels, so it will only affect the aspect ratio.
+`layout="responsive"`, `layout="fill"`을 사용할 때 `width` 속성은 _원본_ 너비(픽셀 단위)를 나타내므로 종횡비에만 영향을 줍니다.
 
-The `width` property is required, except for [statically imported images](/docs/pages/building-your-application/optimizing/images#local-images), or those with `layout="fill"`.
+`width` 속성은 [정적으로 가져온 이미지](/docs/pages/building-your-application/optimizing/images#local-images)나 `layout="fill"`을 사용하는 경우를 제외하고 필수입니다.
 
 ### height
 
-The `height` property can represent either the _rendered_ height or _original_ height in pixels, depending on the [`layout`](#layout) and [`sizes`](#sizes) properties.
+`height` 속성은 [`layout`](#layout)과 [`sizes`](#sizes) 속성에 따라 _렌더링된_ 높이 또는 _원본_ 높이(픽셀 단위)를 나타낼 수 있습니다.
 
-When using `layout="intrinsic"` or `layout="fixed"` the `height` property represents the _rendered_ height in pixels, so it will affect how large the image appears.
+`layout="intrinsic"` 또는 `layout="fixed"`를 사용할 때 `height` 속성은 _렌더링된_ 높이(픽셀 단위)를 나타내므로 이미지가 표시되는 크기에 영향을 줍니다.
 
-When using `layout="responsive"`, `layout="fill"`, the `height` property represents the _original_ height in pixels, so it will only affect the aspect ratio.
+`layout="responsive"`, `layout="fill"`을 사용할 때 `height` 속성은 _원본_ 높이(픽셀 단위)를 나타내므로 종횡비에만 영향을 줍니다.
 
-The `height` property is required, except for [statically imported images](/docs/pages/building-your-application/optimizing/images#local-images), or those with `layout="fill"`.
+`height` 속성은 [정적으로 가져온 이미지](/docs/pages/building-your-application/optimizing/images#local-images)나 `layout="fill"`을 사용하는 경우를 제외하고 필수입니다.
 
 ## Optional Props
 
-The `<Image />` component accepts a number of additional properties beyond those which are required. This section describes the most commonly-used properties of the Image component. Find details about more rarely-used properties in the [Advanced Props](#advanced-props) section.
+`<Image />` 컴포넌트는 필수 속성 외에도 여러 추가 속성을 허용합니다. 이 섹션에서는 Image 컴포넌트의 가장 일반적으로 사용되는 속성에 대해 설명합니다. 더 드물게 사용되는 속성에 대한 자세한 내용은 [고급 Props](#advanced-props) 섹션에서 확인할 수 있습니다.
 
 ### layout
 
-The layout behavior of the image as the viewport changes size.
+뷰포트 크기가 변경됨에 따른 이미지의 레이아웃 동작입니다.
 
-| `layout`              | Behavior                                                 | `srcSet`                                                                                                    | `sizes` | Has wrapper and sizer |
-| --------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ------- | --------------------- |
-| `intrinsic` (default) | Scale _down_ to fit width of container, up to image size | `1x`, `2x` (based on [imageSizes](#image-sizes))                                                            | N/A     | yes                   |
-| `fixed`               | Sized to `width` and `height` exactly                    | `1x`, `2x` (based on [imageSizes](#image-sizes))                                                            | N/A     | yes                   |
-| `responsive`          | Scale to fit width of container                          | `640w`, `750w`, ... `2048w`, `3840w` (based on [imageSizes](#image-sizes) and [deviceSizes](#device-sizes)) | `100vw` | yes                   |
-| `fill`                | Grow in both X and Y axes to fill container              | `640w`, `750w`, ... `2048w`, `3840w` (based on [imageSizes](#image-sizes) and [deviceSizes](#device-sizes)) | `100vw` | yes                   |
+| `layout`             | 동작                                         | `srcSet`                                                                                              | `sizes` | 래퍼와 사이저 유무 |
+| -------------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------- | ------------------ |
+| `intrinsic` (기본값) | 컨테이너 너비에 맞게 _축소_, 이미지 크기까지 | `1x`, `2x` ([imageSizes](#image-sizes) 기반)                                                          | N/A     | 예                 |
+| `fixed`              | `width`와 `height`에 정확히 맞춤             | `1x`, `2x` ([imageSizes](#image-sizes) 기반)                                                          | N/A     | 예                 |
+| `responsive`         | 컨테이너 너비에 맞게 조정                    | `640w`, `750w`, ... `2048w`, `3840w` ([imageSizes](#image-sizes)와 [deviceSizes](#device-sizes) 기반) | `100vw` | 예                 |
+| `fill`               | 컨테이너를 채우기 위해 X와 Y축 모두에서 확장 | `640w`, `750w`, ... `2048w`, `3840w` ([imageSizes](#image-sizes)와 [deviceSizes](#device-sizes) 기반) | `100vw` | 예                 |
 
-- [Demo the `intrinsic` layout (default)](https://image-legacy-component.nextjs.gallery/layout-intrinsic)
-  - When `intrinsic`, the image will scale the dimensions down for smaller viewports, but maintain the original dimensions for larger viewports.
-- [Demo the `fixed` layout](https://image-legacy-component.nextjs.gallery/layout-fixed)
-  - When `fixed`, the image dimensions will not change as the viewport changes (no responsiveness) similar to the native `img` element.
-- [Demo the `responsive` layout](https://image-legacy-component.nextjs.gallery/layout-responsive)
-  - When `responsive`, the image will scale the dimensions down for smaller viewports and scale up for larger viewports.
-  - Ensure the parent element uses `display: block` in their stylesheet.
-- [Demo the `fill` layout](https://image-legacy-component.nextjs.gallery/layout-fill)
-  - When `fill`, the image will stretch both width and height to the dimensions of the parent element, provided the parent element is relative.
-  - This is usually paired with the [`objectFit`](#objectfit) property.
-  - Ensure the parent element has `position: relative` in their stylesheet.
-- [Demo background image](https://image-legacy-component.nextjs.gallery/background)
+- [`intrinsic` 레이아웃 데모 (기본값)](https://image-legacy-component.nextjs.gallery/layout-intrinsic)
+  - `intrinsic`일 때 이미지는 작은 뷰포트에서는 치수를 축소하지만 큰 뷰포트에서는 원래 치수를 유지합니다.
+- [`fixed` 레이아웃 데모](https://image-legacy-component.nextjs.gallery/layout-fixed)
+  - `fixed`일 때 이미지 치수는 뷰포트가 변경되어도 변하지 않습니다(반응형 없음). 네이티브 `img` 요소와 유사합니다.
+- [`responsive` 레이아웃 데모](https://image-legacy-component.nextjs.gallery/layout-responsive)
+  - `responsive`일 때 이미지는 작은 뷰포트에서는 치수를 축소하고 큰 뷰포트에서는 확대합니다.
+  - 부모 요소의 스타일시트에서 `display: block`을 사용해야 합니다.
+- [`fill` 레이아웃 데모](https://image-legacy-component.nextjs.gallery/layout-fill)
+  - `fill`일 때 이미지는 부모 요소의 치수에 맞게 너비와 높이를 모두 늘립니다. 부모 요소는 상대적이어야 합니다.
+  - 일반적으로 [`objectFit`](#objectfit) 속성과 함께 사용됩니다.
+  - 부모 요소의 스타일시트에 `position: relative`가 있어야 합니다.
+- [배경 이미지 데모](https://image-legacy-component.nextjs.gallery/background)
 
 ### loader
 
-A custom function used to resolve URLs. Setting the loader as a prop on the Image component overrides the default loader defined in the [`images` section of `next.config.js`](#loader-configuration).
+URL을 해석하는 데 사용되는 사용자 정의 함수입니다. Image 컴포넌트에 loader를 prop으로 설정하면 [`next.config.js`의 `images` 섹션](#loader-configuration)에 정의된 기본 loader를 재정의합니다.
 
-A `loader` is a function returning a URL string for the image, given the following parameters:
+`loader`는 다음 매개변수를 받아 이미지의 URL 문자열을 반환하는 함수입니다:
 
 - [`src`](#src)
 - [`width`](#width)
 - [`quality`](#quality)
 
-Here is an example of using a custom loader:
+다음은 사용자 정의 loader를 사용하는 예시입니다:
 
 ```js
 import Image from 'next/legacy/image'
@@ -129,15 +127,15 @@ const MyImage = (props) => {
 
 ### sizes
 
-A string that provides information about how wide the image will be at different breakpoints. The value of `sizes` will greatly affect performance for images using `layout="responsive"` or `layout="fill"`. It will be ignored for images using `layout="intrinsic"` or `layout="fixed"`.
+이미지가 다양한 브레이크포인트에서 얼마나 넓게 표시될지를 제공하는 문자열입니다. `sizes`의 값은 `layout="responsive"` 또는 `layout="fill"`을 사용하는 이미지의 성능에 큰 영향을 미칩니다. `layout="intrinsic"` 또는 `layout="fixed"`를 사용하는 이미지에는 무시됩니다.
 
-The `sizes` property serves two important purposes related to image performance:
+`sizes` 속성은 이미지 성능과 관련하여 두 가지 중요한 목적을 수행합니다:
 
-First, the value of `sizes` is used by the browser to determine which size of the image to download, from `next/legacy/image`'s automatically-generated source set. When the browser chooses, it does not yet know the size of the image on the page, so it selects an image that is the same size or larger than the viewport. The `sizes` property allows you to tell the browser that the image will actually be smaller than full screen. If you don't specify a `sizes` value, a default value of `100vw` (full screen width) is used.
+첫째, `sizes`의 값은 브라우저가 `next/legacy/image`의 자동 생성된 소스 세트에서 다운로드할 이미지의 크기를 결정하는 데 사용됩니다. 브라우저가 선택할 때 페이지에서 이미지의 크기를 아직 알지 못하므로 뷰포트와 같은 크기 또는 더 큰 이미지를 선택합니다. `sizes` 속성을 사용하면 브라우저에 이미지가 실제로 전체 화면보다 작을 것임을 알릴 수 있습니다. `sizes` 값을 지정하지 않으면 기본값인 `100vw`(전체 화면 너비)가 사용됩니다.
 
-Second, the `sizes` value is parsed and used to trim the values in the automatically-created source set. If the `sizes` property includes sizes such as `50vw`, which represent a percentage of the viewport width, then the source set is trimmed to not include any values which are too small to ever be necessary.
+둘째, `sizes` 값은 구문 분석되어 자동 생성된 소스 세트의 값을 조정하는 데 사용됩니다. `sizes` 속성에 `50vw`와 같은 뷰포트 너비의 비율을 나타내는 크기가 포함되면, 소스 세트는 필요할 수 없는 너무 작은 값을 포함하지 않도록 조정됩니다.
 
-For example, if you know your styling will cause an image to be full-width on mobile devices, in a 2-column layout on tablets, and a 3-column layout on desktop displays, you should include a sizes property such as the following:
+예를 들어, 스타일링으로 인해 모바일 장치에서 이미지를 전체 너비로 표시하고, 태블릿에서는 2열 레이아웃, 데스크탑 디스플레이에서는 3열 레이아웃이 될 것임을 알고 있다면, 다음과 같은 `sizes` 속성을 포함해야 합니다:
 
 ```js
 import Image from 'next/legacy/image'
@@ -154,37 +152,37 @@ const Example = () => (
 )
 ```
 
-This example `sizes` could have a dramatic effect on performance metrics. Without the `33vw` sizes, the image selected from the server would be 3 times as wide as it needs to be. Because file size is proportional to the square of the width, without `sizes` the user would download an image that's 9 times larger than necessary.
+이 예제의 `sizes`는 성능 지표에 극적인 영향을 미칠 수 있습니다. `33vw` 크기가 없으면 서버에서 선택된 이미지는 필요 이상으로 3배 넓어질 것입니다. 파일 크기는 너비의 제곱에 비례하므로, `sizes`가 없으면 사용자는 필요 이상으로 9배 큰 이미지를 다운로드하게 됩니다.
 
-Learn more about `srcset` and `sizes`:
+`srcset` 및 `sizes`에 대해 더 알아보세요:
 
 - [web.dev](https://web.dev/learn/design/responsive-images/#sizes)
 - [mdn](https://developer.mozilla.org/docs/Web/HTML/Element/img#attr-sizes)
 
 ### quality
 
-The quality of the optimized image, an integer between `1` and `100` where `100` is the best quality. Defaults to `75`.
+최적화된 이미지의 품질로, `1`에서 `100` 사이의 정수이며 `100`이 최고의 품질입니다. 기본값은 `75`입니다.
 
 ### priority
 
-When true, the image will be considered high priority and
-[preload](https://web.dev/preload-responsive-images/). Lazy loading is automatically disabled for images using `priority`.
+true일 경우, 이미지는 높은 우선순위로 간주되며
+[preload](https://web.dev/preload-responsive-images/)됩니다. `priority`를 사용하는 이미지는 Lazy loading이 자동으로 비활성화됩니다.
 
-You should use the `priority` property on any image detected as the [Largest Contentful Paint (LCP)](https://nextjs.org/learn/seo/web-performance/lcp) element. It may be appropriate to have multiple priority images, as different images may be the LCP element for different viewport sizes.
+[Largest Contentful Paint (LCP)](https://nextjs.org/learn/seo/web-performance/lcp) 요소로 감지된 모든 이미지에 `priority` 속성을 사용해야 합니다. 서로 다른 이미지가 서로 다른 뷰포트 크기에서 LCP 요소가 될 수 있으므로 여러 개의 우선순위 이미지를 갖는 것이 적절할 수 있습니다.
 
-Should only be used when the image is visible above the fold. Defaults to `false`.
+이미지가 화면에 보일 때만 사용해야 합니다. 기본값은 `false`입니다.
 
 ### placeholder
 
-A placeholder to use while the image is loading. Possible values are `blur` or `empty`. Defaults to `empty`.
+이미지가 로딩되는 동안 사용할 플레이스홀더입니다. 가능한 값은 `blur` 또는 `empty`이며, 기본값은 `empty`입니다.
 
-When `blur`, the [`blurDataURL`](#blurdataurl) property will be used as the placeholder. If `src` is an object from a [static import](/docs/pages/building-your-application/optimizing/images#local-images) and the imported image is `.jpg`, `.png`, `.webp`, or `.avif`, then `blurDataURL` will be automatically populated.
+`blur`인 경우, [`blurDataURL`](#blurdataurl) 속성이 플레이스홀더로 사용됩니다. `src`가 [정적 가져오기](/docs/pages/building-your-application/optimizing/images#local-images)에서 가져온 객체이고, 가져온 이미지가 `.jpg`, `.png`, `.webp`, 또는 `.avif`일 경우, `blurDataURL`이 자동으로 채워집니다.
 
-For dynamic images, you must provide the [`blurDataURL`](#blurdataurl) property. Solutions such as [Plaiceholder](https://github.com/joe-bell/plaiceholder) can help with `base64` generation.
+동적 이미지의 경우, [`blurDataURL`](#blurdataurl) 속성을 제공해야 합니다. `base64` 생성에 도움이 되는 솔루션으로는 [Plaiceholder](https://github.com/joe-bell/plaiceholder)가 있습니다.
 
-When `empty`, there will be no placeholder while the image is loading, only empty space.
+`empty`인 경우, 이미지가 로딩되는 동안 플레이스홀더가 없으며, 빈 공간만 표시됩니다.
 
-Try it out:
+다음과 같이 시도해 보세요:
 
 - [Demo the `blur` placeholder](https://image-legacy-component.nextjs.gallery/placeholder)
 - [Demo the shimmer effect with `blurDataURL` prop](https://image-legacy-component.nextjs.gallery/shimmer)
@@ -192,86 +190,80 @@ Try it out:
 
 ## Advanced Props
 
-In some cases, you may need more advanced usage. The `<Image />` component optionally accepts the following advanced properties.
+일부 경우에는 더 고급 사용이 필요할 수 있습니다. `<Image />` 컴포넌트는 선택적으로 다음과 같은 고급 속성을 수용합니다.
 
 ### style
 
-Allows [passing CSS styles](https://developer.mozilla.org/docs/Web/HTML/Element/style) to the underlying image element.
+기본 이미지 요소에 [CSS 스타일을 전달](https://developer.mozilla.org/docs/Web/HTML/Element/style)할 수 있습니다.
 
-Note that all `layout` modes apply their own styles to the image element, and these automatic styles take precedence over the `style` prop.
+모든 `layout` 모드는 이미지 요소에 고유한 스타일을 적용하며, 이러한 자동 스타일이 `style` prop보다 우선합니다.
 
-Also keep in mind that the required `width` and `height` props can interact with your styling. If you use styling to modify an image's `width`, you must set the `height="auto"` style as well, or your image will be distorted.
+또한 필수 `width` 및 `height` 속성이 스타일과 상호작용할 수 있음을 기억하세요. 이미지를 수정하기 위해 스타일링을 사용하는 경우, `height="auto"` 스타일도 설정해야 하며, 그렇지 않으면 이미지가 왜곡될 수 있습니다.
 
 ### objectFit
 
-Defines how the image will fit into its parent container when using `layout="fill"`.
+`layout="fill"`을 사용할 때 이미지가 부모 컨테이너에 어떻게 맞춰질지를 정의합니다.
 
-This value is passed to the [object-fit CSS property](https://developer.mozilla.org/docs/Web/CSS/object-fit) for the `src` image.
+이 값은 `src` 이미지의 [object-fit CSS 속성](https://developer.mozilla.org/docs/Web/CSS/object-fit)으로 전달됩니다.
 
 ### objectPosition
 
-Defines how the image is positioned within its parent element when using `layout="fill"`.
+`layout="fill"`을 사용할 때 이미지가 부모 요소 내에서 어떻게 위치하는지를 정의합니다.
 
-This value is passed to the [object-position CSS property](https://developer.mozilla.org/docs/Web/CSS/object-position) applied to the image.
+이 값은 이미지에 적용되는 [object-position CSS 속성](https://developer.mozilla.org/docs/Web/CSS/object-position)으로 전달됩니다.
 
 ### onLoadingComplete
 
-A callback function that is invoked once the image is completely loaded and the [placeholder](#placeholder) has been removed.
+이미지가 완전히 로드되고 [플레이스홀더](#placeholder)가 제거된 후 호출되는 콜백 함수입니다.
 
-The `onLoadingComplete` function accepts one parameter, an object with the following properties:
+`onLoadingComplete` 함수는 다음 속성을 가진 객체를 하나의 매개변수로 받습니다:
 
 - [`naturalWidth`](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/naturalWidth)
 - [`naturalHeight`](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/naturalHeight)
 
 ### loading
 
-> **Attention**: This property is only meant for advanced usage. Switching an
-> image to load with `eager` will normally **hurt performance**.
+> **주의**: 이 속성은 고급 사용을 위한 것입니다. 이미지를 `eager`로 전환하면 일반적으로 **성능에 악영향**을 미칩니다.
 >
-> We recommend using the [`priority`](#priority) property instead, which
-> properly loads the image eagerly for nearly all use cases.
+> 대부분의 사용 사례에 대해 이미지를 적절하게 즉시 로드하려면 [`priority`](#priority) 속성을 사용하는 것이 좋습니다.
 
-The loading behavior of the image. Defaults to `lazy`.
+이미지의 로딩 동작입니다. 기본값은 `lazy`입니다.
 
-When `lazy`, defer loading the image until it reaches a calculated distance from
-the viewport.
+`lazy`일 경우, 이미지가 뷰포트에서 계산된 거리까지 도달할 때까지 로딩을 연기합니다.
 
-When `eager`, load the image immediately.
+`eager`일 경우, 이미지를 즉시 로드합니다.
 
-[Learn more](https://developer.mozilla.org/docs/Web/HTML/Element/img#attr-loading)
+[자세히 알아보기](https://developer.mozilla.org/docs/Web/HTML/Element/img#attr-loading)
 
 ### blurDataURL
 
-A [Data URL](https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) to
-be used as a placeholder image before the `src` image successfully loads. Only takes effect when combined
-with [`placeholder="blur"`](#placeholder).
+`src` 이미지가 성공적으로 로드되기 전에 플레이스홀더 이미지로 사용되는 [데이터 URL](https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URIs)입니다. [`placeholder="blur"`](#placeholder)와 결합할 때만 효과를 발휘합니다.
 
-Must be a base64-encoded image. It will be enlarged and blurred, so a very small image (10px or
-less) is recommended. Including larger images as placeholders may harm your application performance.
+반드시 base64로 인코딩된 이미지여야 합니다. 확대되고 블러 처리되므로, 매우 작은 이미지(10px 이하)가 권장됩니다. 더 큰 이미지를 플레이스홀더로 포함하면 애플리케이션 성능에 악영향을 미칠 수 있습니다.
 
-Try it out:
+다음과 같이 시도해 보세요:
 
 - [Demo the default `blurDataURL` prop](https://image-legacy-component.nextjs.gallery/placeholder)
 - [Demo the shimmer effect with `blurDataURL` prop](https://image-legacy-component.nextjs.gallery/shimmer)
 - [Demo the color effect with `blurDataURL` prop](https://image-legacy-component.nextjs.gallery/color)
 
-You can also [generate a solid color Data URL](https://png-pixel.com) to match the image.
+이미지에 맞는 고유 색상 데이터 URL을 [생성할 수도 있습니다](https://png-pixel.com).
 
 ### lazyBoundary
 
-A string (with similar syntax to the margin property) that acts as the bounding box used to detect the intersection of the viewport with the image and trigger lazy [loading](#loading). Defaults to `"200px"`.
+이미지와 뷰포트의 교차를 감지하고 lazy [로딩](#loading)을 트리거하는 데 사용되는 경계 상자로, margin 속성과 유사한 구문을 가진 문자열입니다. 기본값은 `"200px"`입니다.
 
-If the image is nested in a scrollable parent element other than the root document, you will also need to assign the [lazyRoot](#lazyroot) prop.
+이미지가 루트 문서가 아닌 스크롤 가능한 부모 요소에 중첩된 경우, [lazyRoot](#lazyroot) 속성도 할당해야 합니다.
 
-[Learn more](https://developer.mozilla.org/docs/Web/API/IntersectionObserver/rootMargin)
+[자세히 알아보기](https://developer.mozilla.org/docs/Web/API/IntersectionObserver/rootMargin)
 
 ### lazyRoot
 
-A React [Ref](https://react.dev/learn/referencing-values-with-refs) pointing to the scrollable parent element. Defaults to `null` (the document viewport).
+스크롤 가능한 부모 요소를 가리키는 React [Ref](https://react.dev/learn/referencing-values-with-refs)입니다. 기본값은 `null`(문서 뷰포트)입니다.
 
-The Ref must point to a DOM element or a React component that [forwards the Ref](https://react.dev/reference/react/forwardRef) to the underlying DOM element.
+Ref는 DOM 요소 또는 [Ref를 전달하는](https://react.dev/reference/react/forwardRef) React 컴포넌트를 가리켜야 합니다.
 
-**Example pointing to a DOM element**
+**DOM 요소를 가리키는 예시**
 
 ```jsx
 import Image from 'next/legacy/image'
@@ -289,7 +281,7 @@ const Example = () => {
 }
 ```
 
-**Example pointing to a React component**
+**React 컴포넌트를 가리키는 예시**
 
 ```jsx
 import Image from 'next/legacy/image'
@@ -315,12 +307,11 @@ const Example = () => {
 }
 ```
 
-[Learn more](https://developer.mozilla.org/docs/Web/API/IntersectionObserver/root)
+[자세히 알아보기](https://developer.mozilla.org/docs/Web/API/IntersectionObserver/root)
 
 ### unoptimized
 
-When true, the source image will be served as-is instead of changing quality,
-size, or format. Defaults to `false`.
+`true`일 경우, 소스 이미지는 품질, 크기 또는 형식을 변경하지 않고 그대로 제공됩니다. 기본값은 `false`입니다.
 
 ```js
 import Image from 'next/image'
@@ -330,7 +321,7 @@ const UnoptimizedImage = (props) => {
 }
 ```
 
-Since Next.js 12.3.0, this prop can be assigned to all images by updating `next.config.js` with the following configuration:
+Next.js 12.3.0부터 이 속성은 다음과 같은 구성으로 next.config.js를 업데이트하여 모든 이미지에 적용할 수 있습니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -342,20 +333,17 @@ module.exports = {
 
 ## Other Props
 
-Other properties on the `<Image />` component will be passed to the underlying
-`img` element with the exception of the following:
+`<Image />` 컴포넌트의 다른 속성은 다음을 제외하고 기본 `img` 요소로 전달됩니다:
 
-- `srcSet`. Use
-  [Device Sizes](#device-sizes)
-  instead.
-- `ref`. Use [`onLoadingComplete`](#onloadingcomplete) instead.
-- `decoding`. It is always `"async"`.
+- `srcSet`. 대신 [Device Sizes](#device-sizes)를 사용하세요.
+- `ref`. 대신 [`onLoadingComplete`](#onloadingcomplete)를 사용하세요.
+- `decoding`. 항상 `"async"`입니다.
 
 ## Configuration Options
 
 ### Remote Patterns
 
-To protect your application from malicious users, configuration is required in order to use external images. This ensures that only external images from your account can be served from the Next.js Image Optimization API. These external images can be configured with the `remotePatterns` property in your `next.config.js` file, as shown below:
+악의적인 사용자로부터 애플리케이션을 보호하기 위해 외부 이미지를 사용하려면 구성이 필요합니다. 이를 통해 귀하의 계정에서 제공되는 외부 이미지만 Next.js 이미지 최적화 API에서 제공될 수 있습니다. 이러한 외부 이미지는 `next.config.js` 파일의 `remotePatterns` 속성으로 구성할 수 있습니다. 아래와 같이 설정하세요:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -372,9 +360,8 @@ module.exports = {
 }
 ```
 
-> **Good to know**: The example above will ensure the `src` property of `next/legacy/image` must start with `https://example.com/account123/`. Any other protocol, hostname, port, or unmatched path will respond with 400 Bad Request.
-
-Below is another example of the `remotePatterns` property in the `next.config.js` file:
+> **알아두면 좋은 점**: 위의 예시는 `next/legacy/image`의 `src` 속성이 `https://example.com/account123/`로 시작해야 함을 보장합니다. 다른 프로토콜, 호스트 이름, 포트 또는 일치하지 않는 경로는 400 Bad Request 응답을 받게 됩니다.
+> 다음은 `next.config.js` 파일의 `remotePatterns` 속성에 대한 또 다른 예시입니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -390,26 +377,26 @@ module.exports = {
 }
 ```
 
-> **Good to know**: The example above will ensure the `src` property of `next/legacy/image` must start with `https://img1.example.com` or `https://me.avatar.example.com` or any number of subdomains. Any other protocol, port, or unmatched hostname will respond with 400 Bad Request.
+> **알아두면 좋은 점**: 위의 예시는 `next/legacy/image`의 `src` 속성이 `https://img1.example.com` 또는 `https://me.avatar.example.com` 또는 여러 개의 서브도메인으로 시작해야 함을 보장합니다. 다른 프로토콜, 포트 또는 일치하지 않는 호스트 이름은 400 Bad Request 응답을 받게 됩니다.
 
-Wildcard patterns can be used for both `pathname` and `hostname` and have the following syntax:
+와일드카드 패턴은 `pathname`과 `hostname` 모두에 사용될 수 있으며, 다음과 같은 구문을 가집니다:
 
-- `*` match a single path segment or subdomain
-- `**` match any number of path segments at the end or subdomains at the beginning
+- `*`는 단일 경로 세그먼트 또는 서브도메인과 일치
+- `**`는 끝의 여러 경로 세그먼트 또는 시작의 서브도메인과 일치
 
-The `**` syntax does not work in the middle of the pattern.
+`**` 구문은 패턴의 중간에 사용될 수 없습니다.
 
-> **Good to know**: When omitting `protocol`, `port` or `pathname`, then the wildcard `**` is implied. This is not recommended because it may allow malicious actors to optimize urls you did not intend.
+> **알아두면 좋은 점**: `protocol`, `port` 또는 `pathname`을 생략하면 와일드카드 `**`가 암묵적으로 적용됩니다. 이는 악의적인 사용자가 의도하지 않은 URL을 최적화할 수 있으므로 권장되지 않습니다.
 
 ### Domains
 
-> **Warning**: Deprecated since Next.js 14 in favor of strict [`remotePatterns`](#remote-patterns) in order to protect your application from malicious users. Only use `domains` if you own all the content served from the domain.
+> **경고**: Next.js 14부터 악의적인 사용자로부터 애플리케이션을 보호하기 위해 엄격한 [`remotePatterns`](#remote-patterns) 사용을 권장합니다. 도메인에서 제공되는 모든 콘텐츠를 소유한 경우에만 `domains`를 사용하세요.
 
-Similar to [`remotePatterns`](#remote-patterns), the `domains` configuration can be used to provide a list of allowed hostnames for external images.
+[`remotePatterns`](#remote-patterns)와 유사하게, `domains` 구성은 외부 이미지에 대한 허용된 호스트 이름 목록을 제공하는 데 사용할 수 있습니다.
 
-However, the `domains` configuration does not support wildcard pattern matching and it cannot restrict protocol, port, or pathname.
+그러나 `domains` 구성은 와일드카드 패턴 매칭을 지원하지 않으며, 프로토콜, 포트 또는 경로를 제한할 수 없습니다.
 
-Below is an example of the `domains` property in the `next.config.js` file:
+다음은 `next.config.js` 파일의 `domains` 속성에 대한 예시입니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -421,7 +408,7 @@ module.exports = {
 
 ### Loader Configuration
 
-If you want to use a cloud provider to optimize images instead of using the Next.js built-in Image Optimization API, you can configure the `loader` and `path` prefix in your `next.config.js` file. This allows you to use relative URLs for the Image [`src`](#src) and automatically generate the correct absolute URL for your provider.
+Next.js 내장 이미지 최적화 API 대신 클라우드 제공업체를 사용하여 이미지를 최적화하려면 `next.config.js` 파일에서 `loader`와 `path` 접두사를 구성할 수 있습니다. 이를 통해 이미지의 [`src`](#src)에 상대 URL을 사용할 수 있으며, 제공업체에 맞는 올바른 절대 URL이 자동으로 생성됩니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -434,28 +421,28 @@ module.exports = {
 
 ### Built-in Loaders
 
-The following Image Optimization cloud providers are included:
+다음의 이미지 최적화 클라우드 제공업체가 포함되어 있습니다:
 
-- Default: Works automatically with `next dev`, `next start`, or a custom server
-- [Vercel](https://vercel.com): Works automatically when you deploy on Vercel, no configuration necessary. [Learn more](https://vercel.com/docs/concepts/image-optimization?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)
+- 기본: `next dev`, `next start` 또는 커스텀 서버에서 자동으로 작동합니다.
+- [Vercel](https://vercel.com): Vercel에 배포할 때 자동으로 작동하며, 별도의 구성 필요 없습니다. [자세히 알아보기](https://vercel.com/docs/concepts/image-optimization?utm_source=next-site&utm_medium=docs&utm_campaign=next-website)
 - [Imgix](https://www.imgix.com): `loader: 'imgix'`
 - [Cloudinary](https://cloudinary.com): `loader: 'cloudinary'`
 - [Akamai](https://www.akamai.com): `loader: 'akamai'`
-- Custom: `loader: 'custom'` use a custom cloud provider by implementing the [`loader`](#loader) prop on the `next/legacy/image` component
+- 커스텀: `loader: 'custom'`를 사용하여 `next/legacy/image` 컴포넌트의 [`loader`](#loader) 속성을 구현하여 커스텀 클라우드 제공업체를 사용할 수 있습니다.
 
-If you need a different provider, you can use the [`loader`](#loader) prop with `next/legacy/image`.
+다른 제공업체가 필요하면 `next/legacy/image`와 함께 [`loader`](#loader) 속성을 사용할 수 있습니다.
 
-> Images can not be optimized at build time using [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports), only on-demand. To use `next/legacy/image` with `output: 'export'`, you will need to use a different loader than the default. [Read more in the discussion.](https://github.com/vercel/next.js/discussions/19065)
+> 이미지 최적화는 빌드 시간에 [`output: 'export'`](/docs/pages/building-your-application/deploying/static-exports)로 사용할 수 없으며, 온디맨드에서만 가능합니다. `output: 'export'`와 함께 `next/legacy/image`를 사용하려면 기본 로더와 다른 로더를 사용해야 합니다. [토론 내용을 더 읽어보세요.](https://github.com/vercel/next.js/discussions/19065)
 
 ## Advanced
 
-The following configuration is for advanced use cases and is usually not necessary. If you choose to configure the properties below, you will override any changes to the Next.js defaults in future updates.
+다음 구성은 고급 사용 사례에 해당하며 일반적으로 필요하지 않습니다. 아래 속성을 구성하기로 선택하면 향후 업데이트에서 Next.js 기본값에 대한 변경 사항이 무시됩니다.
 
 ### Device Sizes
 
-If you know the expected device widths of your users, you can specify a list of device width breakpoints using the `deviceSizes` property in `next.config.js`. These widths are used when the `next/legacy/image` component uses `layout="responsive"` or `layout="fill"` to ensure the correct image is served for user's device.
+사용자의 예상 디바이스 너비를 알고 있다면, `next.config.js`의 `deviceSizes` 속성을 사용하여 디바이스 너비 브레이크포인트 목록을 지정할 수 있습니다. 이러한 너비는 `next/legacy/image` 컴포넌트가 `layout="responsive"` 또는 `layout="fill"`을 사용할 때 사용자 디바이스에 맞는 올바른 이미지가 제공되도록 하는 데 사용됩니다.
 
-If no configuration is provided, the default below is used.
+구성이 제공되지 않으면 아래의 기본값이 사용됩니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -467,11 +454,11 @@ module.exports = {
 
 ### Image Sizes
 
-You can specify a list of image widths using the `images.imageSizes` property in your `next.config.js` file. These widths are concatenated with the array of [device sizes](#device-sizes) to form the full array of sizes used to generate image [srcset](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/srcset)s.
+`next.config.js` 파일에서 `images.imageSizes` 속성을 사용하여 이미지 너비 목록을 지정할 수 있습니다. 이러한 너비는 [디바이스 사이즈](#device-sizes) 배열과 결합되어 이미지 [srcset](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/srcset)를 생성하는 데 사용되는 전체 사이즈 배열을 형성합니다.
 
-The reason there are two separate lists is that imageSizes is only used for images which provide a [`sizes`](#sizes) prop, which indicates that the image is less than the full width of the screen. **Therefore, the sizes in imageSizes should all be smaller than the smallest size in deviceSizes.**
+두 개의 별도 목록이 있는 이유는 `imageSizes`가 [`sizes`](#sizes) 속성을 제공하는 이미지에만 사용되기 때문입니다. 이 속성은 이미지가 화면의 전체 너비보다 작다는 것을 나타냅니다. **따라서 `imageSizes`의 사이즈는 모두 `deviceSizes`의 가장 작은 사이즈보다 작아야 합니다.**
 
-If no configuration is provided, the default below is used.
+구성이 제공되지 않으면 아래의 기본값이 사용됩니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -483,11 +470,11 @@ module.exports = {
 
 ### Acceptable Formats
 
-The default [Image Optimization API](#loader-configuration) will automatically detect the browser's supported image formats via the request's `Accept` header.
+기본 [이미지 최적화 API](#loader-configuration)는 요청의 `Accept` 헤더를 통해 브라우저에서 지원하는 이미지 포맷을 자동으로 감지합니다.
 
-If the `Accept` head matches more than one of the configured formats, the first match in the array is used. Therefore, the array order matters. If there is no match (or the source image is [animated](#animated-images)), the Image Optimization API will fallback to the original image's format.
+`Accept` 헤더가 구성된 포맷 중 하나와 일치하면 배열에서 첫 번째 일치 항목이 사용됩니다. 따라서 배열의 순서가 중요합니다. 일치하는 항목이 없거나(또는 소스 이미지가 [애니메이션](#animated-images)인 경우) 이미지 최적화 API는 원본 이미지의 포맷으로 되돌아갑니다.
 
-If no configuration is provided, the default below is used.
+구성이 제공되지 않으면 아래의 기본값이 사용됩니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -497,7 +484,7 @@ module.exports = {
 }
 ```
 
-You can enable AVIF support with the following configuration.
+AVIF 지원을 다음 구성으로 활성화할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -507,29 +494,29 @@ module.exports = {
 }
 ```
 
-> **Good to know**: AVIF generally takes 20% longer to encode but it compresses 20% smaller compared to WebP. This means that the first time an image is requested, it will typically be slower and then subsequent requests that are cached will be faster.
+> **알아두면 좋은 점**: AVIF는 일반적으로 인코딩에 20% 더 오랜 시간이 걸리지만, WebP에 비해 20% 더 작은 크기로 압축됩니다. 이는 이미지를 처음 요청할 때 일반적으로 느리지만, 이후 캐시된 요청은 더 빨라진다는 것을 의미합니다.
 
 ## Caching Behavior
 
-The following describes the caching algorithm for the default [loader](#loader). For all other loaders, please refer to your cloud provider's documentation.
+다음은 기본 [로더](#loader)에 대한 캐싱 알고리즘을 설명합니다. 다른 모든 로더에 대해서는 클라우드 제공업체의 문서를 참조하세요.
 
-Images are optimized dynamically upon request and stored in the `<distDir>/cache/images` directory. The optimized image file will be served for subsequent requests until the expiration is reached. When a request is made that matches a cached but expired file, the expired image is served stale immediately. Then the image is optimized again in the background (also called revalidation) and saved to the cache with the new expiration date.
+이미지는 요청 시 동적으로 최적화되어 `<distDir>/cache/images` 디렉토리에 저장됩니다. 최적화된 이미지 파일은 만료될 때까지 이후 요청에 대해 제공됩니다. 만약 캐시된 파일이 만료되었지만 요청이 들어오면, 만료된 이미지는 즉시 오래된 상태로 제공됩니다. 이후 이미지는 백그라운드에서 다시 최적화(재검증이라고도 함)되어 새로운 만료 날짜와 함께 캐시에 저장됩니다.
 
-The cache status of an image can be determined by reading the value of the `x-nextjs-cache` (`x-vercel-cache` when deployed on Vercel) response header. The possible values are the following:
+이미지의 캐시 상태는 `x-nextjs-cache`(`Vercel에 배포된 경우 `x-vercel-cache`) 응답 헤더의 값을 읽음으로써 확인할 수 있습니다. 가능한 값은 다음과 같습니다:
 
-- `MISS` - the path is not in the cache (occurs at most once, on the first visit)
-- `STALE` - the path is in the cache but exceeded the revalidate time so it will be updated in the background
-- `HIT` - the path is in the cache and has not exceeded the revalidate time
+- `MISS` - 경로가 캐시에 없음 (최초 방문 시 최대 한 번 발생)
+- `STALE` - 경로가 캐시에 있지만 재검증 시간을 초과하여 백그라운드에서 업데이트될 예정
+- `HIT` - 경로가 캐시에 있으며 재검증 시간을 초과하지 않음
 
-The expiration (or rather Max Age) is defined by either the [`minimumCacheTTL`](#minimum-cache-ttl) configuration or the upstream image `Cache-Control` header, whichever is larger. Specifically, the `max-age` value of the `Cache-Control` header is used. If both `s-maxage` and `max-age` are found, then `s-maxage` is preferred. The `max-age` is also passed-through to any downstream clients including CDNs and browsers.
+만료(또는 최대 연령)는 [`minimumCacheTTL`](#minimum-cache-ttl) 구성이나 상위 이미지의 `Cache-Control` 헤더 중 더 큰 값으로 정의됩니다. 구체적으로, `Cache-Control` 헤더의 `max-age` 값이 사용됩니다. `s-maxage`와 `max-age`가 모두 발견되면 `s-maxage`가 우선시됩니다. `max-age`는 CDN 및 브라우저를 포함한 모든 다운스트림 클라이언트에도 전달됩니다.
 
-- You can configure [`minimumCacheTTL`](#minimum-cache-ttl) to increase the cache duration when the upstream image does not include `Cache-Control` header or the value is very low.
-- You can configure [`deviceSizes`](#device-sizes) and [`imageSizes`](#image-sizes) to reduce the total number of possible generated images.
-- You can configure [formats](#acceptable-formats) to disable multiple formats in favor of a single image format.
+- 상위 이미지에 `Cache-Control` 헤더가 포함되어 있지 않거나 값이 매우 낮을 경우, [`minimumCacheTTL`](#minimum-cache-ttl)을 구성하여 캐시 기간을 늘릴 수 있습니다.
+- [`deviceSizes`](#device-sizes) 및 [`imageSizes`](#image-sizes)를 구성하여 생성 가능한 이미지의 총 수를 줄일 수 있습니다.
+- [formats](#acceptable-formats)를 구성하여 여러 포맷을 비활성화하고 단일 이미지 포맷을 사용할 수 있습니다.
 
 ### Minimum Cache TTL
 
-You can configure the Time to Live (TTL) in seconds for cached optimized images. In many cases, it's better to use a [Static Image Import](/docs/pages/building-your-application/optimizing/images#local-images) which will automatically hash the file contents and cache the image forever with a `Cache-Control` header of `immutable`.
+캐시된 최적화된 이미지의 생존 시간(TTL)을 초 단위로 구성할 수 있습니다. 많은 경우, [정적 이미지 가져오기](/docs/pages/building-your-application/optimizing/images#local-images)를 사용하는 것이 더 좋습니다. 이 방법은 파일 내용을 자동으로 해시하고 `immutable`의 `Cache-Control` 헤더로 이미지를 영구적으로 캐시합니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -539,19 +526,19 @@ module.exports = {
 }
 ```
 
-The expiration (or rather Max Age) of the optimized image is defined by either the `minimumCacheTTL` or the upstream image `Cache-Control` header, whichever is larger.
+최적화된 이미지의 만료(또는 최대 연령)는 `minimumCacheTTL` 또는 상위 이미지의 `Cache-Control` 헤더 중 더 큰 값으로 정의됩니다.
 
-If you need to change the caching behavior per image, you can configure [`headers`](/docs/pages/api-reference/next-config-js/headers) to set the `Cache-Control` header on the upstream image (e.g. `/some-asset.jpg`, not `/_next/image` itself).
+이미지마다 캐싱 동작을 변경해야 할 경우, [`headers`](/docs/pages/api-reference/next-config-js/headers)를 구성하여 상위 이미지에 `Cache-Control` 헤더를 설정할 수 있습니다(예: `/some-asset.jpg`, `/_next/image` 자체는 아님).
 
-There is no mechanism to invalidate the cache at this time, so its best to keep `minimumCacheTTL` low. Otherwise you may need to manually change the [`src`](#src) prop or delete `<distDir>/cache/images`.
+현재 캐시를 무효화하는 메커니즘은 없으므로 `minimumCacheTTL`을 낮게 유지하는 것이 좋습니다. 그렇지 않으면 [`src`](#src) 속성을 수동으로 변경하거나 `<distDir>/cache/images`를 삭제해야 할 수도 있습니다.
 
 ### Disable Static Imports
 
-The default behavior allows you to import static files such as `import icon from './icon.png'` and then pass that to the `src` property.
+기본 동작은 `import icon from './icon.png'`와 같은 정적 파일을 가져온 후 이를 `src` 속성에 전달할 수 있게 해줍니다.
 
-In some cases, you may wish to disable this feature if it conflicts with other plugins that expect the import to behave differently.
+경우에 따라, 가져오기가 다르게 동작하기를 기대하는 다른 플러그인과 충돌할 경우 이 기능을 비활성화하고 싶을 수 있습니다.
 
-You can disable static image imports inside your `next.config.js`:
+정적 이미지 가져오기를 `next.config.js` 내에서 비활성화할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -563,11 +550,11 @@ module.exports = {
 
 ### Dangerously Allow SVG
 
-The default [loader](#loader) does not optimize SVG images for a few reasons. First, SVG is a vector format meaning it can be resized losslessly. Second, SVG has many of the same features as HTML/CSS, which can lead to vulnerabilities without proper [Content Security Policy (CSP) headers](/docs/app/api-reference/next-config-js/headers#content-security-policy).
+기본 [로더](#loader)는 몇 가지 이유로 SVG 이미지를 최적화하지 않습니다. 첫째, SVG는 벡터 형식으로 손실 없이 크기를 조절할 수 있습니다. 둘째, SVG는 HTML/CSS와 유사한 많은 기능을 가지고 있어 적절한 [콘텐츠 보안 정책(CSP) 헤더](/docs/app/api-reference/next-config-js/headers#content-security-policy)가 없으면 취약점이 발생할 수 있습니다.
 
-Therefore, we recommended using the [`unoptimized`](#unoptimized) prop when the [`src`](#src) prop is known to be SVG. This happens automatically when `src` ends with `".svg"`.
+따라서 [`src`](#src) 속성이 SVG임이 확실할 때는 [`unoptimized`](#unoptimized) 속성을 사용하는 것이 좋습니다. 이는 `src`가 `".svg"`로 끝날 때 자동으로 발생합니다.
 
-However, if you need to serve SVG images with the default Image Optimization API, you can set `dangerouslyAllowSVG` inside your `next.config.js`:
+그러나 기본 이미지 최적화 API로 SVG 이미지를 제공해야 하는 경우, `next.config.js` 내에서 `dangerouslyAllowSVG`를 설정할 수 있습니다:
 
 ```js filename="next.config.js"
 module.exports = {
@@ -579,15 +566,15 @@ module.exports = {
 }
 ```
 
-In addition, it is strongly recommended to also set `contentDispositionType` to force the browser to download the image, as well as `contentSecurityPolicy` to prevent scripts embedded in the image from executing.
+또한, 브라우저가 이미지를 다운로드하도록 강제하기 위해 `contentDispositionType`을 설정하고, 이미지에 포함된 스크립트가 실행되지 않도록 `contentSecurityPolicy`를 설정하는 것이 강력히 권장됩니다.
 
 ### `contentDispositionType`
 
-The default [loader](#loader) sets the [`Content-Disposition`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition#as_a_response_header_for_the_main_body) header to `attachment` for added protection since the API can serve arbitrary remote images.
+기본 [로더](#loader)는 추가 보호를 위해 [`Content-Disposition`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition#as_a_response_header_for_the_main_body) 헤더를 `attachment`로 설정합니다. API는 임의의 원격 이미지를 제공할 수 있기 때문입니다.
 
-The default value is `attachment` which forces the browser to download the image when visiting directly. This is particularly important when [`dangerouslyAllowSVG`](#dangerously-allow-svg) is true.
+기본 값은 `attachment`로, 이를 통해 브라우저는 직접 방문할 때 이미지를 다운로드하도록 강제됩니다. 이는 [`dangerouslyAllowSVG`](#dangerously-allow-svg)가 true일 때 특히 중요합니다.
 
-You can optionally configure `inline` to allow the browser to render the image when visiting directly, without downloading it.
+선택적으로 `inline`을 구성하여 브라우저가 직접 방문할 때 이미지를 다운로드하지 않고 렌더링할 수 있도록 할 수 있습니다.
 
 ```js filename="next.config.js"
 module.exports = {
@@ -599,9 +586,9 @@ module.exports = {
 
 ### Animated Images
 
-The default [loader](#loader) will automatically bypass Image Optimization for animated images and serve the image as-is.
+기본 [로더](#loader)는 애니메이션 이미지에 대해 자동으로 이미지 최적화를 우회하고 이미지를 있는 그대로 제공합니다.
 
-Auto-detection for animated files is best-effort and supports GIF, APNG, and WebP. If you want to explicitly bypass Image Optimization for a given animated image, use the [unoptimized](#unoptimized) prop.
+애니메이션 파일에 대한 자동 감지는 최선의 노력으로 이루어지며 GIF, APNG 및 WebP를 지원합니다. 특정 애니메이션 이미지에 대해 명시적으로 이미지 최적화를 우회하고 싶다면 [unoptimized](#unoptimized) 속성을 사용하세요.
 
 ## Version History
 
