@@ -3,6 +3,8 @@ title: useAmp
 description: Enable AMP in a page, and control the way Next.js adds AMP to the page with the AMP config.
 ---
 
+# useAMP
+
 <details>
   <summary>Examples</summary>
 
@@ -10,24 +12,24 @@ description: Enable AMP in a page, and control the way Next.js adds AMP to the p
 
 </details>
 
-> AMP support is one of our advanced features, you can [read more about AMP here](/docs/pages/building-your-application/configuring/amp).
+> AMP 지원은 고급 기능 중 하나이며, [여기에서 AMP에 대해 더 읽어보실 수 있습니다](/docs/pages/building-your-application/configuring/amp).
 
-To enable AMP, add the following config to your page:
+AMP를 활성화하려면, 다음과 같은 설정을 페이지에 추가하세요:
 
 ```jsx filename="pages/index.js"
 export const config = { amp: true }
 ```
 
-The `amp` config accepts the following values:
+`amp` 설정은 다음의 값을 허용합니다:
 
-- `true` - The page will be AMP-only
-- `'hybrid'` - The page will have two versions, one with AMP and another one with HTML
+- `true` - 페이지가 AMP-only 상태가 됩니다
+- `hybrid` - 페이지에 AMP 버전과 HTML 버전이 모두 존재하게 됩니다
 
-To learn more about the `amp` config, read the sections below.
+`amp` 구성에 대해 더 알아보려면, 아래 섹션을 읽어보세요.
 
 ## AMP First Page
 
-Take a look at the following example:
+다음 예제를 살펴보세요:
 
 ```jsx filename="pages/about.js"
 export const config = { amp: true }
@@ -39,15 +41,15 @@ function About(props) {
 export default About
 ```
 
-The page above is an AMP-only page, which means:
+위의 예시 페이지는 AMP-only 페이지로, 다음을 의미합니다:
 
-- The page has no Next.js or React client-side runtime
-- The page is automatically optimized with [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer), an optimizer that applies the same transformations as AMP caches (improves performance by up to 42%)
-- The page has a user-accessible (optimized) version of the page and a search-engine indexable (unoptimized) version of the page
+- 페이지에 Next.js 또는 React 클라이언트 측 런타임이 없습니다
+- 페이지는 자동으로 [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)로 최적화되며, 이 최적화 도구는 AMP 캐시와 동일한 변환을 적용합니다(성능이 최대 42% 향상됨)
+- 페이지는 사용자 접근이 가능한 최적화된 버전과 검색 엔진에 인덱싱 가능한 최적화되지 않은 버전을 갖습니다
 
 ## Hybrid AMP Page
 
-Take a look at the following example:
+다음 예제를 살펴보세요:
 
 ```jsx filename="pages/about.js"
 import { useAmp } from 'next/amp'
@@ -78,9 +80,9 @@ function About(props) {
 export default About
 ```
 
-The page above is a hybrid AMP page, which means:
+위의 예시 페이지는 Hybrid AMP 페이지로, 다음을 의미합니다:
 
-- The page is rendered as traditional HTML (default) and AMP HTML (by adding `?amp=1` to the URL)
-- The AMP version of the page only has valid optimizations applied with AMP Optimizer so that it is indexable by search-engines
+- 페이지는 기존의 HTML(기본값)과 AMP HTML(URL에 `?amp=1` 추가하는 것을 통해)로 렌더링됩니다
+- 페이지의 AMP 버전은 AMP Optimizer로 적용된 유효한 최적화만 적용되어 검색 엔진에 인덱싱됩니다
 
-The page uses `useAmp` to differentiate between modes, it's a [React Hook](https://react.dev/reference/react) that returns `true` if the page is using AMP, and `false` otherwise.
+이 페이지는 `useAmp`를 사용하여 모드를 구분하며, 이 함수(`useAmp`)는 페이지가 AMP를 사용하는 경우 `true`를, 그렇지 않은 경우 `false`를 반환하는 [React Hook](https://react.dev/reference/react)입니다.
