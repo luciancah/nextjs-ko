@@ -73,6 +73,9 @@
         <td align="center" valign="top" width="14.28%"><a href="https://litt.ly/jinseung_"><img src="https://avatars.githubusercontent.com/u/127307160?v=4?s=100" width="100px;" alt="Jinseung"/><br /><sub><b>Jinseung</b></sub></a><br /><a href="#content-wlstmd" title="Content">🖋</a></td>
         <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@mini-boo/posts"><img src="https://avatars.githubusercontent.com/u/81962257?v=4?s=100" width="100px;" alt="Hyunsoo Kim"/><br /><sub><b>Hyunsoo Kim</b></sub></a><br /><a href="#content-mini-boo" title="Content">🖋</a></td>
         <td align="center" valign="top" width="14.28%"><a href="https://parkubin.notion.site/a71d9b12489e4a93ab2d7c51b9b1e00b"><img src="https://avatars.githubusercontent.com/u/102154880?v=4?s=100" width="100px;" alt="박우빈"/><br /><sub><b>박우빈</b></sub></a><br /><a href="#content-Ubinquitous" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/HarrySeop"><img src="https://avatars.githubusercontent.com/u/141125424?v=4" width="100px;" alt="HarrySeop"/><br /><sub><b>HarrySeop</b></sub></a><br /><a href="#content-HarrySeop" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@lionleeee"><img src="https://avatars.githubusercontent.com/u/51181222?v=4" width="100px;" alt="정훈"/><br /><sub><b>정훈</b></sub></a><br /><a href="#content-lionleeee" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://sangseophwang.tistory.com/"><img src="https://avatars.githubusercontent.com/u/79933417?v=4" width="100px;" alt="SangSeop Hwang"/><br /><sub><b>SangSeop Hwang</b></sub></a><br /><a href="#content-sangseophwang" title="Content">🖋</a></td>
     </tr>
 </tbody>
 </table>

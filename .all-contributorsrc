@@ -285,6 +285,33 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "HarrySeop",
+      "name": "HarrySeop",
+      "avatar_url": "https://avatars.githubusercontent.com/u/141125424?v=4",
+      "profile": "https://github.com/HarrySeop",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "lionleeee",
+      "name": "정훈",
+      "avatar_url": "https://avatars.githubusercontent.com/u/51181222?v=4",
+      "profile": "https://velog.io/@lionleeee",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "sangseophwang",
+      "name": "SangSeop Hwang",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79933417?v=4",
+      "profile": "https://sangseophwang.tistory.com/",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
