@@ -51,17 +51,17 @@ const data = unstable_cache(fetchData, keyParts, options)()
 import { unstable_cache } from 'next/cache';
 
 export default async function Page({ params }: { params: { userID: string } }) {
- const getCachedUser = unstable_cache(
-  async () => {
-
-  return { id: params.userID };
+  const getCachedUser = unstable_cache(
+    async () => {
+      return { id: params.userId }
     },
     [params.userID], // 여기서 userID를 keyParts에 추가하여 Next.js가 서로 다른 userID에 대해 별도의 캐시를 만들 수 있도록 합니다.
     {
       tags: ["cached-user-tag"],
       revalidate: 60,
     }
-);
+  );
+  
   ...
 }
 ```
@@ -70,17 +70,17 @@ export default async function Page({ params }: { params: { userID: string } }) {
 import { unstable_cache } from 'next/cache';
 
 export default async function Page({ params }) {
- const getCachedUser = unstable_cache(
-  async () => {
-
-  return { id: params.userID };
+  const getCachedUser = unstable_cache(
+    async () => {
+      return { id: params.userId }
     },
     [params.userID], // 여기서 userID를 keyParts에 추가하여 Next.js가 서로 다른 userID에 대해 별도의 캐시를 만들 수 있도록 합니다.
     {
       tags: ["cached-user-tag"],
       revalidate: 60,
     }
-);
+  );
+  
   ...
 }
 ```
