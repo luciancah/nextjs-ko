@@ -212,9 +212,7 @@ import { headers } from 'next/headers'
 
 export async function GET(request: Request) {
   const headersList = headers()
-  const referer = headersList.get('refer
-
-er')
+  const referer = headersList.get('referer')
 
   return new Response('Hello, Next.js!', {
     status: 200,
@@ -510,9 +508,7 @@ export async function GET(request) {
 
 > **알아두면 좋은 점**:
 >
-> - 여러 Route Handlers에 CORS 헤더를 추가하려면 [Middleware](/docs/app/building-your-application/routing/middleware#cors) 또는 [`
-
-next.config.js` 파일](/docs/app/api-reference/next-config-js/headers#cors)을 사용할 수 있습니다.
+> - 여러 Route Handlers에 CORS 헤더를 추가하려면 [Middleware](/docs/app/building-your-application/routing/middleware#cors) 또는 [`next.config.js` 파일](/docs/app/api-reference/next-config-js/headers#cors)을 사용할 수 있습니다.
 
 > - 또는 [CORS 예제](https://github.com/vercel/examples/blob/main/edge-functions/cors/lib/cors.ts) 패키지를 참조하세요.
 
@@ -558,7 +554,7 @@ export async function POST(request) {
 
 ### Non-UI Responses
 
-Route Handlers를 사용하여 UI가 아닌 콘텐츠를 반환할 수 있습니다. [`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generating-a-sitemap-using-code-js-ts), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), [open graph images](/docs/app/api-reference/file-conventions/metadata/opengraph-image) 등은 모두 기본적으로 지원됩니다.
+Route Handlers를 사용하여 UI가 아닌 콘텐츠를 반환할 수 있습니다. [`sitemap.xml`](/docs/app/api-reference/file-conventions/metadata/sitemap#generating-a-sitemap-using-code-js-ts), [`robots.txt`](/docs/app/api-reference/file-conventions/metadata/robots#generate-a-robots-file), [`app icons`](/docs/app/api-reference/file-conventions/metadata/app-icons#generate-icons-using-code-js-ts-tsx), [`open graph images`](/docs/app/api-reference/file-conventions/metadata/opengraph-image) 등은 모두 기본적으로 지원됩니다.
 
 ```ts filename="app/rss.xml/route.ts" switcher
 export async function GET() {
