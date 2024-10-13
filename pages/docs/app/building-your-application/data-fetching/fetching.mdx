@@ -179,9 +179,7 @@ import fetcher from '@/utils/fetcher'
 
 export default function PollingComponent {
   // 폴링 간격을 2000 밀리초로 설정
-  const {
-
- data } = useSWR('/api/data', fetcher, { refreshInterval: 2000 });
+  const { data } = useSWR('/api/data', fetcher, { refreshInterval: 2000 });
 
   return '...'
 }

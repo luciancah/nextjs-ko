@@ -76,6 +76,10 @@
         <td align="center" valign="top" width="14.28%"><a href="https://github.com/HarrySeop"><img src="https://avatars.githubusercontent.com/u/141125424?v=4" width="100px;" alt="HarrySeop"/><br /><sub><b>HarrySeop</b></sub></a><br /><a href="#content-HarrySeop" title="Content">🖋</a></td>
         <td align="center" valign="top" width="14.28%"><a href="https://velog.io/@lionleeee"><img src="https://avatars.githubusercontent.com/u/51181222?v=4" width="100px;" alt="정훈"/><br /><sub><b>정훈</b></sub></a><br /><a href="#content-lionleeee" title="Content">🖋</a></td>
         <td align="center" valign="top" width="14.28%"><a href="https://sangseophwang.tistory.com/"><img src="https://avatars.githubusercontent.com/u/79933417?v=4" width="100px;" alt="SangSeop Hwang"/><br /><sub><b>SangSeop Hwang</b></sub></a><br /><a href="#content-sangseophwang" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/blueline1984"><img src="https://avatars.githubusercontent.com/u/97525377?v=4" width="100px;" alt="White"/><br /><sub><b>White</b></sub></a><br /><a href="#content-blueline1984" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="14.28%"><a href="https://blog.seokkamoni.me"><img src="https://avatars.githubusercontent.com/u/102217654?v=4" width="100px;" alt="김석진(poki)"/><br /><sub><b>김석진(poki)</b></sub></a><br /><a href="#content-seokkamoni" title="Content">🖋</a></td>
     </tr>
 </tbody>
 </table>
