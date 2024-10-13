@@ -312,6 +312,24 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "blueline1984",
+      "name": "White",
+      "avatar_url": "https://avatars.githubusercontent.com/u/97525377?v=4",
+      "profile": "http://github.com/blueline1984",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "seokkamoni",
+      "name": "김석진(poki)",
+      "avatar_url": "https://avatars.githubusercontent.com/u/102217654?v=4",
+      "profile": "https://blog.seokkamoni.me",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7,
