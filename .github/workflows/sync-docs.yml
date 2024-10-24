@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: vercel/next.js
-          ref: canary
+          ref: v15.0.1
           path: next-js
           sparse-checkout: |
             docs
