@@ -20,8 +20,6 @@ Next.js에서 경로 간 이동하는 방법은 네 가지가 있습니다:
 
 ## `<Link>` Component
 
-`<Link>` 컴포넌트
-
 `<Link>`는 HTML `<a>` 태그를 확장하여 경로 간 [사전 로드](#2-prefetching)와 클라이언트 측 내비게이션을 제공하는 내장 컴포넌트입니다. Next.js에서 경로 간 이동을 위한 기본적이고 권장되는 방법입니다.
 
 다음과 같이 `next/link`에서 가져와 컴포넌트에 `href` prop을 전달하여 사용할 수 있습니다:
@@ -46,11 +44,7 @@ export default function Page() {
 
 ### Examples
 
-예제
-
 #### Linking to Dynamic Segments
-
-동적 세그먼트에 링크하기
 
 [동적 세그먼트](/docs/app/building-your-application/routing/dynamic-routes)에 링크할 때 [템플릿 리터럴과 인터폴레이션](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals)을 사용하여 링크 목록을 생성할 수 있습니다. 예를 들어, 블로그 게시물 목록을 생성하려면 다음과 같이 합니다:
 
@@ -71,8 +65,6 @@ export default function PostList({ posts }) {
 ```
 
 #### Checking Active Links
-
-활성 링크 확인하기
 
 [`usePathname()`](/docs/app/api-reference/functions/use-pathname)를 사용하여 링크가 활성화되었는지 확인할 수 있습니다. 예를 들어, 현재 `pathname`이 링크의 `href`와 일치하는지 확인하여 활성 링크에 클래스를 추가할 수 있습니다:
 
@@ -130,8 +122,6 @@ export function Links() {
 
 #### Scrolling to an `id`
 
-`id`로 스크롤하기
-
 Next.js App Router의 기본 동작은 **새로운 경로로 이동할 때 맨 위로 스크롤하거나 이전 및 다음 탐색을 위해 스크롤 위치를 유지하는 것입니다.**
 
 내비게이션 시 특정 `id`로 스크롤하려면 URL에 `#` 해시 링크를 추가하거나 `href` prop에 해시 링크를 전달할 수 있습니다. `<Link>`는 `<a>` 요소로 렌더링되기 때문에 가능합니다.
@@ -148,8 +138,6 @@ Next.js App Router의 기본 동작은 **새로운 경로로 이동할 때 맨 �
 > - Next.js는 내비게이션 시 페이지가 뷰포트에 보이지 않으면 [페이지](/docs/app/building-your-application/routing/pages)로 스크롤합니다.
 
 #### Disabling scroll restoration
-
-스크롤 복원 비활성화
 
 Next.js App Router의 기본 동작은 **새로운 경로로 이동할 때 맨 위로 스크롤하거나 이전 및 다음 탐색을 위해 스크롤 위치를 유지하는 것입니다.** 이 동작을 비활성화하려면 `<Link>` 컴포넌트에 `scroll={false}`를 전달하거나 `router.push()` 또는 `router.replace()`에 `scroll: false`를 전달할 수 있습니다.
 
@@ -170,8 +158,6 @@ router.push('/dashboard', { scroll: false })
 ```
 
 ## `useRouter()` hook
-
-`useRouter()` 훅
 
 `useRouter` 훅을 사용하여 [클라이언트 컴포넌트](/docs/app/building-your-application/rendering/client-components)에서 프로그래밍 방식으로 경로를 변경할 수 있습니다.
 
@@ -196,8 +182,6 @@ export default function Page() {
 > **권장 사항:** 특정 요구 사항이 없는 한 경로 간 내비게이션을 위해 `<Link>` 컴포넌트를 사용하는 것이 좋습니다.
 
 ## `redirect` function
-
-`redirect` 함수
 
 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)의 경우 `redirect` 함수를 사용하세요.
 
@@ -251,15 +235,11 @@ export default async function Profile({ params }) {
 
 ## Using the native History API
 
-네이티브 History API 사용
-
 Next.js는 네이티브 [`window.history.pushState`](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState) 및 [`window.history.replaceState`](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState) 메서드를 사용하여 페이지를 다시 로드하지 않고 브라우저의 히스토리 스택을 업데이트할 수 있습니다.
 
 `pushState` 및 `replaceState` 호출은 Next.js 라우터와 통합되어 [`usePathname`](/docs/app/api-reference/functions/use-pathname) 및 [`useSearchParams`](/docs/app/api-reference/functions/use-search-params)와 동기화할 수 있습니다.
 
 ### `window.history.pushState`
-
-`window.history.pushState`
 
 브라우저의 히스토리 스택에 새 항목을 추가하는 데 사용됩니다. 사용자는 이전 상태로 돌아갈 수 있습니다. 예를 들어, 제품 목록을 정렬하려면 다음과 같이 합니다:
 
@@ -311,8 +291,6 @@ export default function SortProducts() {
 
 ### `window.history.replaceState`
 
-`window.history.replaceState`
-
 브라우저의 히스토리 스택에서 현재 항목을 대체하는 데 사용됩니다. 사용자는 이전 상태로 돌아갈 수 없습니다. 예를 들어, 애플리케이션의 로케일을 변경하려면 다음과 같이 합니다:
 
 ```tsx fileName="app/ui/locale-switcher.tsx" switcher
@@ -363,21 +341,15 @@ export function LocaleSwitcher() {
 
 ## How Routing and Navigation Works
 
-라우팅 및 내비게이션 작동 방식
-
 App Router는 라우팅 및 내비게이션에 대해 하이브리드 접근 방식을 사용합니다. 서버에서 애플리케이션 코드는 경로 세그먼트에 의해 자동으로 [코드 분할](#1-code-splitting)됩니다. 클라이언트에서 Next.js는 경로 세그먼트를 [사전 로드](#2-prefetching)하고 [캐시](#3-caching)합니다. 즉, 사용자가 새 경로로 내비게이션할 때 브라우저가 페이지를 다시 로드하지 않으며 변경된 경로 세그먼트만 다시 렌더링됩니다. 이는 내비게이션 경험과 성능을 향상시킵니다.
 
 ### 1. Code Splitting
-
-1. 코드 분할
 
 코드 분할은 애플리케이션 코드를 더 작은 번들로 나누어 브라우저가 다운로드하고 실행할 수 있게 합니다. 이는 전송되는 데이터 양과 각 요청에 대한 실행 시간을 줄여 성능을 향상시킵니다.
 
 [서버 컴포넌트](/docs/app/building-your-application/rendering/server-components)를 사용하면 애플리케이션 코드가 경로 세그먼트에 의해 자동으로 코드 분할됩니다. 이는 현재 경로에 필요한 코드만 내비게이션 시 로드된다는 것을 의미합니다.
 
 ### 2. Prefetching
-
-2. 사전 로드
 
 사전 로드는 사용자가 방문하기 전에 백그라운드에서 경로를 미리 로드하는 방법입니다.
 
@@ -398,8 +370,6 @@ Next.js에서 경로를 사전 로드하는 두 가지 방법이 있습니다:
 
 ### 3. Caching
 
-3. 캐싱
-
 Next.js에는 [라우터 캐시](/docs/app/building-your-application/caching#client-side-router-cache)라고 불리는 **메모리 내 클라이언트 측 캐시**가 있습니다. 사용자가 애플리케이션을 탐색할 때 [사전 로드된](#2-prefetching) 경로 세그먼트와 방문한 경로의 React 서버 컴포넌트 페이로드가 캐시에 저장됩니다.
 
 이는 내비게이션 시 새로운 서버 요청을 만드는 대신 가능한 한 캐시를 재사용하여 요청 수와 전송되는 데이터 양을 줄여 성능을 향상시킵니다.
@@ -407,8 +377,6 @@ Next.js에는 [라우터 캐시](/docs/app/building-your-application/caching#cli
 [라우터 캐시](/docs/app/building-your-application/caching#client-side-router-cache)가 어떻게 작동하고 설정하는 방법에 대해 자세히 알아보세요.
 
 ### 4. Partial Rendering
-
-4. 부분 렌더링
 
 부분 렌더링은 내비게이션 시 변경된 경로 세그먼트만 클라이언트에서 다시 렌더링되고, 공유된 세그먼트는 유지되는 것을 의미합니다.
 
@@ -426,19 +394,13 @@ Next.js에는 [라우터 캐시](/docs/app/building-your-application/caching#cli
 
 ### 5. Soft Navigation
 
-5. 소프트 내비게이션
-
 브라우저는 페이지 간 내비게이션 시 "하드 내비게이션"을 수행합니다. Next.js App Router는 페이지 간 "소프트 내비게이션"을 가능하게 하여 변경된 경로 세그먼트만 다시 렌더링되도록 합니다(부분 렌더링). 이를 통해 내비게이션 중 클라이언트 React 상태가 유지됩니다.
 
 ### 6. Back and Forward Navigation
 
-6. 뒤로 및 앞으로 내비게이션
-
 기본적으로 Next.js는 뒤로 및 앞으로 내비게이션을 위해 스크롤 위치를 유지하고 [라우터 캐시](/docs/app/building-your-application/caching#client-side-router-cache)의 경로 세그먼트를 재사용합니다.
 
 ### 7. Routing between `pages/` and `app/`
-
-7. `pages/`와 `app/` 간의 라우팅
 
 `pages/`에서 `app/`로 점진적으로 마이그레이션할 때 Next.js 라우터는 두 경로 간의 하드 내비게이션을 자동으로 처리합니다. `pages/`에서 `app/`로의 전환을 감지하기 위해 앱 경로의 확률적 검사를 활용하는 클라이언트 라우터 필터가 있으며, 때때로 false positive를 초래할 수 있습니다. 기본적으로 이러한 발생은 매우 드물어야 하며, false positive 가능성을 0.01%로 구성합니다. 이 가능성은 `next.config.js`의 `experimental.clientRouterFilterAllowedRate` 옵션을 통해 사용자 지정할 수 있습니다. false positive 비율을 낮추면 클라이언트 번들에서 생성된 필터의 크기가 증가한다는 점을 유의해야 합니다.
 
