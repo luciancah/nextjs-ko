@@ -3,7 +3,7 @@ import { useTheme } from 'nextra-theme-docs'
 
 const ExternalImage = ({ srcLight, srcDark, alt, width, height }) => {
   const { theme, systemTheme } = useTheme()
-  const baseUrl = 'https://nextjs.org'
+  const baseUrl = 'https://h8DxKfmAPhn8O0p3.public.blob.vercel-storage.com'
   const src =
     theme === 'system'
       ? systemTheme === 'dark'
