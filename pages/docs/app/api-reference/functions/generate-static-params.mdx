@@ -213,9 +213,7 @@ export async function generateStaticParams() {
 
 #### 런타임에 모든 경로
 
-모든 경로를 처음 방문 시 정적으로 렌
-
-더링하려면 빈 배열을 반환하세요(빌드 시 경로가 렌더링되지 않음) 또는 [`export const dynamic = 'force-static'`](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 사용하세요:
+모든 경로를 처음 방문 시 정적으로 렌더링하려면 빈 배열을 반환하세요(빌드 시 경로가 렌더링되지 않음) 또는 [`export const dynamic = 'force-static'`](/docs/app/api-reference/file-conventions/route-segment-config#dynamic)을 사용하세요:
 
 ```jsx filename="app/blog/[slug]/page.js"
 export async function generateStaticParams() {
