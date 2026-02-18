@@ -1,38 +1,36 @@
 ---
-title: 문서 기여 가이드
-nav_title: 기여 가이드
-description: Next.js 문서에 기여하는 방법을 알아보세요
+title: Docs Contribution Guide
+nav_title: Contribution Guide
+description: Learn how to contribute to Next.js Documentation
 ---
-
-# 문서 기여 가이드
 
 Next.js 문서 기여 가이드에 오신 것을 환영합니다! 여기 와주셔서 감사합니다.
 
 이 페이지는 Next.js 문서를 수정하는 방법에 대한 지침을 제공합니다. 우리의 목표는 커뮤니티의 모든 사람들이 문서에 기여하고 개선할 수 있도록 하는 것입니다.
 
-## 왜 기여해야 할까요?
+## Why Contribute?
 
 오픈 소스 작업은 끝이 없고, 문서도 마찬가지입니다. 문서에 기여하는 것은 초보자들이 오픈 소스에 참여할 수 있는 좋은 방법이며, 경험 많은 개발자들이 더 복잡한 주제를 명확히 하면서 커뮤니티와 지식을 공유할 수 있는 기회입니다.
 
 Next.js 문서에 기여함으로써 모든 개발자에게 더 강력한 학습 리소스를 구축하는 데 도움을 줄 수 있습니다. 오타를 찾았거나, 혼란스러운 섹션이 있거나, 특정 주제가 누락된 것을 발견한 경우, 여러분의 기여는 환영받고 감사받을 것입니다.
 
-## 기여 방법
+## How to Contribute
 
 문서 콘텐츠는 [Next.js 저장소](https://github.com/vercel/next.js/tree/canary/docs)에서 찾을 수 있습니다. 기여하려면 GitHub에서 파일을 직접 편집하거나 저장소를 복제하고 로컬에서 파일을 편집할 수 있습니다.
 
-### GitHub 워크플로우
+### GitHub Workflow
 
 GitHub에 익숙하지 않은 경우, [GitHub 오픈 소스 가이드](https://opensource.guide/how-to-contribute/#opening-a-pull-request)를 읽어보고 저장소를 포크하는 방법, 브랜치를 만드는 방법 및 풀 리퀘스트를 제출하는 방법을 배우는 것이 좋습니다.
 
 > **알아두면 좋은 점**: 기본 문서 코드는 Next.js 공개 저장소와 동기화되는 비공개 코드베이스에 있습니다. 따라서 로컬에서 문서를 미리 볼 수 없습니다. 그러나 풀 리퀘스트를 병합한 후 [nextjs.org](https://nextjs.org/docs)에서 변경 내용을 확인할 수 있습니다.
 
-### MDX 작성
+### Writing MDX
 
 문서는 [MDX](https://mdxjs.com/)로 작성되며, JSX 문법을 지원하는 마크다운 형식입니다. 이를 통해 문서에 React 컴포넌트를 포함할 수 있습니다. 마크다운 문법에 대한 간략한 개요는 [GitHub Markdown Guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)를 참조하세요.
 
 ### VSCode
 
-#### 로컬에서 변경 사항 미리 보기
+#### Previewing Changes Locally
 
 VSCode에는 로컬에서 편집 내용을 확인할 수 있는 내장 마크다운 미리 보기 기능이 있습니다. MDX 파일에 대한 미리 보기를 활성화하려면 사용자 설정에 구성 옵션을 추가해야 합니다.
 
@@ -50,14 +48,14 @@ VSCode에는 로컬에서 편집 내용을 확인할 수 있는 내장 마크다
 
 다시 명령 팔레트를 열고, `Markdown: Preview File` 또는 `Markdown: Open Preview to the Side`를 검색하세요. 이렇게 하면 포맷된 변경 내용을 볼 수 있는 미리 보기 창이 열립니다.
 
-#### 확장 프로그램
+#### Extensions
 
 VSCode 사용자에게 다음 확장 프로그램을 추천합니다:
 
 - [MDX](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx): MDX에 대한 IntelliSense 및 구문 강조 표시.
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode): 저장할 때 MDX 파일을 포맷합니다.
 
-### 리뷰 프로세스
+### Review Process
 
 기여 내용을 제출하면 Next.js 또는 Developer Experience 팀이 변경 내용을 검토하고 피드백을 제공하며 준비가 되면 풀 리퀘스트를 병합합니다.
 
@@ -65,7 +63,7 @@ VSCode 사용자에게 다음 확장 프로그램을 추천합니다:
 
 > **팁:** 풀 리퀘스트를 제출하기 전에 `pnpm prettier-fix`를 실행하여 Prettier를 실행하세요.
 
-## 파일 구조
+## File Structure
 
 문서는 **파일 시스템 라우팅**을 사용합니다. [`/docs`](https://github.com/vercel/next.js/tree/canary/docs) 내부의 각 폴더와 파일은 라우트 세그먼트를 나타냅니다. 이러한 세그먼트는 URL 경로, 탐색 및 브레드크럼을 생성하는 데 사용됩니다.
 
@@ -97,11 +95,11 @@ VSCode 사용자에게 다음 확장 프로그램을 추천합니다:
 >
 > 문서 탐색을 생성하는 또 다른 인기 있는 방법인 매니페스트 파일을 사용하는 것을 고려했지만, 매니페스트가 파일과 빠르게 동기화되지 않는다는 것을 발견했습니다. 파일 시스템 라우팅은 문서의 구조에 대해 생각하게 만들며 Next.js에 더 자연스럽게 느껴집니다.
 
-## 메타데이터
+## Metadata
 
 각 페이지에는 세 개의 대시로 구분된 메타데이터 블록이 파일 상단에 있습니다.
 
-### 필수 필드
+### Required Fields
 
 다음 필드는 **필수**입니다:
 
@@ -119,7 +117,7 @@ description: 페이지 설명
 
 페이지 제목은 2-3 단어로 제한하고(예: 이미지 최적화), 설명은 1-2 문장으로 제한하는 것이 좋습니다(예: Next.js에서 이미지를 최적화하는 방법을 배우세요).
 
-### 선택 필드
+### Optional Fields
 
 다음 필드는 **선택 사항**입니다:
 
@@ -140,11 +138,11 @@ related:
 ---
 ```
 
-## `App` 및 `Pages` 문서
+## `App` and `Pages` Docs
 
 **App Router**와 **Pages Router**의 대부분의 기능이 완전히 다르기 때문에, 각 기능에 대한 문서는 별도의 섹션(`02-app` 및 `03-pages`)에 유지됩니다. 그러나 일부 기능은 둘 사이에 공유됩니다.
 
-### 공유 페이지
+### Shared Pages
 
 콘텐츠 중복을 피하고 콘텐츠가 동기화되지 않을 위험을 방지하기 위해, 한 페이지의 콘텐츠를 다른 페이지로 가져오는 데 `source` 필드를 사용합니다. 예를 들어, `<Link>` 컴포넌트는 **App**과 **Pages**에서 대부분 동일하게 작동합니다. 콘텐츠를 복제하는 대신, `app/.../link.mdx`에서 `pages/.../link.mdx`로 콘텐츠를 가져올 수 있습니다:
 
@@ -170,7 +168,7 @@ source: app/api-reference/components/link
 
 따라서 하나의 위치에서 콘텐츠를 편집하고 두 섹션에 반영할 수 있습니다.
 
-### 공유 콘텐츠
+### Shared Content
 
 공유 페이지에서는 **App Router** 또는 **Pages Router**에 특정한 콘텐츠가 있을 수 있습니다. 예를 들어, `<Link>` 컴포넌트에는 **App**에는 없고 **Pages**에만 있는 `shallow` 속성이 있습니다.
 
@@ -190,7 +188,7 @@ source: app/api-reference/components/link
 
 예제와 코드 블록에 이러한 컴포넌트를 주로 사용할 것입니다.
 
-## 코드 블록
+## Code Blocks
 
 코드 블록은 복사 및 붙여넣기할 수 있는 최소 작업 예제를 포함해야 합니다. 즉, 추가 구성 없이 실행할 수 있어야 합니다.
 
@@ -206,7 +204,7 @@ export default function Page() {
 
 예제를 커밋하기 전에 항상 로컬에서 실행해 보세요. 이렇게 하면 코드가 최신 상태이며 작동하는지 확인할 수 있습니다.
 
-### 언어 및 파일명
+### Language and Filename
 
 코드 블록에는 언어와 `filename`이 포함된 헤더가 있어야 합니다. `filename` 속성을 추가하여 명령어를 입력할 위치를 사용자에게 안내하는 특수 터미널 아이콘을 렌더링합니다. 예를 들어:
 
@@ -227,7 +225,7 @@ JavaScript 코드 블록을 작성할 때는 다음 언어 및 확장자 조합�
 | JSX 코드가 있는 TypeScript 파일 | ```tsx | .tsx   |
 | JSX가 없는 TypeScript 파일      | ```ts  | .ts    |
 
-### TS 및 JS 스위처
+### TS and JS Switcher
 
 TypeScript와 JavaScript 간에 전환할 수 있는 언어 스위처를 추가하세요. 코드 블록은 TypeScript가 기본이며 JavaScript 버전을 제공하여 사용자를 수용합니다.
 
@@ -245,7 +243,7 @@ TypeScript와 JavaScript 간에 전환할 수 있는 언어 스위처를 추가�
 
 > **알아두면 좋은 점**: 앞으로 TypeScript 스니펫을 자동으로 JavaScript로 컴파일할 계획입니다. 그동안 [transform.tools](https://transform.tools/typescript-to-javascript)를 사용할 수 있습니다.
 
-### 라인 강조
+### Line Highlighting
 
 코드 라인을 강조할 수 있습니다. 이는 코드의 특정 부분에 주의를 기울이려 할 때 유용합니다. `highlight` 속성에 숫자를 전달하여 라인을 강조할 수 있습니다.
 
@@ -279,7 +277,7 @@ export default function Page() {
 }
 ```
 
-## 아이콘
+## Icons
 
 문서에서 사용할 수 있는 아이콘은 다음과 같습니다:
 
@@ -298,7 +296,7 @@ import Cross from 'components/cross'
 
 문서에는 이모지를 사용하지 않습니다.
 
-## 노트
+## Notes
 
 중요하지만 중요한 정보가 아닌 경우에는 노트를 사용하세요. 노트는 사용자의 주요 콘텐츠에서 주의를 분산시키지 않으면서 정보를 추가하는 좋은 방법입니다.
 
@@ -320,7 +318,7 @@ import Cross from 'components/cross'
 > - 여러 줄로 된 노트에는 이 형식을 사용합니다.
 > - 알아두거나 기억해야 할 여러 항목이 있는 경우도 있습니다.
 
-## 관련 링크
+## Related Links
 
 관련 링크는 사용자의 학습 여정을 안내하여 논리적 다음 단계를 제공하는 링크입니다.
 
@@ -340,7 +338,7 @@ related:
 ---
 ```
 
-### 중첩된 필드
+### Nested Fields
 
 | 필드          | 필수 여부 | 설명                                                                                                                                              |
 | ------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -348,23 +346,23 @@ related:
 | `description` | 선택      | 카드 목록의 설명입니다.                                                                                                                           |
 | `links`       | 필수      | 다른 문서 페이지에 대한 링크 목록입니다. 각 목록 항목은 상대 URL 경로(선행 슬래시 없이)여야 합니다. 예: `app/api-reference/file-conventions/page` |
 
-## 다이어그램
+## Diagrams
 
 다이어그램은 복잡한 개념을 설명하는 좋은 방법입니다. 우리는 Vercel의 디자인 가이드를 따르며 [Figma](https://www.figma.com/)를 사용하여 다이어그램을 작성합니다.
 
 현재 다이어그램은 비공개 Next.js 사이트의 `/public` 폴더에 있습니다. 다이어그램을 업데이트하거나 추가하려면 아이디어와 함께 [GitHub 이슈](https://github.com/vercel/next.js/issues/new?assignees=&labels=template%3A+documentation&projects=&template=4.docs_request.yml&title=Docs%3A+)를 열어 주세요.
 
-## 커스텀 컴포넌트와 HTML
+## Custom Components and HTML
 
 다음은 문서에서 사용할 수 있는 React 컴포넌트입니다: `<Image />` (next/image), `<PagesOnly />`, `<AppOnly />`, `<Cross />`, 및 `<Check />`. `<details>` 태그를 제외한 원시 HTML은 문서에 허용되지 않습니다.
 
 새로운 컴포넌트에 대한 아이디어가 있다면 [GitHub 이슈](https://github.com/vercel/next.js/issues/new/choose)를 열어 주세요.
 
-## 스타일 가이드
+## Style Guide
 
 이 섹션에는 기술 문서 작성에 익숙하지 않은 사람들을 위한 문서 작성 가이드라인이 포함되어 있습니다.
 
-### 페이지 템플릿
+### Page Templates
 
 엄격한 페이지 템플릿은 없지만, 문서 전체에서 반복되는 페이지 섹션이 있습니다:
 
