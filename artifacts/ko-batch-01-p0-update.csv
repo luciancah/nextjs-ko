@@ -1,0 +1,16 @@
+status,old_path,new_path,normalized_path,ko_path,action,priority,additions,deletions,section
+A,,docs/01-app/03-api-reference/02-components/image.mdx,app/api-reference/components/image,pages/docs/app/api-reference/components/image.mdx,UPDATE_REQUIRED,P0,1390,0,app/api-reference
+A,,docs/01-app/03-api-reference/02-components/link.mdx,app/api-reference/components/link,pages/docs/app/api-reference/components/link.mdx,UPDATE_REQUIRED,P0,1292,0,app/api-reference
+A,,docs/01-app/03-api-reference/02-components/font.mdx,app/api-reference/components/font,pages/docs/app/api-reference/components/font.mdx,UPDATE_REQUIRED,P0,1068,0,app/api-reference
+A,,docs/01-app/03-api-reference/03-file-conventions/layout.mdx,app/api-reference/file-conventions/layout,pages/docs/app/api-reference/file-conventions/layout.mdx,UPDATE_REQUIRED,P0,681,0,app/api-reference
+R,docs/02-app/02-api-reference/04-functions/generate-metadata.mdx,docs/01-app/03-api-reference/04-functions/generate-metadata.mdx,app/api-reference/functions/generate-metadata,pages/docs/app/api-reference/functions/generate-metadata.mdx,UPDATE_REQUIRED,P0,353,168,app/api-reference
+A,,docs/01-app/03-api-reference/04-functions/cookies.mdx,app/api-reference/functions/cookies,pages/docs/app/api-reference/functions/cookies.mdx,UPDATE_REQUIRED,P0,301,0,app/api-reference
+A,,docs/01-app/03-api-reference/03-file-conventions/page.mdx,app/api-reference/file-conventions/page,pages/docs/app/api-reference/file-conventions/page.mdx,UPDATE_REQUIRED,P0,239,0,app/api-reference
+A,,docs/01-app/03-api-reference/03-file-conventions/not-found.mdx,app/api-reference/file-conventions/not-found,pages/docs/app/api-reference/file-conventions/not-found.mdx,UPDATE_REQUIRED,P0,233,0,app/api-reference
+A,,docs/01-app/03-api-reference/04-functions/image-response.mdx,app/api-reference/functions/image-response,pages/docs/app/api-reference/functions/image-response.mdx,UPDATE_REQUIRED,P0,212,0,app/api-reference
+A,,docs/01-app/03-api-reference/04-functions/revalidatePath.mdx,app/api-reference/functions/revalidatePath,pages/docs/app/api-reference/functions/revalidatePath.mdx,UPDATE_REQUIRED,P0,195,0,app/api-reference
+R,docs/02-app/02-api-reference/04-functions/generate-static-params.mdx,docs/01-app/03-api-reference/04-functions/generate-static-params.mdx,app/api-reference/functions/generate-static-params,pages/docs/app/api-reference/functions/generate-static-params.mdx,UPDATE_REQUIRED,P0,188,25,app/api-reference
+A,,docs/01-app/03-api-reference/03-file-conventions/loading.mdx,app/api-reference/file-conventions/loading,pages/docs/app/api-reference/file-conventions/loading.mdx,UPDATE_REQUIRED,P0,185,0,app/api-reference
+R,docs/02-app/01-building-your-application/01-routing/13-route-handlers.mdx,docs/01-app/03-api-reference/03-file-conventions/route.mdx,app/api-reference/file-conventions/route,pages/docs/app/api-reference/file-conventions/route.mdx,UPDATE_REQUIRED,P0,180,125,app/api-reference
+A,,docs/01-app/03-api-reference/04-functions/forbidden.mdx,app/api-reference/functions/forbidden,pages/docs/app/api-reference/functions/forbidden.mdx,UPDATE_REQUIRED,P0,172,0,app/api-reference
+A,,docs/01-app/03-api-reference/03-file-conventions/template.mdx,app/api-reference/file-conventions/template,pages/docs/app/api-reference/file-conventions/template.mdx,UPDATE_REQUIRED,P0,160,0,app/api-reference

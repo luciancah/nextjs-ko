@@ -1,0 +1,482 @@
+status	old_path	new_path	additions	deletions	section
+A		docs/01-app/01-getting-started/01-installation.mdx	413	0	app/getting-started
+A		docs/01-app/01-getting-started/02-project-structure.mdx	421	0	app/getting-started
+A		docs/01-app/01-getting-started/03-layouts-and-pages.mdx	360	0	app/getting-started
+A		docs/01-app/01-getting-started/04-linking-and-navigating.mdx	440	0	app/getting-started
+A		docs/01-app/01-getting-started/05-server-and-client-components.mdx	778	0	app/getting-started
+A		docs/01-app/01-getting-started/06-cache-components.mdx	653	0	app/getting-started
+A		docs/01-app/01-getting-started/07-fetching-data.mdx	657	0	app/getting-started
+A		docs/01-app/01-getting-started/08-updating-data.mdx	521	0	app/getting-started
+A		docs/01-app/01-getting-started/09-caching-and-revalidating.mdx	323	0	app/getting-started
+A		docs/01-app/01-getting-started/10-error-handling.mdx	372	0	app/getting-started
+A		docs/01-app/01-getting-started/11-css.mdx	458	0	app/getting-started
+A		docs/01-app/01-getting-started/12-images.mdx	192	0	app/getting-started
+A		docs/01-app/01-getting-started/13-fonts.mdx	414	0	app/getting-started
+A		docs/01-app/01-getting-started/14-metadata-and-og-images.mdx	334	0	app/getting-started
+A		docs/01-app/01-getting-started/15-route-handlers.mdx	202	0	app/getting-started
+A		docs/01-app/01-getting-started/16-proxy.mdx	78	0	app/getting-started
+A		docs/01-app/01-getting-started/17-deploying.mdx	83	0	app/getting-started
+A		docs/01-app/01-getting-started/18-upgrading.mdx	63	0	app/getting-started
+A		docs/01-app/01-getting-started/index.mdx	21	0	app/getting-started
+R	docs/02-app/01-building-your-application/06-optimizing/08-analytics.mdx	docs/01-app/02-guides/analytics.mdx	22	4	app/guides
+R	docs/02-app/01-building-your-application/09-authentication/index.mdx	docs/01-app/02-guides/authentication.mdx	179	117	app/guides
+A		docs/01-app/02-guides/backend-for-frontend.mdx	803	0	app/guides
+R	docs/02-app/01-building-your-application/04-caching/index.mdx	docs/01-app/02-guides/caching.mdx	92	63	app/guides
+R	docs/03-pages/01-building-your-application/09-deploying/04-ci-build-caching.mdx	docs/01-app/02-guides/ci-build-caching.mdx	3	2	app/guides
+A		docs/01-app/02-guides/content-security-policy.mdx	724	0	app/guides
+R	docs/02-app/01-building-your-application/05-styling/04-css-in-js.mdx	docs/01-app/02-guides/css-in-js.mdx	6	9	app/guides
+A		docs/01-app/02-guides/custom-server.mdx	122	0	app/guides
+A		docs/01-app/02-guides/data-security.mdx	472	0	app/guides
+A		docs/01-app/02-guides/debugging.mdx	167	0	app/guides
+A		docs/01-app/02-guides/draft-mode.mdx	215	0	app/guides
+R	docs/02-app/01-building-your-application/07-configuring/03-environment-variables.mdx	docs/01-app/02-guides/environment-variables.mdx	35	37	app/guides
+A		docs/01-app/02-guides/forms.mdx	491	0	app/guides
+A		docs/01-app/02-guides/incremental-static-regeneration.mdx	608	0	app/guides
+A		docs/01-app/02-guides/index.mdx	4	0	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/09-instrumentation.mdx	docs/01-app/02-guides/instrumentation.mdx	6	7	app/guides
+R	docs/02-app/01-building-your-application/01-routing/15-internationalization.mdx	docs/01-app/02-guides/internationalization.mdx	89	18	app/guides
+A		docs/01-app/02-guides/json-ld.mdx	85	0	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/07-lazy-loading.mdx	docs/01-app/02-guides/lazy-loading.mdx	28	8	app/guides
+A		docs/01-app/02-guides/local-development.mdx	237	0	app/guides
+A		docs/01-app/02-guides/mcp.mdx	175	0	app/guides
+R	docs/02-app/01-building-your-application/07-configuring/05-mdx.mdx	docs/01-app/02-guides/mdx.mdx	189	84	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/13-memory-usage.mdx	docs/01-app/02-guides/memory-usage.mdx	68	4	app/guides
+R	docs/02-app/01-building-your-application/11-upgrading/04-app-router-migration.mdx	docs/01-app/02-guides/migrating/app-router-migration.mdx	72	56	app/guides
+A		docs/01-app/02-guides/migrating/from-create-react-app.mdx	587	0	app/guides
+R	docs/02-app/01-building-your-application/11-upgrading/05-from-vite.mdx	docs/01-app/02-guides/migrating/from-vite.mdx	33	39	app/guides
+A		docs/01-app/02-guides/migrating/index.mdx	4	0	app/guides
+A		docs/01-app/02-guides/multi-tenant.mdx	7	0	app/guides
+R	docs/02-app/01-building-your-application/10-deploying/03-multi-zones.mdx	docs/01-app/02-guides/multi-zones.mdx	62	9	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/10-open-telemetry.mdx	docs/01-app/02-guides/open-telemetry.mdx	24	21	app/guides
+A		docs/01-app/02-guides/package-bundling.mdx	279	0	app/guides
+A		docs/01-app/02-guides/prefetching.mdx	368	0	app/guides
+A		docs/01-app/02-guides/production-checklist.mdx	152	0	app/guides
+A		docs/01-app/02-guides/progressive-web-apps.mdx	658	0	app/guides
+A		docs/01-app/02-guides/public-static-pages.mdx	253	0	app/guides
+R	docs/02-app/01-building-your-application/01-routing/07-redirecting.mdx	docs/01-app/02-guides/redirecting.mdx	80	54	app/guides
+R	docs/02-app/01-building-your-application/05-styling/03-sass.mdx	docs/01-app/02-guides/sass.mdx	49	6	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/05-scripts.mdx	docs/01-app/02-guides/scripts.mdx	54	7	app/guides
+A		docs/01-app/02-guides/self-hosting.mdx	272	0	app/guides
+A		docs/01-app/02-guides/single-page-applications.mdx	424	0	app/guides
+R	docs/02-app/01-building-your-application/10-deploying/02-static-exports.mdx	docs/01-app/02-guides/static-exports.mdx	27	25	app/guides
+A		docs/01-app/02-guides/tailwind-v3-css.mdx	173	0	app/guides
+R	docs/02-app/01-building-your-application/08-testing/04-cypress.mdx	docs/01-app/02-guides/testing/cypress.mdx	13	14	app/guides
+R	docs/02-app/01-building-your-application/08-testing/index.mdx	docs/01-app/02-guides/testing/index.mdx	4	4	app/guides
+R	docs/02-app/01-building-your-application/08-testing/02-jest.mdx	docs/01-app/02-guides/testing/jest.mdx	22	20	app/guides
+R	docs/02-app/01-building-your-application/08-testing/03-playwright.mdx	docs/01-app/02-guides/testing/playwright.mdx	3	5	app/guides
+R	docs/02-app/01-building-your-application/08-testing/01-vitest.mdx	docs/01-app/02-guides/testing/vitest.mdx	10	12	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/12-third-party-libraries.mdx	docs/01-app/02-guides/third-party-libraries.mdx	20	10	app/guides
+A		docs/01-app/02-guides/upgrading/codemods.mdx	721	0	app/guides
+A		docs/01-app/02-guides/upgrading/index.mdx	7	0	app/guides
+R	docs/02-app/01-building-your-application/11-upgrading/03-version-14.mdx	docs/01-app/02-guides/upgrading/version-14.mdx	9	8	app/guides
+A		docs/01-app/02-guides/upgrading/version-15.mdx	603	0	app/guides
+A		docs/01-app/02-guides/upgrading/version-16.mdx	1167	0	app/guides
+R	docs/02-app/01-building-your-application/06-optimizing/02-videos.mdx	docs/01-app/02-guides/videos.mdx	12	11	app/guides
+A		docs/01-app/03-api-reference/01-directives/index.mdx	6	0	app/api-reference
+A		docs/01-app/03-api-reference/01-directives/use-cache-private.mdx	176	0	app/api-reference
+A		docs/01-app/03-api-reference/01-directives/use-cache-remote.mdx	606	0	app/api-reference
+A		docs/01-app/03-api-reference/01-directives/use-cache.mdx	663	0	app/api-reference
+A		docs/01-app/03-api-reference/01-directives/use-client.mdx	123	0	app/api-reference
+A		docs/01-app/03-api-reference/01-directives/use-server.mdx	161	0	app/api-reference
+A		docs/01-app/03-api-reference/02-components/font.mdx	1068	0	app/api-reference
+A		docs/01-app/03-api-reference/02-components/form.mdx	406	0	app/api-reference
+A		docs/01-app/03-api-reference/02-components/image.mdx	1390	0	app/api-reference
+R	docs/02-app/02-api-reference/01-components/index.mdx	docs/01-app/03-api-reference/02-components/index.mdx	0	0	app/api-reference
+A		docs/01-app/03-api-reference/02-components/link.mdx	1292	0	app/api-reference
+R	docs/02-app/02-api-reference/01-components/script.mdx	docs/01-app/03-api-reference/02-components/script.mdx	11	11	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/01-metadata/app-icons.mdx	docs/01-app/03-api-reference/03-file-conventions/01-metadata/app-icons.mdx	27	18	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/01-metadata/index.mdx	docs/01-app/03-api-reference/03-file-conventions/01-metadata/index.mdx	4	1	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/01-metadata/manifest.mdx	docs/01-app/03-api-reference/03-file-conventions/01-metadata/manifest.mdx	2	2	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/01-metadata/opengraph-image.mdx	docs/01-app/03-api-reference/03-file-conventions/01-metadata/opengraph-image.mdx	64	49	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/01-metadata/robots.mdx	docs/01-app/03-api-reference/03-file-conventions/01-metadata/robots.mdx	1	1	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/01-metadata/sitemap.mdx	docs/01-app/03-api-reference/03-file-conventions/01-metadata/sitemap.mdx	132	6	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/default.mdx	66	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/dynamic-routes.mdx	375	0	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/error.mdx	docs/01-app/03-api-reference/03-file-conventions/error.mdx	135	17	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/forbidden.mdx	50	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/index.mdx	4	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/instrumentation-client.mdx	224	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/instrumentation.mdx	139	0	app/api-reference
+R	docs/02-app/01-building-your-application/01-routing/12-intercepting-routes.mdx	docs/01-app/03-api-reference/03-file-conventions/intercepting-routes.mdx	6	6	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/layout.mdx	681	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/loading.mdx	185	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/mdx-components.mdx	60	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/not-found.mdx	233	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/page.mdx	239	0	app/api-reference
+R	docs/02-app/01-building-your-application/01-routing/11-parallel-routes.mdx	docs/01-app/03-api-reference/03-file-conventions/parallel-routes.mdx	34	32	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/proxy.mdx	744	0	app/api-reference
+R	docs/02-app/01-building-your-application/06-optimizing/11-static-assets.mdx	docs/01-app/03-api-reference/03-file-conventions/public-folder.mdx	2	7	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/route-groups.mdx	32	0	app/api-reference
+R	docs/02-app/02-api-reference/02-file-conventions/route-segment-config.mdx	docs/01-app/03-api-reference/03-file-conventions/route-segment-config.mdx	35	41	app/api-reference
+R	docs/02-app/01-building-your-application/01-routing/13-route-handlers.mdx	docs/01-app/03-api-reference/03-file-conventions/route.mdx	180	125	app/api-reference
+R	docs/02-app/01-building-your-application/07-configuring/06-src-directory.mdx	docs/01-app/03-api-reference/03-file-conventions/src-folder.mdx	9	8	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/template.mdx	160	0	app/api-reference
+A		docs/01-app/03-api-reference/03-file-conventions/unauthorized.mdx	114	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/after.mdx	183	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/cacheLife.mdx	481	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/cacheTag.mdx	199	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/connection.mdx	58	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/cookies.mdx	301	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/draft-mode.mdx	137	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/fetch.mdx	104	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/forbidden.mdx	172	0	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/generate-image-metadata.mdx	docs/01-app/03-api-reference/04-functions/generate-image-metadata.mdx	63	16	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/generate-metadata.mdx	docs/01-app/03-api-reference/04-functions/generate-metadata.mdx	353	168	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/generate-sitemaps.mdx	docs/01-app/03-api-reference/04-functions/generate-sitemaps.mdx	16	9	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/generate-static-params.mdx	docs/01-app/03-api-reference/04-functions/generate-static-params.mdx	188	25	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/generate-viewport.mdx	docs/01-app/03-api-reference/04-functions/generate-viewport.mdx	54	7	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/headers.mdx	73	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/image-response.mdx	212	0	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/index.mdx	docs/01-app/03-api-reference/04-functions/index.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/next-request.mdx	docs/01-app/03-api-reference/04-functions/next-request.mdx	24	52	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/next-response.mdx	docs/01-app/03-api-reference/04-functions/next-response.mdx	61	4	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/not-found.mdx	docs/01-app/03-api-reference/04-functions/not-found.mdx	3	2	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/permanentRedirect.mdx	docs/01-app/03-api-reference/04-functions/permanentRedirect.mdx	4	3	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/redirect.mdx	docs/01-app/03-api-reference/04-functions/redirect.mdx	90	11	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/refresh.mdx	69	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/revalidatePath.mdx	195	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/revalidateTag.mdx	136	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/unauthorized.mdx	234	0	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/unstable_cache.mdx	docs/01-app/03-api-reference/04-functions/unstable_cache.mdx	30	24	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/unstable_noStore.mdx	docs/01-app/03-api-reference/04-functions/unstable_noStore.mdx	11	7	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/unstable_rethrow.mdx	docs/01-app/03-api-reference/04-functions/unstable_rethrow.mdx	10	8	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/updateTag.mdx	153	0	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/use-link-status.mdx	242	0	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/use-params.mdx	docs/01-app/03-api-reference/04-functions/use-params.mdx	3	3	app/api-reference
+A		docs/01-app/03-api-reference/04-functions/use-pathname.mdx	156	0	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/use-report-web-vitals.mdx	docs/01-app/03-api-reference/04-functions/use-report-web-vitals.mdx	78	63	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/use-router.mdx	docs/01-app/03-api-reference/04-functions/use-router.mdx	15	12	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/use-search-params.mdx	docs/01-app/03-api-reference/04-functions/use-search-params.mdx	23	12	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/use-selected-layout-segment.mdx	docs/01-app/03-api-reference/04-functions/use-selected-layout-segment.mdx	2	2	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/use-selected-layout-segments.mdx	docs/01-app/03-api-reference/04-functions/use-selected-layout-segments.mdx	3	3	app/api-reference
+R	docs/02-app/02-api-reference/04-functions/userAgent.mdx	docs/01-app/03-api-reference/04-functions/userAgent.mdx	14	6	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/adapterPath.mdx	365	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/allowedDevOrigins.mdx	18	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/appDir.mdx	11	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/assetPrefix.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/assetPrefix.mdx	23	14	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/authInterrupts.mdx	33	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/basePath.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/basePath.mdx	0	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/browserDebugInfoInTerminal.mdx	134	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/cacheComponents.mdx	40	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/cacheHandlers.mdx	429	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/cacheLife.mdx	81	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/compress.mdx	22	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/crossOrigin.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/crossOrigin.mdx	1	1	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/cssChunking.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/cssChunking.mdx	8	6	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/devIndicators.mdx	59	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/distDir.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/distDir.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/env.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/env.mdx	5	4	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/expireTime.mdx	21	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/exportPathMap.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/exportPathMap.mdx	6	13	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/generateBuildId.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/generateBuildId.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/generateEtags.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/generateEtags.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/headers.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/headers.mdx	61	11	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/htmlLimitedBots.mdx	75	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/httpAgentOptions.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/httpAgentOptions.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/images.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/images.mdx	32	3	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/incrementalCacheHandlerPath.mdx	78	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/index.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/index.mdx	30	2	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/inlineCss.mdx	66	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/isolatedDevBuild.mdx	44	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/logging.mdx	71	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/mdxRs.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/mdxRs.mdx	2	3	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/onDemandEntries.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/onDemandEntries.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/optimizePackageImports.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/optimizePackageImports.mdx	3	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/output.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/output.mdx	80	45	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/pageExtensions.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/pageExtensions.mdx	3	3	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/poweredByHeader.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/poweredByHeader.mdx	0	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/productionBrowserSourceMaps.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/productionBrowserSourceMaps.mdx	0	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/proxyClientMaxBodySize.mdx	118	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/reactCompiler.mdx	86	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/reactMaxHeadersLength.mdx	16	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/reactStrictMode.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/reactStrictMode.mdx	1	1	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/redirects.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/redirects.mdx	53	10	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/rewrites.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/rewrites.mdx	26	26	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/sassOptions.mdx	49	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/serverActions.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/serverActions.mdx	0	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/serverComponentsHmrCache.mdx	36	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/serverExternalPackages.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/serverExternalPackages.mdx	25	3	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/staleTimes.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/staleTimes.mdx	12	13	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/staticGeneration.mdx	41	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/taint.mdx	226	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/trailingSlash.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/trailingSlash.mdx	10	3	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/transpilePackages.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/transpilePackages.mdx	0	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/turbopack.mdx	314	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/turbopackFileSystemCache.mdx	48	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/typedRoutes.mdx	17	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/typescript.mdx	58	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/urlImports.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/urlImports.mdx	5	5	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/useLightningcss.mdx	41	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/01-next-config-js/viewTransition.mdx	38	0	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/webVitalsAttribution.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/webVitalsAttribution.mdx	5	2	app/api-reference
+R	docs/02-app/02-api-reference/05-next-config-js/webpack.mdx	docs/01-app/03-api-reference/05-config/01-next-config-js/webpack.mdx	14	14	app/api-reference
+A		docs/01-app/03-api-reference/05-config/02-typescript.mdx	532	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/03-eslint.mdx	385	0	app/api-reference
+A		docs/01-app/03-api-reference/05-config/index.mdx	4	0	app/api-reference
+A		docs/01-app/03-api-reference/06-cli/create-next-app.mdx	111	0	app/api-reference
+A		docs/01-app/03-api-reference/06-cli/index.mdx	11	0	app/api-reference
+A		docs/01-app/03-api-reference/06-cli/next.mdx	342	0	app/api-reference
+R	docs/02-app/02-api-reference/07-edge.mdx	docs/01-app/03-api-reference/07-edge.mdx	26	13	app/api-reference
+A		docs/01-app/03-api-reference/08-turbopack.mdx	260	0	app/api-reference
+R	docs/02-app/02-api-reference/index.mdx	docs/01-app/03-api-reference/index.mdx	0	2	app/api-reference
+A		docs/01-app/04-glossary.mdx	272	0	app/glossary
+A		docs/01-app/index.mdx	15	0	app/index
+D		docs/01-getting-started/01-installation.mdx	0	195	getting-started/installation
+D		docs/01-getting-started/02-project-structure.mdx	0	167	getting-started/project-structure
+D		docs/01-getting-started/index.mdx	0	4	getting-started/index
+D		docs/02-app/01-building-your-application/01-routing/01-defining-routes.mdx	0	58	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/02-pages.mdx	0	58	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/03-layouts-and-templates.mdx	0	306	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/04-linking-and-navigating.mdx	0	405	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/05-error-handling.mdx	0	266	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/06-loading-ui-and-streaming.mdx	0	184	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/08-route-groups.mdx	0	78	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/09-colocation.mdx	0	180	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/10-dynamic-routes.mdx	0	126	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/14-middleware.mdx	0	583	app/building-your-application
+D		docs/02-app/01-building-your-application/01-routing/index.mdx	0	160	app/building-your-application
+D		docs/02-app/01-building-your-application/02-data-fetching/01-fetching.mdx	0	619	app/building-your-application
+D		docs/02-app/01-building-your-application/02-data-fetching/02-caching-and-revalidating.mdx	0	199	app/building-your-application
+D		docs/02-app/01-building-your-application/02-data-fetching/03-server-actions-and-mutations.mdx	0	1006	app/building-your-application
+D		docs/02-app/01-building-your-application/02-data-fetching/index.mdx	0	4	app/building-your-application
+D		docs/02-app/01-building-your-application/03-rendering/01-partial-prerendering.mdx	0	88	app/building-your-application
+D		docs/02-app/01-building-your-application/03-rendering/02-server-components.mdx	0	136	app/building-your-application
+D		docs/02-app/01-building-your-application/03-rendering/03-client-components.mdx	0	106	app/building-your-application
+D		docs/02-app/01-building-your-application/03-rendering/04-composition-patterns.mdx	0	560	app/building-your-application
+D		docs/02-app/01-building-your-application/03-rendering/05-edge-and-nodejs-runtimes.mdx	0	26	app/building-your-application
+D		docs/02-app/01-building-your-application/03-rendering/index.mdx	0	78	app/building-your-application
+D		docs/02-app/01-building-your-application/05-styling/01-stylesheets.mdx	0	367	app/building-your-application
+D		docs/02-app/01-building-your-application/05-styling/02-tailwind-css.mdx	0	201	app/building-your-application
+D		docs/02-app/01-building-your-application/05-styling/index.mdx	0	16	app/building-your-application
+D		docs/02-app/01-building-your-application/06-optimizing/01-images.mdx	0	357	app/building-your-application
+D		docs/02-app/01-building-your-application/06-optimizing/03-fonts.mdx	0	642	app/building-your-application
+D		docs/02-app/01-building-your-application/06-optimizing/04-metadata.mdx	0	364	app/building-your-application
+D		docs/02-app/01-building-your-application/06-optimizing/06-package-bundling.mdx	0	138	app/building-your-application
+D		docs/02-app/01-building-your-application/06-optimizing/index.mdx	0	46	app/building-your-application
+D		docs/02-app/01-building-your-application/07-configuring/01-typescript.mdx	0	344	app/building-your-application
+D		docs/02-app/01-building-your-application/07-configuring/02-eslint.mdx	0	312	app/building-your-application
+D		docs/02-app/01-building-your-application/07-configuring/04-absolute-imports-and-module-aliases.mdx	0	178	app/building-your-application
+D		docs/02-app/01-building-your-application/07-configuring/11-draft-mode.mdx	0	244	app/building-your-application
+D		docs/02-app/01-building-your-application/07-configuring/15-content-security-policy.mdx	0	247	app/building-your-application
+D		docs/02-app/01-building-your-application/10-deploying/01-production-checklist.mdx	0	165	app/building-your-application
+D		docs/02-app/01-building-your-application/10-deploying/index.mdx	0	282	app/building-your-application
+D		docs/02-app/01-building-your-application/11-upgrading/01-codemods.mdx	0	378	app/building-your-application
+D		docs/02-app/01-building-your-application/11-upgrading/02-version-15.mdx	0	150	app/building-your-application
+D		docs/02-app/01-building-your-application/11-upgrading/05-from-create-react-app.mdx	0	498	app/building-your-application
+D		docs/02-app/01-building-your-application/11-upgrading/06-from-create-react-app.mdx	0	585	app/building-your-application
+D		docs/02-app/01-building-your-application/11-upgrading/index.mdx	0	7	app/building-your-application
+D		docs/02-app/01-building-your-application/index.mdx	0	22	app/building-your-application
+D		docs/02-app/02-api-reference/01-components/font.mdx	0	354	app/api-reference
+D		docs/02-app/02-api-reference/01-components/image.mdx	0	1043	app/api-reference
+D		docs/02-app/02-api-reference/01-components/link.mdx	0	513	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/default.mdx	0	39	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/index.mdx	0	4	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/instrumentation.mdx	0	53	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/layout.mdx	0	169	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/loading.mdx	0	34	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/mdx-components.mdx	0	71	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/middleware.mdx	0	135	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/not-found.mdx	0	93	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/page.mdx	0	57	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/route.mdx	0	93	app/api-reference
+D		docs/02-app/02-api-reference/02-file-conventions/template.mdx	0	55	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/cookies.mdx	0	157	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/draft-mode.mdx	0	26	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/fetch.mdx	0	105	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/headers.mdx	0	127	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/image-response.mdx	0	45	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/revalidatePath.mdx	0	123	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/revalidateTag.mdx	0	78	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/unstable_after.mdx	0	78	app/api-reference
+D		docs/02-app/02-api-reference/04-functions/use-pathname.mdx	0	94	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/appDir.mdx	0	10	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/compress.mdx	0	35	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/devIndicators.mdx	0	64	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/eslint.mdx	0	22	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/incrementalCacheHandlerPath.mdx	0	59	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/instrumentationHook.mdx	0	21	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/logging.mdx	0	28	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/ppr.mdx	0	39	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/reactCompiler.mdx	0	45	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/swrDelta.mdx	0	19	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/turbo.mdx	0	104	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/typedRoutes.mdx	0	18	app/api-reference
+D		docs/02-app/02-api-reference/05-next-config-js/typescript.mdx	0	26	app/api-reference
+D		docs/02-app/02-api-reference/06-create-next-app.mdx	0	144	app/api-reference
+D		docs/02-app/02-api-reference/08-next-cli.mdx	0	436	app/api-reference
+D		docs/02-app/index.mdx	0	73	app/index
+A		docs/02-pages/01-getting-started/01-installation.mdx	8	0	pages/getting-started
+A		docs/02-pages/01-getting-started/02-project-structure.mdx	8	0	pages/getting-started
+R	docs/03-pages/01-building-your-application/05-optimizing/01-images.mdx	docs/02-pages/01-getting-started/04-images.mdx	6	1	pages/getting-started
+R	docs/03-pages/01-building-your-application/05-optimizing/02-fonts.mdx	docs/02-pages/01-getting-started/05-fonts.mdx	8	3	pages/getting-started
+A		docs/02-pages/01-getting-started/06-css.mdx	15	0	pages/getting-started
+A		docs/02-pages/01-getting-started/11-deploying.mdx	6	0	pages/getting-started
+A		docs/02-pages/01-getting-started/index.mdx	5	0	pages/getting-started
+R	docs/03-pages/01-building-your-application/04-styling/01-css-modules.mdx	docs/02-pages/02-guides/analytics.mdx	4	3	pages/guides
+R	docs/03-pages/01-building-your-application/08-authentication/index.mdx	docs/02-pages/02-guides/authentication.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/08-babel.mdx	docs/02-pages/02-guides/babel.mdx	2	1	pages/guides
+R	docs/03-pages/01-building-your-application/02-rendering/06-edge-and-nodejs-runtimes.mdx	docs/02-pages/02-guides/ci-build-caching.mdx	4	3	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/15-content-security-policy.mdx	docs/02-pages/02-guides/content-security-policy.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/04-styling/03-css-in-js.mdx	docs/02-pages/02-guides/css-in-js.mdx	3	2	pages/guides
+A		docs/02-pages/02-guides/custom-server.mdx	8	0	pages/guides
+A		docs/02-pages/02-guides/debugging.mdx	8	0	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/11-draft-mode.mdx	docs/02-pages/02-guides/draft-mode.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/03-environment-variables.mdx	docs/02-pages/02-guides/environment-variables.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/03-data-fetching/03-forms-and-mutations.mdx	docs/02-pages/02-guides/forms.mdx	14	84	pages/guides
+A		docs/02-pages/02-guides/incremental-static-regeneration.mdx	8	0	pages/guides
+A		docs/02-pages/02-guides/index.mdx	4	0	pages/guides
+R	docs/03-pages/01-building-your-application/05-optimizing/09-instrumentation.mdx	docs/02-pages/02-guides/instrumentation.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/01-routing/10-internationalization.mdx	docs/02-pages/02-guides/internationalization.mdx	10	10	pages/guides
+R	docs/03-pages/01-building-your-application/05-optimizing/08-lazy-loading.mdx	docs/02-pages/02-guides/lazy-loading.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/06-mdx.mdx	docs/02-pages/02-guides/mdx.mdx	2	2	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/02-app-router-migration.mdx	docs/02-pages/02-guides/migrating/app-router-migration.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/04-from-create-react-app.mdx	docs/02-pages/02-guides/migrating/from-create-react-app.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/03-from-vite.mdx	docs/02-pages/02-guides/migrating/from-vite.mdx	3	2	pages/guides
+A		docs/02-pages/02-guides/migrating/index.mdx	4	0	pages/guides
+R	docs/03-pages/01-building-your-application/09-deploying/03-multi-zones.mdx	docs/02-pages/02-guides/multi-zones.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/05-optimizing/10-open-telemetry.mdx	docs/02-pages/02-guides/open-telemetry.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/05-optimizing/06-package-bundling.mdx	docs/02-pages/02-guides/package-bundling.mdx	4	4	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/09-post-css.mdx	docs/02-pages/02-guides/post-css.mdx	4	10	pages/guides
+R	docs/03-pages/01-building-your-application/06-configuring/14-preview-mode.mdx	docs/02-pages/02-guides/preview-mode.mdx	28	17	pages/guides
+R	docs/03-pages/01-building-your-application/09-deploying/01-production-checklist.mdx	docs/02-pages/02-guides/production-checklist.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/01-routing/04-redirecting.mdx	docs/02-pages/02-guides/redirecting.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/04-styling/04-sass.mdx	docs/02-pages/02-guides/sass.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/05-optimizing/03-scripts.mdx	docs/02-pages/02-guides/scripts.mdx	2	2	pages/guides
+A		docs/02-pages/02-guides/self-hosting.mdx	8	0	pages/guides
+R	docs/03-pages/01-building-your-application/09-deploying/02-static-exports.mdx	docs/02-pages/02-guides/static-exports.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/04-styling/02-tailwind-css.mdx	docs/02-pages/02-guides/tailwind-v3-css.mdx	1	1	pages/guides
+R	docs/03-pages/01-building-your-application/07-testing/04-cypress.mdx	docs/02-pages/02-guides/testing/cypress.mdx	2	2	pages/guides
+R	docs/03-pages/01-building-your-application/07-testing/index.mdx	docs/02-pages/02-guides/testing/index.mdx	1	1	pages/guides
+R	docs/03-pages/01-building-your-application/07-testing/02-jest.mdx	docs/02-pages/02-guides/testing/jest.mdx	2	2	pages/guides
+R	docs/03-pages/01-building-your-application/07-testing/03-playwright.mdx	docs/02-pages/02-guides/testing/playwright.mdx	2	2	pages/guides
+R	docs/03-pages/01-building-your-application/07-testing/01-vitest.mdx	docs/02-pages/02-guides/testing/vitest.mdx	2	2	pages/guides
+R	docs/03-pages/01-building-your-application/05-optimizing/11-third-party-libraries.mdx	docs/02-pages/02-guides/third-party-libraries.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/01-codemods.mdx	docs/02-pages/02-guides/upgrading/codemods.mdx	1	1	pages/guides
+A		docs/02-pages/02-guides/upgrading/index.mdx	6	0	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/09-version-10.mdx	docs/02-pages/02-guides/upgrading/version-10.mdx	2	1	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/08-version-11.mdx	docs/02-pages/02-guides/upgrading/version-11.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/07-version-12.mdx	docs/02-pages/02-guides/upgrading/version-12.mdx	5	4	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/06-version-13.mdx	docs/02-pages/02-guides/upgrading/version-13.mdx	13	12	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/05-version-14.mdx	docs/02-pages/02-guides/upgrading/version-14.mdx	3	2	pages/guides
+R	docs/03-pages/01-building-your-application/10-upgrading/10-version-9.mdx	docs/02-pages/02-guides/upgrading/version-9.mdx	1	9	pages/guides
+R	docs/03-pages/01-building-your-application/01-routing/01-pages-and-layouts.mdx	docs/02-pages/03-building-your-application/01-routing/01-pages-and-layouts.mdx	0	0	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/02-dynamic-routes.mdx	docs/02-pages/03-building-your-application/01-routing/02-dynamic-routes.mdx	0	0	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/03-linking-and-navigating.mdx	docs/02-pages/03-building-your-application/01-routing/03-linking-and-navigating.mdx	1	8	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/05-custom-app.mdx	docs/02-pages/03-building-your-application/01-routing/05-custom-app.mdx	3	3	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/06-custom-document.mdx	docs/02-pages/03-building-your-application/01-routing/06-custom-document.mdx	3	3	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/07-api-routes.mdx	docs/02-pages/03-building-your-application/01-routing/07-api-routes.mdx	45	9	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/08-custom-error.mdx	docs/02-pages/03-building-your-application/01-routing/08-custom-error.mdx	1	1	pages/building-your-application
+R	docs/03-pages/01-building-your-application/01-routing/index.mdx	docs/02-pages/03-building-your-application/01-routing/index.mdx	0	0	pages/building-your-application
+R	docs/03-pages/01-building-your-application/02-rendering/01-server-side-rendering.mdx	docs/02-pages/03-building-your-application/02-rendering/01-server-side-rendering.mdx	0	0	pages/building-your-application
+R	docs/03-pages/01-building-your-application/02-rendering/02-static-site-generation.mdx	docs/02-pages/03-building-your-application/02-rendering/02-static-site-generation.mdx	25	16	pages/building-your-application
+R	docs/03-pages/01-building-your-application/02-rendering/04-automatic-static-optimization.mdx	docs/02-pages/03-building-your-application/02-rendering/04-automatic-static-optimization.mdx	2	2	pages/building-your-application
+R	docs/03-pages/01-building-your-application/02-rendering/05-client-side-rendering.mdx	docs/02-pages/03-building-your-application/02-rendering/05-client-side-rendering.mdx	2	3	pages/building-your-application
+R	docs/03-pages/01-building-your-application/02-rendering/index.mdx	docs/02-pages/03-building-your-application/02-rendering/index.mdx	0	0	pages/building-your-application
+R	docs/03-pages/01-building-your-application/03-data-fetching/01-get-static-props.mdx	docs/02-pages/03-building-your-application/03-data-fetching/01-get-static-props.mdx	5	5	pages/building-your-application
+R	docs/03-pages/01-building-your-application/03-data-fetching/02-get-static-paths.mdx	docs/02-pages/03-building-your-application/03-data-fetching/02-get-static-paths.mdx	0	0	pages/building-your-application
+A		docs/02-pages/03-building-your-application/03-data-fetching/03-forms-and-mutations.mdx	107	0	pages/building-your-application
+R	docs/03-pages/01-building-your-application/03-data-fetching/03-get-server-side-props.mdx	docs/02-pages/03-building-your-application/03-data-fetching/03-get-server-side-props.mdx	1	1	pages/building-your-application
+R	docs/03-pages/01-building-your-application/03-data-fetching/05-client-side.mdx	docs/02-pages/03-building-your-application/03-data-fetching/05-client-side.mdx	2	2	pages/building-your-application
+R	docs/03-pages/01-building-your-application/03-data-fetching/index.mdx	docs/02-pages/03-building-your-application/03-data-fetching/index.mdx	25	14	pages/building-your-application
+R	docs/03-pages/01-building-your-application/06-configuring/12-error-handling.mdx	docs/02-pages/03-building-your-application/06-configuring/12-error-handling.mdx	0	0	pages/building-your-application
+R	docs/02-app/01-building-your-application/07-configuring/index.mdx	docs/02-pages/03-building-your-application/06-configuring/index.mdx	0	2	pages/building-your-application
+A		docs/02-pages/03-building-your-application/index.mdx	4	0	pages/building-your-application
+R	docs/03-pages/02-api-reference/01-components/font.mdx	docs/02-pages/04-api-reference/01-components/font.mdx	0	0	pages/api-reference
+A		docs/02-pages/04-api-reference/01-components/form.mdx	7	0	pages/api-reference
+R	docs/03-pages/02-api-reference/01-components/head.mdx	docs/02-pages/04-api-reference/01-components/head.mdx	4	10	pages/api-reference
+R	docs/03-pages/02-api-reference/01-components/image-legacy.mdx	docs/02-pages/04-api-reference/01-components/image-legacy.mdx	92	39	pages/api-reference
+R	docs/03-pages/02-api-reference/01-components/image.mdx	docs/02-pages/04-api-reference/01-components/image.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/01-components/index.mdx	docs/02-pages/04-api-reference/01-components/index.mdx	0	0	pages/api-reference
+R	docs/03-pages/02-api-reference/01-components/link.mdx	docs/02-pages/04-api-reference/01-components/link.mdx	2	2	pages/api-reference
+R	docs/03-pages/02-api-reference/01-components/script.mdx	docs/02-pages/04-api-reference/01-components/script.mdx	1	1	pages/api-reference
+A		docs/02-pages/04-api-reference/02-file-conventions/index.mdx	4	0	pages/api-reference
+A		docs/02-pages/04-api-reference/02-file-conventions/instrumentation.mdx	7	0	pages/api-reference
+R	docs/03-pages/01-building-your-application/04-styling/index.mdx	docs/02-pages/04-api-reference/02-file-conventions/proxy.mdx	3	3	pages/api-reference
+R	docs/03-pages/01-building-your-application/05-optimizing/05-static-assets.mdx	docs/02-pages/04-api-reference/02-file-conventions/public-folder.mdx	3	2	pages/api-reference
+R	docs/03-pages/01-building-your-application/06-configuring/05-src-directory.mdx	docs/02-pages/04-api-reference/02-file-conventions/src-folder.mdx	2	2	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/get-initial-props.mdx	docs/02-pages/04-api-reference/03-functions/get-initial-props.mdx	2	2	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/get-server-side-props.mdx	docs/02-pages/04-api-reference/03-functions/get-server-side-props.mdx	8	8	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/get-static-paths.mdx	docs/02-pages/04-api-reference/03-functions/get-static-paths.mdx	13	13	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/get-static-props.mdx	docs/02-pages/04-api-reference/03-functions/get-static-props.mdx	21	21	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/index.mdx	docs/02-pages/04-api-reference/03-functions/index.mdx	0	0	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/next-request.mdx	docs/02-pages/04-api-reference/03-functions/next-request.mdx	0	0	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/next-response.mdx	docs/02-pages/04-api-reference/03-functions/next-response.mdx	0	0	pages/api-reference
+A		docs/02-pages/04-api-reference/03-functions/use-params.mdx	242	0	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/use-report-web-vitals.mdx	docs/02-pages/04-api-reference/03-functions/use-report-web-vitals.mdx	0	0	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/use-router.mdx	docs/02-pages/04-api-reference/03-functions/use-router.mdx	79	7	pages/api-reference
+A		docs/02-pages/04-api-reference/03-functions/use-search-params.mdx	318	0	pages/api-reference
+R	docs/03-pages/02-api-reference/02-functions/userAgent.mdx	docs/02-pages/04-api-reference/03-functions/userAgent.mdx	0	0	pages/api-reference
+A		docs/02-pages/04-api-reference/04-config/01-next-config-js/adapterPath.mdx	7	0	pages/api-reference
+A		docs/02-pages/04-api-reference/04-config/01-next-config-js/allowedDevOrigins.mdx	7	0	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/assetPrefix.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/assetPrefix.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/basePath.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/basePath.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/bundlePagesRouterDependencies.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/bundlePagesRouterDependencies.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/compress.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/compress.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/crossOrigin.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/crossOrigin.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/devIndicators.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/devIndicators.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/distDir.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/distDir.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/env.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/env.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/exportPathMap.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/exportPathMap.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/generateBuildId.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/generateBuildId.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/generateEtags.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/generateEtags.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/headers.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/headers.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/httpAgentOptions.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/httpAgentOptions.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/images.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/images.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/index.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/index.mdx	1	1	pages/api-reference
+A		docs/02-pages/04-api-reference/04-config/01-next-config-js/isolatedDevBuild.mdx	7	0	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/onDemandEntries.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/onDemandEntries.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/optimizePackageImports.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/optimizePackageImports.mdx	2	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/output.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/output.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/pageExtensions.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/pageExtensions.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/poweredByHeader.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/poweredByHeader.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/productionBrowserSourceMaps.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/productionBrowserSourceMaps.mdx	1	1	pages/api-reference
+A		docs/02-pages/04-api-reference/04-config/01-next-config-js/proxyClientMaxBodySize.mdx	7	0	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/reactStrictMode.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/reactStrictMode.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/redirects.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/redirects.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/rewrites.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/rewrites.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/serverExternalPackages.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/serverExternalPackages.mdx	25	3	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/trailingSlash.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/trailingSlash.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/transpilePackages.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/transpilePackages.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/turbo.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/turbopack.mdx	3	3	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/typescript.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/typescript.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/urlImports.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/urlImports.mdx	3	2	pages/api-reference
+R	docs/03-pages/01-building-your-application/01-routing/11-middleware.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/useLightningcss.mdx	4	3	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/webVitalsAttribution.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/webVitalsAttribution.mdx	1	1	pages/api-reference
+R	docs/03-pages/02-api-reference/03-next-config-js/webpack.mdx	docs/02-pages/04-api-reference/04-config/01-next-config-js/webpack.mdx	1	1	pages/api-reference
+R	docs/03-pages/01-building-your-application/06-configuring/01-typescript.mdx	docs/02-pages/04-api-reference/04-config/01-typescript.mdx	1	1	pages/api-reference
+R	docs/03-pages/01-building-your-application/06-configuring/02-eslint.mdx	docs/02-pages/04-api-reference/04-config/02-eslint.mdx	1	1	pages/api-reference
+A		docs/02-pages/04-api-reference/04-config/index.mdx	4	0	pages/api-reference
+A		docs/02-pages/04-api-reference/05-cli/create-next-app.mdx	7	0	pages/api-reference
+R	docs/03-pages/02-api-reference/04-create-next-app.mdx	docs/02-pages/04-api-reference/05-cli/index.mdx	3	3	pages/api-reference
+A		docs/02-pages/04-api-reference/05-cli/next.mdx	7	0	pages/api-reference
+R	docs/03-pages/02-api-reference/06-edge.mdx	docs/02-pages/04-api-reference/06-edge.mdx	0	0	pages/api-reference
+A		docs/02-pages/04-api-reference/08-turbopack.mdx	5	0	pages/api-reference
+R	docs/03-pages/02-api-reference/index.mdx	docs/02-pages/04-api-reference/index.mdx	0	0	pages/api-reference
+A		docs/02-pages/index.mdx	10	0	pages/index
+R	docs/04-architecture/accessibility.mdx	docs/03-architecture/accessibility.mdx	1	1	architecture/accessibility
+R	docs/04-architecture/fast-refresh.mdx	docs/03-architecture/fast-refresh.mdx	3	3	architecture/fast-refresh
+R	docs/04-architecture/index.mdx	docs/03-architecture/index.mdx	0	0	architecture/index
+R	docs/04-architecture/nextjs-compiler.mdx	docs/03-architecture/nextjs-compiler.mdx	45	7	architecture/nextjs-compiler
+R	docs/04-architecture/supported-browsers.mdx	docs/03-architecture/supported-browsers.mdx	75	14	architecture/supported-browsers
+D		docs/03-pages/01-building-your-application/03-data-fetching/04-incremental-static-regeneration.mdx	0	182	pages/building-your-application
+D		docs/03-pages/01-building-your-application/05-optimizing/07-analytics.mdx	0	7	pages/building-your-application
+D		docs/03-pages/01-building-your-application/05-optimizing/index.mdx	0	8	pages/building-your-application
+D		docs/03-pages/01-building-your-application/06-configuring/04-absolute-imports-and-module-aliases.mdx	0	7	pages/building-your-application
+D		docs/03-pages/01-building-your-application/06-configuring/07-amp.mdx	0	156	pages/building-your-application
+D		docs/03-pages/01-building-your-application/06-configuring/10-custom-server.mdx	0	119	pages/building-your-application
+D		docs/03-pages/01-building-your-application/06-configuring/13-debugging.mdx	0	122	pages/building-your-application
+D		docs/03-pages/01-building-your-application/06-configuring/index.mdx	0	7	pages/building-your-application
+D		docs/03-pages/01-building-your-application/09-deploying/index.mdx	0	7	pages/building-your-application
+D		docs/03-pages/01-building-your-application/10-upgrading/index.mdx	0	7	pages/building-your-application
+D		docs/03-pages/01-building-your-application/index.mdx	0	7	pages/building-your-application
+D		docs/03-pages/02-api-reference/02-functions/use-amp.mdx	0	86	pages/api-reference
+D		docs/03-pages/02-api-reference/03-next-config-js/eslint.mdx	0	7	pages/api-reference
+D		docs/03-pages/02-api-reference/03-next-config-js/instrumentationHook.mdx	0	7	pages/api-reference
+D		docs/03-pages/02-api-reference/03-next-config-js/runtime-configuration.mdx	0	60	pages/api-reference
+D		docs/03-pages/02-api-reference/05-next-cli.mdx	0	7	pages/api-reference
+D		docs/03-pages/index.mdx	0	8	pages/index
+D		docs/04-architecture/turbopack.mdx	0	68	architecture/turbopack
+R	docs/05-community/01-contribution-guide.mdx	docs/04-community/01-contribution-guide.mdx	19	12	community/contribution-guide
+A		docs/04-community/02-rspack.mdx	12	0	community/rspack
+R	docs/05-community/index.mdx	docs/04-community/index.mdx	1	1	community/index
+M		docs/index.mdx	35	25	index

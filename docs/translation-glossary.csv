@@ -1,0 +1,30 @@
+source_term,ko_term,do_not_translate,notes,example
+App Router,App Router,true,공식 명칭 유지,App Router uses file-system routing.
+Pages Router,Pages Router,true,공식 명칭 유지,Pages Router supports getServerSideProps.
+Server Components,Server Components,true,RSC 문맥에서 영문 유지,Server Components render on the server.
+Client Components,Client Components,true,RSC 문맥에서 영문 유지,Client Components run in the browser.
+Route Handler,Route Handler,true,기능명은 영문 유지,Use Route Handler for custom request handling.
+Server Actions,Server Actions,true,공식 기능명 유지,Server Actions can be called from forms.
+Edge Runtime,Edge Runtime,true,런타임 고유명사 유지,This route runs on the Edge Runtime.
+Node.js Runtime,Node.js Runtime,true,런타임 고유명사 유지,Use Node.js Runtime for native modules.
+Rendering,렌더링,false,문맥에 따라 SSR/CSR 정밀 표기,Rendering can happen at build time.
+Static Rendering,정적 렌더링,false,문맥상 SSG와 구분 필요,Static Rendering caches output.
+Dynamic Rendering,동적 렌더링,false,요청 시 렌더링,Dynamic Rendering happens per request.
+Caching,캐싱,false,명사형 통일,Caching improves response times.
+Revalidation,재검증,false,Revalidate 동사와 구분,Revalidation updates cached data.
+Hydration,하이드레이션,false,음역 표기 우선,Hydration attaches event handlers.
+Streaming,스트리밍,false,음역 표기 우선,Streaming sends UI in chunks.
+Bundling,번들링,false,음역 표기 우선,Bundling reduces network requests.
+Code Splitting,코드 분할,false,복합어 일관 유지,Code Splitting loads less JavaScript.
+Prefetch,프리페치,false,동사형은 프리페치하다 사용 가능,Link can prefetch routes.
+Middleware,Middleware,true,파일/기능명과 일치 필요,Middleware runs before a request completes.
+Partial Prerendering,부분 사전 렌더링,false,PPR 약어 병기 가능,Partial Prerendering mixes static and dynamic content.
+Data Fetching,데이터 페칭,false,fetch API 용어와 일관,Data Fetching can be cached.
+Layout,Layout,true,파일 컨벤션과 충돌 방지,Use layout.tsx for shared UI.
+Template,Template,true,파일 컨벤션과 충돌 방지,Template remounts on navigation.
+Loading UI,Loading UI,true,섹션명은 영문 유지,Use loading.tsx for instant feedback.
+Error Handling,에러 처리,false,헤딩이 영문이면 본문만 번역,Error Handling improves resilience.
+File Conventions,파일 컨벤션,false,공식 섹션명 번역,Follow File Conventions for routing files.
+Metadata,메타데이터,false,웹 표준 용어,Metadata controls SEO tags.
+OpenTelemetry,OpenTelemetry,true,고유 프로젝트명 유지,OpenTelemetry exports traces.
+Incremental Static Regeneration,점진적 정적 재생성,false,ISR 약어 병기 권장,ISR updates static pages after deploy.

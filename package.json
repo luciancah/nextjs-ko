@@ -12,7 +12,12 @@
     "format:fix": "prettier --cache --write --ignore-path .prettierignore \"**/*.{js,jsx,ts,tsx,css,scss,mdx}\"",
     "prepare": "husky",
     "lint-staged": "pnpm format:fix && pnpm lint",
-    "generate-sitemap": "node scripts/generate-sitemap.mjs"
+    "generate-sitemap": "node scripts/generate-sitemap.mjs",
+    "docs:diff:v16.1.6": "node scripts/generate-docs-diff.mjs --repo ../next.js --base v15.0.0-canary.82 --target v16.1.6 --output artifacts/docs-diff-v15c82_to_v16.1.6.tsv",
+    "docs:backlog:v16.1.6": "node scripts/build-ko-update-backlog.mjs --input artifacts/docs-diff-v15c82_to_v16.1.6.tsv --output artifacts/ko-update-backlog-v16.1.6.csv --ko-root pages/docs",
+    "docs:update-prep:v16.1.6": "pnpm docs:diff:v16.1.6 && pnpm docs:backlog:v16.1.6",
+    "docs:batch:01:v16.1.6": "node scripts/make-translation-batch.mjs --input artifacts/ko-update-backlog-v16.1.6.csv --output-csv artifacts/ko-batch-01-p0-update.csv --output-md artifacts/ko-batch-01-p0-update.md --action UPDATE_REQUIRED --priority P0 --limit 15",
+    "docs:workpack:batch01:first5": "node scripts/prepare-batch-workpack.mjs --input artifacts/ko-batch-01-p0-update.csv --output-dir artifacts/workpacks/batch-01-first5 --repo ../next.js --target v16.1.6 --limit 5"
   },
   "repository": {
     "type": "git",
