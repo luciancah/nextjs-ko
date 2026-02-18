@@ -8,9 +8,80 @@ description: Optimizing loading web fonts with the built-in `next/font` loaders.
 
 # Font Module
 
-이 API 참조는 [`next/font/google`](/docs/app/building-your-application/optimizing/fonts#google-fonts) 및 [`next/font/local`](/docs/app/building-your-application/optimizing/fonts#local-fonts)를 사용하는 방법을 이해하는 데 도움이 됩니다. 기능 및 사용법에 대한 자세한 내용은 [글꼴 최적화](/docs/app/building-your-application/optimizing/fonts) 페이지를 참조하십시오.
+[`next/font`](/docs/app/api-reference/components/font)는 커스텀 폰트를 포함한 폰트를 자동으로 최적화하고, 외부 네트워크 요청을 제거해 개인정보 보호와 성능을 개선합니다.
 
-### 글꼴 함수 인수
+모든 폰트 파일에 대해 **내장 자동 self-hosting**을 제공하며, [레이아웃 시프트](https://web.dev/articles/cls) 없이 웹 폰트를 로드할 수 있습니다.
+
+또한 [Google Fonts](https://fonts.google.com/)를 편리하게 사용할 수 있습니다. CSS와 폰트 파일은 빌드 시점에 다운로드되어 정적 에셋과 함께 self-hosting 됩니다. **브라우저에서 Google로 요청이 전송되지 않습니다.**
+
+<AppOnly>
+
+```tsx filename="app/layout.tsx" switcher
+import { Inter } from 'next/font/google'
+
+// variable 폰트를 로드하면 weight를 지정할 필요가 없습니다.
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+```jsx filename="app/layout.js" switcher
+import { Inter } from 'next/font/google'
+
+// variable 폰트를 로드하면 weight를 지정할 필요가 없습니다.
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={inter.className}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+</AppOnly>
+
+<PagesOnly>
+
+모든 페이지에서 폰트를 사용하려면 `/pages`의 [`_app.js` 파일](/docs/pages/building-your-application/routing/custom-app)에 다음과 같이 추가하세요:
+
+```jsx filename="pages/_app.js"
+import { Inter } from 'next/font/google'
+
+// variable 폰트를 로드하면 weight를 지정할 필요가 없습니다.
+const inter = Inter({ subsets: ['latin'] })
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={inter.className}>
+      <Component {...pageProps} />
+    </main>
+  )
+}
+```
+
+</PagesOnly>
+
+> **🎥 시청:** `next/font` 사용법 더 알아보기 → [YouTube (6분)](https://www.youtube.com/watch?v=L8_98i_bMMA)
+
+## Reference
 
 사용법에 대한 자세한 내용은 [Google 글꼴](/docs/app/building-your-application/optimizing/fonts#google-fonts) 및 [로컬 글꼴](/docs/app/building-your-application/optimizing/fonts#local-fonts)을 참조하십시오.
 

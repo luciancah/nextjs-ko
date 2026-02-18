@@ -1,11 +1,9 @@
 ---
-title: <Image>
+title: Image Component
 description: Optimize Images in your Next.js Application using the built-in `next/image` Component.
 ---
 
 {/* The content of this doc is shared between the app and pages router. You can use the `<PagesOnly>Content</PagesOnly>` component to add content that is specific to the Pages Router. Any shared content should not be wrapped in a component. */}
-
-# `<Image>`
 
 <details>
   <summary>예시</summary>
@@ -20,7 +18,7 @@ description: Optimize Images in your Next.js Application using the built-in `nex
 
 </PagesOnly>
 
-이 API 참조는 Image 컴포넌트에서 사용 가능한 [props](#props) 및 [구성 옵션](#configuration-options)을 이해하는 데 도움이 됩니다. 기능 및 사용법에 대한 자세한 내용은 [Image 컴포넌트](/docs/app/building-your-application/optimizing/images) 페이지를 참조하십시오.
+Next.js Image 컴포넌트는 HTML `<img>` 요소를 확장하여 자동 이미지 최적화를 제공합니다.
 
 ```jsx filename="app/page.js"
 import Image from 'next/image'
@@ -37,7 +35,9 @@ export default function Page() {
 }
 ```
 
-## Props
+## Reference
+
+### Props
 
 다음은 Image 컴포넌트에서 사용할 수 있는 props의 요약입니다:
 
@@ -45,14 +45,14 @@ export default function Page() {
 | Prop                                      | Example                                  | Type            | Status     |
 | ----------------------------------------- | ---------------------------------------- | --------------- | ---------- |
 | [`src`](#src)                             | `src="/profile.png"`                     | String          | Required   |
-| [`width`](#width)                         | `width={500}`                            | Integer (px)    | Required   |
-| [`height`](#height)                       | `height={500}`                           | Integer (px)    | Required   |
 | [`alt`](#alt)                             | `alt="Picture of the author"`            | String          | Required   |
-| [`loader`](#loader)                       | `loader={imageLoader}`                   | Function        | -          |
+| [`width`](#width-and-height)              | `width={500}`                            | Integer (px)    | -          |
+| [`height`](#width-and-height)             | `height={500}`                           | Integer (px)    | -          |
 | [`fill`](#fill)                           | `fill={true}`                            | Boolean         | -          |
+| [`loader`](#loader)                       | `loader={imageLoader}`                   | Function        | -          |
 | [`sizes`](#sizes)                         | `sizes="(max-width: 768px) 100vw, 33vw"` | String          | -          |
 | [`quality`](#quality)                     | `quality={80}`                           | Integer (1-100) | -          |
-| [`priority`](#priority)                   | `priority={true}`                        | Boolean         | -          |
+| [`preload`](#preload)                     | `preload={true}`                         | Boolean         | -          |
 | [`placeholder`](#placeholder)             | `placeholder="blur"`                     | String          | -          |
 | [`style`](#style)                         | `style={{objectFit: "contain"}}`         | Object          | -          |
 | [`onLoadingComplete`](#onloadingcomplete) | `onLoadingComplete={img => done())}`     | Function        | Deprecated |
@@ -60,29 +60,10 @@ export default function Page() {
 | [`onError`](#onerror)                     | `onError(event => fail()}`               | Function        | -          |
 | [`loading`](#loading)                     | `loading="lazy"`                         | String          | -          |
 | [`blurDataURL`](#blurdataurl)             | `blurDataURL="data:image/jpeg..."`       | String          | -          |
+| [`unoptimized`](#unoptimized)             | `unoptimized={true}`                     | Boolean         | -          |
 | [`overrideSrc`](#overridesrc)             | `overrideSrc="/seo.png"`                 | String          | -          |
+| [`decoding`](#decoding)                   | `decoding="async"`                       | String          | -          |
 </div>
-
-## 필수 Props
-
-Image 컴포넌트는 다음 속성이 필요합니다: `src`, `alt`, `width`, `height` (또는 `fill`).
-
-```jsx filename="app/page.js"
-import Image from 'next/image'
-
-export default function Page() {
-  return (
-    <div>
-      <Image
-        src="/profile.png"
-        width={500}
-        height={500}
-        alt="Picture of the author"
-      />
-    </div>
-  )
-}
-```
 
 ### `src`
 
@@ -93,17 +74,11 @@ export default function Page() {
 
 외부 URL을 사용하는 경우, 이를 `next.config.js`의 [remotePatterns](#remotepatterns)에 추가해야 합니다.
 
-### `width`
+### `width` and `height`
 
-`width` 속성은 픽셀 단위의 _고유_ 이미지 너비를 나타냅니다.
+`width` 및 `height` 속성은 픽셀 단위의 [intrinsic](https://developer.mozilla.org/en-US/docs/Glossary/Intrinsic_Size) 이미지 크기를 나타냅니다. 브라우저가 올바른 **종횡비**를 추론해 로딩 중 레이아웃 이동을 줄이는 데 사용됩니다. 실제 렌더링 크기는 CSS가 결정합니다.
 
-[정적 이미지](/docs/app/building-your-application/optimizing/images#local-images) 또는 [`fill` 속성](#fill)을 사용하는 이미지의 경우 제외하고 필수입니다.
-
-### `height`
-
-`height` 속성은 픽셀 단위의 _고유_ 이미지 높이를 나타냅니다.
-
-[정적 이미지](/docs/app/building-your-application/optimizing/images#local-images) 또는 [`fill` 속성](#fill)을 사용하는 이미지의 경우 제외하고 필수입니다.
+[정적 이미지](/docs/app/building-your-application/optimizing/images#local-images) 또는 [`fill` 속성](#fill)을 사용하는 경우를 제외하면 `width`와 `height`를 함께 지정해야 합니다.
 
 > **참고사항:**
 >
@@ -257,13 +232,13 @@ quality={75} // {number 1-100}
 
 최적화된 이미지의 품질로, `1`에서 `100` 사이의 정수입니다. `100`은 최고의 품질로 가장 큰 파일 크기를 의미합니다. 기본값은 `75`입니다.
 
-### `priority`
+### `preload`
 
 ```js
-priority={false} // {false} | {true}
+preload={false} // {false} | {true}
 ```
 
-true로 설정하면 이미지는 높은 우선순위로 간주되어 [preload](https://web.dev/preload-responsive-images/)됩니다. `priority`를 사용하는 이미지는 자동으로 지연 로딩이 비활성화됩니다.
+`true`로 설정하면 이미지를 우선 로드 대상으로 간주해 브라우저가 더 일찍 가져오도록 합니다.
 
 [Largest Contentful Paint (LCP)](https://nextjs.org/learn/seo/web-performance/lcp) 요소로 감지된 모든 이미지에 `priority` 속성을 사용해야 합니다. 다른 뷰포트 크기에서 LCP 요소로 감지될 수 있는 여러 `priority` 이미지를 사용할 수도 있습니다.
 
@@ -470,7 +445,7 @@ module.exports = {
 `<Image />` 컴포넌트의 다른 속성들은 기본 `img` 요소로 전달되지만, 다음은 예외입니다:
 
 - `srcSet`. 대신 [Device Sizes](#devicesizes)를 사용하세요.
-- `decoding`. 항상 `"async"`입니다.
+- `decoding`
 
 ## 구성 옵션
 
