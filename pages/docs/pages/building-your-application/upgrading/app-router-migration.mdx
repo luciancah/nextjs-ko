@@ -108,13 +108,10 @@ App Router로 이동하는 것은 Next.js가 기반으로 하는 React 기능(�
 
 - `app` 디렉토리는 중첩된 라우트 _및_ 레이아웃을 지원합니다. [자세히 알아보기](/docs/app/building-your-application/routing).
 - 중첩된 폴더를 사용하여 [라우트를 정의](/docs/app/building-your-application/routing/defining-routes)하고 특정 `page.js` 파일을 사용하여 라우트 세그먼트를 공개적으로 접근할 수 있도록 만듭니다. [자세히 알아보기](#step-4-migrating-pages).
-- [특수 파일 규칙](/docs/app/building-your-application/routing#file-conventions)은 각 라우트 세그먼트에 대한 UI를 생성하는 데 사용됩니다. 가장 일반적인 특수 파일은 `page
-
-.js`및`layout.js`입니다.
-
-- `page.js`를 사용하여 라우트에 고유한 UI를 정의합니다.
-- `layout.js`를 사용하여 여러 라우트에 공유되는 UI를 정의합니다.
-- `.js`, `.jsx`, 또는 `.tsx` 파일 확장자는 특수 파일에 사용할 수 있습니다.
+- [특수 파일 규칙](/docs/app/building-your-application/routing#file-conventions)은 각 라우트 세그먼트에 대한 UI를 생성하는 데 사용됩니다. 가장 일반적인 특수 파일은 `page.js` 및 `layout.js`입니다.
+  - `page.js`를 사용하여 라우트에 고유한 UI를 정의합니다.
+  - `layout.js`를 사용하여 여러 라우트에 공유되는 UI를 정의합니다.
+  - `.js`, `.jsx`, 또는 `.tsx` 파일 확장자는 특수 파일에 사용할 수 있습니다.
 - 구성 요소, 스타일, 테스트 등과 같은 다른 파일을 `app` 디렉토리 내에 배치할 수 있습니다. [자세히 알아보기](/docs/app/building-your-application/routing).
 - `getServerSideProps` 및 `getStaticProps`와 같은 데이터 가져오기 함수는 `app` 내에서 [새 API](/docs/app/building-your-application/data-fetching)로 대체되었습니다. `getStaticPaths`는 [`generateStaticParams`](/docs/app/api-reference/functions/generate-static-params)로 대체되었습니다.
 - `pages/_app.js` 및 `pages/_document.js`는 단일 `app/layout.js` 루트 레이아웃으로 대체되었습니다. [자세히 알아보기](/docs/app/building-your-application/routing/layouts-and-templates#root-layout-required).

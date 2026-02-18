@@ -10,7 +10,7 @@ description: 프론트엔드 애플리케이션의 라우팅 기본 사항을 �
 
 ## 용어
 
-먼저, 문서 전체에서 자주 사용되는 용어를 살펴보겠습니다. 여기에 대한 간단한 참고 자료를 제공합니다:
+먼저, 문서 전체에서 자주 사용되는 용어를 살펴보겠습니다. 아래는 이를 이해하기 위한 간단한 참고 자료입니다:
 
 <Image
   alt="컴포넌트 트리를 위한 용어"
@@ -40,7 +40,7 @@ description: 프론트엔드 애플리케이션의 라우팅 기본 사항을 �
 
 버전 13에서 Next.js는 공유 레이아웃, 중첩 라우팅, 로딩 상태, 오류 처리 등을 지원하는 [React Server Components](/docs/app/building-your-application/rendering/server-components) 기반의 새로운 **App Router**를 도입했습니다.
 
-App Router는 `app`이라는 새로운 디렉토리에서 작동합니다. `app` 디렉토리는 `pages` 디렉토리와 함께 작동하여 점진적인 도입을 허용합니다. 이를 통해 애플리케이션의 일부 경로를 새로운 동작으로 전환하면서 다른 경로는 이전 동작을 위해 `pages` 디렉토리에 유지할 수 있습니다. 애플리케이션이 `pages` 디렉토리를 사용하는 경우, [Pages Router](/docs/pages/building-your-application/routing) 문서도 참조하세요.
+App Router는 `app`이라는 새로운 디렉토리에서 작동합니다. `app` 디렉토리는 `pages` 디렉토리와 함께 작동하여 점진적인 도입을 허용합니다. 이를 통해 애플리케이션의 일부 경로는 새로운 동작으로 전환하고, 다른 경로는 이전 동작을 유지한 채 `pages` 디렉토리에 둘 수 있습니다. 애플리케이션이 `pages` 디렉토리를 사용하는 경우, [Pages Router](/docs/pages/building-your-application/routing) 문서도 참조하세요.
 
 > **알아두면 좋은 점**: App Router는 Pages Router보다 우선 순위가 높습니다. 디렉토리 간 경로가 동일한 URL 경로로 해석되면 빌드 타임 오류가 발생하여 충돌을 방지합니다.
 
@@ -60,7 +60,7 @@ App Router는 `app`이라는 새로운 디렉토리에서 작동합니다. `app`
 
 Next.js는 파일 시스템 기반의 라우터를 사용하여 다음과 같은 역할을 합니다:
 
-- **폴더**는 경로를 정의하는 데 사용됩니다. 경로는 **루트 폴더**에서 시작하여 `page.js` 파일을 포함하는 최종 **리프 폴더**까지 파일 시스템 계층을 따르는 중첩 폴더의 단일 경로입니다. [라우트 정의](/docs/app/building-your-application/routing/defining-routes)를 참조하세요.
+- **폴더**는 경로를 정의하는 데 사용됩니다. 경로는 **루트 폴더**에서 시작하여 `page.js` 파일을 포함하는 최종 **리프 폴더**까지, 파일 시스템 계층을 따르는 중첩 폴더 구조로 구성됩니다. [라우트 정의](/docs/app/building-your-application/routing/defining-routes)를 참조하세요.
 - **파일**은 경로 세그먼트에 대해 표시되는 UI를 생성하는 데 사용됩니다. [특수 파일](#file-conventions)을 참조하세요.
 
 ## 경로 세그먼트
@@ -152,7 +152,7 @@ Next.js는 중첩 경로에서 특정 동작을 가진 UI를 생성하기 위해
 
 라우팅 패턴
 
-App Router는 더 고급 라우팅 패턴을 구현하는 데 도움이 되는 일련의 규칙도 제공합니다. 여기에는 다음이 포함됩니다:
+App Router는 더 고급 라우팅 패턴을 구현할 수 있도록 일련의 규칙을 제공합니다. 여기에는 다음이 포함됩니다:
 
 - [병렬 경로](/docs/app/building-your-application/routing/parallel-routes): 동시에 두 개 이상의 페이지를 동일한 뷰에 표시하고 독립적으로 탐색할 수 있습니다. 예: 대시보드.
 - [경로 인터셉트](/docs/app/building-your-application/routing/intercepting-routes): 경로를 인터셉트하고 다른 경로의 컨텍스트에서 표시할 수 있습니다. 현재 페이지의 컨텍스트를 유지하는 것이 중요한 경우에 사용할 수 있습니다. 예: 하나의 작업을 편집하는 동안 모든 작업 보기 또는 피드에서 사진 확대 보기.

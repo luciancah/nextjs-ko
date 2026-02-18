@@ -38,7 +38,8 @@ const config: DocsThemeConfig = {
     key: 'banner',
     text: (
       <a href="https://github.com/luciancah/nextjs-ko" target="_blank">
-        🎉 공식문서 번역에 참여해주세요. &nbsp;🐙&nbsp; Github 바로가기 &nbsp;🐙
+        🎉 공식문서 번역에 참여해 주세요. &nbsp;🐙&nbsp; Github 바로가기
+        &nbsp;🐙
       </a>
     ),
   },
