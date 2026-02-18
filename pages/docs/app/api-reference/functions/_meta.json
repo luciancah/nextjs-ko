@@ -85,5 +85,14 @@
   },
   "userAgent": {
     "title": "User Agent"
+  },
+  "forbidden": {
+    "title": "Forbidden"
+  },
+  "refresh": {
+    "title": "Refresh"
+  },
+  "updateTag": {
+    "title": "Update Tag"
   }
 }

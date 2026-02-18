@@ -1,10 +1,17 @@
 ---
+title: forbidden
+description: API Reference for the forbidden function.
+version: experimental
+related:
+  links:
+    - app/api-reference/file-conventions/forbidden
+---
 
-## title: forbidden description: API Reference for the forbidden function. version: experimental related: links: - app/api-reference/file-conventions/forbidden
+# forbidden
 
-`forbidden` 함수는 Next.js 403 에러 페이지를 렌더링하는 에러를 발생시킵니다. 애플리케이션에서 인가(authorization) 에러를 처리할 때 유용합니다. [`forbidden.js` 파일](https://nextjs.org/docs/app/api-reference/file-conventions/forbidden)을 사용하여 UI를 커스터마이징할 수 있습니다.
+`forbidden` 함수는 Next.js 403 에러 페이지를 렌더링하는 에러를 발생시킵니다. 애플리케이션에서 인가(authorization) 에러를 처리할 때 유용합니다. [`forbidden.js` 파일](/docs/app/api-reference/file-conventions/forbidden)을 사용하여 UI를 커스터마이징할 수 있습니다.
 
-`forbidden`을 사용하려면 `next.config.js` 파일에서 실험적인 [`authInterrupts`](https://nextjs.org/docs/app/api-reference/config/next-config-js/authInterrupts) 구성 옵션을 활성화해야 합니다.
+`forbidden`을 사용하려면 `next.config.js` 파일에서 실험적인 [`authInterrupts`](/docs/app/api-reference/config/next-config-js/authInterrupts) 구성 옵션을 활성화해야 합니다.
 
 ```ts filename="next.config.ts" switcher
 import type { NextConfig } from 'next'
@@ -16,7 +23,6 @@ const nextConfig: NextConfig = {
 }
 
 export default nextConfig
-
 ```
 
 ```js filename="next.config.js" switcher
@@ -25,10 +31,9 @@ module.exports = {
     authInterrupts: true,
   },
 }
-
 ```
 
-`forbidden`은 [Server Components](https://nextjs.org/docs/app/getting-started/server-and-client-components), [Server Functions](https://www.google.com/search?q=/docs/app/getting-started/updating-data), 그리고 [Route Handlers](https://nextjs.org/docs/app/api-reference/file-conventions/route)에서 호출할 수 있습니다.
+`forbidden`은 [Server Components](/docs/app/getting-started/server-and-client-components), [Server Functions](/docs/app/getting-started/updating-data), 그리고 [Route Handlers](/docs/app/api-reference/file-conventions/route)에서 호출할 수 있습니다.
 
 ```tsx filename="app/auth/page.tsx" switcher
 import { verifySession } from '@/app/lib/dal'
@@ -45,7 +50,6 @@ export default async function AdminPage() {
   // 인가된 사용자를 위해 관리자 페이지 렌더링
   return <></>
 }
-
 ```
 
 ```jsx filename="app/auth/page.js" switcher
@@ -63,12 +67,11 @@ export default async function AdminPage() {
   // 인가된 사용자를 위해 관리자 페이지 렌더링
   return <></>
 }
-
 ```
 
 ## Good to know
 
-* `forbidden` 함수는 [root layout](https://nextjs.org/docs/app/api-reference/file-conventions/layout#root-layout)에서 호출할 수 없습니다.
+- `forbidden` 함수는 [root layout](/docs/app/api-reference/file-conventions/layout#root-layout)에서 호출할 수 없습니다.
 
 ## Examples
 
@@ -96,7 +99,6 @@ export default async function AdminPage() {
     </main>
   )
 }
-
 ```
 
 ```jsx filename="app/admin/page.js" switcher
@@ -119,7 +121,6 @@ export default async function AdminPage() {
     </main>
   )
 }
-
 ```
 
 ### Mutations with Server Actions
@@ -144,7 +145,6 @@ export async function updateRole(formData: FormData) {
   // 인가된 사용자를 위해 역할 업데이트 수행
   // ...
 }
-
 ```
 
 ```js filename="app/actions/update-role.js" switcher
@@ -165,11 +165,10 @@ export async function updateRole(formData) {
   // 인가된 사용자를 위해 역할 업데이트 수행
   // ...
 }
-
 ```
 
 ## Version History
 
-| Version | Changes |
-| --- | --- |
+| Version   | Changes             |
+| --------- | ------------------- |
 | `v15.1.0` | `forbidden` 도입됨. |
