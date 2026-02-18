@@ -81,6 +81,16 @@
     <tr>
         <td align="center" valign="top" width="14.28%"><a href="https://blog.seokkamoni.me"><img src="https://avatars.githubusercontent.com/u/102217654?v=4" width="100px;" alt="김석진(poki)"/><br /><sub><b>김석진(poki)</b></sub></a><br /><a href="#content-seokkamoni" title="Content">🖋</a></td>
         <td align="center" valign="top" width="14.28%"><a href="https://developer-sungjun.tistory.com/"><img src="https://avatars.githubusercontent.com/u/99730910?v=4" width="100px;" alt="umsungjun"/><br /><sub><b>umsungjun</b></sub></a><br /><a href="#content-umsungjun" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/hanna0175"><img src="https://avatars.githubusercontent.com/hanna0175?size=100" width="100px;" alt="hannah_k"/><br /><sub><b>hannah_k</b></sub></a><br /><a href="#content-hanna0175" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/mini-chip"><img src="https://avatars.githubusercontent.com/mini-chip?size=100" width="100px;" alt="Kim Minhee"/><br /><sub><b>Kim Minhee</b></sub></a><br /><a href="#content-mini-chip" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/Clt689"><img src="https://avatars.githubusercontent.com/Clt689?size=100" width="100px;" alt="이한빈"/><br /><sub><b>이한빈</b></sub></a><br /><a href="#content-Clt689" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/jaeilnet"><img src="https://avatars.githubusercontent.com/jaeilnet?size=100" width="100px;" alt="jaeil.joo"/><br /><sub><b>jaeil.joo</b></sub></a><br /><a href="#content-jaeilnet" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/JaeHye0k"><img src="https://avatars.githubusercontent.com/JaeHye0k?size=100" width="100px;" alt="JaeHye0k"/><br /><sub><b>JaeHye0k</b></sub></a><br /><a href="#content-JaeHye0k" title="Content">🖋</a></td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/GulSam00"><img src="https://avatars.githubusercontent.com/GulSam00?size=100" width="100px;" alt="sham"/><br /><sub><b>sham</b></sub></a><br /><a href="#content-GulSam00" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/cofla159"><img src="https://avatars.githubusercontent.com/cofla159?size=100" width="100px;" alt="황채림"/><br /><sub><b>황채림</b></sub></a><br /><a href="#content-cofla159" title="Content">🖋</a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/jjpp43"><img src="https://avatars.githubusercontent.com/jjpp43?size=100" width="100px;" alt="Junna Park"/><br /><sub><b>Junna Park</b></sub></a><br /><a href="#content-jjpp43" title="Content">🖋</a></td>
     </tr>
 </tbody>
 </table>
@@ -89,4 +99,3 @@
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
