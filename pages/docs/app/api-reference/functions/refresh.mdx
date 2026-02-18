@@ -1,0 +1,69 @@
+---
+
+## title: refresh description: API Reference for the refresh function.
+
+`refresh`를 사용하면 [Server Action](https://www.google.com/search?q=/docs/app/getting-started/updating-data) 내부에서 client router를 새로 고침할 수 있습니다.
+
+## Usage
+
+`refresh`는 **오직** Server Actions 내부에서만 호출할 수 있습니다. Route Handlers, Client Components, 또는 다른 어떤 컨텍스트에서도 사용할 수 없습니다.
+
+## Parameters
+
+```tsx
+refresh(): void;
+
+```
+
+## Returns
+
+`refresh`는 값을 반환하지 않습니다.
+
+## Examples
+
+```ts filename="app/actions.ts" switcher
+'use server'
+
+import { refresh } from 'next/cache'
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title')
+  const content = formData.get('content')
+
+  // 데이터베이스에 게시물 생성
+  const post = await db.post.create({
+    data: { title, content },
+  })
+
+  refresh()
+}
+```
+
+```js filename="app/actions.js" switcher
+'use server'
+
+import { refresh } from 'next/cache'
+
+export async function createPost(formData) {
+  const title = formData.get('title')
+  const content = formData.get('content')
+
+  // 데이터베이스에 게시물 생성
+  const post = await db.post.create({
+    data: { title, content },
+  })
+
+  refresh()
+}
+```
+
+### Error when used outside Server Actions
+
+```ts filename="app/api/posts/route.ts" switcher
+import { refresh } from 'next/cache'
+
+export async function POST() {
+  // 이 코드는 에러를 발생시킵니다
+  refresh()
+}
+```
