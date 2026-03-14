@@ -22,36 +22,24 @@ description: Style your Next.js Application using Tailwind CSS.
 
 ## Installing Tailwind
 
-Tailwind CSS 패키지를 설치하고 `init` 명령어를 실행하여 `tailwind.config.js` 및 `postcss.config.js` 파일을 생성합니다:
+Tailwind CSS 패키지와 `@tailwindcss/postcss`를 설치합니다:
 
 ```bash filename="Terminal"
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+npm install -D tailwindcss @tailwindcss/postcss
 ```
 
 ## Configuring Tailwind
 
-`tailwind.config.js` 파일 내에 Tailwind CSS 클래스 이름을 사용할 파일의 경로를 추가합니다:
+PostCSS 설정 파일에 `@tailwindcss/postcss` 플러그인을 추가합니다:
 
-```js filename="tailwind.config.js"
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}', // `app` 디렉토리 추가에 주의하세요.
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-
-    // 또는 `src` 디렉토리를 사용하는 경우:
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {
-    extend: {},
+```js filename="postcss.config.mjs"
+const config = {
+  plugins: {
+    '@tailwindcss/postcss': {},
   },
-  plugins: [],
 }
+export default config
 ```
-
-`postcss.config.js`를 수정할 필요는 없습니다.
 
 <AppOnly>
 
@@ -60,9 +48,7 @@ module.exports = {
 Tailwind가 생성한 스타일을 주입하는 [Tailwind CSS 지시문](https://tailwindcss.com/docs/functions-and-directives#directives)을 애플리케이션의 [Global Stylesheet](/docs/app/building-your-application/styling/stylesheets#global-styles)에 추가합니다. 예를 들어:
 
 ```css filename="app/globals.css"
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 ```
 
 [루트 레이아웃](/docs/app/building-your-application/routing/layouts-and-templates#root-layout-required) (`app/layout.tsx`) 내에서 `globals.css` 스타일 시트를 임포트하여 애플리케이션의 모든 경로에 스타일을 적용합니다.
@@ -134,9 +120,7 @@ export default function Page() {
 Tailwind가 생성한 스타일을 주입하는 [Tailwind CSS 지시문](https://tailwindcss.com/docs/functions-and-directives#directives)을 애플리케이션의 [Global Stylesheet](/docs/pages/building-your-application/styling/css-modules#global-styles)에 추가합니다. 예를 들어:
 
 ```css filename="styles/globals.css"
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 ```
 
 [커스텀 app 파일](/docs/pages/building-your-application/routing/custom-app) (`pages/_app.js`) 내에서 `globals.css` 스타일 시트를 임포트하여 애플리케이션의 모든 경로에 스타일을 적용합니다.
