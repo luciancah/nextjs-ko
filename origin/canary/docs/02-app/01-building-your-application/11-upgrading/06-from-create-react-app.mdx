@@ -323,46 +323,27 @@ import '../index.css'
 // ...
 ```
 
-If you're using Tailwind, you'll need to install `postcss` and `autoprefixer`:
+If you're using Tailwind, install `@tailwindcss/postcss`:
 
 ```bash filename="Terminal"
-npm install postcss autoprefixer
+npm install -D tailwindcss @tailwindcss/postcss
 ```
 
-Then, create a `postcss.config.js` file at the root of your project:
+Add the PostCSS plugin to your `postcss.config.mjs` file:
 
-```js filename="postcss.config.js"
-module.exports = {
+```js filename="postcss.config.mjs"
+const config = {
   plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
+    '@tailwindcss/postcss': {},
   },
-}
-```
-
-Create a `` file at the root of your project:
-
-```ts filename="tailwind.config.ts"
-import type { Config } from 'tailwindcss'
-
-const config: Config = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
-  theme: {},
-  plugins: [],
 }
 export default config
 ```
 
-Create an `app/globals.css` and import Tailwind globals:
+Import Tailwind in your global CSS file:
 
 ```css filename="app/globals.css"
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 ```
 
 Lastly, import the `globals.css` file in your `app/layout.tsx` file:

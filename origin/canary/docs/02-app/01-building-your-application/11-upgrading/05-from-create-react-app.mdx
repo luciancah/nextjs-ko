@@ -281,21 +281,21 @@ import '../index.css'
 // ...
 ```
 
-If you're using Tailwind, you'll need to install `postcss` and `autoprefixer`:
+If you're using Tailwind, install `@tailwindcss/postcss`:
 
 ```bash filename="Terminal"
-npm install postcss autoprefixer
+npm install -D tailwindcss @tailwindcss/postcss
 ```
 
-Then, create a `postcss.config.js` file at the root of your project:
+Create a `postcss.config.mjs` file at the root of your project:
 
-```js filename="postcss.config.js"
-module.exports = {
+```js filename="postcss.config.mjs"
+const config = {
   plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
+    '@tailwindcss/postcss': {},
   },
 }
+export default config
 ```
 
 ### Step 6: Create the Entrypoint Page
